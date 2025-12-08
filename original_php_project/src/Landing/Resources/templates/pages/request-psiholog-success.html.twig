@@ -1,0 +1,40 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div class="gh-request-psiholog-success__container-outer">
+        <div class="gh-request-psiholog-success__container-inner">
+            <div class="gh-request-psiholog-success__soft-light"></div>
+            <div style="">
+                <h3 class="gh-request-psiholog-success__header">
+                    {{ 'Thank_you_that_care_about_yourself'|trans|raw }}
+                </h3>
+                <div class="gh-request-psiholog-success__description">
+                    {% if psihologProfile is defined %}
+                        {% if clientName is defined and clientName|length > 0 %}
+                            {{ 'We_received_your_questionnaire_3'|trans({'%psihologName%': psihologProfile.firstName, '%clientName%': clientName})|raw }}
+                        {% else %}
+                            {{ 'We_received_your_questionnaire_2'|trans({'%psihologName%': psihologProfile.firstName})|raw }}
+                        {% endif %}
+                    {% else %}
+                        {{ 'We_received_your_questionnaire'|trans|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="gh-request-psiholog-success__photo">
+                <img class="gh-img" src="{{ asset('img/request-psiholog-success-liza.jpg', 'landing') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            gtag("event", "request_psiholog_form_sent", {
+                'event_category': 'Conversions'
+            });
+        });
+    </script>
+{% endblock %}

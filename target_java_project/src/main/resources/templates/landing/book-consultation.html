@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{Book_consultation} + ' - GoodHelp'">Book consultation - GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/book-consultation.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="gh-book-consultation">
+        <div class="gh-container">
+            <div class="gh-book-consultation__header-block">
+                <h1 class="gh-book-consultation__h1" th:text="#{Book_consultation}">Book consultation</h1>
+                <div class="gh-book-consultation__back-btn-container">
+                    <a class="gh-button gh-button--outlined"
+                       th:href="@{/{lang}/profile/{id}(lang=${lang != 'uk'} ? ${lang} : '', id=${therapist.id()})}">
+                        <svg width="31" height="9" viewBox="0 0 31 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M29.75 5C30.0261 5 30.25 4.77614 30.25 4.5C30.25 4.22386 30.0261 4 29.75 4V5ZM0.896447 4.14645C0.701184 4.34171 0.701184 4.65829 0.896447 4.85355L4.07843 8.03553C4.27369 8.2308 4.59027 8.2308 4.78553 8.03553C4.9808 7.84027 4.9808 7.52369 4.78553 7.32843L1.95711 4.5L4.78553 1.67157C4.9808 1.47631 4.9808 1.15973 4.78553 0.964466C4.59027 0.769204 4.27369 0.769204 4.07843 0.964466L0.896447 4.14645ZM29.75 4H1.25V5H29.75V4Z"
+                                  fill="black"/>
+                        </svg>
+                        <span th:text="#{To_psiholog_profile}">Back to profile</span>
+                    </a>
+                </div>
+            </div>
+
+            <form id="booking-form"
+                  class="gh-book-consultation__content-block gh-book-consultation__book-form"
+                  th:action="@{/{lang}/checkout(lang=${lang != 'uk'} ? ${lang} : '')}"
+                  th:object="${bookingForm}"
+                  method="post"
+                  novalidate>
+                <input type="hidden" th:field="*{therapistId}">
+                <input type="hidden" th:field="*{slotId}" id="slotId">
+                <input type="hidden" th:field="*{promocode}" id="appliedPromocode">
+
+                <div class="gh-book-consultation__main">
+                    <div class="gh-book-consultation__main-block">
+                        <div class="gh-book-consultation__choose-type" th:if="${hasSchedule}">
+                            <h2 class="gh-book-consultation__h2" th:text="#{Consultation_type}">Consultation type</h2>
+                            <h3 class="gh-book-consultation__h3" th:text="#{Choose_consultation_type}">Choose type</h3>
+                            <div class="gh-book-consultation__choose-type-container">
+                                <div class="gh-book-consultation__choose-type-specific"
+                                     th:each="price : ${prices}">
+                                    <div class="gh-switch-new">
+                                        <input type="radio"
+                                               class="gh-switch-new__input gh-book-consultation__choose-type-switch"
+                                               th:id="'price-' + ${price.type()}"
+                                               th:value="${price.id()}"
+                                               name="priceId"
+                                               th:data-label="#{${price.typeLabelKey()}}"
+                                               th:data-duration="${price.durationMinutes()}"
+                                               th:data-price-value="${price.price()}"
+                                               th:data-price-currency="${price.currency()}"
+                                               th:data-target-selector="'.gh-book-consultation__schedule-time-list--' + ${price.type()}"
+                                               th:checked="${price.id()} == ${selectedPriceId}">
+                                        <label th:for="'price-' + ${price.type()}"
+                                               class="gh-switch-new__label"
+                                               th:text="#{${price.typeLabelKey()}}">Individual</label>
+                                    </div>
+                                    <div class="gh-book-consultation__choose-type-specific-info">
+                                        <span th:text="${price.durationMinutes()}"></span>
+                                        <span th:text="#{minutes}">minutes</span>,
+                                        <span class="gh-text-bold" th:text="${price.price()} + ' \u20b4'">800</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gh-horizontal-divider gh-horizontal-divider--schedule gh-d-none"></div>
+
+                        <div class="gh-book-consultation__schedule-container" th:classappend="${hasSchedule} ? '' : 'gh-d-none'">
+                            <h2 class="gh-book-consultation__h2">
+                                <span class="gh-error gh-d-none" id="slot-error" th:text="#{Select_session_date_and_time}">Select session date and time</span>
+                                <span th:text="#{Select_session_date_and_time}">Select session date and time</span>
+                            </h2>
+                            <h3 class="gh-book-consultation__h3">
+                                <span th:text="#{Timezone}">Timezone</span>:
+                                <span th:text="${timezoneLabel}">UTC+2</span>
+                            </h3>
+
+                            <th:block th:each="price : ${prices}">
+                                <div class="gh-book-consultation__schedule-time-list"
+                                     th:classappend="' gh-book-consultation__schedule-time-list--' + ${price.type()} + (${price.id()} == ${selectedPriceId} ? '' : ' gh-d-none')">
+                                    <div th:if="${slots.hasSlots()}">
+                                        <div class="gh-book-consultation__schedule-day" th:each="day : ${slots.days()}">
+                                            <div class="gh-book-consultation__schedule-day-title">
+                                                <span th:text="${day.date().dayOfMonth} + ' ' + ${day.dayName()}"></span>
+                                            </div>
+                                            <div class="gh-book-consultation__schedule-day-time-list">
+                                                <div class="gh-switch-new" th:each="time : ${day.times()}">
+                                                    <input type="radio"
+                                                           class="gh-switch-new__input gh-book-consultation__schedule-day-time-switch"
+                                                           name="slot-radio"
+                                                           th:id="'slot-' + ${price.type()} + '-' + ${time.id()}"
+                                                           th:data-summary-label="${day.dayName()} + ', ' + ${time.formatted()}"
+                                                           th:data-time="${time.formatted()}"
+                                                           th:data-type="${price.type()}"
+                                                           th:value="${time.id()}">
+                                                    <label class="gh-switch-new__label"
+                                                           th:for="'slot-' + ${price.type()} + '-' + ${time.id()}"
+                                                           th:text="${time.formatted()}">14:00</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gh-book-consultation__schedule-no-time-available" th:if="${!slots.hasSlots()}">
+                                        <span class="gh-book-consultation__schedule-no-time-available-label"
+                                              th:utext="#{To_book_consultation_fill_questionnaire}">
+                                            Please fill the questionnaire
+                                        </span>
+                                        <a th:href="${requestConsultationLink}" class="gh-button" th:text="#{Fill_questionnaire}">Fill questionnaire</a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+
+                        <div class="gh-horizontal-divider"></div>
+
+                        <div class="gh-book-consultation__auth" th:if="${hasSchedule}">
+                            <h2 class="gh-book-consultation__h2" th:text="#{Authorization}">Authorization</h2>
+                            <h3 class="gh-book-consultation__h3" th:text="#{Choose_authorization_type}">Choose authorization type</h3>
+                            <div class="gh-book-consultation__auth-type-select">
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-book-consultation__choose-auth-type-switch"
+                                           th:id="'auth-new'"
+                                           th:field="*{authType}"
+                                           value="new"
+                                           data-target-selector=".gh-book-consultation__auth-form--new"
+                                           checked="checked">
+                                    <label th:for="'auth-new'" class="gh-switch-new__label" th:text="#{I_book_first_time}">I book first time</label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-book-consultation__choose-auth-type-switch"
+                                           th:id="'auth-existing'"
+                                           th:field="*{authType}"
+                                           value="existing"
+                                           data-target-selector=".gh-book-consultation__auth-form--existing">
+                                    <label th:for="'auth-existing'" class="gh-switch-new__label" th:text="#{I_already_booked_before}">I already booked</label>
+                                </div>
+                            </div>
+
+                            <div class="gh-book-consultation__auth-form gh-book-consultation__auth-form--new">
+                                <div class="gh-book-consultation__auth-form-title">
+                                    <span class="gh-text-bold" th:text="#{Enter_your_data}">Enter your data</span>
+                                    <span th:text="#{to_receive_email_after_purchase}">to receive email after purchase</span>
+                                </div>
+                                <div class="gh-book-consultation__auth-form-fields">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none" id="error-name" th:text="#{Have_to_enter_name}">Name required</div>
+                                        <input type="text" class="gh-input-text"
+                                               th:field="*{name}"
+                                               id="auth-new--name"
+                                               th:placeholder="#{Your_name}">
+                                    </div>
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none" id="error-phone" th:text="#{Have_to_enter_phone}">Phone required</div>
+                                        <input type="text" class="gh-input-text"
+                                               th:field="*{phone}"
+                                               id="auth-new--phone"
+                                               th:placeholder="#{Phone}">
+                                    </div>
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none" id="error-email" th:text="#{Have_to_enter_email}">Email required</div>
+                                        <input type="email" class="gh-input-text"
+                                               th:field="*{email}"
+                                               id="auth-new--email"
+                                               th:placeholder="#{Email}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gh-book-consultation__auth-form gh-book-consultation__auth-form--existing gh-d-none">
+                                <div class="gh-book-consultation__auth-form-title">
+                                    <span class="gh-text-bold" th:text="#{Enter_your_data}">Enter your data</span>
+                                    <span th:text="#{to_receive_email_after_purchase}">to receive email after purchase</span>
+                                </div>
+                                <div class="gh-book-consultation__auth-form-fields">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none" id="error-email-existing" th:text="#{Have_to_enter_email}">Email required</div>
+                                        <input type="email" class="gh-input-text"
+                                               th:field="*{email}"
+                                               id="auth-existing--email"
+                                               th:placeholder="#{Email}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gh-book-consultation__summary">
+                    <div class="gh-avatar gh-avatar--profile">
+                        <img class="gh-img"
+                             th:src="${therapist.photoUrl()}"
+                             th:alt="${therapist.fullName()}">
+                    </div>
+
+                    <div class="gh-book-consultation__summary-short-info">
+                        <div class="gh-book-consultation__summary-short-name" th:text="${therapist.fullName()}">Name</div>
+                        <div class="gh-book-consultation__summary-short-trait"
+                             th:text="#{${therapist.singlePhraseKey()}}">Trait</div>
+                    </div>
+
+                    <div th:if="${hasSchedule}">
+                        <div class="gh-horizontal-divider"></div>
+                        <div class="gh-book-consultation__summary-session-info">
+                            <div class="gh-book-consultation__summary-session-header" th:text="#{Session_info}">Session info</div>
+                            <div class="gh-book-consultation__summary-session-row">
+                                <div class="gh-book-consultation__summary-session-row-label" th:text="#{Session_type} + ':'">Session type:</div>
+                                <div class="gh-book-consultation__summary-session-row-value"
+                                     id="summary-session-type"
+                                     th:data-placeholder="#{Needs_to_be_chosen}"
+                                     th:text="#{Needs_to_be_chosen}">Needs to be chosen</div>
+                            </div>
+                            <div class="gh-book-consultation__summary-session-row">
+                                <div class="gh-book-consultation__summary-session-row-label" th:text="#{Time} + ':'">Time:</div>
+                                <div class="gh-book-consultation__summary-session-row-value"
+                                     id="summary-session-time"
+                                     th:data-placeholder="#{Needs_to_be_chosen}"
+                                     th:text="#{Needs_to_be_chosen}">Needs to be chosen</div>
+                            </div>
+                            <div class="gh-book-consultation__summary-session-row">
+                                <div class="gh-book-consultation__summary-session-row-label" th:text="#{Session_duration} + ':'">Duration:</div>
+                                <div class="gh-book-consultation__summary-session-row-value"
+                                     id="summary-session-duration"
+                                     th:data-minutes-label="#{minutes}"></div>
+                            </div>
+                        </div>
+
+                        <div class="gh-horizontal-divider"></div>
+
+                        <div class="gh-book-consultation__summary-price-info gh-d-none" id="price-summary">
+                            <div class="gh-book-consultation__summary-price-header" th:text="#{Consultation_price}">Price</div>
+                            <div class="gh-book-consultation__summary-old-price-content gh-d-none" id="old-price">
+                                <div class="gh-book-consultation__summary-old-price-value" id="old-price-value">0</div>
+                                <div class="gh-book-consultation__summary-old-price-currency">₴</div>
+                            </div>
+                            <div class="gh-book-consultation__summary-price-content">
+                                <div class="gh-book-consultation__summary-price-value" id="new-price-value">0</div>
+                                <div class="gh-book-consultation__summary-price-currency">₴</div>
+                            </div>
+                            <div class="gh-book-consultation__summary-promo-info gh-d-none"
+                                 id="promo-applied-label"
+                                 th:data-label="#{Promocode_applied}"></div>
+                        </div>
+
+                        <div class="gh-book-consultation__summary-book-container">
+                            <div class="gh-error gh-error--carrot gh-book-consultation__summary-book-error-container gh-d-none"
+                                 id="summary-errors">
+                                <div class="gh-text-color-black-2" th:text="#{To_book_you_have_to}">To book you have to</div>
+                                <ol>
+                                    <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--consultation-type"
+                                        th:text="#{Have_to_select_session_type}">Select session type</li>
+                                    <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--date-and-time"
+                                        th:text="#{Have_to_select_session_date_and_time}">Select date and time</li>
+                                    <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--name"
+                                        th:text="#{Have_to_enter_name}">Enter name</li>
+                                    <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--phone"
+                                        th:text="#{Have_to_enter_phone}">Enter phone</li>
+                                    <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--email"
+                                        th:text="#{Have_to_enter_email}">Enter email</li>
+                                </ol>
+                                <div class="gh-text-color-black-2" th:text="#{You_can_do_that_on_this_page_higher}">You can do that above</div>
+                            </div>
+                            <button class="gh-button" type="submit" id="book-button" disabled="disabled" th:text="#{Book}">Book</button>
+                        </div>
+
+                        <div class="gh-book-consultation__summary-promo">
+                            <div class="gh-book-consultation__summary-promo-show-form" id="promo-toggle" th:text="#{I_have_promocode}">
+                                I have promocode
+                            </div>
+                            <div class="gh-book-consultation__summary-promo-form gh-d-none" id="promo-form">
+                                <div class="gh-input">
+                                    <div class="gh-error gh-error--olive gh-d-none" id="promocode-applied-message" th:text="#{Horrey_promocode_is_successfully_applied}">Promocode applied</div>
+                                    <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-doesnt-exist" th:text="#{Promocode_doesnt_exist}">Promocode doesn't exist</div>
+                                    <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-empty" th:text="#{Please_enter_promocode}">Please enter promocode</div>
+                                    <input type="text" class="gh-input-text" id="promocode-name" th:placeholder="#{Enter_promocode}">
+                                    <button class="gh-book-consultation__summary-promo-add-btn" id="apply-promocode" type="button">
+                                        <svg class="promo-submit-icon" width="26" height="18" viewBox="0 0 26 18" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M25.0898 0.572266C25.6953 1.17773 25.6953 2.17383 25.0898 2.7793L10.4414 17.4277C10.1387 17.7305 9.73828 17.8867 9.33789 17.8867C8.9375 17.8867 8.53711 17.7305 8.23438 17.4277L0.910156 10.1035C0.304688 9.49805 0.304688 8.50195 0.910156 7.89648C1.51562 7.29102 2.51172 7.29102 3.11719 7.89648L9.33789 14.1172L22.8828 0.572266C23.4883 -0.0429688 24.4844 -0.0429688 25.0898 0.572266Z"
+                                                  fill="#202020"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script th:src="@{/js/landing/book-consultation.js}"></script>
+</main>
+</body>
+</html>
+

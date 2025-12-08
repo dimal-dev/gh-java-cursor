@@ -1,0 +1,18 @@
+.gh-breadcrumbs {
+  display: flex;
+  gap: 1rem;
+
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.2;
+
+  align-items: center;
+
+  &__item {
+    color: $color-black-2;
+
+    &--active {
+      color: $color-primary-olive-2;
+    }
+  }
+}

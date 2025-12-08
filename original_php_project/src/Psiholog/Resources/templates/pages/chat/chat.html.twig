@@ -1,0 +1,158 @@
+{% extends '@psiholog/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ userName }} Чат
+{% endblock %}
+
+{% block subheaderTitle %}
+    Чат с: <b>{{ userName }}</b>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body row">
+                    <div class="col-12" id="chat-container">
+                        <div class="kt-notes">
+                            <div class="kt-notes__items">
+                                <div id="chat-messages-container">
+                                    {% include '@psiholog/pages/chat/chat_messages.html.twig' with {chatMessages: chatMessages} %}
+                                </div>
+                                <div id="send-message-container">
+                                    <div class="kt-notes__item">
+                                        <div class="kt-notes__media">
+                                                <span class="kt-notes__icon kt-font-boldest kt-hidden">
+                                                    <i class="flaticon2-cup"></i>
+                                                </span>
+                                            <span class="kt-notes__circle kt-hidden-"
+                                                  style="margin-top: 16px;"></span>
+                                        </div>
+                                        <div class="kt-notes__content" style="margin-top: -30px;">
+                                            <div class="kt-notes__section">
+                                                <div class="kt-notes__info w-100">
+                                                    <form class="kt-form w-100" method="post"
+                                                          action="{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::CHAT_SEND_MESSAGE')) }}"
+                                                          id="chat-message-form"
+                                                    >
+                                                        <div class="chat-message-send-wrapper">
+                                                                <textarea class="form-control"
+                                                                          id="chat-message-body"
+                                                                          rows="3"
+                                                                          name="body"
+                                                                          placeholder="Написать клиенту"></textarea>
+                                                                <input type="hidden" name="userId" value="{{ app.request.query.get('userId') }}" />
+
+                                                            <button type="submit"
+                                                                    id="chat-message-send-btn"
+                                                                    class="btn btn-brand">
+                                                                Отправить
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessagesContainer = document.querySelector('#chat-messages-container');
+        const chatContainer = document.querySelector('#chat-container');
+
+        const scrollChatToBottom = () => {
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 0);
+        };
+
+        scrollChatToBottom();
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            let latestChatMessageId = {{ latestChatMessageId }};
+
+            const fetchAndRenderMessages = () => {
+                const url = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::CHAT_GET_MESSAGES_AJAX')) }}';
+                const callback = (json) => {
+                    if (json.messagesHtml.length > 0) {
+                        $(chatMessagesContainer).append(json.messagesHtml);
+                    }
+                    if (json.latestChatMessageId > 0) {
+                        latestChatMessageId = json.latestChatMessageId;
+                    }
+                };
+                const params = {
+                    latestChatMessageId: latestChatMessageId,
+                    userId: {{ app.request.query.get('userId') }}
+                };
+
+                $.get(url, params, callback, 'json');
+            };
+
+            setInterval(fetchAndRenderMessages, 10 * 1000);
+
+            $('#chat-message-form').submit(function () {
+                $('#chat-message-send-btn').attr('disabled', 'disabled');
+            });
+        });
+    </script>
+
+    <style>
+        .ms-auto {
+            margin-left: auto;
+        }
+
+        .kt-notes .kt-notes__items .kt-notes__item:not(:last-child) {
+            padding-bottom: 20px;
+        }
+
+        .psiholog-profile-img {
+            border-radius: 50%;
+            width: 3rem;
+        }
+
+        #chat-container {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        #chat-message-body {
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 68px;
+        }
+
+        .chat-message-send-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #chat-message-send-btn {
+            margin-left: 15px;
+        }
+
+        #send-message-container > .kt-notes__item {
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .chat-message-send-wrapper {
+                flex-direction: column;
+            }
+
+            #chat-message-send-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp: asset('img/profile/0008-mariya-koroyed/001-mariya-koroyed.webp', 'landing'),
+            fallback:  asset('img/profile/0008-mariya-koroyed/001-mariya-koroyed.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0008-mariya-koroyed/002-mariya-koroyed.webp', 'landing'),
+            fallback:  asset('img/profile/0008-mariya-koroyed/002-mariya-koroyed.jpg', 'landing'),
+        },
+    ]
+} %}

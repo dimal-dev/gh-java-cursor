@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="${therapist.fullName()} + ' | GoodHelp'">Therapist Profile - GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/therapist-profile.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="gh-psiholog-profile-container">
+        <div class="gh-container gh-psiholog-profile">
+            <!-- Soft light decorative background -->
+            <div class="gh-psiholog-profile__soft-light-container">
+                <div class="gh-psiholog-profile__soft-light"></div>
+            </div>
+
+            <!-- Short info section (sidebar on desktop) -->
+            <div class="gh-psiholog-profile__short">
+                <!-- Avatar -->
+                <div class="gh-avatar gh-avatar--profile">
+                    <img class="gh-img"
+                         th:src="${therapist.photoUrl()}"
+                         th:alt="${therapist.fullName()}">
+                </div>
+
+                <!-- Name and tagline -->
+                <h1 class="gh-psiholog-profile__short-info">
+                    <span class="gh-psiholog-profile__short-name" th:text="${therapist.fullName()}">Therapist Name</span>
+                    <span class="gh-psiholog-profile__short-trait" th:text="#{${therapist.singlePhrase()}}">Gestalt therapist</span>
+                </h1>
+
+                <!-- Price section -->
+                <div class="gh-psiholog-profile__short-price-container">
+                    <div class="gh-psiholog-profile__short-price-title" th:text="#{Consultation_price}">Consultation price</div>
+                    <div class="gh-psiholog-profile__short-price">
+                        <span class="gh-psiholog-profile__short-price-value" th:text="${price}">800</span>
+                        <span class="gh-psiholog-profile__short-price-currency">₴</span>
+                    </div>
+                </div>
+
+                <!-- Book button -->
+                <div class="gh-psiholog-profile__short-book-container">
+                    <a th:href="${bookConsultationLink}" class="gh-button">
+                        <span th:text="#{Book}">Book</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Full info section (main content area) -->
+            <div class="gh-psiholog-profile__full">
+                <!-- Experience stats -->
+                <div class="gist">
+                    <!-- Years of experience -->
+                    <div class="gist__item" th:if="${therapist.experienceYears() != null}">
+                        <div class="gist__icon">
+                            <th:block th:replace="~{landing/fragments/profile-icons :: experience-icon}"/>
+                        </div>
+                        <div class="gist__label">
+                            <span th:text="${therapist.experienceYears()}">5</span>
+                            <span th:text="#{many_years}">years</span>
+                            <span th:text="#{of_working_experience}">of working experience</span>
+                        </div>
+                    </div>
+
+                    <!-- Diploma -->
+                    <div class="gist__item" th:if="${therapist.hasPsychologistDiploma()}">
+                        <div class="gist__icon">
+                            <th:block th:replace="~{landing/fragments/profile-icons :: diploma-icon}"/>
+                        </div>
+                        <div class="gist__label" th:text="#{Diploma_psychologist}">Psychology diploma</div>
+                    </div>
+
+                    <!-- Professional courses -->
+                    <div class="gist__item" th:if="${therapist.profileCourses() != null and therapist.profileCourses() > 0}">
+                        <div class="gist__icon">
+                            <th:block th:replace="~{landing/fragments/profile-icons :: courses-icon}"/>
+                        </div>
+                        <div class="gist__label">
+                            <span th:text="${therapist.profileCourses()}">4</span>
+                            <span th:text="#{many_professional_course}">professional courses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Therapy types -->
+                <div class="therapy" th:if="${therapist.therapyTypes() != null and !therapist.therapyTypes().isEmpty()}">
+                    <div class="therapy__head" th:text="#{Therapy}">Therapy</div>
+                    <div class="therapy__item-list">
+                        <div class="therapy__item" th:each="therapy : ${therapist.therapyTypes()}" th:text="#{${therapy}}">Individual</div>
+                    </div>
+                </div>
+
+                <!-- Mobile header (shown on mobile only) -->
+                <div class="gh-psiholog-profile__mobile-header">
+                    <div class="gh-psiholog-profile__mobile-header-avatar">
+                        <img class="gh-img"
+                             th:src="${therapist.photoUrl()}"
+                             th:alt="${therapist.fullName()}">
+                    </div>
+                    <div class="gh-psiholog-profile__mobile-header-info">
+                        <div class="gh-psiholog-profile__mobile-header-info-name" th:text="${therapist.fullName()}">Name</div>
+                        <div>
+                            <span class="gh-psiholog-profile__mobile-header-price-value" th:text="${price}">800</span>
+                            <span class="gh-psiholog-profile__mobile-header-price-currency">₴</span>
+                        </div>
+                    </div>
+                    <div class="gh-psiholog-profile__mobile-header-book">
+                        <a th:href="${bookConsultationLink}" class="gh-button" th:text="#{Book}">Book</a>
+                    </div>
+                </div>
+
+                <!-- About section -->
+                <div class="about" th:if="${therapist.about() != null and !therapist.about().isEmpty()}">
+                    <div class="about__head">
+                        <span th:if="${therapist.isNotTherapist()}" th:text="#{About_psiholog}">About the psychologist</span>
+                        <span th:unless="${therapist.isNotTherapist()}" th:text="#{About_therapist}">About the therapist</span>
+                    </div>
+                    <div class="about__body">
+                        <!-- Get about text for current locale -->
+                        <th:block th:with="locale=${#locale.language == 'uk' ? 'ua' : #locale.language}">
+                            <th:block th:utext="${therapist.about().get(locale) != null ? therapist.about().get(locale) : therapist.about().get('en')}"/>
+                        </th:block>
+                    </div>
+                </div>
+
+                <!-- Topics / Works with section -->
+                <div class="topics" th:if="${topicsGrouped != null and !topicsGrouped.isEmpty()}">
+                    <div class="topics__head" th:text="#{Specialist_works_with_issues}">Specialist works with topics</div>
+                    <div class="topics__list">
+                        <div class="topics__group" th:each="entry : ${topicsGrouped}">
+                            <div class="topics__group-head" th:text="#{${entry.key}}">My State</div>
+                            <div class="topics__group-items">
+                                <th:block th:each="group : ${entry.value}">
+                                    <div class="topics__topic" th:each="topic : ${group.topics()}">
+                                        <div class="topics__topic-icon">
+                                            <th:block th:replace="~{landing/fragments/profile-icons :: topic-check-icon}"/>
+                                        </div>
+                                        <div class="topics__topic-label" th:text="#{${topic}}">Topic</div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qualification tabs section -->
+                <div class="qualification">
+                    <div class="qualification__head" th:text="#{Qualification}">Qualification</div>
+                    <div class="qualification__body">
+                        <!-- Tab buttons -->
+                        <div class="qualification__tab-list">
+                            <div class="qualification__tab qualification__tab--active" data-target="#qualification__tab-content-education">
+                                <span th:text="#{Education}">Education</span>
+                            </div>
+                            <div class="qualification__tab" data-target="#qualification__tab-content-methods" th:if="${therapist.methods() != null and !therapist.methods().isEmpty()}">
+                                <span th:text="#{Methods_and_approaches}">Methods and approaches</span>
+                            </div>
+                            <div class="qualification__tab" data-target="#qualification__tab-content-supervision" th:if="${!therapist.associationAndSupervision().isEmpty()}">
+                                <span th:text="#{Association_and_supervision}">Association and supervision</span>
+                            </div>
+                            <div class="qualification__tab" data-target="#qualification__tab-content-reviews" th:if="${reviews != null and !reviews.isEmpty()}">
+                                <span th:text="#{Reviews}">Reviews</span>
+                                <span class="gh-text-color-grey-4">(<span th:text="${reviews.size()}">0</span>)</span>
+                            </div>
+                        </div>
+
+                        <!-- Education tab content -->
+                        <div class="qualification__item qualification__item--active" id="qualification__tab-content-education" th:if="${therapist.education() != null}">
+                            <div class="qualification__item-head">
+                                <span class="qualification__item-head-label" th:text="#{Education}">Education</span>
+                                <span class="qualification__item-head-icon">
+                                    <th:block th:replace="~{landing/fragments/profile-icons :: plus-icon}"/>
+                                </span>
+                            </div>
+                            <div class="qualification__item-content qualification__item-education">
+                                <div class="qualification__item-education-head">
+                                    <span th:if="${therapist.education().mainAmount() > 0}">
+                                        <span th:text="${therapist.education().mainAmount()}">2</span>
+                                        <span th:text="#{high_education_many}">higher educations</span>
+                                        <span th:if="${therapist.education().additionalAmount() > 0}">,</span>
+                                    </span>
+                                    <span th:if="${therapist.education().additionalAmount() > 0}">
+                                        <span th:text="${therapist.education().additionalAmount()}">3</span>
+                                        <span th:text="#{additional_education_many}">additional educations</span>
+                                    </span>
+                                </div>
+                                <div class="qualification__item-education-list">
+                                    <div class="qualification__item-education-list-row" th:each="edu : ${therapist.education().list()}">
+                                        <div class="qualification__item-education-year-range" th:text="${edu.years()}">2020-2022</div>
+                                        <div class="qualification__item-education-title">
+                                            <th:block th:with="locale=${#locale.language == 'uk' ? 'ua' : #locale.language}">
+                                                <span th:text="${edu.name().get(locale) != null ? edu.name().get(locale) : edu.name().get('en')}">Education title</span>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Methods tab content -->
+                        <div class="qualification__item" id="qualification__tab-content-methods" th:if="${therapist.methods() != null and !therapist.methods().isEmpty()}">
+                            <div class="qualification__item-head">
+                                <span class="qualification__item-head-label" th:text="#{Methods_and_approaches}">Methods</span>
+                                <span class="qualification__item-head-icon">
+                                    <th:block th:replace="~{landing/fragments/profile-icons :: plus-icon}"/>
+                                </span>
+                            </div>
+                            <div class="qualification__item-content qualification__item-list">
+                                <div class="qualification__item-list-row" th:each="method : ${therapist.methods()}">
+                                    <div class="qualification__item-list-check-icon">
+                                        <th:block th:replace="~{landing/fragments/profile-icons :: check-icon}"/>
+                                    </div>
+                                    <div class="qualification__item-list-label" th:text="#{${method}}">Method name</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Supervision tab content -->
+                        <div class="qualification__item" id="qualification__tab-content-supervision" th:if="${!therapist.associationAndSupervision().isEmpty()}">
+                            <div class="qualification__item-head">
+                                <span class="qualification__item-head-label" th:text="#{Association_and_supervision}">Association</span>
+                                <span class="qualification__item-head-icon">
+                                    <th:block th:replace="~{landing/fragments/profile-icons :: plus-icon}"/>
+                                </span>
+                            </div>
+                            <div class="qualification__item-content qualification__item-list">
+                                <div class="qualification__item-list-row" th:each="assoc : ${therapist.associationAndSupervision()}">
+                                    <div class="qualification__item-list-check-icon">
+                                        <th:block th:replace="~{landing/fragments/profile-icons :: check-icon}"/>
+                                    </div>
+                                    <div class="qualification__item-list-label">
+                                        <th:block th:with="locale=${#locale.language == 'uk' ? 'ua' : #locale.language}">
+                                            <span th:text="${assoc.text().get(locale) != null ? assoc.text().get(locale) : assoc.text().get('en')}">Association name</span>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reviews tab content -->
+                        <div class="qualification__item" id="qualification__tab-content-reviews" th:if="${reviews != null and !reviews.isEmpty()}">
+                            <div class="qualification__item-head">
+                                <span class="qualification__item-head-label">
+                                    <span th:text="#{Reviews}">Reviews</span>
+                                    <span class="gh-text-color-grey-4">(<span th:text="${reviews.size()}">0</span>)</span>
+                                </span>
+                                <span class="qualification__item-head-icon">
+                                    <th:block th:replace="~{landing/fragments/profile-icons :: plus-icon}"/>
+                                </span>
+                            </div>
+                            <div class="qualification__item-content qualification__item-review-list">
+                                <div class="qualification__item-review" th:each="review : ${reviews}">
+                                    <div class="qualification__item-review-info">
+                                        <div class="qualification__item-review-name" th:text="${review.name()}">Client Name</div>
+                                        <div class="qualification__item-review-date" th:text="${review.created()}">2024-01-15</div>
+                                    </div>
+                                    <div class="qualification__item-review-content">
+                                        <div class="qualification__item-review-quote-icon">
+                                            <th:block th:replace="~{landing/fragments/profile-icons :: quote-icon}"/>
+                                        </div>
+                                        <div class="qualification__item-review-body" th:text="${review.body()}">Review text</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second decorative soft light -->
+        <div class="second-soft-light__container">
+            <div class="second-soft-light__container-container">
+                <div class="second-soft-light__actual-light"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const allQualificationTabs = document.querySelectorAll('.qualification__tab');
+
+            const hideAllQualificationTabs = function() {
+                allQualificationTabs.forEach(function(tabEl) {
+                    tabEl.classList.remove('qualification__tab--active');
+                });
+                document.querySelectorAll('.qualification__item').forEach(function(targetEl) {
+                    targetEl.classList.remove('qualification__item--active');
+                });
+            };
+
+            allQualificationTabs.forEach(function(tabEl) {
+                tabEl.addEventListener('click', function() {
+                    hideAllQualificationTabs();
+                    tabEl.classList.add('qualification__tab--active');
+                    var target = tabEl.getAttribute('data-target');
+                    var targetEl = document.querySelector(target);
+                    if (targetEl) {
+                        targetEl.classList.add('qualification__item--active');
+                    }
+                });
+            });
+
+            // Accordion on mobile
+            document.querySelectorAll('.qualification__item-head').forEach(function(btn) {
+                var containerEl = btn.parentElement;
+                btn.addEventListener('click', function() {
+                    if (containerEl.classList.contains('qualification__item--opened')) {
+                        containerEl.classList.remove('qualification__item--opened');
+                    } else {
+                        containerEl.classList.add('qualification__item--opened');
+                    }
+                });
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+.gh-avatar {
+  width: 19rem;
+  height: 19rem;
+
+  box-shadow: 0 0 0 8px rgb(212 212 94 / 30%), 0 0 0 1.6rem rgb(212 212 94 / 20%);
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+
+  @include tablet-full {
+    width: 15rem;
+    height: 15rem;
+  }
+
+  @include mobile {
+    width: 15rem;
+    height: 15rem;
+  }
+}

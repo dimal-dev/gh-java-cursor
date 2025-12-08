@@ -132,11 +132,39 @@ public SecurityFilterChain therapistSecurityFilterChain(HttpSecurity http) throw
 ---
 
 ## Verification
-- [ ] Auto-login with valid token works
-- [ ] Invalid token shows error
-- [ ] Protected routes require authentication
-- [ ] Logout clears session
-- [ ] @AuthenticationPrincipal injects TherapistUserDetails
+- [x] Auto-login with valid token works
+- [x] Invalid token shows error
+- [x] Protected routes require authentication
+- [x] Logout clears session
+- [x] @AuthenticationPrincipal injects TherapistUserDetails
+
+## Implementation Notes
+
+### Created Files (`com.goodhelp.therapist.infrastructure.security`):
+
+1. **TherapistUserDetails.java** - Spring Security UserDetails implementation
+   - Maps TherapistRole to Spring Security authorities (ROLE_PSIHOLOG, ROLE_TEST_PSIHOLOG)
+   - Provides user state information (enabled, locked, etc.)
+
+2. **TherapistUserDetailsService.java** - UserDetailsService implementation
+   - Loads therapist by email for authentication
+   - Also supports loading by ID for session-based auth
+
+3. **TherapistAutoLoginFilter.java** - Custom authentication filter
+   - Handles `/therapist/auto-login?t={token}` requests
+   - Validates token and establishes Spring Security session
+   - Redirects to schedule on success, login page on failure
+
+4. **CurrentTherapist.java** - Convenience annotation
+   - Wraps @AuthenticationPrincipal for cleaner controller code
+   - Usage: `@CurrentTherapist TherapistUserDetails therapist`
+
+### Updated Files:
+
+- **SecurityConfig.java** - Added auto-login filter integration
+- **TherapistStatus.java** - Added INACTIVE, SUSPENDED, PENDING_APPROVAL statuses
+
+## Status: COMPLETED ✅
 
 ---
 

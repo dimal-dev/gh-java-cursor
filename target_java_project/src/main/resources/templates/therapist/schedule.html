@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.schedule.title}">Schedule - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page schedule-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.schedule.heading}">Upcoming Consultations</h1>
+        <a th:href="@{/therapist/schedule/settings}" class="btn btn-primary" th:text="#{therapist.schedule.settings.button}">
+            Schedule Settings
+        </a>
+    </div>
+
+    <div class="schedule-list" id="schedule-container">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <span th:text="#{common.loading}">Loading...</span>
+        </div>
+    </div>
+
+    <!-- No consultations message (hidden by default) -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-state__icon">📅</div>
+        <h3 th:text="#{therapist.schedule.empty.title}">No upcoming consultations</h3>
+        <p th:text="#{therapist.schedule.empty.description}">
+            When clients book consultations, they will appear here.
+        </p>
+    </div>
+
+    <!-- Consultation card template -->
+    <template id="consultation-card-template">
+        <div class="consultation-card">
+            <div class="consultation-card__header">
+                <span class="consultation-card__time"></span>
+                <span class="consultation-card__type"></span>
+            </div>
+            <div class="consultation-card__body">
+                <div class="consultation-card__client">
+                    <span class="client-name"></span>
+                </div>
+                <div class="consultation-card__actions">
+                    <a href="#" class="btn btn-sm btn-outline chat-link" th:text="#{therapist.schedule.openChat}">Open Chat</a>
+                    <a href="#" class="btn btn-sm btn-outline notes-link" th:text="#{therapist.schedule.editNotes}">Client Notes</a>
+                    <form method="post" class="cancel-form">
+                        <input type="hidden" name="user_consultation_id" value="" />
+                        <button type="submit" class="btn btn-sm btn-danger cancel-btn" th:text="#{therapist.schedule.cancel}">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const MINIMUM_CANCEL_DELTA = [[${minimumCancelDelta}]];
+            const container = document.getElementById('schedule-container');
+            const emptyState = document.getElementById('empty-state');
+            const cardTemplate = document.getElementById('consultation-card-template');
+
+            const messages = {
+                cancelConfirm: /*[[#{therapist.schedule.cancelConfirm}]]*/ 'Are you sure you want to cancel this consultation?',
+                cancelPenalty: /*[[#{therapist.schedule.cancelPenaltyConfirm}]]*/ 'Less than 24 hours before the consultation. A penalty fee will apply. Still want to cancel?',
+                chatUrl: /*[[@{/therapist/chat}]]*/ '/therapist/chat',
+                notesUrl: /*[[@{/therapist/clients/notes}]]*/ '/therapist/clients/notes',
+                cancelUrl: /*[[@{/therapist/schedule/consultation/__ID__/cancel}]]*/ '/therapist/schedule/consultation/{id}/cancel',
+                typeIndividual: /*[[#{therapist.schedule.type.individual}]]*/ 'Individual (50 min)',
+                typeCouple: /*[[#{therapist.schedule.type.couple}]]*/ 'Couple/Family (80 min)'
+            };
+
+            async function loadSchedule() {
+                try {
+                    const response = await fetch('/therapist/schedule/list?page=0&perpage=50');
+                    const data = await response.json();
+
+                    container.innerHTML = '';
+
+                    if (!data.data || data.data.length === 0) {
+                        container.style.display = 'none';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    container.style.display = 'block';
+
+                    data.data.forEach(consultation => {
+                        const card = createConsultationCard(consultation);
+                        container.appendChild(card);
+                    });
+                } catch (error) {
+                    console.error('Failed to load schedule:', error);
+                    container.innerHTML = '<div class="error-message">Failed to load schedule. Please refresh the page.</div>';
+                }
+            }
+
+            function createConsultationCard(consultation) {
+                const template = cardTemplate.content.cloneNode(true);
+                const card = template.querySelector('.consultation-card');
+
+                // Time
+                card.querySelector('.consultation-card__time').textContent = consultation.availableAtLabel;
+
+                // Type
+                const typeLabel = consultation.consultationType === 'individual'
+                    ? messages.typeIndividual
+                    : messages.typeCouple;
+                card.querySelector('.consultation-card__type').textContent = typeLabel;
+
+                // Client name
+                let clientDisplay = consultation.clientName || 'клиент не указал';
+                if (consultation.therapistNotesName) {
+                    clientDisplay += ' / ' + consultation.therapistNotesName;
+                }
+                card.querySelector('.client-name').textContent = clientDisplay;
+
+                // Chat link
+                const chatLink = card.querySelector('.chat-link');
+                chatLink.href = messages.chatUrl + '?userId=' + consultation.userId;
+
+                // Notes link
+                const notesLink = card.querySelector('.notes-link');
+                notesLink.href = messages.notesUrl + '?userId=' + consultation.userId;
+
+                // Cancel form
+                const cancelForm = card.querySelector('.cancel-form');
+                cancelForm.action = '/therapist/schedule/consultation/' + consultation.id + '/cancel';
+                cancelForm.querySelector('input[name="user_consultation_id"]').value = consultation.id;
+
+                // Cancel confirmation
+                cancelForm.addEventListener('submit', function(e) {
+                    const currentTs = Math.floor(Date.now() / 1000);
+                    const delta = consultation.availableAtTimestampUtc - currentTs;
+                    const willCharge = delta < MINIMUM_CANCEL_DELTA;
+
+                    const confirmMessage = willCharge ? messages.cancelPenalty : messages.cancelConfirm;
+                    if (!confirm(confirmMessage)) {
+                        e.preventDefault();
+                        return;
+                    }
+
+                    const btn = this.querySelector('.cancel-btn');
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-small"></span> ' + btn.textContent;
+                });
+
+                return card;
+            }
+
+            // Load on page ready
+            document.addEventListener('DOMContentLoaded', loadSchedule);
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+.gh-main-block {
+  width: 116.5rem;
+  margin: 0 auto;
+
+  @include mobile {
+    width: 28.9rem;
+  }
+
+  @include tablet-full {
+    width: 69.1rem;
+  }
+}
+
+@import "main/first-screen";
+@import "main/second-screen";
+@import "main/third-screen";
+@import "main/fourth-screen";
+@import "main/fifth-screen";
+@import "main/sixth-screen";
+@import "main/seventh-screen";
+
+.ghl__main-h2 {
+  font-size: 4.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @include mobile {
+    font-size: 3rem;
+  }
+
+  @include tablet-full {
+    font-size: 3rem;
+  }
+}
+
+.text-highlight-yellow-olive {
+  background: $color-yellow-olive-1;
+}
+
+.text-highlight-carrot-2 {
+  background: $color-primary-carrot-2;
+}
+
+.text-highlight-yellow-orange {
+  background: $color-yellow-orange-1;
+}
+

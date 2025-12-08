@@ -1,0 +1,100 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'Цены'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center p-3" style="background-color: #f4fdee;">
+        <div class="row gy-3 justify-content-center">
+            {% include '@landing/partials/_ol-list-card.html.twig' with {
+                title: "Стоимость консультации у психолога зависит от:",
+                cardClass: ' text-start shadow-sm col-md-5',
+                cardTextClass: '  mt-3 ms-1',
+                list: [
+                    'Опыта работы психолога',
+                    'Количества специализаций пройденных психологом',
+                    'Количества записей к психологу и его загруженности',
+                ]
+            } %}
+            {% include '@landing/partials/_ol-list-card.html.twig' with {
+                title: "У психолога 3 уровня квалификации:",
+                cardClass: ' text-start shadow-sm col-md-5 ms-md-3',
+                cardTextClass: '  mt-3 ms-1',
+                list: [
+                    'Опыт работы от 5 до 10 лет.',
+                    'От 1 до 3 специализаций.',
+                    'Средний уровень загруженности.',
+                ]
+            } %}
+            {% include '@landing/partials/_ol-list-card.html.twig' with {
+                title: "У психолога 2 уровня квалификации:",
+                cardClass: ' text-start shadow-sm col-md-5',
+                cardTextClass: '  mt-3 ms-1',
+                list: [
+                    'Опыт работы от 10 до 15 лет.',
+                    'Наличие от трех специализаций.',
+                    'Высокий уровень загруженности.',
+                ]
+            } %}
+            {% include '@landing/partials/_ol-list-card.html.twig' with {
+                title: "У психолога 1 уровня квалификации:",
+                cardClass: ' text-start shadow-sm col-md-5 ms-md-3',
+                cardTextClass: '  mt-3 ms-1',
+                list: [
+                    'Опыт работы от 15 лет.',
+                    'Пять и больше специализаций.',
+                    'Эксперт высокого уровня с большим количеством клиентов.',
+                ]
+            } %}
+            <div class="card shadow-sm col-md-5">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ 'prices_page_phrase_1'|trans }}
+                    </h5>
+                    <div class="card-text">
+                        {{ 'prices_page_phrase_2'|trans }}
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm col-md-5 ms-md-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ 'prices_page_phrase_3'|trans }}
+                    </h5>
+                    <div class="card-text">
+                        {{ 'prices_page_phrase_4'|trans }}
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ 'prices_page_phrase_5'|trans }}
+                    </h5>
+                    <div class="card-text">
+                        {{ 'prices_page_phrase_6'|trans|raw }}
+                        <p>
+                            Для того чтобы работать качественно и эффективно, психологу нужно постоянно проходить свою
+                            индивидуальную терапию которая стоит достаточно дорого.
+                        </p>
+                        <p>
+                            Также нужно постоянно посещать встречи с более опытным, выше по рангу коллегой, обсуждая
+                            сложности работы с клиентами (это называется супервизия). Такие встречи еще дороже чем
+                            индивидуальная терапия.
+                        </p>
+                        <p>
+                            Помимо высшего образования, психологи проходят дорогостоящие длительные обучающие программы
+                            где повышают квалификацию.
+                        </p>
+                        <p>
+                            Большая часть дохода психолога уходит на покрытие этих расходов. Если же он не тратит деньги
+                            на свою личную терапию, супервизию и получение новых знаний, он не может быть эффективным и
+                            оказывать профессиональную помощь.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

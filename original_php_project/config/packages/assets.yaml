@@ -1,0 +1,13 @@
+framework:
+  assets:
+    version: 'v=%env(ASSET_VERSION_HASH)%'
+    base_path: '/assets/'
+    packages:
+      staff:
+        base_path: '/assets/staff1'
+      user:
+        base_path: '/assets/user'
+      psiholog:
+        base_path: '/assets/psiholog'
+      landing:
+        base_path: '/assets/landing'

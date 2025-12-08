@@ -1,0 +1,112 @@
+{% extends '@psiholog/pages/payments/payments-layout.html.twig' %}
+
+{% block paymentsLayoutContent %}
+    <div class="kt_datatable" id="payments-history"></div>
+
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Class definition
+            var datatable;
+
+            var KTUsersListDatatable = function() {
+                var init = function() {
+
+                    datatable = $('.kt_datatable').KTDatatable({
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    url: '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::PAYMENTS_HISTORY_ITEMS_AJAX')) }}',
+                                    method: 'GET',
+                                    timeout: 30000
+                                },
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                        },
+                        layout: {
+                            scroll: false,
+                            footer: false,
+                            spinner: {
+                                message: '{{ 'Please wait'|trans({}, 'userspace') }}',
+                            }
+                        },
+                        translate: {
+                            records: {
+                                noRecords: 'Ни одного платежа',
+                            },
+                            toolbar: {
+                                pagination: {
+                                    items: {
+                                        info: '{{ "Displaying {{start}} - {{end}} of {{total}} records"|trans({}, 'userspace') }}',
+                                        default: {
+                                            first: '{{ 'First'|trans({}, 'userspace') }}',
+                                            prev: '{{ 'Previous'|trans({}, 'userspace') }}',
+                                            next: '{{ 'Next'|trans({}, 'userspace') }}',
+                                            last: '{{ 'Last'|trans({}, 'userspace') }}',
+                                            more: '{{ 'More pages'|trans({}, 'userspace') }}',
+                                            input: '{{ 'Page number'|trans({}, 'userspace') }}',
+                                            select: '{{ 'Select page size'|trans({}, 'userspace') }}'
+                                        },
+                                    }
+                                }
+                            }
+                        },
+                        sortable: false,
+                        pagination: true,
+                        columns: [
+                            {
+                                field: 'amount',
+                                title: 'Сумма',
+                                template: function(row) {
+                                    return `${row.amount} ₴`;
+                                }
+                            },
+                            {
+                                field: 'date_created',
+                                title: 'Дата',
+                                type: 'date',
+                                format: 'MM/DD/YYYY HH:MM:SS',
+                            },
+                            {
+                                field: 'id',
+                                title: 'ID',
+                                width: 30,
+                                type: 'number',
+                                selector: false,
+                                textAlign: 'center',
+                            },
+                        ],
+
+                    });
+                };
+
+                return {
+                    // public functions
+                    init: function() {
+                        init();
+                    },
+                };
+            }();
+
+            jQuery(document).ready(function() {
+                KTUsersListDatatable.init();
+            });
+        });
+    </script>
+
+    <style>
+        .kt-datatable.kt-datatable--default > .kt-datatable__table {
+            overflow: auto;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head, .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__foot {
+            overflow: initial;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {
+            overflow: initial;
+        }
+    </style>
+{% endblock %}

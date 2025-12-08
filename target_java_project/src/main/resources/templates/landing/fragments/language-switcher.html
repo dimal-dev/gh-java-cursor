@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Desktop Language Switcher -->
+<div th:fragment="switcher" class="gh-header__lang-picker">
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'uk'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${ukUrl != null} ? ${ukUrl} : @{/}">UA</a>
+    </div>
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'ru'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${ruUrl != null} ? ${ruUrl} : @{/ru/}">RU</a>
+    </div>
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'en'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${enUrl != null} ? ${enUrl} : @{/en/}">EN</a>
+    </div>
+</div>
+
+<!-- Mobile Language Switcher -->
+<div th:fragment="switcher-mobile" class="gh-header__lang-picker gh-header__lang-picker--mobile">
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'uk'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${ukUrl != null} ? ${ukUrl} : @{/}">UA</a>
+    </div>
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'ru'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${ruUrl != null} ? ${ruUrl} : @{/ru/}">RU</a>
+    </div>
+    <div class="gh-header__lang-picker-item" 
+         th:classappend="${#locale.language == 'en'} ? 'gh-header__lang-picker-item--active' : ''">
+        <a th:href="${enUrl != null} ? ${enUrl} : @{/en/}">EN</a>
+    </div>
+</div>
+</body>
+</html>
+

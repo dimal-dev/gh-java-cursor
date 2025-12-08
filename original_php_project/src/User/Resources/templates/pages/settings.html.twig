@@ -1,0 +1,36 @@
+{% extends '@user/layout/main.html.twig' %}
+
+{% block page_title %}
+    Настройки. GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-lg-6 col-xl-4 order-lg-1 order-xl-1">
+            <form action="" method="post">
+                <div class="form-group row">
+                    <label class="col-xl-4 col-lg-4 col-form-label">Часовой пояс</label>
+                    <div class="col-lg-8 col-xl-6">
+                        <select class="form-control" name="newTimezone" style="min-width: 20rem;">
+                            {% for timezone, label in getTimezoneList() %}
+                                <option value="{{ timezone }}" {{ timezone == currentTimezone ? 'selected' : '' }}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-4 col-lg-4 col-form-label">Ваше имя</label>
+                    <div class="col-lg-8 col-xl-6">
+                        <input class="form-control" type="text" value="{{ fullName }}" name="newFullName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-9 col-xl-6">
+                        <button class="btn btn-brand" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

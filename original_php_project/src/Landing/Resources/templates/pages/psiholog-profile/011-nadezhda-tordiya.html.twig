@@ -1,0 +1,222 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'Психолог по кризисам и травмам'|trans }}. GoodHelp
+    - {{ psihologProfile.fullName|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="profile">
+        <div class="container-lg pt-md-5 pt-sm-4 pt-3" style="max-width: 1140px">
+            <div class="row">
+                <div class="col-sm-5">
+                    {% include '@landing/pages/psiholog-profile-photo-carousel/' ~ psihologProfile.profileTemplate ~ '.html.twig' %}
+                </div>
+                <div class="col-sm-7">
+                    {% include '@landing/partials/psiholog-profile/_name-and-price.html.twig' with {
+                        name: psihologProfile.fullName,
+                        price: priceIndividual.price,
+                        currency: 'грн'
+                    } %}
+
+                    {% include '@landing/partials/psiholog-profile/_book-consultation-btn.html.twig' %}
+
+                    {% include '@landing/partials/psiholog-profile/_experience.html.twig' with {
+                        title: "Работаю с клиентами %years% лет"|trans({"%years%": 12}),
+                        text: "За это время ко мне обратилось более %people% человек"|trans({"%people%": 1000})
+                    } %}
+                    {% include '@landing/partials/psiholog-profile/_specializations.html.twig' with {
+                        specializations: [
+                            'Кризисы и травмы'
+                        ]
+                    } %}
+
+                    {% include '@landing/partials/psiholog-profile/_list-card.html.twig' with {
+                        title: "С чем я работаю лучше всего",
+                        list: [
+                            'Кризисы среднего возраста.',
+                        ]
+                    } %}
+
+                    {% include '@landing/partials/psiholog-profile/_list-card.html.twig' with {
+                        title: "Принципы работы, которые я использую",
+                        iconClass: 'fa-shield-alt',
+                        list: [
+                            'Конфиденциальность.',
+                            'Безоценочное отношение к клиенту.',
+                        ]
+                    } %}
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            {% include '@landing/partials/psiholog-profile/_tabs.html.twig' %}
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="about-psiholog" role="tabpanel"
+                                     aria-labelledby="about-psiholog-tab">
+                                    {% include '@landing/partials/psiholog-profile/_list-card.html.twig' with {
+                                        title: "С какими клиентами и запросами я работаю:",
+                                        iconClass: 'fa-plus',
+                                        cardClass: ' border-0 text-start',
+                                        cardTextClass: '  mt-3 ms-1',
+                                        list: [
+                                            'Депрессии, тревога, страх, безысходность.',
+                                            'Проблемы в отношениях (конфликты, абьюз, измена, расставание, развод).',
+                                            'Сложности на пути к успеху, потеря смысла жизни.',
+                                            'Заниженная самооценка, синдром самозванца.',
+                                            'Подавленные эмоции, чувство вины, обида, злость.',
+                                            'Переживание утраты близкого человека.',
+                                            'Эмоциональная травма.',
+                                            'С мужчинами и женщинами (в основном, в возрасте от 30 до 50 лет).',
+                                            'С беженцами и людьми из военных семей.',
+                                        ]
+                                    } %}
+
+                                    {% include '@landing/partials/psiholog-profile/_list-card.html.twig' with {
+                                        title: "С какими клиентами и запросами я не работаю:",
+                                        iconClass: 'fa-minus',
+                                        cardClass: ' border-0 text-start',
+                                        cardTextClass: '  mt-3 ms-1',
+                                        list: [
+                                            'С химической, игровой и алкогольной зависимостями.',
+                                            'С психическими заболеваниями.',
+                                        ]
+                                    } %}
+
+                                    <hr>
+
+                                    <div class="accordion accordion-flush" id="accordionExample">
+                                        {% set accordionItemNumber = 0 %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% include '@landing/partials/psiholog-profile/_accordion-item-list.html.twig' with {
+                                            buttonTitle: "Почему стоит обратиться именно ко мне",
+                                            itemNumber: accordionItemNumber,
+                                            list: [
+                                                'Я сертифицированный психотерапевт, прошла обучение в 5-летнем психотерапевтическом проекте.',
+                                                'У меня многолетний опыт работы психологом, интерес и приверженность к работе.',
+                                                'Много клиентов успешно прошли у меня консультирование и изменили свою жизнь в лучшую сторону.',
+                                                'И могу точно подбирать и применять психологические техники и методы для работы с запросом клиента, поскольку чувствительна к состоянию клиента.',
+                                                'Я чувствительная к клиенту. И поэтому точно подбираю и применяю техники и методы для работы с запросом клиента.',
+                                                'Я готова понять любого человека и любую ситуацию, какой бы сложной и запутанной она не была.',
+                                                'У меня есть стратегическое видение и креативность. Помогаю найти клиентам нестандартный выход из непростых ситуаций.',
+                                                'Я эксперт в области кризиса среднего возраста, со всеми его аспектами. Изучила этот вопрос достаточно глубоко. И успешно прошла сама через такой кризис.',
+                                                'Постоянно пополняю свои знания в психологии и психотерапии. Обучаюсь у зарубежных психотерапевтов.',
+                                                'У меня есть опыт длительной семейной жизни и родительства.',
+                                                'Я могу помочь вам чутким, внимательным, безоценочным отношением, которое уже само по себе является ресурсным и позволяет посмотреть на вашу ситуацию другими глазами.',
+                                                'Я оказываю действенную психологическая помощь, которая поможет улучшить ваше эмоциональное состояние и это скажется на качестве жизни.',
+                                            ]
+                                        } %}
+
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% include '@landing/partials/psiholog-profile/_accordion-item-list.html.twig' with {
+                                            buttonTitle: "Базовое психологическое образование",
+                                            itemNumber: accordionItemNumber,
+                                            list: [
+                                                'Открытый Международный Университет развития человека «Украина», Факультет социальных технологий.',
+                                            ]
+                                        } %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% include '@landing/partials/psiholog-profile/_accordion-item-list.html.twig' with {
+                                            buttonTitle: "Где я обучалась психотерапии",
+                                            itemNumber: accordionItemNumber,
+                                            list: [
+                                                'Клиент-центрированная психотерапия. Тренеры: проф. Кочарян А.С., доц. Жидко М.Е., доц. Кочарян И.А. 2010-2019. (Украина, Харьков).',
+                                            ]
+                                        } %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% include '@landing/partials/psiholog-profile/_accordion-item-list.html.twig' with {
+                                            buttonTitle: "Дополнительное образование (тренинги, курсы, лекции)",
+                                            itemNumber: accordionItemNumber,
+                                            list: [
+                                                'Стабилизация в работе с травмой. Тренеры: Профеcсор Джейн Айрленд,
+Акредитований психолог Кімберлі МакНіл, 2022, (Lancashire (UK).',
+                                                'Проработка темы страданий с помощью майндфулнес и сострадания. Тренер: Dr. Bassam Khoury, 2022, ( Канада, Монреаль).',
+                                                'Практикум психологической стойкости в условиях горя и травм. Тренер: Dr. Tina Montreuil, 2022, ( Канада, Монреаль).',
+                                                'Выездной тренинг: «Восстановление энергии жизни». Тренер: Светлана Липинская, 2014, (г.Буша , Винницкая область, Украина).',
+                                            ]
+                                        } %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% include '@landing/partials/psiholog-profile/_accordion-item-list.html.twig' with {
+                                            buttonTitle: "Методы и подходы, которые использую",
+                                            itemNumber: accordionItemNumber,
+                                            list: [
+                                                'Гештальт-терапия.',
+                                                'КПТ.',
+                                                'Клиент-центрированная психотерапия.',
+                                                'ACT-терапия(Терапия принятия и ответственности).',
+                                            ]
+                                        } %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% embed '@landing/partials/psiholog-profile/_accordion-item-card.html.twig' with {
+                                            buttonTitle: "Как и почему я стала психологом",
+                                            itemNumber: accordionItemNumber,
+                                        } %}
+                                            {% block cardText %}
+                                                {{ 'nadezhda_tordiya_how_i_became_psi'|trans|raw }}
+                                            {% endblock %}
+                                        {% endembed %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% embed '@landing/partials/psiholog-profile/_accordion-item-card.html.twig' with {
+                                            buttonTitle: "Кратко обо мне как о личности",
+                                            itemNumber: accordionItemNumber,
+                                        } %}
+                                            {% block cardText %}
+                                                {{ 'nadezhda_tordiya_about'|trans|raw }}
+                                            {% endblock %}
+                                        {% endembed %}
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% embed '@landing/partials/psiholog-profile/_accordion-item.html.twig' with {
+                                            buttonTitle: "Сколько нужно встреч для решения моей проблемы?",
+                                            itemNumber: accordionItemNumber,
+                                        } %}
+                                            {% block body %}
+                                                {% include '@landing/partials/psiholog-profile/_what-can-i-get-for-n-consultations.html.twig' %}
+                                            {% endblock %}
+                                        {% endembed %}
+
+
+                                        {% set accordionItemNumber = accordionItemNumber + 1 %}
+                                        {% embed '@landing/partials/psiholog-profile/_accordion-item.html.twig' with {
+                                            buttonTitle: "Языки на которых консультирую",
+                                            itemNumber: accordionItemNumber,
+                                        } %}
+                                            {% block body %}
+                                                {{ 'Украинский и русский.'|trans }}
+                                            {% endblock %}
+                                        {% endembed %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="psiholog-reviews" role="tabpanel"
+                                     aria-labelledby="psiholog-reviews-tab">
+                                    {% include '@landing/partials/psiholog-profile/_reviews.html.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include '@landing/partials/psiholog-profile/_failed-to-book.html.twig' %}
+
+            <div class="row">
+                <div class="col-12">
+                    {% include '@landing/partials/psiholog-profile/_book-consultation.html.twig' with {schedule: schedule} %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends '@user/layout/main.html.twig' %}
+
+{% block page_title %}
+    Условия консультаций GoodHelp
+{% endblock %}
+
+{% block content %}
+    <style>
+        .consultation-conditions {
+            font-size: 1.2rem;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        .ms-1 {
+            margin-left: .5rem;
+        }
+    </style>
+    <div class="consultation-conditions">
+        {% include '@common/partials/_consultation-conditions.html.twig' %}
+    </div>
+{% endblock %}

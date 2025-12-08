@@ -1,0 +1,199 @@
+.ghl-second-screen {
+  margin-top: 15.5rem;
+
+  @include mobile {
+    margin-top: 41.6rem;
+    overflow: hidden;
+  }
+
+  @include tablet-full {
+    overflow: initial;
+  }
+
+  &__main-block {
+    position: relative;
+  }
+
+  &__soft-light {
+    width: 94.2rem;
+    height: 82.2rem;
+    background-image: $soft-light-gradient;
+
+    position: absolute;
+
+    top: 8.6rem;
+    left: -24rem;
+
+    z-index: -1;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__arrow-down {
+    display: inline-block;
+    position: relative;
+
+    & > svg {
+      display: none;
+      position: absolute;
+    }
+
+    @include desktop {
+      .desktop {
+        top: -2.3rem;
+        left: 2.6rem;
+        display: initial;
+      }
+    }
+
+    @include tablet-full {
+      .tablet {
+        top: -2rem;
+        left: 0rem;
+        display: initial;
+      }
+    }
+
+    @include mobile {
+      .mobile {
+        top: -1.5rem;
+        left: -0.1rem;
+        display: initial;
+      }
+    }
+  }
+}
+
+.problem-category-list {
+  @include mobile {
+    &__wrapper {
+      margin-left: -1.8rem;
+      margin-right: -1.8rem;
+      position: relative;
+
+      padding-bottom: 6rem;
+      margin-bottom: -6rem;
+    }
+  }
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 37rem);
+  justify-content: space-between;
+  row-gap: 3rem;
+  margin-top: 5rem;
+
+  @include tablet-full {
+    margin-top: 3rem;
+    grid-template-columns: repeat(auto-fill, 21.7rem);
+    row-gap: 2rem;
+  }
+
+  @include mobile {
+    top: 0;
+    left: 1.8rem;
+    position: relative;
+    gap: 1.5rem;
+    display: flex;
+    width: max-content;
+  }
+
+  &__hand-tip-icon {
+    display: none;
+
+    @include mobile {
+      display: block;
+
+      margin-top: 1.5rem;
+
+      animation-duration: 1s;
+      animation-name: lalala;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+
+      @keyframes lalala {
+        0% {
+          margin-left: .5rem;
+        }
+
+        100% {
+          margin-left: 1.5rem;
+        }
+      }
+    }
+  }
+
+  &__item {
+    background-color: $color-white-1;
+    display: flex;
+    flex-direction: column;
+    width: 37rem;
+    border-radius: 2rem;
+    box-shadow: $box-shadow-1;
+    padding: 3rem 4rem;
+
+    @include tablet-full {
+      width: 21.7rem;
+      padding: 2rem 1.5rem;
+    }
+
+    @include mobile {
+      width: 27.5rem;
+
+      padding: 2rem 1.5rem;
+
+      box-shadow: 0 1.5rem 5rem rgba($color-black-1, 0.05), 0 .3rem 1rem rgba($color-black-1, 0.025);
+    }
+
+
+    &-icon {
+      margin: 0 auto;
+
+      @include tablet-full {
+        & > svg {
+          width: 10rem;
+          height: auto;
+        }
+      }
+    }
+
+    &-header {
+      margin-top: 1.5rem;
+      font-weight: 700;
+      font-size: 2.4rem;
+      line-height: 1.2;
+      text-align: center;
+
+      @include tablet-full {
+        font-size: 1.8rem;
+      }
+
+      @include mobile {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  &__specific-problem-list {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+  }
+
+  &__specific-problem {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  &__double-quotes-icon {
+    align-self: flex-start;
+  }
+}

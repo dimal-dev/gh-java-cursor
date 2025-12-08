@@ -1,0 +1,70 @@
+{% for message in chatMessages %}
+    {% set isUserSent = message.type == constant('\\App\\User\\Entity\\ChatMessage::TYPE_SENT_BY_USER') %}
+    {% set isUnread = message.state == constant('\\App\\User\\Entity\\ChatMessage::STATE_UNREAD') %}
+    <div class="kt-notes__item">
+        <div class="kt-notes__media">
+            {% if isUserSent %}
+                <span class="kt-notes__icon kt-font-boldest">
+                    <i class="fas fa-user-alt kt-font-brand"></i>
+                </span>
+            {% else %}
+                <img class="kt-hidden-" src="{{ getPsihologProfileSrc(message.psiholog_id) }}" alt="image">
+            {% endif %}
+        </div>
+        <div class="kt-notes__content">
+            <div class="kt-notes__section">
+                <div class="kt-notes__info d-flex w-100">
+                    {% if isUserSent %}
+                        <span class="kt-notes__title kt-font-brand">
+                            {% if userName|length > 0 %}
+                                {{ userName | raw }}
+                            {% else %}
+                                <a class="btn btn-brand btn-sm"
+                                   href="{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::USER_NOTES')) }}?userId={{ message.user_id }}">
+                                    Назвать клиента
+                                </a>
+                                &nbsp;&nbsp;
+                            {% endif %}
+                        </span>
+
+                        {% if isUnread %}
+                            <span class="kt-badge kt-badge--brand kt-badge--inline">Новое</span>
+                        {% endif %}
+                        <span class="kt-notes__desc ms-auto">
+                            {% set goodLookingDatetimeParts = toGoodLookingDatetimeParts(message.sent_at) %}
+                            {{ goodLookingDatetimeParts.time }}, {{ goodLookingDatetimeParts.dayOfMonth }} {{ goodLookingDatetimeParts.month }}
+                        </span>
+                    {% else %}
+                        <span class="kt-notes__title kt-font-brand">
+                            {{ getPsihologFullName(message.psiholog_id) }}
+                        </span>
+
+                        <div class="kt-notes__desc ms-auto">
+                            {% set goodLookingDatetimeParts = toGoodLookingDatetimeParts(message.sent_at) %}
+                            {{ goodLookingDatetimeParts.time }}
+                            , {{ goodLookingDatetimeParts.dayOfMonth }} {{ goodLookingDatetimeParts.month }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="kt-notes__body">
+                <div>{{ message.body }}</div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="kt-notes__item">
+        <div class="kt-notes__media">
+            <span class="kt-notes__icon kt-font-boldest">
+                <i class="fas fa-coffee kt-font-brand"></i>
+            </span>
+        </div>
+        <div class="kt-notes__content">
+            <div class="kt-notes__body">
+                <div>
+                    Пока никаких сообщений от пользователя не было
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

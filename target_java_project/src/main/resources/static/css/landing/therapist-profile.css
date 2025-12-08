@@ -1,0 +1,653 @@
+/* ==============================================
+   Therapist Profile Page Styles
+   ============================================== */
+
+/* Profile Container */
+.gh-psiholog-profile-container {
+    position: relative;
+    padding: 120px 0 80px;
+    min-height: 100vh;
+}
+
+.gh-psiholog-profile {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 60px;
+    position: relative;
+}
+
+/* Soft Light Decorative Background */
+.gh-psiholog-profile__soft-light-container {
+    position: absolute;
+    top: -50px;
+    left: -100px;
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.gh-psiholog-profile__soft-light {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(213, 213, 94, 0.15) 0%, transparent 70%);
+    filter: blur(60px);
+}
+
+.second-soft-light__container {
+    position: absolute;
+    bottom: 0;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.second-soft-light__container-container {
+    width: 100%;
+    height: 100%;
+}
+
+.second-soft-light__actual-light {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(239, 150, 101, 0.1) 0%, transparent 70%);
+    filter: blur(60px);
+}
+
+/* Short Info Section (Left Sidebar) */
+.gh-psiholog-profile__short {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+}
+
+.gh-avatar--profile {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.gh-avatar--profile .gh-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gh-psiholog-profile__short-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.gh-psiholog-profile__short-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #202020;
+    line-height: 1.2;
+}
+
+.gh-psiholog-profile__short-trait {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.gh-psiholog-profile__short-price-container {
+    margin-bottom: 20px;
+}
+
+.gh-psiholog-profile__short-price-title {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.gh-psiholog-profile__short-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.gh-psiholog-profile__short-price-from {
+    font-size: 14px;
+    color: #888;
+}
+
+.gh-psiholog-profile__short-price-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #202020;
+}
+
+.gh-psiholog-profile__short-price-currency {
+    font-size: 24px;
+    font-weight: 600;
+    color: #202020;
+}
+
+.gh-psiholog-profile__short-book-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gh-psiholog-profile__short-book-container .gh-button {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Full Info Section (Main Content) */
+.gh-psiholog-profile__full {
+    padding-top: 20px;
+}
+
+/* Gist Section (Experience stats) */
+.gist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.gist__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gist__icon {
+    flex-shrink: 0;
+}
+
+.gist__icon svg {
+    width: 56px;
+    height: 56px;
+}
+
+.gist__label {
+    font-size: 15px;
+    color: #202020;
+    line-height: 1.4;
+}
+
+/* Therapy Types Section */
+.therapy {
+    margin-bottom: 40px;
+}
+
+.therapy__head {
+    font-size: 20px;
+    font-weight: 600;
+    color: #202020;
+    margin-bottom: 16px;
+}
+
+.therapy__item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.therapy__item {
+    padding: 8px 16px;
+    background: #F5F5DE;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #202020;
+}
+
+/* Mobile Header (hidden on desktop) */
+.gh-psiholog-profile__mobile-header {
+    display: none;
+}
+
+/* About Section */
+.about {
+    margin-bottom: 40px;
+}
+
+.about__head {
+    font-size: 24px;
+    font-weight: 600;
+    color: #202020;
+    margin-bottom: 20px;
+}
+
+.about__body {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.7;
+}
+
+.about__body p {
+    margin-bottom: 16px;
+}
+
+.about__body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Topics Section */
+.topics {
+    margin-bottom: 40px;
+}
+
+.topics__head {
+    font-size: 24px;
+    font-weight: 600;
+    color: #202020;
+    margin-bottom: 24px;
+}
+
+.topics__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.topics__group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.topics__group-head {
+    font-size: 18px;
+    font-weight: 600;
+    color: #202020;
+}
+
+.topics__group-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.topics__topic {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid #E5E5E5;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+}
+
+.topics__topic:hover {
+    border-color: #D4D45E;
+    background: #FAFAF5;
+}
+
+.topics__topic-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topics__topic-label {
+    font-size: 14px;
+    color: #202020;
+}
+
+/* Qualification Section */
+.qualification {
+    margin-bottom: 40px;
+}
+
+.qualification__head {
+    font-size: 24px;
+    font-weight: 600;
+    color: #202020;
+    margin-bottom: 24px;
+}
+
+.qualification__body {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+/* Tab List */
+.qualification__tab-list {
+    display: flex;
+    border-bottom: 1px solid #E5E5E5;
+    overflow-x: auto;
+}
+
+.qualification__tab {
+    padding: 16px 24px;
+    font-size: 15px;
+    color: #666;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.qualification__tab:hover {
+    color: #202020;
+}
+
+.qualification__tab--active {
+    color: #202020;
+    font-weight: 600;
+    border-bottom-color: #D4D45E;
+}
+
+.gh-text-color-grey-4 {
+    color: #888;
+    font-weight: 400;
+}
+
+/* Tab Content Items */
+.qualification__item {
+    display: none;
+}
+
+.qualification__item--active {
+    display: block;
+}
+
+.qualification__item-head {
+    display: none;
+}
+
+.qualification__item-content {
+    padding: 24px;
+}
+
+/* Education */
+.qualification__item-education-head {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.qualification__item-education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.qualification__item-education-list-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+}
+
+.qualification__item-education-year-range {
+    font-size: 14px;
+    color: #888;
+}
+
+.qualification__item-education-title {
+    font-size: 15px;
+    color: #202020;
+    line-height: 1.5;
+}
+
+/* Methods/Supervision List */
+.qualification__item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.qualification__item-list-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.qualification__item-list-check-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.qualification__item-list-label {
+    font-size: 15px;
+    color: #202020;
+    line-height: 1.5;
+}
+
+/* Reviews */
+.qualification__item-review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.qualification__item-review {
+    padding-bottom: 24px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.qualification__item-review:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.qualification__item-review-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.qualification__item-review-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #202020;
+}
+
+.qualification__item-review-date {
+    font-size: 14px;
+    color: #888;
+}
+
+.qualification__item-review-content {
+    display: flex;
+    gap: 12px;
+}
+
+.qualification__item-review-quote-icon {
+    flex-shrink: 0;
+}
+
+.qualification__item-review-body {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* =====================================
+   Responsive Styles
+   ===================================== */
+
+@media (max-width: 1024px) {
+    .gh-psiholog-profile {
+        grid-template-columns: 280px 1fr;
+        gap: 40px;
+    }
+    
+    .gh-avatar--profile {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-profile-container {
+        padding: 100px 0 60px;
+    }
+    
+    .gh-psiholog-profile {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    /* Hide desktop sidebar */
+    .gh-psiholog-profile__short {
+        display: none;
+    }
+    
+    /* Show mobile header */
+    .gh-psiholog-profile__mobile-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px;
+        position: sticky;
+        top: 70px;
+        z-index: 10;
+    }
+    
+    .gh-psiholog-profile__mobile-header-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    
+    .gh-psiholog-profile__mobile-header-avatar .gh-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .gh-psiholog-profile__mobile-header-info {
+        flex: 1;
+    }
+    
+    .gh-psiholog-profile__mobile-header-info-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #202020;
+        margin-bottom: 4px;
+    }
+    
+    .gh-psiholog-profile__mobile-header-price-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #202020;
+    }
+    
+    .gh-psiholog-profile__mobile-header-price-currency {
+        font-size: 16px;
+        font-weight: 600;
+        color: #202020;
+    }
+    
+    .gh-psiholog-profile__mobile-header-book .gh-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    /* Tab list scrollable */
+    .qualification__tab-list {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .qualification__tab {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    /* Show accordion headers on mobile */
+    .qualification__tab-list {
+        display: none;
+    }
+    
+    .qualification__item {
+        display: block;
+        border-bottom: 1px solid #E5E5E5;
+    }
+    
+    .qualification__item:last-child {
+        border-bottom: none;
+    }
+    
+    .qualification__item-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        cursor: pointer;
+    }
+    
+    .qualification__item-head-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #202020;
+    }
+    
+    .qualification__item-head-icon {
+        transition: transform 0.2s ease;
+    }
+    
+    .qualification__item-content {
+        display: none;
+        padding: 0 20px 20px;
+    }
+    
+    .qualification__item--opened .qualification__item-content {
+        display: block;
+    }
+    
+    .qualification__item--opened .qualification__item-head-icon {
+        transform: rotate(45deg);
+    }
+    
+    /* Gist on mobile */
+    .gist {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    /* Topics on mobile */
+    .topics__group-items {
+        gap: 8px;
+    }
+    
+    .topics__topic {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    /* Education on mobile */
+    .qualification__item-education-list-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gh-psiholog-profile__mobile-header {
+        flex-wrap: wrap;
+    }
+    
+    .gh-psiholog-profile__mobile-header-book {
+        width: 100%;
+        margin-top: 12px;
+    }
+    
+    .gh-psiholog-profile__mobile-header-book .gh-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+

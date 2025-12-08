@@ -1,0 +1,854 @@
+/**
+ * GoodHelp Home Page Styles
+ * Landing page specific styles for index.html
+ */
+
+/* ==========================================
+   Variables (complement main.css)
+   ========================================== */
+:root {
+    --color-primary-olive: #D4D45E;
+    --color-primary-olive-light: #F5F5DE;
+    --color-primary-carrot: #EF9665;
+    --color-black: #202020;
+    --color-white: #fff;
+    --color-gray-light: #F8F6F1;
+}
+
+/* ==========================================
+   First Screen / Hero Section
+   ========================================== */
+.ghl-first-screen {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 80px;
+    background-color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.ghl-first-screen__left {
+    width: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.ghl-first-screen__left-social {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ghl-first-screen__left-social--middle-mobile {
+    display: none;
+}
+
+.ghl-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.ghl-social-icon:hover {
+    background-color: var(--color-primary-olive-light);
+}
+
+.ghl-first-screen__middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    max-width: 600px;
+}
+
+.ghl-first-screen__soft-light {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212, 212, 94, 0.15) 0%, rgba(212, 212, 94, 0) 70%);
+    pointer-events: none;
+}
+
+.ghl-first-screen__middle-from-any-point {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--color-black);
+    margin-bottom: 20px;
+}
+
+.ghl-first-screen__middle-from-any-point-dash {
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-black);
+}
+
+.ghl-first-screen__middle-main-phrase {
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--color-black);
+}
+
+.gh-text-color-carrot-1 {
+    color: var(--color-primary-carrot);
+}
+
+.ghl-first-screen__middle-description-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+.ghl-first-screen__middle-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-black);
+    max-width: 400px;
+}
+
+.ghl-first-screen__middle-cool-arrow {
+    flex-shrink: 0;
+}
+
+.ghl-first-screen__middle-select-psiholog-zero-wrapper {
+    margin-bottom: 40px;
+}
+
+.ghl-first-screen__middle-advantages-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+}
+
+.ghl-first-screen__middle-advantage-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ghl-first-screen__middle-advantage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--color-black);
+}
+
+.ghl-first-screen__middle-advantage svg {
+    flex-shrink: 0;
+}
+
+/* Right Side - Images */
+.ghl-first-screen__right {
+    flex: 1;
+    position: relative;
+    max-width: 500px;
+}
+
+.ghl-first-screen__right-bulb {
+    position: absolute;
+    top: 10%;
+    right: 20%;
+}
+
+.ghl-first-screen__right-bulb-soft-light {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(239, 150, 101, 0.2) 0%, rgba(239, 150, 101, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ghl-first-screen__right-dima {
+    position: absolute;
+    top: 30%;
+    right: 10%;
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    max-width: 200px;
+}
+
+.ghl__message-info-header {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ghl__message-info-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.ghl-first-screen__right-notebook,
+.ghl-first-screen__right-phone {
+    position: absolute;
+    max-width: 300px;
+}
+
+.ghl-first-screen__right-notebook {
+    bottom: 20%;
+    right: 15%;
+}
+
+.ghl-first-screen__right-phone {
+    bottom: 10%;
+    right: 40%;
+    max-width: 150px;
+}
+
+/* ==========================================
+   Second Screen / Problems Section
+   ========================================== */
+.ghl-second-screen {
+    padding: 80px 0;
+    background-color: var(--color-white);
+    position: relative;
+}
+
+.ghl-second-screen__main-block {
+    position: relative;
+}
+
+.ghl-second-screen__soft-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(212, 212, 94, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.ghl-second-screen__light-bulb {
+    position: absolute;
+    top: -40px;
+    right: 100px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--color-primary-olive) 0%, var(--color-primary-olive-light) 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity: 0.3;
+}
+
+.ghl-second-screen__arrow-down {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.ghl-second-screen__arrow-down .tablet,
+.ghl-second-screen__arrow-down .mobile {
+    display: none;
+}
+
+/* Problem Category List */
+.problem-category-list__wrapper {
+    overflow-x: auto;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.problem-category-list {
+    display: flex;
+    gap: 20px;
+    min-width: max-content;
+    position: relative;
+}
+
+.problem-category-list__item {
+    flex-shrink: 0;
+    width: 280px;
+    background: var(--color-primary-olive-light);
+    border-radius: 20px;
+    padding: 30px 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.problem-category-list__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.problem-category-list__item-icon {
+    margin-bottom: 20px;
+}
+
+.problem-category-list__item-icon svg {
+    width: 100px;
+    height: 100px;
+}
+
+.problem-category-list__item-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--color-black);
+}
+
+.problem-category-list__item-problems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.problem-category-list__item-problems li {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.problem-category-list__item-problems li:last-child {
+    border-bottom: none;
+}
+
+/* ==========================================
+   Third Screen / Our Therapists
+   ========================================== */
+.ghl-third-screen {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--color-primary-olive-light) 0%, var(--color-white) 100%);
+    position: relative;
+}
+
+.ghl-third-screen__main-block {
+    text-align: center;
+    position: relative;
+}
+
+.ghl-third-screen__soft-light {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 212, 94, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.ghl-third-screen__h2 {
+    margin-bottom: 40px;
+}
+
+.ghl-third-screen__cta-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================
+   Fourth Screen / Why Choose Us
+   ========================================== */
+.ghl-fourth-screen {
+    padding: 80px 0;
+    background-color: var(--color-white);
+}
+
+.ghl-fourth-screen__main-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.ghl-fourth-screen__benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.ghl-fourth-screen__benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.ghl-fourth-screen__benefit-icon {
+    flex-shrink: 0;
+}
+
+.ghl-fourth-screen__benefit-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-black);
+}
+
+.ghl-fourth-screen__selection {
+    background: var(--color-primary-olive-light);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.ghl-fourth-screen__selection-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--color-black);
+}
+
+.ghl-fourth-screen__selection-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.ghl-fourth-screen__selection-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.ghl-fourth-screen__selection-item {
+    padding-left: 20px;
+    border-left: 3px solid var(--color-primary-olive);
+}
+
+.ghl-fourth-screen__selection-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-black);
+}
+
+.ghl-fourth-screen__selection-item-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+}
+
+/* ==========================================
+   Fifth Screen / Reviews
+   ========================================== */
+.ghl-fifth-screen {
+    padding: 80px 0;
+    background-color: var(--color-gray-light);
+}
+
+.ghl-fifth-screen__h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.ghl-reviews {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.ghl-reviews__list {
+    display: flex;
+    gap: 30px;
+}
+
+.ghl-reviews__list-item {
+    background: var(--color-white);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.ghl-reviews__list-item-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.ghl-reviews__list-item-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-primary-olive-light);
+}
+
+.ghl-reviews__list-item-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ghl-reviews__list-item-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.ghl-reviews__list-item-body {
+    position: relative;
+}
+
+.ghl-reviews__list-item-quote-icon {
+    margin-bottom: 16px;
+}
+
+.ghl-reviews__list-item-review-content {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+}
+
+.ghl-reviews__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.ghl-reviews__pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: var(--color-primary-olive);
+    opacity: 0.3;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.ghl-reviews__pagination .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* ==========================================
+   Sixth Screen / FAQ
+   ========================================== */
+.ghl-sixth-screen {
+    padding: 80px 0;
+    background-color: var(--color-white);
+}
+
+.ghl-sixth-screen__h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.ghl-sixth-screen__arrow-down {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.ghl-frequent-questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    position: relative;
+}
+
+.ghl-frequent-questions__soft-light {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(239, 150, 101, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.ghl-frequent-questions__column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ghl-frequent-questions__question {
+    background: var(--color-gray-light);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.ghl-frequent-questions__question:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.ghl-frequent-questions__question-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    gap: 16px;
+}
+
+.ghl-frequent-questions__question-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-black);
+    flex: 1;
+}
+
+.ghl-frequent-questions__question-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+
+.ghl-frequent-questions__question-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-primary-carrot);
+}
+
+.ghl-frequent-questions__question-body {
+    display: none;
+    padding: 0 24px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* FAQ Open State */
+.ghl-frequent-questions__question--opened .ghl-frequent-questions__question-body {
+    display: block;
+}
+
+.ghl-frequent-questions__question--opened .ghl-frequent-questions__question-icon {
+    transform: rotate(45deg);
+}
+
+/* ==========================================
+   Seventh Screen / Final CTA
+   ========================================== */
+.ghl-seventh-screen {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--color-primary-olive-light) 0%, var(--color-white) 100%);
+    overflow: hidden;
+}
+
+.ghl-seventh-screen__main-block {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.ghl-seventh-screen__column-one {
+    flex: 1;
+    max-width: 500px;
+}
+
+.ghl-seventh-screen__logo {
+    margin-bottom: 24px;
+}
+
+.ghl-seventh-screen__logo img {
+    max-width: 250px;
+    height: auto;
+}
+
+.ghl-seventh-screen__column-one h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.ghl-seventh-screen__column-two {
+    flex: 1;
+    position: relative;
+    min-height: 400px;
+}
+
+.ghl-seventh-screen__waves {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+}
+
+.ghl-seventh-screen__boy-and-girl {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.ghl-seventh-screen__boy-and-girl img {
+    max-width: 400px;
+    height: auto;
+}
+
+/* ==========================================
+   Common Elements
+   ========================================== */
+.ghl__main-h2 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-black);
+}
+
+.gh-main-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.gh-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Select Psychologist Button */
+.select-psiholog-btn {
+    display: inline-block;
+    background-color: var(--color-primary-carrot);
+    color: var(--color-white);
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(239, 150, 101, 0.3);
+}
+
+.select-psiholog-btn:hover {
+    background-color: #e08550;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 150, 101, 0.4);
+}
+
+.select-psiholog-btn--main {
+    font-size: 18px;
+    padding: 18px 40px;
+}
+
+/* ==========================================
+   Responsive Design
+   ========================================== */
+@media (max-width: 1024px) {
+    .ghl-first-screen {
+        flex-direction: column;
+        padding-top: 100px;
+    }
+    
+    .ghl-first-screen__left {
+        display: none;
+    }
+    
+    .ghl-first-screen__left-social--middle-mobile {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    
+    .ghl-first-screen__middle {
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+        padding: 20px;
+    }
+    
+    .ghl-first-screen__middle-main-phrase {
+        font-size: 36px;
+    }
+    
+    .ghl-first-screen__middle-description-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .ghl-first-screen__middle-cool-arrow {
+        display: none;
+    }
+    
+    .ghl-first-screen__middle-advantages-wrapper {
+        justify-content: center;
+    }
+    
+    .ghl-first-screen__right {
+        display: none;
+    }
+    
+    .ghl-fourth-screen__main-block {
+        grid-template-columns: 1fr;
+    }
+    
+    .ghl-frequent-questions {
+        grid-template-columns: 1fr;
+    }
+    
+    .ghl-seventh-screen__main-block {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .ghl-seventh-screen__column-two {
+        display: none;
+    }
+    
+    .ghl__main-h2 {
+        font-size: 32px;
+    }
+    
+    .ghl-second-screen__arrow-down .desktop {
+        display: none;
+    }
+    
+    .ghl-second-screen__arrow-down .tablet {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .ghl-first-screen__middle-main-phrase {
+        font-size: 28px;
+    }
+    
+    .ghl__main-h2 {
+        font-size: 26px;
+    }
+    
+    .problem-category-list__item {
+        width: 260px;
+    }
+    
+    .ghl-fourth-screen__selection {
+        padding: 30px 20px;
+    }
+    
+    .ghl-second-screen__arrow-down .tablet {
+        display: none;
+    }
+    
+    .ghl-second-screen__arrow-down .mobile {
+        display: block;
+    }
+}
+
+/* Hide desktop line breaks on mobile */
+.gh-ld-display {
+    display: block;
+}
+
+.gh-ld-d-none {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .gh-ld-display {
+        display: none;
+    }
+}
+

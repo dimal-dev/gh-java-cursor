@@ -1,0 +1,37 @@
+.gh-soft-light {
+  &__container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    width: .1rem;
+    height: 0;
+    z-index: -1;
+  }
+
+  &__actual-light {
+    top: 0;
+    left: 0;
+
+    width: 127rem;
+    height: 96.3rem;
+    position: absolute;
+    background: $soft-light-gradient;
+
+    @include tablet-full {
+      width: 78.7rem;
+      height: 59.6rem;
+    }
+
+    &--left-first {
+      left: -179rem;
+      top: 6rem;
+
+      @include tablet-full {
+        left: initial;
+        right: 36.6rem;
+        top: 14rem;
+      }
+    }
+  }
+}

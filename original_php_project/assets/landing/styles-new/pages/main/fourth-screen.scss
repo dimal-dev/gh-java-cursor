@@ -1,0 +1,261 @@
+.ghl-fourth-screen {
+  overflow: hidden;
+  margin-top: 12rem;
+  padding-bottom: 12rem;
+
+  @include mobile {
+    padding-bottom: 3rem;
+    margin-top: 4rem;
+  }
+
+  @include tablet-full {
+    padding-bottom: 6rem;
+  }
+
+  @include tablet-full {
+    margin-top: 15rem;
+  }
+
+  &__arrow-down {
+    position: absolute;
+    bottom: -6.6rem;
+    left: -6rem;
+
+    @include mobile {
+      bottom: -5.4rem;
+      left: 25.1rem;
+      transform: scaleX(-1) rotate(14deg);
+    }
+
+    @include tablet-full {
+      display: none;
+    }
+  }
+
+  & &__h2 {
+    position: relative;
+
+    @include mobile {
+      font-size: 2.5rem;
+      font-weight: 500;
+      line-height: 120%;
+    }
+  }
+}
+
+.ghl-what-we-check {
+  &__container {
+    margin-top: 5rem;
+    display: flex;
+
+    @include mobile {
+      margin-top: 3rem;
+      flex-direction: column;
+    }
+
+    @include tablet-full {
+      margin-top: 3rem;
+    }
+
+    & > div {
+      width: 50%;
+      @include mobile {
+        width: auto;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4rem;
+
+    @include mobile {
+      row-gap: 3rem;
+    }
+
+    &-item {
+      display: grid;
+      column-gap: 2rem;
+      row-gap: 2rem;
+      grid-template-columns: 9.5rem 1fr;
+
+      @include mobile {
+        grid-template-columns: 6.5rem 1fr;
+        align-items: center;
+        row-gap: 1rem;
+      }
+
+      @include tablet-full {
+        grid-template-columns: 6.5rem 1fr;
+        align-items: center;
+        row-gap: 1rem;
+      }
+
+      &-icon {
+        grid-row: 1/3;
+        grid-column: 1/2;
+
+        @include mobile {
+          grid-row: 1/2;
+          grid-column: 1/2;
+
+          & > svg {
+            width: 100%;
+            height: auto;
+          }
+        }
+
+        @include tablet-full {
+          grid-row: 1/2;
+          grid-column: 1/2;
+
+          & > svg {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+
+      &-title {
+        font-weight: 700;
+        font-size: 2.4rem;
+        line-height: 1.2;
+
+        grid-row: 1/2;
+        grid-column: 2/3;
+
+        @include mobile {
+          font-size: 1.8rem;
+          grid-row: 1/2;
+          grid-column: 2/3;
+        }
+
+        @include tablet-full {
+          font-size: 1.8rem;
+          grid-row: 1/2;
+          grid-column: 2/3;
+        }
+      }
+
+      &-text {
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 1.4;
+
+        grid-row: 2/3;
+        grid-column: 2/3;
+
+        @include mobile {
+          grid-row: 2/3;
+          grid-column: 1/3;
+          font-size: 1.4rem;
+        }
+
+        @include tablet-full {
+          grid-row: 2/3;
+          grid-column: 1/3;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-select-psiholog-btn {
+        grid-column: 2/3;
+      }
+
+      &--select-psiholog {
+        display: none;
+
+        @include desktop {
+          display: grid;
+        }
+      }
+    }
+  }
+
+  &__visual {
+    position: relative;
+  }
+
+  &__bulb {
+    position: absolute;
+
+    top: -4.8rem;
+    left: 5.1rem;
+
+    @include mobile {
+      position: relative;
+      width: 39rem;
+      top: initial;
+      left: -3.9rem;
+
+      margin-top: 2.1rem;
+
+      & > svg {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    @include tablet-full {
+      top: -3.1rem;
+      left: 4.5rem;
+
+      & > svg {
+        width: 35rem;
+        height: auto;
+      }
+    }
+
+    &-soft-light {
+      position: absolute;
+      z-index: -1;
+
+      top: 1rem;
+      left: -11.5rem;
+
+      width: 95.3rem;
+      height: 72.26rem;
+
+      @include mobile {
+        display: none;
+      }
+
+      @include tablet-full {
+        display: none;
+      }
+
+      background: $soft-light-gradient;
+    }
+  }
+
+  &__interview {
+    position: absolute;
+
+    top: -0.1rem;
+    left: 11rem;
+
+    @include mobile {
+      top: 5.0rem;
+      left: initial;
+    }
+
+    @include tablet-full {
+      top: -0.3rem;
+      left: 7.8rem;
+    }
+
+    z-index: 1;
+
+
+    max-width: 47rem;
+
+    & > img {
+      border-radius: 3rem;
+
+      @include mobile {
+        border-radius: 1rem;
+      }
+    }
+  }
+}

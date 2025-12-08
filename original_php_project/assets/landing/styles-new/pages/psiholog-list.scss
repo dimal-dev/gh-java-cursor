@@ -1,0 +1,340 @@
+.gh-psiholog-list {
+  padding-top: 3rem;
+  padding-bottom: 12rem;
+  position: relative;
+
+  @include tablet-full {
+    padding-bottom: 6rem;
+  }
+
+  @include mobile {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+  }
+
+
+  &__soft-light {
+    position: absolute;
+    width: 127rem;
+    height: 96rem;
+    left: -185.8rem;
+    top: 25.6rem;
+
+    @include tablet-full {
+      width: 78.7rem;
+      height: 59.6rem;
+      left: -112rem;
+      top: 2.7rem;
+    }
+
+    background: $soft-light-gradient;
+
+    &-container {
+      position: absolute;
+      top:0;
+      left: 50%;
+      z-index: -1;
+    }
+  }
+
+  &__h1 {
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 1.2;
+    margin: 0;
+
+    @include tablet-full {
+      font-size: 3.5rem;
+    }
+
+    @include mobile {
+      font-size: 3rem;
+      text-align: center;
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 37rem);
+    gap: 3rem;
+    margin-top: 4rem;
+
+    @include tablet-full {
+      grid-template-columns: repeat(2, 33.1rem);
+    }
+
+    @include mobile {
+      grid-template-columns: repeat(1, 29rem);
+      margin-top: 3rem;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 3rem 3rem 3rem;
+    border-radius: 2rem;
+
+    justify-content: space-between;
+    box-shadow: $box-shadow-1;
+
+    overflow: hidden;
+
+    @include tablet-full {
+      padding: 3rem 1.5rem 1.5rem 2rem;
+    }
+
+    @include mobile {
+      padding: 3rem 1.5rem 1.5rem 2rem;
+    }
+
+    &-help-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    &-help-need {
+      font-weight: 700;
+      font-size: 2.6rem;
+      line-height: 1.2;
+    }
+
+    &-help-description {
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.4;
+    }
+
+    &--help {
+      display: none;
+
+      @include desktop {
+        display: flex;
+      }
+
+      position: relative;
+      flex-direction: column;
+
+      text-align: center;
+      justify-content: center;
+      gap: 2rem;
+
+      padding: 4rem;
+    }
+
+    &-specifics {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    &-experience {
+      width: 13rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: .7rem;
+
+      &-label {
+        color: $color-primary-carrot-1;
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 1.2;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+        }
+
+        @include mobile {
+          font-size: 1.2rem;
+        }
+      }
+
+      &-value-number {
+        font-size: 2.4rem;
+        line-height: .9;
+        font-weight: 400;
+
+        @include tablet-full {
+          font-size: 2rem;
+        }
+
+        @include mobile {
+          font-size: 2rem;
+        }
+      }
+
+      &-years {
+        font-size: 1.4rem;
+        line-height: 1.1;
+        font-weight: 600;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+
+        @include mobile {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &-price {
+      width: 13rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: .7rem;
+
+      &-label {
+        color: $color-primary-carrot-1;
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 1.2;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+        }
+
+        @include mobile {
+          font-size: 1.2rem;
+        }
+      }
+
+      &-from {
+        font-size: 1.4rem;
+        line-height: 1.1;
+        font-weight: 600;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+
+        @include mobile {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+      }
+
+      &-value {
+        display: flex;
+        gap: .4rem;
+        align-items: flex-end;
+      }
+
+      &-value-number {
+        font-size: 2.4rem;
+        line-height: .9;
+        font-weight: 400;
+
+        @include tablet-full {
+          font-size: 2rem;
+        }
+
+        @include mobile {
+          font-size: 2rem;
+        }
+      }
+
+      &-currency {
+        font-size: 1.4rem;
+        line-height: 1.1;
+        font-weight: 600;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+
+        @include mobile {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &-avatar-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    &-info {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      max-height: 5.5rem;
+    }
+
+    &-name {
+      font-weight: 700;
+      font-size: 2.4rem;
+      line-height: 1.2;
+
+      @include tablet-full {
+        font-size: 2rem;
+      }
+
+      @include mobile {
+        font-size: 2rem;
+      }
+    }
+
+    &-trait {
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      margin-top: 1rem;
+
+      @include tablet-full {
+        font-size: 1.3rem;
+      }
+
+      @include mobile {
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  &__specializations {
+    flex-grow: 1;
+
+    &-header {
+      font-weight: 700;
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+
+    &-list {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+
+      &-item {
+        padding: .5rem 1.2rem;
+        line-height: 1.25;
+        font-size: 1.2rem;
+        font-weight: 400;
+        background-color: $color-primary-olive-3;
+        border-radius: 11rem;
+
+        &--carrot {
+          background-color: $color-primary-carrot-4;
+        }
+      }
+    }
+  }
+
+  &__view-psiholog-button-wrapper {
+    margin-top: 3rem;
+
+    & > .gh-button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,362 @@
+.ghl-third-screen {
+  margin-top: 12rem;
+
+  @include mobile {
+    margin-top: 5rem;
+  }
+
+  @include tablet-full {
+    margin-top: 6rem;
+  }
+
+  &__main-block {
+    position: relative;
+    display: grid;
+
+    @include tablet-full {
+      grid-template-columns: 32.5rem 32.5rem;
+      column-gap: 4rem;
+    }
+
+    @include desktop {
+      grid-template-columns: 54.5rem 57.5rem;
+      column-gap: 4rem;
+    }
+
+    & > .ghl__main-h2 {
+      @include tablet-full {
+        grid-column: 1/3;
+        grid-row: 1/2;
+      }
+
+      @include desktop {
+        grid-column: 2/3;
+        grid-row: 1/2;
+      }
+    }
+  }
+
+  &__soft-light {
+    position: absolute;
+    width: 94.2rem;
+    height: 90.1rem;
+    left: -101.5rem;
+    top: 1rem;
+
+    background: $soft-light-gradient;
+  }
+}
+
+.ghl-psiholog-pics {
+  position: relative;
+  width: 50%;
+
+  @include tablet-full {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    width: auto;
+  }
+
+  @include desktop {
+    grid-column: 1/2;
+    grid-row: 1/3;
+    width: auto;
+  }
+
+  @include mobile {
+    width: auto;
+    height: 38rem;
+    order: 1;
+  }
+
+  &__cap {
+    white-space: nowrap;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    padding: 1rem 1.2rem;
+
+    @include mobile {
+      padding: 1rem .8rem;
+    }
+
+    @include tablet-full {
+      padding: 1rem .8rem;
+    }
+
+    background: rgba($color-white-1, 0.9);
+    border-radius: 0.37rem;
+
+    box-shadow: 0 0.29rem 3.96rem rgba($color-black-1, 0.1);
+
+    display: flex;
+    align-items: center;
+
+    &-avatar {
+      width: 3.17rem;
+      border-radius: 50%;
+      overflow: hidden;
+
+      @include mobile {
+        display: none;
+      }
+
+      @include tablet-full {
+        display: none;
+      }
+    }
+
+    &-info {
+      margin-left: .8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.25;
+
+      @include mobile {
+        text-align: center;
+        margin-left: 0;
+      }
+
+      @include tablet-full {
+        text-align: center;
+        margin-left: 0;
+      }
+    }
+
+    &-name {
+      font-weight: 700;
+    }
+
+    &-description {
+      margin-top: .4rem;
+    }
+  }
+
+  &__item {
+    max-width: 20rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    box-shadow: 0px 0px 0px 8px rgba(212, 212, 94, 0.3), 0px 0px 0px 16px rgba(212, 212, 94, 0.2);
+    border-radius: 50%;
+
+    &--first {
+      max-width: 21.2rem;
+      top: 3.5rem;
+      left: 1.7rem;
+
+      @include mobile {
+        max-width: 11rem;
+        top: 8.1rem;
+        left: 1.4rem;
+      }
+
+      @include tablet-full {
+        max-width: 13rem;
+        top: 6.9rem;
+        left: 1.4rem;
+      }
+
+
+      & .ghl-psiholog-pics__cap {
+        bottom: -3.3rem;
+        left: -3.1rem;
+
+        @include mobile {
+          bottom: -4.5rem;
+          left: -1.6rem;
+        }
+
+        @include tablet-full {
+          bottom: -2.7rem;
+          left: -0.5rem;
+        }
+      }
+    }
+
+    &--second {
+      left: 25.8rem;
+      top: 1.4rem;
+
+      max-width: 9.68rem;
+
+      @include mobile {
+        max-width: initial;
+        width: 11rem;
+        left: 16.4rem;
+        top: 4.2rem;
+      }
+
+      @include tablet-full {
+        max-width: initial;
+        width: 13rem;
+        left: 18.5rem;
+        top: 3rem;
+      }
+    }
+
+    &--third {
+      top: 30.6rem;
+      left: 4.2rem;
+
+      max-width: 15.77rem;
+
+      @include mobile {
+        max-width: initial;
+        width: 11rem;
+        top: 27.1rem;
+        left: 1.4rem;
+      }
+
+      @include tablet-full {
+        max-width: initial;
+        width: 13rem;
+        top: 26.6rem;
+        left: 1.4rem;
+      }
+    }
+
+    &--fourth {
+      top: 15.9rem;
+      left: 24.3rem;
+
+      max-width: 26.33rem;
+
+      @include mobile {
+        max-width: initial;
+        width: 11rem;
+        top: 20rem;
+        left: 16.2rem;
+      }
+
+      @include tablet-full {
+        max-width: initial;
+        width: 13rem;
+        top: 20rem;
+        left: 18.7rem;
+      }
+
+      & .ghl-psiholog-pics__cap {
+        bottom: -2.9rem;
+        left: 6rem;
+
+        @include mobile {
+
+          width: 14rem;
+          bottom: -6.7rem;
+          left: -1.6rem;
+
+          white-space: normal;
+        }
+
+        @include tablet-full {
+          bottom: initial;
+          top: 10rem;
+          left: 0;
+          width: 14rem;
+          white-space: normal;
+        }
+      }
+    }
+
+    &-picture {
+      border-radius: 50%;
+      max-width: 100%;
+    }
+  }
+}
+
+.ghl-benefits {
+  @include tablet-full {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    width: auto;
+  }
+  @include desktop {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    width: auto;
+  }
+
+  @include mobile {
+    width: auto;
+  }
+
+  &__list {
+    margin-top: 5rem;
+    gap: 2.5rem;
+    display: flex;
+    flex-direction: column;
+
+    @include mobile {
+      margin-top: 3rem;
+    }
+
+    @include tablet-full {
+      margin-top: 3rem;
+    }
+
+    @include mobile {
+      gap: 2rem;
+    }
+
+    @include tablet-full {
+      gap: 2rem;
+    }
+
+    &-item {
+      display: flex;
+      font-size: 1.8rem;
+      line-height: 1.2;
+      font-weight: 500;
+
+      @include tablet-full {
+        font-size: 1.6rem;
+        font-weight: 400;
+      }
+
+      &-icon {
+        align-self: flex-start;
+
+        @include tablet-full {
+          & > svg {
+            width: 3rem;
+            height: auto;
+          }
+        }
+      }
+
+      &-label {
+        margin-left: 2rem;
+        align-self: center;
+
+        @include mobile {
+          font-size: 1.6rem;
+        }
+
+        @include tablet-full {
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+
+  &__select-psiholog-btn-wrapper {
+    margin-top: 4rem;
+
+    @include mobile {
+      margin-top: 3rem;
+    }
+
+    @include tablet-full {
+      .select-psiholog-btn {
+        padding: 1rem 4rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+    goodhelp_nginx:
+        build:
+          context: .
+          dockerfile: ./nginx/Dockerfile
+        container_name: goodhelp-nginx
+        working_dir: /application
+        volumes_from:
+          - goodhelp_php_fpm
+
+    goodhelp_php_fpm:
+        build: php-fpm
+        container_name: goodhelp-php-fpm
+        working_dir: /application
+        environment:
+          - NODE_NAME=green

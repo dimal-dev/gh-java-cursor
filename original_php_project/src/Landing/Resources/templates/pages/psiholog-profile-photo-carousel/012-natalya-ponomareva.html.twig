@@ -1,0 +1,16 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp:         asset('img/profile/0012-natalya-ponomareva/001-natalya-ponomareva.webp', 'landing'),
+            fallback:          asset('img/profile/0012-natalya-ponomareva/001-natalya-ponomareva.jpg', 'landing'),
+        },
+        {
+            webp:         asset('img/profile/0012-natalya-ponomareva/002-natalya-ponomareva.webp', 'landing'),
+            fallback:          asset('img/profile/0012-natalya-ponomareva/002-natalya-ponomareva.jpg', 'landing'),
+        },
+        {
+            webp:         asset('img/profile/0012-natalya-ponomareva/003-natalya-ponomareva.jpg', 'landing'),
+            fallback:          asset('img/profile/0012-natalya-ponomareva/003-natalya-ponomareva.jpg', 'landing'),
+        },
+    ]
+} %}

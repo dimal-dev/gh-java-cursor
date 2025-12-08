@@ -1,0 +1,238 @@
+{% extends '@staff/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_ADD')) }}" class="btn btn-brand">Добавить
+                пост</a>
+            {% if locale != 'ua' %}
+                <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_LIST'), {locale: 'ua'}) }}"
+                   class="btn btn-brand"
+
+
+                >
+                    UA
+                </a>
+            {% else %}
+                <span class="btn btn-primary">UA</span>
+            {% endif %}
+            {% if locale != 'ru' %}
+                <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_LIST'), {locale: 'ru'}) }}"
+                   class="btn btn-brand"
+
+
+                >
+                    RU
+                </a>
+            {% else %}
+                <span class="btn btn-primary">RU</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="kt_datatable table-responsive" id="blog-post-list"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Class definition
+            var datatable;
+
+            var KTUsersListDatatable = function () {
+                var init = function () {
+
+                    datatable = $('.kt_datatable').KTDatatable({
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    url: '{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_LIST_DATA_AJAX'), {locale: locale}) }}',
+                                    method: 'GET',
+                                    timeout: 30000
+                                },
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                        },
+                        layout: {
+                            scroll: true,
+                            footer: false,
+                            customScrollbar: false,
+                            spinner: {
+                                message: '{{ 'Please wait'|trans({}, 'userspace') }}',
+                            }
+                        },
+                        translate: {
+                            records: {
+                                noRecords: 'Пока ни одного поста не добавили',
+                            },
+                            toolbar: {
+                                pagination: {
+                                    items: {
+                                        info: '{{ "Displaying {{start}} - {{end}} of {{total}} records"|trans({}, 'userspace') }}',
+                                        default: {
+                                            first: '{{ 'First'|trans({}, 'userspace') }}',
+                                            prev: '{{ 'Previous'|trans({}, 'userspace') }}',
+                                            next: '{{ 'Next'|trans({}, 'userspace') }}',
+                                            last: '{{ 'Last'|trans({}, 'userspace') }}',
+                                            more: '{{ 'More pages'|trans({}, 'userspace') }}',
+                                            input: '{{ 'Page number'|trans({}, 'userspace') }}',
+                                            select: '{{ 'Select page size'|trans({}, 'userspace') }}'
+                                        },
+                                    }
+                                }
+                            }
+                        },
+                        sortable: true,
+                        pagination: true,
+                        columns: [
+                            {
+                                field: 'id',
+                                title: 'ID',
+                                width: 30,
+                                type: 'number',
+                                selector: false,
+                                textAlign: 'center',
+                                sortable: true,
+                            },
+                            {
+                                field: 'header',
+                                title: 'Заголовок',
+                                template: (row) => {
+                                    return `
+                                     <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_EDIT'), {locale: locale}) }}&id=${row.id}">${row.header}</a>
+                                    `;
+                                },
+                            },
+                            {
+                                field: 'psiholog',
+                                title: 'Автор',
+                                template: (row) => {
+                                    let authorHTML = '';
+                                    if (row.psihologFullName) {
+                                        authorHTML += `<div><img src="${row.psihologAvatar}" style="border-radius: 50%; width: 49px;" /></div>`;
+                                        authorHTML += `<div><span>${row.psihologFullName}</span></div>`;
+                                    }
+
+                                    if (row.author) {
+                                        authorHTML += ` <div><span>${row.author}</span></div>`;
+                                    }
+                                    return authorHTML;
+                                },
+                            },
+                            // {
+                            //     field: 'preview',
+                            //     title: 'Короткое описание (часть)',
+                            // },
+                            {
+                                field: 'state',
+                                title: 'Статус',
+                                template: (row) => {
+                                    if (row.state == '{{ constant('\\App\\Landing\\Entity\\PostInterface::STATE_DRAFT') }}') {
+                                        return `<div>Черновик</div>`
+                                    }
+                                    if (row.state == '{{ constant('\\App\\Landing\\Entity\\PostInterface::STATE_POSTED') }}') {
+                                        return `<div>Опубликовано</div>`
+                                    }
+                                    return `<div>Неизвестный статус</div>`
+                                }
+                            },
+                            {
+                                field: 'post_i18n_id',
+                                title: 'Версия на другом языке',
+                                template: (row) => {
+                                    if (!row.post_i18n_id || row.post_i18n_id < 1) {
+                                        let link = `{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_ADD'), {locale: locale == 'ua' ? 'ru' : 'ua'}) }}&post_i18n_id=${row.id}`;
+                                        if (row.psiholog_id) {
+                                            link += `&psiholog_id=${row.psiholog_id}`;
+                                        }
+                                        if (row.author) {
+                                            link += `&author=${row.author}`;
+                                        }
+                                        return `
+                                            <div>
+Нет версии! Надо добавить
+<a href="${link}" target="_blank">
+Добавить
+</a>
+
+</div>
+                                        `;
+                                    }
+
+                                    return `
+                                            <div>
+<a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_EDIT'), {locale: locale == 'ua' ? 'ru' : 'ua'}) }}&id=${row.post_i18n_id}">
+Отредактировать
+</a>
+
+</div>
+                                        `;
+                                }
+                            },
+                            {
+                                field: 'posted_at',
+                                title: 'Дата публикации',
+                            },
+                            {
+                                field: 'date_created',
+                                title: 'Дата создания',
+                            },
+                            {
+                                field: 'noname_1',
+                                title: 'Посмотреть в блоге',
+                                template: (row) => {
+                                    let link;
+                                    {% if locale == 'ua' %}
+                                        link = ``;
+                                    {% else %}
+                                        link = `/{{ locale }}`;
+                                    {% endif %}
+                                    link += `/blog/post-view/${row.id}/${row.slug}`;
+                                    return `
+                                            <div>
+
+<a href="${link}" class="btn btn-primary" target="_blank">Посмотреть в блоге</a>
+
+</div>
+                                        `;
+                                }
+                            },
+                        ],
+
+                    });
+                };
+
+                return {
+                    // public functions
+                    init: function () {
+                        init();
+                    },
+                };
+            }();
+
+            jQuery(document).ready(function () {
+                KTUsersListDatatable.init();
+            });
+        });
+    </script>
+
+    <style>
+        .kt-datatable.kt-datatable--default > .kt-datatable__table {
+            overflow: auto;
+        }
+
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head, .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__foot {
+            overflow: initial;
+        }
+
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {
+            overflow: initial;
+        }
+    </style>
+{% endblock %}

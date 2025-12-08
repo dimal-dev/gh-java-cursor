@@ -1,0 +1,277 @@
+.gh-checkout {
+  margin: 4rem auto 12rem;
+  width: 69.1rem;
+
+  @include mobile {
+    width: 28.8rem;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+
+
+    ////width: 28.8rem;
+    //margin-top: 3rem;
+    //margin-bottom: 6rem;
+    //padding-left: 1.5rem;
+    //padding-right: 1.5rem;
+    //width: 100%;
+  }
+
+  &__h1 {
+    font-weight: 500;
+    font-size: 4.5rem;
+    line-height: 1.2;
+    margin: 0;
+
+    @include media(tablet-full, mobile) {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__prepayment {
+    margin-top: 2.4rem;
+
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 1.4;
+
+    @include mobile {
+      font-size: 2rem;
+    }
+
+    &-description {
+      margin-top: 2rem;
+
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1.4;
+    }
+  }
+
+  &__summary {
+    display: flex;
+    gap: 3rem;
+
+    &-info {
+      flex-grow: 1;
+    }
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    & > .gh-avatar {
+      width: 11.5rem;
+      height: 11.5rem;
+      flex-shrink: 0;
+      position: sticky;
+      top: 2rem;
+
+      @include mobile {
+        position: static;
+        top: initial;
+      }
+    }
+
+    &-container {
+      margin-top: 4rem;
+      box-shadow: $box-shadow-1;
+      border-radius: 2rem;
+      background-color: $color-white-1;
+      padding: 4rem 3rem 3rem 3rem;
+
+      @include mobile {
+        margin-top: 2rem;
+        padding: 4rem 1.5rem 3rem 1.5rem;
+        border-radius: 1rem;
+      }
+    }
+
+    &-name {
+      font-weight: 700;
+      font-size: 3rem;
+      line-height: 1.2;
+
+      @include mobile {
+        font-size: 2rem;
+        text-align: center;
+      }
+    }
+
+    &-trait {
+      margin-top: 1rem;
+
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.2;
+
+      @include mobile {
+        font-size: 1.4rem;
+        text-align: center;
+      }
+    }
+
+    &-session {
+      &-header {
+        font-weight: 700;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+
+        @include mobile {
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+      }
+
+      &-row {
+        margin-bottom: 1rem;
+        display: flex;
+
+        font-weight: 400;
+        font-size: 1.2rem;
+        line-height: 1.2;
+
+        &-value {
+          font-weight: 600;
+          text-align: right;
+          margin-left: auto;
+        }
+      }
+    }
+
+    &-price {
+      @include mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      &-content {
+        display: flex;
+        margin-top: .7rem;
+
+        @include mobile {
+          justify-content: center;
+        }
+      }
+
+      &-info {
+        text-align: center;
+      }
+
+      &-header {
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 120%;
+        color: $color-primary-carrot-1;
+
+        @include tablet-full {
+          font-size: 1.2rem;
+        }
+
+        @include mobile {
+          text-align: center;
+          font-size: 1.4rem;
+        }
+      }
+
+      &-value {
+        font-size: 2.4rem;
+        line-height: .9;
+
+        @include media(mobile, tablet-full) {
+          font-size: 2rem;
+        }
+      }
+
+      &-currency {
+        font-weight: 600;
+        font-size: 1.4rem;
+        line-height: 1.1;
+        align-self: flex-end;
+      }
+    }
+
+    &-old-price {
+      &-content {
+        display: inline-flex;
+        color: $color-grey-4;
+        justify-content: center;
+        //text-decoration: line-through;
+
+        background: linear-gradient(10deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0) calc(50% - 0.8px),
+                $color-grey-4 50%,
+                rgba(0, 0, 0, 0) calc(50% + 0.8px),
+                rgba(0, 0, 0, 0) 100%);
+
+      }
+
+      &-content {
+        margin-top: .7rem;
+      }
+
+      &-value {
+        font-size: 1.4rem;
+        line-height: .9;
+      }
+
+      &-currency {
+        font-size: 1.2rem;
+        line-height: 1.1;
+        align-self: flex-end;
+      }
+    }
+
+    &-promo-info {
+      margin-top: 1.7rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 400;
+      font-size: 1.3rem;
+      line-height: 1.2;
+
+      @include mobile {
+        font-size: 1.2rem;
+      }
+
+      & > svg {
+        flex-shrink: 0;
+      }
+    }
+
+    &-balance-header {
+      color: $color-black-2;
+    }
+  }
+
+  &__pay-btn-wrapper {
+    margin-top: 3rem;
+
+    & .gh-button {
+      width: 100%;
+    }
+
+    @include mobile {
+      margin-top: 1.5rem;
+    }
+  }
+
+  &__agree-with-terms {
+    margin-top: 3rem;
+
+    @include mobile {
+      margin-top: 1.5rem;
+    }
+
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-align: center;
+    color: $color-grey-4;
+  }
+}

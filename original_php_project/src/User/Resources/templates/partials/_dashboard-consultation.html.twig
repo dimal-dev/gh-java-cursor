@@ -1,0 +1,24 @@
+<div class="kt-list__item">
+    <span class="kt-list__icon">
+        <span class="kt-media kt-media--sm kt-media--light">
+            <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+        </span>
+    </span>
+<span class="kt-list__text">
+        <span>
+            {% if consultation.profile_template is defined %}
+                <img class="psiholog-profile-img"
+                     src="{{ asset('media/psiholog-profile/' ~ consultation.profile_template ~ '.jpg', 'user') }} "
+                     alt="">
+            {% endif %}
+
+            {{ consultation.first_name }} {{ consultation.last_name }}, {{ toGoodLookingDatetime(consultation.available_at_tz_aware) }}
+            {{ consultationAdditionalText ?? '' }}
+            , <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::CANCEL_CONSULTATION'), {id: consultation.id}) }}"
+                 data-consultation-ts="{{consultation.available_at | date('U') }}"
+                 class="btn btn-danger cancel-consultation-btn">
+                Отменить
+            </a>
+        </span>
+    </span>
+</div>

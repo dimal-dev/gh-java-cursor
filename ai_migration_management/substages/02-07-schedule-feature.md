@@ -153,13 +153,50 @@ async function toggleSlot(slotId, available) {
 ---
 
 ## Verification
-- [ ] Schedule page loads with calendar
-- [ ] AJAX fetches slots correctly
-- [ ] Can toggle slot availability
-- [ ] Booked slots show client info
-- [ ] Can cancel consultation
-- [ ] Weekly settings template works
-- [ ] Time displayed in therapist's timezone
+- [x] Schedule page loads with calendar
+- [x] AJAX fetches slots correctly
+- [x] Can toggle slot availability
+- [x] Booked slots show client info
+- [ ] Can cancel consultation (partial - needs billing/notification modules)
+- [x] Weekly settings template works
+- [x] Time displayed in therapist's timezone
+
+---
+
+## Implementation Status: COMPLETED (2024-12-08)
+
+### Components Created:
+
+**Application Layer:**
+- `ConsultationDto.java` - DTO for consultation display
+- `WeekInfoDto.java` - DTO for week information
+- `TimeSlotSettingDto.java` - DTO for schedule grid slots
+- `WeekGridDto.java` - DTO for the weekly grid
+- `GetUpcomingConsultationsUseCase.java` - Use case for fetching consultations
+- `GetWeekScheduleSettingsUseCase.java` - Use case for weekly schedule grid
+- `ToggleSlotByTimeUseCase.java` - Use case for toggling slot availability
+
+**Presentation Layer:**
+- `TherapistScheduleController.java` - Controller with all endpoints
+
+**Templates:**
+- `schedule.html` - Main schedule page (consultation list)
+- `schedule-settings.html` - Schedule settings with week selector
+- `fragments/schedule-settings-week.html` - AJAX-loaded weekly grid
+
+**Styles:**
+- `static/css/therapist/cabinet.css` - Complete cabinet styling
+- `static/js/therapist/cabinet.js` - Common JavaScript functionality
+
+**i18n:**
+- Added schedule-related messages to all three language files (EN, UK, RU)
+
+### Notes:
+- Consultation cancellation is partially implemented - full cancellation requires
+  billing (wallet refunds) and notification (email/Telegram) modules which will
+  be implemented in later stages.
+- The schedule feature follows the PHP reference for feature parity but uses
+  native Java/Spring patterns and DDD architecture.
 
 ---
 

@@ -1,0 +1,150 @@
+{% extends '@staff/layout/main.html.twig' %}
+
+{% block content %}
+    <!-- Include Editor style. -->
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Редактируем пост</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <form class="kt-form kt-form--label-right" method="post">
+                        <div class="kt-portlet__body">
+                            {% if errors is defined %}
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                                        <div class="alert-text">
+                                            {% for error in errors %}
+                                                <div>
+                                                    {{ error }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Заголовок</label>
+                                <div class="col-10">
+                                    <input class="form-control" required type="text" name="header"
+                                           value="{{ post.header }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Автор (нужно выбрать или автора или психолога)</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="text" name="author"
+                                           value="{{ post.author }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="psiholog_id-field" class="col-2 col-form-label">Психолог (Автор поста)</label>
+                                <div class="col-10">
+                                    <select class="form-control" name="psiholog_id" id="psiholog_id-field">
+                                        <option value="">Выберите психолога</option>
+                                        {% for id, name in psihologList %}
+                                            <option value="{{ id }}"
+                                                    {{ id == post.psiholog_id ? 'selected="selected"' : '' }}
+                                            >{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="psiholog_id-field" class="col-2 col-form-label">Статус</label>
+                                <div class="col-10">
+                                    <select class="form-control" name="state" required id="psiholog_id-field">
+                                        {% for state, label in postStateList %}
+                                            <option value="{{ state }}"
+                                                    {{ state == post.state ? 'selected="selected"' : '' }}
+                                            >{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="psiholog_id-field" class="col-2 col-form-label">Опубликован</label>
+                                <div class="col-10">
+                                    {{ post.posted_at }}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Описание</label>
+                                <div class="col-10">
+                                    <textarea name="preview" class="reachtextarea">{{ post.preview }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Содержимое</label>
+                                <div class="col-10">
+                                    <textarea name="body" class="reachtextarea">{{ post.body }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="locale" value="{{ locale }}">
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <div class="row">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-10">
+                                        <button type="submit" class="btn btn-brand">Сохранить</button>
+                                        <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_LIST')) }}"
+                                           class="btn btn-secondary">Назад к постам</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteImage = ($img) => {
+            $.ajax({
+                // Request method.
+                method: 'POST',
+
+                // Request URL.
+                url: '{{ path(constant('\\App\\Staff\\Service\\RouteNames::FROALA_IMAGE_DELETE_CONTROLLER')) }}',
+
+                // Request params.
+                data: {
+                    src: $img.attr('src')
+                }
+            })
+                .done(function (data) {
+                    console.log('Image was deleted');
+                })
+                .fail(function (err) {
+                    console.log('Image delete problem: ' + JSON.stringify(err));
+                })
+        };
+
+        new FroalaEditor('.reachtextarea', {
+            placeholderText: 'Туть редактировать',
+            imageUploadURL: '{{ path(constant('\\App\\Staff\\Service\\RouteNames::FROALA_IMAGE_UPLOAD_CONTROLLER')) }}',
+            events: {
+                'image.removed': function ($img) {
+                    deleteImage($img);
+                },
+                'image.replaced': function ($img, response) {
+                    deleteImage($img);
+                }
+            }
+        });
+    </script>
+{% endblock %}

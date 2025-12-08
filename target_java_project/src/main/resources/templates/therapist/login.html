@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title th:text="#{therapist.login.title}">Therapist Login - GoodHelp</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #5D6B4E;
+            --color-primary-dark: #4A5740;
+            --color-primary-light: #7A8A69;
+            --color-accent: #D4A574;
+            --color-bg: #F8F6F3;
+            --color-surface: #FFFFFF;
+            --color-text: #2D3436;
+            --color-text-muted: #636E72;
+            --color-error: #D63031;
+            --color-success: #00B894;
+            --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 48px 40px;
+        }
+        
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .login-logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .login-heading {
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+            color: var(--color-text);
+        }
+        
+        .login-subheading {
+            font-size: 0.95rem;
+            text-align: center;
+            color: var(--color-text-muted);
+            margin-bottom: 32px;
+        }
+        
+        .alert {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+        
+        .alert-success {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(0, 184, 148, 0.2);
+        }
+        
+        .alert-error {
+            background: rgba(214, 48, 49, 0.1);
+            color: var(--color-error);
+            border: 1px solid rgba(214, 48, 49, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E8E6E3;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--color-surface);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(93, 107, 78, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--color-error);
+        }
+        
+        .form-error {
+            color: var(--color-error);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        .btn-submit:hover {
+            background: var(--color-primary-dark);
+        }
+        
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #E8E6E3;
+        }
+        
+        .login-footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .login-help {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            text-align: center;
+            margin-top: 16px;
+        }
+        
+        /* Language Picker */
+        .lang-picker {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .lang-picker a {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: color 0.2s, background 0.2s;
+        }
+        
+        .lang-picker a:hover {
+            color: var(--color-primary);
+        }
+        
+        .lang-picker a.active {
+            background: var(--color-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo -->
+            <div class="login-logo">
+                <a th:href="@{/}">
+                    <img th:src="@{/img/logo/logo-olive.svg}" alt="GoodHelp">
+                </a>
+            </div>
+            
+            <!-- Language Picker -->
+            <div class="lang-picker">
+                <a th:href="@{/therapist/login(lang='en')}" 
+                   th:classappend="${#locale.language == 'en'} ? 'active'">EN</a>
+                <a th:href="@{/therapist/login(lang='uk')}" 
+                   th:classappend="${#locale.language == 'uk'} ? 'active'">UA</a>
+                <a th:href="@{/therapist/login(lang='ru')}" 
+                   th:classappend="${#locale.language == 'ru'} ? 'active'">RU</a>
+            </div>
+            
+            <!-- Heading -->
+            <h1 class="login-heading" th:text="#{therapist.login.heading}">Sign In</h1>
+            <p class="login-subheading" th:text="#{therapist.login.subheading}">Enter your email to receive a login link</p>
+            
+            <!-- Success Message -->
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+                Login link sent!
+            </div>
+            
+            <!-- Error Message -->
+            <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}">
+                An error occurred.
+            </div>
+            
+            <!-- Login Form -->
+            <form th:action="@{/therapist/request-login}" th:object="${loginForm}" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="email" th:text="#{therapist.login.email}">Email</label>
+                    <input type="email" 
+                           id="email" 
+                           th:field="*{email}" 
+                           class="form-input"
+                           th:classappend="${#fields.hasErrors('email')} ? 'error'"
+                           th:placeholder="#{therapist.login.emailPlaceholder}"
+                           autocomplete="email"
+                           autofocus>
+                    <p th:if="${#fields.hasErrors('email')}" 
+                       th:errors="*{email}" 
+                       class="form-error">
+                        Invalid email
+                    </p>
+                </div>
+                
+                <button type="submit" class="btn-submit" th:text="#{therapist.login.submit}">
+                    Send Login Link
+                </button>
+            </form>
+            
+            <!-- Footer -->
+            <div class="login-footer">
+                <a th:href="@{/}" th:text="#{therapist.login.backToSite}">← Back to site</a>
+            </div>
+            
+            <p class="login-help" th:text="#{therapist.login.help}">
+                We'll send a secure link to your email for one-click login.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'Условия консультаций'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div class="mt-4 mb-4" style="max-width: 65rem; padding: 2rem; margin: 0 auto;">
+        <div class="landing-main-psihologi__title-wrapper mt-2">
+            <h1 class="landing-main-psihologi__title">
+                {{ 'Условия консультаций'|trans }}
+            </h1>
+        </div>
+        <div style=" font-size: 1.4rem; line-height: 1.4;">
+            {% include '@common/partials/_consultation-conditions.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

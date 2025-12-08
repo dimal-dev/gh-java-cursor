@@ -1,0 +1,52 @@
+{% extends '@psiholog/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0">
+                <div class="card-body p-0">
+                    <h5 class="card-title">Сообщение для подключения телеграмма</h5>
+                    <div class="card-text">
+                        <div>
+                            1. <a href="https://t.me/goodhelpua_bot" target="_blank" class="kt-link">Откройте бота в телеграмме</a>
+                        </div>
+                        <div>
+                            2. Нажмите "Начать/Старт"
+                        </div>
+                        <div>
+                            3. Нажмите на поле ввода внизу и скопируйте выделившийся текст
+                        </div>
+                        <div>
+                            <input type="text" value="{{ telegramLinkToken }}" class="form-control" onClick="this.select();">
+                        </div>
+                        <div>
+                            4. Отправьте его как сообщение боту
+                        </div>
+                        <div>
+                            5. Если все пройдет хорошо, бот вам ответит
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <form action="" method="post">
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Часовой пояс</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <select class="form-control" name="newTimezone" style="min-width: 20rem;">
+                            {% for timezone, label in getTimezoneList() %}
+                                <option value="{{ timezone }}" {{ timezone == psihologTimezone ? 'selected' : '' }}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-9 col-xl-6">
+                        <button class="btn btn-brand" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+landing_routes_ua:
+  resource: ../../src/Landing/Controller
+  type: 'annotation'
+  name_prefix: 'landing_'
+  prefix:
+    ua: ''
+    ru: '/ru'
+  defaults:
+    is_landing_route: true

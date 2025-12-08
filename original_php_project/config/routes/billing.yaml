@@ -1,0 +1,5 @@
+billing_routes:
+  resource: ../../src/Billing/Controller
+  type: 'annotation'
+  name_prefix: 'billing_'
+  prefix: billing

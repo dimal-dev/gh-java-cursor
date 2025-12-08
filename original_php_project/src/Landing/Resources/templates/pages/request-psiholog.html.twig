@@ -1,0 +1,813 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'Выбрать психолога'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    {% if psihologProfile is defined %}
+        <div class="gh-request-psiholog__psiholog">
+            <div class="gh-request-psiholog__psiholog-avatar">
+                <img class="gh-img"
+                     src="{{ asset('img/select-psiholog/' ~ psihologProfile.profileTemplate ~ '.jpg', 'landing') }}"
+                     alt="">
+            </div>
+            <div class="gh-request-psiholog__psiholog-info">
+                <div class="gh-request-psiholog__psiholog-name-and-single-phrase">
+                    <div class="gh-request-psiholog__psiholog-name">
+                        {{ psihologProfile.fullName|trans }}
+                    </div>
+                    <div class="gh-request-psiholog__psiholog-description">
+                        {{ psihologProfileInfo.singlePhrase|trans|raw }}
+                    </div>
+                </div>
+                <div class="gh-request-psiholog__psiholog-price">
+                    {% if isPriceFrom %}
+                    <span class="gh-request-psiholog__psiholog-price-from">
+                        {{ 'from'|trans }}
+                    </span>
+                    {% endif %}
+                    <span class="gh-request-psiholog__psiholog-price-value">
+                        {{ minimalPrice }}
+                    </span>
+                    <span class="gh-request-psiholog__psiholog-price-currency">
+                        ₴
+                    </span>
+                </div>
+            </div>
+            <div class="gh-psiholog-profile__mobile-header-book">
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="gh-request-psiholog gh-main-block">
+        <h1 class="gh-request-psiholog__h1">
+            {% if psihologProfile is defined %}
+                {{ 'Book_consultation'|trans }}
+            {% else %}
+                {{ 'Request_psiholog'|trans }}
+            {% endif %}
+        </h1>
+
+        <div class="gh-request-psiholog-container">
+            <form class="gh-request-psiholog__form" action="" method="post">
+                <div class="gh-request-psiholog__step-list">
+                    <div class="gh-request-psiholog__step gh-request-psiholog__step--active"
+                         data-target-selector="#gh-request-psiholog__step-1"
+                    >
+                        <div class="gh-request-psiholog__step-number-label">
+                            {{ 'Step_n'|trans({'%step%': 1}) }}
+                        </div>
+                        <div class="gh-request-psiholog__step-name">
+                            {{ 'Personal_questions'|trans }}
+                        </div>
+                    </div>
+                    <div class="gh-request-psiholog__step"
+                         data-target-selector="#gh-request-psiholog__step-2"
+                    >
+                        <div class="gh-request-psiholog__step-number-label">
+                            {{ 'Step_n'|trans({'%step%': 2}) }}
+                        </div>
+                        <div class="gh-request-psiholog__step-name">
+                            {{ 'General_questions'|trans }}
+                        </div>
+                    </div>
+                </div>
+                <div id="gh-request-psiholog__step-1"
+                     class="gh-request-psiholog__step-content gh-request-psiholog__step-content--active">
+                    <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            {{ 'Your_name'|trans }}
+                        </div>
+                        <div class="gh-request-psiholog__section-sub-header">
+                            {{ 'Your_name_description'|trans }}
+                        </div>
+                        <div class="gh-request-psiholog__section-content">
+                            <div class="gh-input">
+                                <div class="gh-error gh-d-none" id="client-name-error">
+                                    {{ 'Your_name_error'|trans }}
+                                </div>
+                                <input type="text"
+                                       id="client-name"
+                                       name="name"
+                                       class="gh-input-text"
+                                       placeholder="{{ 'Your_name'|trans }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if psihologProfile is not defined %}
+                        <div class="gh-request-psiholog__section">
+                            <div class="gh-request-psiholog__section-header">
+                                {{ 'Which_psiholog_sex_preferred'|trans }}
+                            </div>
+                            <div class="gh-request-psiholog__section-sub-header">
+                                {{ 'Sex'|trans }}
+                            </div>
+                            <div class="gh-request-psiholog__section-content gh-request-psiholog__section-content--sex">
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input"
+                                           name="sex"
+                                           value="both"
+                                           checked
+                                           id="gh-switch-new-id__sex_both"
+                                    ><label for="gh-switch-new-id__sex_both" class="gh-switch-new__label">
+                                        {{ 'Dont_care'|trans }}
+                                    </label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input"
+                                           name="sex"
+                                           value="female"
+                                           id="gh-switch-new-id__sex_female"
+                                    ><label for="gh-switch-new-id__sex_female" class="gh-switch-new__label">
+                                        {{ 'Female'|trans }}
+                                    </label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input"
+                                           name="sex"
+                                           value="male"
+                                           id="gh-switch-new-id__sex_male"
+                                    ><label for="gh-switch-new-id__sex_male" class="gh-switch-new__label">
+                                        {{ 'Male'|trans }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            {{ 'What_discuss_first'|trans }}
+                        </div>
+
+
+                        {% for groupTitle, topicsList in topicsGrouped %}
+                            <div class="gh-request-psiholog__section-sub-header gh-display-only-desktop">
+                                {{ groupTitle|trans }}
+                            </div>
+                            <div class="gh-request-psiholog__collapsable"
+                                 data-target="#gh-request-psiholog-{{ groupTitle }}">
+                            <span class="gh-request-psiholog__collapsable-label">
+                                    {{ groupTitle|trans }}
+                            </span>
+                                <span class="gh-request-psiholog__collapsable-icon">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_173_9301)">
+                                    <path d="M19.2188 9.21875H10.7812V0.78125C10.7812 0.349766 10.4315 0 10 0C9.56852 0 9.21875 0.349766 9.21875 0.78125V9.21875H0.78125C0.349766 9.21875 0 9.56852 0 10C0 10.4315 0.349766 10.7812 0.78125 10.7812H9.21875V19.2188C9.21875 19.6502 9.56852 20 10 20C10.4315 20 10.7812 19.6502 10.7812 19.2188V10.7812H19.2188C19.6502 10.7812 20 10.4315 20 10C20 9.56852 19.6502 9.21875 19.2188 9.21875Z"
+                                          fill="#D4D45E"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_173_9301">
+                                        <rect width="20" height="20" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            </span>
+                            </div>
+
+                            <div id="gh-request-psiholog-{{ groupTitle }}"
+                                 class="gh-request-psiholog__section-content gh-request-psiholog__section-content--problem">
+
+                                {% for topic in topicsList %}
+                                    <div class="gh-switch-new">
+                                        <input type="checkbox"
+                                               class="gh-switch-new__input"
+                                               id="gh-request-psiholog-topic-{{ topic }}"
+                                               name="topic[]"
+                                               value="{{ topic }}"
+                                        ><label for="gh-request-psiholog-topic-{{ topic }}"
+                                                class="gh-switch-new__label">
+                                            {{ source('@landing/icons/' ~ topic ~ '.svg', true) }}
+                                            {{ topic|trans }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if psihologProfile is not defined %}
+                        <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            {{ 'Is_LGBTQ_experience_important'|trans }}
+                        </div>
+                        <div class="gh-request-psiholog__section-content gh-request-psiholog__section-content--lgbtq">
+                            <div class="gh-switch-new">
+                                <input type="radio"
+                                       class="gh-switch-new__input"
+                                       name="lgbtq"
+                                       value="1"
+                                       id="gh-switch-new-id__lgbtq_yes"
+                                ><label for="gh-switch-new-id__lgbtq_yes" class="gh-switch-new__label">
+                                    {{ 'Yes'|trans }}
+                                </label>
+                            </div>
+                            <div class="gh-switch-new">
+                                <input type="radio"
+                                       class="gh-switch-new__input"
+                                       name="lgbtq"
+                                       value="0"
+                                       id="gh-switch-new-id__lgbtq_no"
+                                       checked
+                                ><label for="gh-switch-new-id__lgbtq_no" class="gh-switch-new__label">
+                                    {{ 'No'|trans }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="gh-request-psiholog__next">
+                        <div class="gh-button">
+                            {{ 'Next'|trans }}
+                            <svg width="31" height="8" viewBox="0 0 31 8" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M30.1036 4.35355C30.2988 4.15829 30.2988 3.84171 30.1036 3.64645L26.9216 0.464466C26.7263 0.269204 26.4097 0.269204 26.2145 0.464466C26.0192 0.659728 26.0192 0.976311 26.2145 1.17157L29.0429 4L26.2145 6.82843C26.0192 7.02369 26.0192 7.34027 26.2145 7.53553C26.4097 7.7308 26.7263 7.7308 26.9216 7.53553L30.1036 4.35355ZM1.25 3.5C0.973858 3.5 0.75 3.72386 0.75 4C0.75 4.27614 0.973858 4.5 1.25 4.5V3.5ZM29.75 3.5H1.25V4.5H29.75V3.5Z"
+                                      fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div id="gh-request-psiholog__step-2" class="gh-request-psiholog__step-content">
+                    <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            {{ 'Your_contacts'|trans }}
+                        </div>
+
+                        <div class="gh-request-psiholog__contacts">
+                            <div class="gh-request-psiholog__contact">
+                                <div class="gh-request-psiholog__section-sub-header">
+                                    {{ 'Email'|trans }}
+                                </div>
+                                <div class="gh-request-psiholog__section-content">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none" id="client-email-error">
+                                            {{ 'Enter_your_email'|trans }}
+                                        </div>
+                                        <input type="text"
+                                               id="client-email"
+                                               name="email"
+                                               class="gh-input-text"
+                                               placeholder="dima@gmail.ua ({{ 'example'|trans }})"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gh-request-psiholog__contact">
+                                <div class="gh-request-psiholog__section-sub-header">
+                                    {{ 'Phone'|trans }}
+                                </div>
+                                <div class="gh-request-psiholog__section-content">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none"
+                                             id="client-phone-error"
+                                        >
+                                            {{ 'Put_your_phone_number'|trans }}
+                                        </div>
+                                        <input type="text"
+                                               id="client-phone"
+                                               name="phone"
+                                               class="gh-input-text"
+                                               placeholder="+38 067 505 4714 ({{ 'example'|trans }})"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            <div class="gh-error gh-d-none"
+                                 id="channel-error"
+                            >
+                                {{ 'Select_channel'|trans }}
+                            </div>
+                            {{ 'How_to_reach_you'|trans }}
+                        </div>
+                        <div class="gh-request-psiholog__section-content gh-request-psiholog__section-content--channel">
+                            <div class="gh-switch-new">
+                                <input type="radio"
+                                       class="gh-switch-new__input gh-switch-new__input-channel"
+                                       name="channel"
+                                       value="telegram"
+                                       id="gh-switch-new-id__channel-telegram"
+                                ><label for="gh-switch-new-id__channel-telegram" class="gh-switch-new__label">
+                                    <svg width="31" height="30" viewBox="0 0 31 30" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_145_1107)">
+                                            <path d="M15.166 30C23.4503 30 30.166 23.2843 30.166 15C30.166 6.71573 23.4503 0 15.166 0C6.88174 0 0.166016 6.71573 0.166016 15C0.166016 23.2843 6.88174 30 15.166 30Z"
+                                                  fill="#47B0D3"/>
+                                            <path d="M22.4466 6.38971C22.3009 6.29069 22.114 6.27569 21.9545 6.34992L5.8361 13.8533C5.55292 13.9852 5.37397 14.2736 5.38106 14.5858C5.38792 14.892 5.57325 15.1671 5.85362 15.2898L20.7138 21.7619C21.2099 21.9874 21.7942 21.6324 21.826 21.0908L22.6648 6.83256C22.675 6.6569 22.5922 6.48862 22.4466 6.38971Z"
+                                                  fill="#E5E5E5"/>
+                                            <path d="M10.2227 17.1926L11.227 23.9062L22.383 6.35339L10.2227 17.1926Z"
+                                                  fill="#CCCCCC"/>
+                                            <path d="M21.9546 6.34994L5.83612 13.8533C5.55856 13.9825 5.37756 14.2706 5.3809 14.5767C5.3843 14.8833 5.57286 15.167 5.85358 15.2898L10.2222 17.1924L22.3825 6.35328C22.2485 6.28871 22.0916 6.28619 21.9546 6.34994Z"
+                                                  fill="white"/>
+                                            <path d="M12.5535 18.2079L11.2266 23.9062L22.3826 6.35339L12.5535 18.2079Z"
+                                                  fill="#E5E5E5"/>
+                                            <path d="M22.448 6.38984C22.4274 6.37584 22.4058 6.36394 22.3838 6.35339L12.5547 18.2079L20.715 21.762C21.2112 21.9875 21.7955 21.6325 21.8273 21.0909L22.666 6.83269C22.6763 6.65703 22.5936 6.48875 22.448 6.38984Z"
+                                                  fill="white"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_145_1107">
+                                                <rect width="30" height="30" fill="white"
+                                                      transform="translate(0.166016)"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    Telegram
+                                </label>
+                            </div>
+                            <div class="gh-switch-new">
+                                <input type="radio"
+                                       class="gh-switch-new__input gh-switch-new__input-channel"
+                                       name="channel"
+                                       value="viber"
+                                       id="gh-switch-new-id__channel-viber"
+                                ><label for="gh-switch-new-id__channel-viber" class="gh-switch-new__label">
+                                    <svg width="31" height="30" viewBox="0 0 31 30" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_145_1122)">
+                                            <path d="M15.5 30C23.7843 30 30.5 23.2843 30.5 15C30.5 6.71573 23.7843 0 15.5 0C7.21573 0 0.5 6.71573 0.5 15C0.5 23.2843 7.21573 30 15.5 30Z"
+                                                  fill="#6F3FAA"/>
+                                            <path d="M24.1638 10.1335V10.1114C23.9627 9.2966 23.4377 8.45455 22.7491 7.74546C21.9445 6.91365 20.9201 6.26081 19.9417 6.04944H19.9212C17.0034 5.49036 14.006 5.49036 11.0883 6.04944H11.0678C9.25077 6.44319 7.27861 8.34205 6.83884 10.1114V10.1335C6.29851 12.5865 6.29851 15.1277 6.83884 17.5807V17.6011C7.15247 18.8625 8.24338 20.1886 9.50134 20.9898C9.91216 21.2575 10.3594 21.4647 10.8292 21.6051V23.579C10.8298 23.7367 10.8775 23.8907 10.966 24.0213C11.0545 24.1519 11.1798 24.2531 11.3261 24.3122C11.4724 24.3713 11.6329 24.3854 11.7873 24.3529C11.9416 24.3204 12.0828 24.2426 12.1928 24.1296L14.194 22.05C14.6269 22.0739 15.0633 22.0875 15.4962 22.0875C16.9783 22.087 18.457 21.9467 19.9127 21.6682H19.9332C21.7451 21.2727 23.719 19.3739 24.1553 17.6046V17.5841C24.6989 15.1306 24.7019 12.5882 24.1638 10.1335ZM22.5803 17.2159C22.2871 18.3699 20.7905 19.8068 19.5991 20.071C18.0515 20.3675 16.4765 20.4961 14.9013 20.4546C14.886 20.4536 14.8707 20.4562 14.8565 20.4621C14.8423 20.468 14.8296 20.4771 14.8195 20.4886L13.3587 21.9886L11.8042 23.5824C11.7793 23.6087 11.7471 23.6269 11.7118 23.6347C11.6765 23.6425 11.6396 23.6395 11.606 23.626C11.5724 23.6126 11.5436 23.5894 11.5233 23.5595C11.503 23.5295 11.4922 23.4941 11.4922 23.458V20.1852C11.4923 20.1589 11.4831 20.1334 11.4663 20.1132C11.4495 20.0929 11.4261 20.0792 11.4002 20.0744C11.1517 20.0154 10.9121 19.9237 10.6877 19.8017C9.6752 19.2614 8.65418 18.1534 8.41895 17.2159C7.93172 14.9986 7.93172 12.702 8.41895 10.4847C8.71043 9.3358 10.2155 7.90228 11.3985 7.63637C14.1074 7.11805 16.8901 7.11805 19.5991 7.63637C20.2553 7.78296 21.0053 8.2824 21.5917 8.89603C22.0741 9.39546 22.444 9.9716 22.5803 10.4898C23.0668 12.7054 23.0668 15.0003 22.5803 17.2159Z"
+                                                  fill="white"/>
+                                            <path d="M19.6415 17.3864C19.4201 17.8918 19.0393 18.3108 18.5574 18.5796C18.4062 18.6438 18.2493 18.6934 18.0887 18.7279C17.9063 18.6733 17.7324 18.6358 17.5773 18.5694C16.2852 18.0666 15.0824 17.3592 14.0148 16.4745C13.6977 16.2041 13.3998 15.9119 13.1234 15.6C12.4406 14.8138 11.8672 13.9388 11.4188 12.9989C11.2006 12.554 11.0165 12.0938 10.829 11.6353C10.6586 11.2177 10.9109 10.783 11.1699 10.4711C11.4236 10.1818 11.7355 9.94942 12.0853 9.78925C12.2084 9.72739 12.3492 9.71057 12.4834 9.7417C12.6176 9.77284 12.7367 9.84996 12.8199 9.9597C13.2554 10.449 13.6393 10.9819 13.9654 11.55C14.0681 11.7152 14.1033 11.9136 14.0636 12.1041C14.024 12.2945 13.9125 12.4623 13.7523 12.5728C13.6671 12.6324 13.5819 12.7006 13.5086 12.7671C13.4363 12.8206 13.374 12.8864 13.3245 12.9614C13.2818 13.0316 13.2558 13.1108 13.2487 13.1927C13.2416 13.2746 13.2536 13.357 13.2836 13.4336C13.6126 14.3387 14.112 15.0938 14.8586 15.6239C15.1112 15.8026 15.3835 15.9518 15.6699 16.0688C15.857 16.1705 16.0672 16.2222 16.2802 16.2188C16.6518 16.1745 16.7745 15.7637 17.0336 15.5523C17.1525 15.4549 17.2997 15.3985 17.4532 15.3915C17.6068 15.3844 17.7585 15.4271 17.8859 15.5131C18.162 15.6836 18.4279 15.8762 18.6938 16.0637C18.9568 16.2432 19.21 16.4366 19.4523 16.6432C19.5657 16.7255 19.6466 16.8449 19.6812 16.9806C19.7157 17.1164 19.7017 17.2599 19.6415 17.3864Z"
+                                                  fill="white"/>
+                                            <path d="M15.9897 9.21819H15.7715C15.8414 9.21478 15.9147 9.21819 15.9897 9.21819Z"
+                                                  fill="white"/>
+                                            <path d="M19.7601 14.3267C19.5896 14.3267 19.5061 14.1818 19.4942 14.0233C19.472 13.7113 19.455 13.3977 19.4123 13.0875C19.3387 12.5641 19.1564 12.0618 18.8771 11.613C18.5901 11.1455 18.2082 10.7434 17.756 10.4328C17.3038 10.1221 16.7915 9.90984 16.2521 9.80964C16.0067 9.76532 15.7561 9.75509 15.5089 9.72953C15.3521 9.71248 15.1459 9.70225 15.1118 9.50793C15.1067 9.47019 15.1097 9.4318 15.1206 9.39532C15.1316 9.35884 15.1502 9.32511 15.1752 9.29639C15.2002 9.26767 15.231 9.24462 15.2657 9.22878C15.3003 9.21294 15.3379 9.20467 15.376 9.20452C15.4169 9.20217 15.4578 9.20217 15.4987 9.20452C16.2438 9.21083 16.9758 9.40079 17.6299 9.75758C18.284 10.1144 18.84 10.627 19.2487 11.25C19.5713 11.7521 19.7904 12.3137 19.893 12.9017C19.9578 13.2699 19.9817 13.6483 20.0106 14.0233C20.0165 14.06 20.0144 14.0976 20.0046 14.1335C19.9948 14.1694 19.9775 14.2028 19.9538 14.2315C19.9301 14.2602 19.9006 14.2835 19.8672 14.2999C19.8338 14.3163 19.7973 14.3255 19.7601 14.3267Z"
+                                                  fill="white"/>
+                                            <path d="M18.8386 13.5307C18.8377 13.5813 18.8308 13.6317 18.8182 13.6807C18.8033 13.73 18.7736 13.7735 18.7331 13.8053C18.6926 13.8371 18.6433 13.8557 18.5919 13.8584C18.5405 13.8612 18.4895 13.8481 18.4458 13.8209C18.4021 13.7937 18.3679 13.7537 18.3477 13.7063C18.329 13.6374 18.3203 13.5662 18.3221 13.4949C18.3261 13.1137 18.2507 12.7357 18.1006 12.3853C18.0665 12.3103 18.029 12.2336 17.9864 12.1603C17.7424 11.7397 17.3802 11.4001 16.9449 11.1836C16.6822 11.0595 16.4033 10.9735 16.1165 10.9279C15.9903 10.9074 15.8642 10.8955 15.7381 10.8784C15.7052 10.8768 15.6731 10.8684 15.6436 10.8539C15.6141 10.8393 15.588 10.8188 15.5667 10.7938C15.5455 10.7687 15.5296 10.7395 15.5201 10.708C15.5105 10.6766 15.5076 10.6435 15.5114 10.6108C15.5114 10.5774 15.5185 10.5444 15.5321 10.5139C15.5458 10.4834 15.5658 10.4562 15.5907 10.434C15.6157 10.4118 15.645 10.3951 15.6769 10.385C15.7088 10.375 15.7424 10.3718 15.7756 10.3756C16.2761 10.3949 16.7664 10.5229 17.2125 10.7506C17.7573 11.0247 18.2016 11.4638 18.4824 12.0051C18.6405 12.3213 18.7464 12.6609 18.796 13.0108C18.8052 13.0565 18.812 13.1025 18.8165 13.1489C18.825 13.2512 18.8284 13.3534 18.8369 13.4796C18.8369 13.4915 18.8386 13.5068 18.8386 13.5307Z"
+                                                  fill="white"/>
+                                            <path d="M17.6716 13.2954C17.6619 13.3386 17.6396 13.378 17.6074 13.4083C17.5752 13.4387 17.5346 13.4588 17.4909 13.4659H17.4534C17.3975 13.4695 17.342 13.4548 17.2953 13.4241C17.2485 13.3933 17.2131 13.3481 17.1943 13.2954C17.1837 13.2675 17.1768 13.2382 17.1738 13.2085C17.1649 13.0938 17.1478 12.9799 17.1227 12.8676C17.072 12.6403 16.9429 12.4381 16.7579 12.2966C16.6685 12.2324 16.5688 12.1839 16.463 12.1534C16.3284 12.1142 16.1869 12.1244 16.054 12.092C15.9882 12.0804 15.9298 12.0432 15.8915 11.9885C15.8531 11.9339 15.838 11.8663 15.8494 11.8005C15.8621 11.7375 15.8973 11.6813 15.9484 11.6424C15.9996 11.6035 16.0632 11.5846 16.1272 11.5892C16.9079 11.6454 17.4909 12.0204 17.6409 12.8574C17.6563 12.9351 17.6671 13.0136 17.6733 13.0926C17.6828 13.1599 17.6822 13.2283 17.6716 13.2954Z"
+                                                  fill="white"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_145_1122">
+                                                <rect width="30" height="30" fill="white" transform="translate(0.5)"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    Viber
+                                </label>
+                            </div>
+                            <div class="gh-switch-new">
+                                <input type="radio"
+                                       class="gh-switch-new__input gh-switch-new__input-channel"
+                                       name="channel"
+                                       value="whatsapp"
+                                       id="gh-switch-new-id__channel-whatsapp"
+                                ><label for="gh-switch-new-id__channel-whatsapp" class="gh-switch-new__label">
+                                    <svg width="31" height="30" viewBox="0 0 31 30" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_145_1165)">
+                                            <path d="M15.3358 0H15.3283C7.05766 0 0.332031 6.7275 0.332031 15C0.332031 18.2812 1.38953 21.3225 3.18766 23.7919L1.31828 29.3644L7.08391 27.5213C9.45578 29.0925 12.2852 30 15.3358 30C23.6064 30 30.332 23.2706 30.332 15C30.332 6.72938 23.6064 0 15.3358 0Z"
+                                                  fill="#4CAF50"/>
+                                            <path d="M24.0641 21.182C23.7022 22.2038 22.2659 23.0513 21.1203 23.2988C20.3366 23.4657 19.3128 23.5988 15.8666 22.1701C11.4584 20.3438 8.61969 15.8645 8.39844 15.5738C8.18656 15.2832 6.61719 13.202 6.61719 11.0495C6.61719 8.89697 7.71031 7.84884 8.15094 7.39884C8.51281 7.02947 9.11094 6.86072 9.68469 6.86072C9.87031 6.86072 10.0372 6.87009 10.1872 6.87759C10.6278 6.89634 10.8491 6.92259 11.1397 7.61822C11.5016 8.49009 12.3828 10.6426 12.4878 10.8638C12.5947 11.0851 12.7016 11.3851 12.5516 11.6757C12.4109 11.9757 12.2872 12.1088 12.0659 12.3638C11.8447 12.6188 11.6347 12.8138 11.4134 13.0876C11.2109 13.3257 10.9822 13.5807 11.2372 14.0213C11.4922 14.4526 12.3734 15.8907 13.6709 17.0457C15.3453 18.5363 16.7028 19.0126 17.1884 19.2151C17.5503 19.3651 17.9816 19.3295 18.2459 19.0482C18.5816 18.6863 18.9959 18.0863 19.4178 17.4957C19.7178 17.072 20.0966 17.0195 20.4941 17.1695C20.8991 17.3101 23.0422 18.3695 23.4828 18.5888C23.9234 18.8101 24.2141 18.9151 24.3209 19.1007C24.4259 19.2863 24.4259 20.1582 24.0641 21.182Z"
+                                                  fill="#FAFAFA"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_145_1165">
+                                                <rect width="30" height="30" fill="white"
+                                                      transform="translate(0.332031)"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    Whatsapp
+                                </label>
+                            </div>
+                            {#                            <div class="gh-switch-new"> #}
+                            {#                                <input type="radio" #}
+                            {#                                       class="gh-switch-new__input" #}
+                            {#                                       name="channel" #}
+                            {#                                       value="sms" #}
+                            {#                                       checked #}
+                            {#                                       id="gh-switch-new-id__channel-sms" #}
+                            {#                                ><label for="gh-switch-new-id__channel-sms" class="gh-switch-new__label"> #}
+                            {#                                    <svg width="31" height="30" viewBox="0 0 31 30" fill="none" #}
+                            {#                                         xmlns="http://www.w3.org/2000/svg"> #}
+                            {#                                        <g clip-path="url(#clip0_145_1116)"> #}
+                            {#                                            <path d="M30.6651 19.4531C30.6651 16.382 28.4245 13.7924 25.331 12.837C24.8361 17.6648 21.0028 21.6462 15.8926 22.9651C17.265 25.0953 19.8376 26.4843 22.7549 26.4843C23.8176 26.4843 24.8492 26.2971 25.8277 25.9282L30.2231 28.1245L29.1039 23.6458C30.1142 22.4384 30.6651 20.9662 30.6651 19.4531Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                            <path d="M12.0918 1.875C5.79182 1.875 0.666016 6.31668 0.666016 11.7773C0.666016 13.9684 1.50716 16.0979 3.04616 17.8258L1.54057 23.7147L7.45786 20.8221C8.93071 21.3913 10.4876 21.6797 12.0918 21.6797C18.3918 21.6797 23.5176 17.2378 23.5176 11.7773C23.5176 6.31691 18.3918 1.875 12.0918 1.875ZM9.45508 12.4219H7.69727V10.6641H9.45508V12.4219ZM12.9707 12.4219H11.2129V10.6641H12.9707V12.4219ZM16.4863 12.4219H14.7285V10.6641H16.4863V12.4219Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                        </g> #}
+                            {#                                        <defs> #}
+                            {#                                            <clipPath id="clip0_145_1116"> #}
+                            {#                                                <rect width="30" height="30" fill="white" transform="translate(0.666016)"/> #}
+                            {#                                            </clipPath> #}
+                            {#                                        </defs> #}
+                            {#                                    </svg> #}
+                            {#                                    SMS #}
+                            {#                                </label> #}
+                            {#                            </div> #}
+                            {#                            <div class="gh-switch-new"> #}
+                            {#                                <input type="radio" #}
+                            {#                                       class="gh-switch-new__input" #}
+                            {#                                       name="channel" #}
+                            {#                                       value="email" #}
+                            {#                                       checked #}
+                            {#                                       id="gh-switch-new-id__channel-email" #}
+                            {#                                ><label for="gh-switch-new-id__channel-email" class="gh-switch-new__label"> #}
+                            {#                                    <svg width="31" height="30" viewBox="0 0 31 30" fill="none" #}
+                            {#                                         xmlns="http://www.w3.org/2000/svg"> #}
+                            {#                                        <g clip-path="url(#clip0_145_1149)"> #}
+                            {#                                            <path d="M30.2351 5.96021L21.1367 15L30.2351 24.0398C30.3996 23.696 30.4994 23.316 30.4994 22.9101V7.08983C30.4994 6.68396 30.3996 6.30397 30.2351 5.96021Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                            <path d="M27.864 4.45312H3.13744C2.73156 4.45312 2.35158 4.55291 2.00781 4.71738L13.6365 16.2875C14.6647 17.3157 16.3367 17.3157 17.3649 16.2875L28.9936 4.71738C28.6499 4.55291 28.2699 4.45312 27.864 4.45312Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                            <path d="M0.764258 5.96021C0.599785 6.30397 0.5 6.68396 0.5 7.08983V22.9101C0.5 23.316 0.599785 23.6961 0.764258 24.0398L9.86264 15L0.764258 5.96021Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                            <path d="M19.8953 16.2428L18.6078 17.5303C16.8945 19.2435 14.1068 19.2435 12.3936 17.5303L11.1062 16.2428L2.00781 25.2826C2.35158 25.4471 2.73156 25.5468 3.13744 25.5468H27.864C28.2699 25.5468 28.6499 25.4471 28.9936 25.2826L19.8953 16.2428Z" #}
+                            {#                                                  fill="#D4D45E"/> #}
+                            {#                                        </g> #}
+                            {#                                        <defs> #}
+                            {#                                            <clipPath id="clip0_145_1149"> #}
+                            {#                                                <rect width="30" height="30" fill="white" transform="translate(0.5)"/> #}
+                            {#                                            </clipPath> #}
+                            {#                                        </defs> #}
+                            {#                                    </svg> #}
+                            {#                                    Email #}
+                            {#                                </label> #}
+                            {#                            </div> #}
+                        </div>
+
+                    </div>
+                    <div class="gh-request-psiholog__section">
+                        <div class="gh-request-psiholog__section-header">
+                            <div class="gh-error gh-d-none"
+                                 id="consultation-type-error"
+                            >
+                                {{ 'Select_consultation_type'|trans }}
+                            </div>
+                            {{ 'This_consultation_for'|trans }}
+                        </div>
+                        <div class="gh-request-psiholog__section-content gh-request-psiholog__section-content--sex">
+                            {% if psihologProfile is defined %}
+                                {% for label, priceConfig in pricesPlain %}
+                                        <div class="gh-switch-new">
+                                            <input type="radio"
+                                                   class="gh-switch-new__input gh-switch-new__type"
+                                                   name="price"
+                                                   value="{{ priceConfig.price.id }}"
+                                                   id="gh-switch-new-id__price-{{ priceConfig.price.type }}"
+                                            ><label for="gh-switch-new-id__price-{{ priceConfig.price.type }}" class="gh-switch-new__label">
+                                                {{ label|trans }} &nbsp;
+                                                <span class="gh-text-color-carrot-1">
+                                                    {{ priceConfig.price.price }} ₴
+                                                </span>
+                                            </label>
+                                        </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-switch-new__type"
+                                           name="type"
+                                           value="individual"
+                                           id="gh-switch-new-id__type-individual"
+                                           data-target-selector="#gh-request-psiholog__section-content--price-individual"
+                                    ><label for="gh-switch-new-id__type-individual" class="gh-switch-new__label">
+                                        {{ 'For_myself'|trans }}
+                                    </label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-switch-new__type"
+                                           name="type"
+                                           value="couple"
+                                           id="gh-switch-new-id__type-couple"
+                                           data-target-selector="#gh-request-psiholog__section-content--price-couple"
+                                    ><label for="gh-switch-new-id__type-couple" class="gh-switch-new__label">
+                                        {{ 'For_couple'|trans }}
+                                    </label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-switch-new__type"
+                                           name="type"
+                                           value="teenager"
+                                           data-target-selector="#gh-request-psiholog__section-content--price-teenager"
+                                           id="gh-switch-new-id__type-teenager"
+                                    ><label for="gh-switch-new-id__type-teenager" class="gh-switch-new__label">
+                                        {{ 'For_teenager'|trans }}
+                                    </label>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if psihologProfile is defined %}
+                        <div class="gh-request-psiholog__i-have-promo">
+                            {{ 'I_have_promocode'|trans }}
+                        </div>
+
+                        <div class="gh-request-psiholog__i-have-promo-content gh-d-none">
+                            <div class="gh-request-psiholog__section-content">
+                                <div class="gh-input">
+                                    <input type="text" name="promocode" class="gh-input-text" placeholder="{{ 'Enter_promocode'|trans }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="gh-request-psiholog__section gh-request-psiholog__section--price gh-d-none">
+                        <div class="gh-request-psiholog__section-header">
+                            <div class="gh-error gh-d-none"
+                                 id="consultation-price-error"
+                            >
+                                {{ 'Select_price_error'|trans }}
+                            </div>
+                            {{ 'Select_price'|trans }}
+                        </div>
+
+                        {% for type, prices in priceConfig %}
+                            <div class="gh-request-psiholog__section-content gh-request-psiholog__section-content--price gh-request-psiholog__section-content--sex gh-d-none"
+                                 id="gh-request-psiholog__section-content--price-{{ type }}"
+                            >
+                                {% for price in prices %}
+                                    <div class="gh-switch-new">
+                                        <input type="radio"
+                                               class="gh-switch-new__input gh-switch-new__price"
+                                               name="price"
+                                               value="{{ price }}"
+                                               data-type-value="{{ type }}"
+                                               id="gh-switch-new-id__price-{{ type }}-{{ price }}"
+                                        ><label for="gh-switch-new-id__price-{{ type }}-{{ price }}"
+                                                class="gh-switch-new__label">
+                                            {{ price }} ₴
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+
+                        {% if psihologProfile is not defined %}
+                        <div class="gh-request-psiholog__i-have-promo">
+                            {{ 'I_have_promocode'|trans }}
+                        </div>
+
+                        <div class="gh-request-psiholog__i-have-promo-content gh-d-none">
+                            <div class="gh-request-psiholog__section-content">
+                                <div class="gh-input">
+                                    <input type="text" name="promocode" class="gh-input-text" placeholder="{{ 'Enter_promocode'|trans }}">
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="gh-request-psiholog__next">
+                        <div class="gh-button gh-button--outlined gh-request-psiholog__back-btn gh-request-psiholog__back-btn--bottom">
+                            <svg width="30" height="8" viewBox="0 0 30 8" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M29.25 4.5C29.5261 4.5 29.75 4.27614 29.75 4C29.75 3.72386 29.5261 3.5 29.25 3.5V4.5ZM0.396447 3.64645C0.201184 3.84171 0.201184 4.15829 0.396447 4.35355L3.57843 7.53553C3.77369 7.7308 4.09027 7.7308 4.28553 7.53553C4.4808 7.34027 4.4808 7.02369 4.28553 6.82843L1.45711 4L4.28553 1.17157C4.4808 0.976311 4.4808 0.659728 4.28553 0.464466C4.09027 0.269204 3.77369 0.269204 3.57843 0.464466L0.396447 3.64645ZM29.25 3.5H0.75V4.5H29.25V3.5Z"
+                                      fill="black"/>
+                            </svg>
+
+                            {{ 'To_first_step'|trans }}
+                        </div>
+
+                        <button class="gh-button">
+                            {% if psihologProfile is defined %}
+                                {{ 'Book'|trans }}
+                            {% else %}
+                                {{ 'Find_psiholog'|trans }}
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% include '@landing/pages/request-psiholog/_benefits.html.twig' %}
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const stepTabList = document.querySelectorAll('.gh-request-psiholog__step');
+
+            stepTabList.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    ActivateStep(index + 1);
+                });
+            });
+
+            document.querySelector('.gh-request-psiholog__next').addEventListener('click', () => {
+                if (IsValidTextInput('#client-name', '#client-name-error', true)) {
+                    ActivateStep(2);
+                }
+            });
+
+            document.querySelector('#client-name').addEventListener('input', (e) => {
+                IsValidTextInput(e.target, '#client-name-error', false);
+                // const clientNameErrorElement = document.querySelector();
+                // const clientName = e.target.value.trim();
+                // if (clientName.length < 1) {
+                //     clientNameErrorElement.classList.remove('gh-d-none');
+                // } else {
+                //     clientNameErrorElement.classList.add('gh-d-none');
+                // }
+            });
+
+            function ActivateStep(stepNumber) {
+                const stepTabActiveClass = 'gh-request-psiholog__step--active';
+
+                const stepTab = stepTabList[stepNumber - 1];
+                if (typeof stepTab === 'undefined') return;
+
+                const contentList = document.querySelectorAll('.gh-request-psiholog__step-content');
+                const contentActiveClass = 'gh-request-psiholog__step-content--active';
+
+                const tabTargetSelector = stepTab.getAttribute('data-target-selector');
+
+                contentList.forEach(contentElement => {
+                    contentElement.classList.remove(contentActiveClass);
+                });
+
+                const targetElement = document.querySelector(tabTargetSelector);
+                targetElement.classList.add(contentActiveClass);
+
+                stepTabList.forEach(tabElement => {
+                    tabElement.classList.remove(stepTabActiveClass);
+                });
+
+                stepTab.classList.add(stepTabActiveClass);
+
+                setTimeout(() => {
+                    document.querySelector('.gh-request-psiholog-container').scrollIntoView({behavior: "smooth"});
+                });
+            }
+
+            function IsValidTextInput(input, errorSelector, scrollToElement = true) {
+                const inputElement = typeof input === 'string' ? document.querySelector(input) : input;
+                const errorElement = document.querySelector(errorSelector);
+                const value = inputElement.value.trim();
+                if (value.length < 1) {
+                    errorElement.classList.remove('gh-d-none');
+                    if (scrollToElement) {
+                        errorElement.scrollIntoView({
+                            behavior: "smooth",
+
+                            {% if psihologProfile is defined %}
+                                block: "end",
+                                inline: "nearest"
+                            {% endif %}
+                        });
+                    }
+                    return false;
+                }
+                errorElement.classList.add('gh-d-none');
+                return true;
+            }
+
+            function IsValidRadioInput(radioClassSelector, errorSelector, scrollToElement = true) {
+                let isValid = false;
+                document.querySelectorAll(radioClassSelector).forEach(radioElement => {
+                    if (!isValid) {
+                        isValid = radioElement.checked;
+                    }
+                });
+
+                const errorElement = document.querySelector(errorSelector);
+                if (isValid) {
+                    errorElement.classList.add('gh-d-none');
+                    return true;
+                }
+
+
+                errorElement.classList.remove('gh-d-none');
+                if (scrollToElement) {
+                    errorElement.scrollIntoView({
+                        behavior: "smooth",
+
+                        {% if psihologProfile is defined %}
+                        block: "end",
+                        inline: "nearest"
+                        {% endif %}
+                    });
+                }
+                return false;
+            }
+
+            document.querySelectorAll('.gh-switch-new__type').forEach(input => {
+                input.addEventListener('change', () => {
+                    {% if psihologProfile is not defined %}
+                        const dataTargetSelector = input.getAttribute('data-target-selector');
+
+                        document.querySelector('.gh-request-psiholog__section--price').classList.remove('gh-d-none');
+                        document.querySelectorAll('.gh-request-psiholog__section-content--price').forEach(priceBlock => {
+                            priceBlock.classList.add('gh-d-none');
+                        });
+                        document.querySelector(dataTargetSelector).classList.remove('gh-d-none');
+
+                        gtag("event", "request_psiholog_form_type-clicked", {
+                            'event_category': 'Request Psiholog Form'
+                        });
+
+                        gtag("event", `request_psiholog_form_type_${input.value}-clicked`, {
+                            'event_category': 'Request Psiholog Form'
+                        });
+                    {% endif %}
+
+                    IsValidRadioInput('.gh-switch-new__type', '#consultation-type-error');
+                });
+            });
+            document.querySelectorAll('.gh-switch-new__input-channel').forEach(input => {
+                input.addEventListener('change', () => {
+                    IsValidRadioInput('.gh-switch-new__input-channel', '#channel-error');
+                });
+            });
+
+            document.querySelectorAll('.gh-request-psiholog__collapsable').forEach(colEl => {
+                colEl.addEventListener('click', () => {
+                    const activeClass = 'gh-request-psiholog__collapsable--active';
+                    const targetActiveClass = 'gh-request-psiholog__section-content--problem--active';
+                    const targetSelector = colEl.getAttribute('data-target');
+                    const target = document.querySelector(targetSelector);
+                    if (colEl.classList.contains(activeClass)) {
+                        colEl.classList.remove(activeClass);
+                        target.classList.remove(targetActiveClass);
+                    } else {
+                        colEl.classList.add(activeClass);
+                        target.classList.add(targetActiveClass);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.gh-switch-new__price').forEach(priceSwitch => {
+                priceSwitch.addEventListener('change', (e) => {
+                    const dataTypeValue = priceSwitch.getAttribute('data-type-value');
+                    gtag("event", "request_psiholog_form_price-clicked", {
+                        'event_category': 'Request Psiholog Form'
+                    });
+
+                    gtag("event", `request_psiholog_form_price_${dataTypeValue}_${priceSwitch.value}-clicked`, {
+                        'event_category': 'Request Psiholog Form'
+                    });
+
+                    IsValidRadioInput('.gh-switch-new__price', '#consultation-price-error');
+                });
+            });
+
+            document.querySelector('.gh-request-psiholog__form').addEventListener('submit', (e) => {
+                if (!IsValidTextInput('#client-name', '#client-name-error', false)) {
+                    ActivateStep(1);
+                    e.preventDefault();
+
+                    setTimeout(() => {
+                        IsValidTextInput('#client-name', '#client-name-error', true);
+                    });
+                    return false;
+                }
+
+                if (!IsValidTextInput('#client-email', '#client-email-error', true)) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!IsValidTextInput('#client-phone', '#client-phone-error', true)) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!IsValidRadioInput('.gh-switch-new__input-channel', '#channel-error', true)) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (!IsValidRadioInput('.gh-switch-new__type', '#consultation-type-error', true)) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                {% if psihologProfile is not defined %}
+                    if (!IsValidRadioInput('.gh-switch-new__price', '#consultation-price-error', true)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                {% endif %}
+            });
+
+            document.querySelector('.gh-request-psiholog__back-btn--bottom').addEventListener('click', (e) => {
+                ActivateStep(1);
+            });
+
+            document.querySelector('.gh-request-psiholog__i-have-promo').addEventListener('click', (e) => {
+                const el = document.querySelector('.gh-request-psiholog__i-have-promo-content');
+
+                if (el.classList.contains('gh-d-none')) {
+                    el.classList.remove('gh-d-none');
+                } else {
+                    el.classList.add('gh-d-none');
+                }
+            });
+
+            // ActivateStep(2);
+        });
+    </script>
+{% endblock %}

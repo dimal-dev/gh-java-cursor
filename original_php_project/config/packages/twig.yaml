@@ -1,0 +1,16 @@
+twig:
+    form_themes: ['bootstrap_4_layout.html.twig']
+    default_path: '%kernel.project_dir%/src/Landing/Resources/templates/'
+    paths:
+        '%kernel.project_dir%/src/Landing/Resources/templates': landing
+        '%kernel.project_dir%/src/User/Resources/templates': user
+        '%kernel.project_dir%/src/Psiholog/Resources/templates': psiholog
+        '%kernel.project_dir%/src/Staff/Resources/templates': staff
+        '%kernel.project_dir%/src/Common/Resources/templates': common
+        '%kernel.project_dir%/src/Notification/Resources/templates': notification
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    exception_controller: null
+    globals:
+        jivochat_disabled: '%jivochat_disabled%'
+        enable_analitics: '%env(ANALYTICS_ENABLE)%'

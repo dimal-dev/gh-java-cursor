@@ -1,0 +1,18 @@
+<div class="mt-2">
+    <a href="#{{ constant('\\App\\Landing\\Controller\\PsihologProfileController::BOOK_CONSULTATION_HTML_ID') }}"
+       class="btn btn-lg btn-primary text-white shadow-sm book-consultation-btn">
+        {{ 'Записаться на консультацию'|trans }}
+    </a>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('.book-consultation-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                gtag("event", "book_consultation_btn_clicked", {
+                    'event_category': 'Conversions'
+                });
+            });
+        });
+    });
+</script>

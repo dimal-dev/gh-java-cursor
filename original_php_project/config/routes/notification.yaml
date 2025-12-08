@@ -1,0 +1,7 @@
+user_routes:
+  resource: ../../src/Notification/Controller
+  type: 'annotation'
+  name_prefix: 'notification_'
+  prefix: notification
+  defaults:
+    is_userspace_route: true

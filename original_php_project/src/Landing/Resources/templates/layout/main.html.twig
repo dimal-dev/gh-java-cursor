@@ -1,0 +1,256 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="facebook-domain-verification" content="ajfkivuf06pbclw682k901t9uutboi" />
+
+    {% block canonical %}
+        <link rel="canonical" href="{{ getCanonicalUrl() }}" />
+    {% endblock %}
+
+    {% block hrefLang %}
+        {% set hrefLangUa = currentRouteLocalizedFull({_locale: 'ua'}) %}
+        {% set hrefLangRu = currentRouteLocalizedFull({_locale: 'ru'}) %}
+
+        <link rel="alternate" href="{{ hrefLangUa }}" hreflang="x-default"  />
+        <link rel="alternate" href="{{ hrefLangUa }}" hreflang="uk" />
+        <link rel="alternate" href="{{ hrefLangRu }}" hreflang="ru" />
+    {% endblock %}
+
+    {% block meta_tags %}
+    {% endblock %}
+    <title>{% block page_title %}GoodHelp{% endblock %}</title>
+
+    {#    todo: remove it, use only the star icon. cause it's used only for the star icons in reviews #}
+    {#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"> #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('landing') }}
+    {% endblock %}
+
+    {% include '@common/partials/_favicon.html.twig' %}
+    {% include '@common/partials/_analytics_head.html.twig' %}
+</head>
+<body>
+{% include '@common/partials/_analytics_body_start.html.twig' %}
+
+<header class="gh-header {{ headerWithoutShadow is defined and headerWithoutShadow ? '' : 'gh-header--with-shadow' }}">
+    <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::MAIN_PAGE')) }}" class="gh-header__logo">
+        <img class="gh-img" src="{{ asset('img/logo/logo-olive.svg', 'landing') }}" alt="">
+    </a>
+    <nav class="gh-header__nav">
+        <ul class="gh-header__nav-menu">
+            <li class="{{ app.request.get('_route') == constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_LIST') ? 'active' : '' }}">
+                <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_LIST')) }}">
+                    {{ 'our_specialists'|trans }}
+                </a>
+            </li>
+            <li class="{{ app.request.get('_route') == constant('\\App\\Landing\\Service\\RouteNames::BLOG_POST_LIST') ? 'active' : '' }}">
+                <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::BLOG_POST_LIST')) }}">
+                    {{ 'Blog'|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank">
+                    {{ 'landing.header.for_psiholog'|trans }}
+                </a>
+            </li>
+            <li>
+                {% if isUserAuthenticated() %}
+                    <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::DASHBOARD')) }}">
+                        {{ 'landing.header.user_dashboard'|trans }}
+                    </a>
+                {% else %}
+                    <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::LOGIN')) }}">
+                        {{ 'landing.header.user_login'|trans }}
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <div class="gh-header__lang-and-select-block-container">
+        {% block headerLangPicker %}
+            <div class="gh-header__lang-picker">
+                <div class="gh-header__lang-picker-item {{ app.request.get('_locale') == 'ua' ? 'gh-header__lang-picker-item--active' : '' }}">
+                    <a href="{{ currentRouteLocalized({_locale: 'ua'}) }}">UA</a>
+                </div>
+                <div class="gh-header__lang-picker-item {{ app.request.get('_locale') == 'ru' ? 'gh-header__lang-picker-item--active' : '' }}">
+                    <a href="{{ currentRouteLocalized({_locale: 'ru'}) }}">RU</a>
+                </div>
+            </div>
+        {% endblock %}
+        <div class="gh-header__select-psiholog-btn-container">
+            <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::REQUEST_PSIHOLOG')) }}" class="select-psiholog-btn select-psiholog-btn--no-shadow select-psiholog-btn--header gh-button">
+                {{ 'landing.request_psiholog'|trans }}
+            </a>
+        </div>
+    </div>
+    <div class="gh-header__burger-icon-mobile">
+        <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.481934" width="20" height="2" rx="1" fill="#202020"/>
+            <rect x="0.481934" y="8" width="20" height="2" rx="0.999999" fill="#202020"/>
+            <rect x="5.48193" y="16" width="15" height="2" rx="1" fill="#202020"/>
+        </svg>
+    </div>
+</header>
+
+<div class="gh-mobile-header">
+    <div class="gh-mobile-header__close-icon">
+        <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32.8245" height="3" rx="1.5" transform="matrix(0.695973 0.718068 -0.695973 0.718068 1.99998 0)"
+                  fill="#EF9665"/>
+            <rect width="32.7942" height="3" rx="1.5"
+                  transform="matrix(0.695973 -0.718068 0.695973 0.718068 1.52588e-05 24)" fill="#EF9665"/>
+        </svg>
+    </div>
+
+    <div class="gh-mobile-header__menu">
+        <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_LIST')) }}" class="gh-mobile-header__menu-item">
+            {{ 'our_specialists'|trans }}
+        </a>
+        <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::BLOG_POST_LIST')) }}" class="gh-mobile-header__menu-item">
+            {{ 'Blog'|trans }}
+        </a>
+        <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" class="gh-mobile-header__menu-item">
+            {{ 'landing.header.for_psiholog'|trans }}
+        </a>
+        {% if isUserAuthenticated() %}
+            <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::DASHBOARD')) }}" class="gh-mobile-header__menu-item">
+                {{ 'landing.header.user_dashboard'|trans }}
+            </a>
+        {% else %}
+            <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::LOGIN')) }}" class="gh-mobile-header__menu-item">
+                {{ 'landing.header.user_login'|trans }}
+            </a>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::REQUEST_PSIHOLOG')) }}" class="select-psiholog-btn gh-button">
+            {{ 'landing.request_psiholog'|trans }}
+        </a>
+    </div>
+
+    {% block headerMobileLangPicker %}
+        <div class="gh-header__lang-picker gh-header__lang-picker--mobile">
+            <div class="gh-header__lang-picker-item {{ app.request.get('_locale') == 'ua' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ua'}) }}">UA</a>
+            </div>
+            <div class="gh-header__lang-picker-item {{ app.request.get('_locale') == 'ru' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ru'}) }}">RU</a>
+            </div>
+        </div>
+    {% endblock %}
+
+
+    <div class="gh-mobile-header__social">
+        <a class="gh-mobile-header__social-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.9824 5.29205C17.9402 4.33564 17.7855 3.67812 17.564 3.10836C17.3354 2.50359 16.9838 1.96213 16.5231 1.51201C16.073 1.05489 15.5279 0.699691 14.9302 0.474702C14.3571 0.253147 13.703 0.0984842 12.7466 0.0563159C11.7831 0.0105764 11.4772 0 9.03334 0C6.5895 0 6.28361 0.0105764 5.32363 0.0527447C4.36722 0.0949129 3.7097 0.249713 3.14009 0.471131C2.53517 0.699691 1.99371 1.05132 1.5436 1.51201C1.08648 1.96213 0.731414 2.50716 0.506288 3.10493C0.284733 3.67812 0.13007 4.33207 0.0879016 5.28848C0.0421621 6.25203 0.0315857 6.55792 0.0315857 9.00176C0.0315857 11.4456 0.0421621 11.7515 0.0843304 12.7115C0.126499 13.6679 0.281299 14.3254 0.502854 14.8952C0.731414 15.4999 1.08648 16.0414 1.5436 16.4915C1.99371 16.9486 2.53874 17.3038 3.13652 17.5288C3.7097 17.7504 4.36365 17.905 5.3202 17.9472C6.28004 17.9895 6.58607 17.9999 9.02991 17.9999C11.4737 17.9999 11.7796 17.9895 12.7396 17.9472C13.696 17.905 14.3535 17.7504 14.9232 17.5288C16.1329 17.0611 17.0893 16.1047 17.557 14.8952C17.7784 14.322 17.9332 13.6679 17.9753 12.7115C18.0175 11.7515 18.0281 11.4456 18.0281 9.00176C18.0281 6.55792 18.0245 6.25203 17.9824 5.29205ZM16.3614 12.6411C16.3227 13.5202 16.175 13.9949 16.052 14.3114C15.7495 15.0956 15.1271 15.7179 14.343 16.0204C14.0265 16.1434 13.5484 16.2911 12.6727 16.3297C11.7233 16.372 11.4386 16.3824 9.03691 16.3824C6.63524 16.3824 6.34693 16.372 5.40096 16.3297C4.52189 16.2911 4.04718 16.1434 3.73072 16.0204C3.34049 15.8761 2.98529 15.6476 2.69698 15.3487C2.39809 15.0568 2.16953 14.7052 2.02531 14.315C1.90224 13.9985 1.75458 13.5202 1.71598 12.6447C1.67368 11.6953 1.66324 11.4104 1.66324 9.00876C1.66324 6.60709 1.67368 6.31878 1.71598 5.37295C1.75458 4.49387 1.90224 4.01917 2.02531 3.7027C2.16953 3.31234 2.39809 2.95727 2.70055 2.66883C2.99229 2.36994 3.34392 2.14138 3.73429 1.99729C4.05076 1.87422 4.52903 1.72656 5.40454 1.68783C6.35394 1.64566 6.63882 1.63508 9.04035 1.63508C11.4456 1.63508 11.7303 1.64566 12.6763 1.68783C13.5554 1.72656 14.0301 1.87422 14.3465 1.99729C14.7368 2.14138 15.092 2.36994 15.3803 2.66883C15.6792 2.96071 15.9077 3.31234 16.052 3.7027C16.175 4.01917 16.3227 4.49731 16.3614 5.37295C16.4036 6.32236 16.4142 6.60709 16.4142 9.00876C16.4142 11.4104 16.4036 11.6917 16.3614 12.6411Z"
+                      fill="#202020"/>
+                <path d="M9.03331 4.37769C6.48055 4.37769 4.40936 6.44874 4.40936 9.00163C4.40936 11.5545 6.48055 13.6256 9.03331 13.6256C11.5862 13.6256 13.6573 11.5545 13.6573 9.00163C13.6573 6.44874 11.5862 4.37769 9.03331 4.37769ZM9.03331 12.0011C7.37721 12.0011 6.03387 10.6579 6.03387 9.00163C6.03387 7.3454 7.37721 6.00219 9.03331 6.00219C10.6896 6.00219 12.0328 7.3454 12.0328 9.00163C12.0328 10.6579 10.6896 12.0011 9.03331 12.0011V12.0011Z"
+                      fill="#202020"/>
+                <path d="M14.9197 4.19496C14.9197 4.79108 14.4364 5.27444 13.8401 5.27444C13.244 5.27444 12.7607 4.79108 12.7607 4.19496C12.7607 3.5987 13.244 3.11548 13.8401 3.11548C14.4364 3.11548 14.9197 3.5987 14.9197 4.19496V4.19496Z"
+                      fill="#202020"/>
+            </svg>
+        </a>
+        <a class="gh-mobile-header__social-icon">
+            <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.18211 2.98875H9.82536V0.12675C9.54186 0.08775 8.56686 0 7.43137 0C5.06212 0 3.43912 1.49025 3.43912 4.22925V6.75H0.824615V9.9495H3.43912V18H6.64461V9.95025H9.15336L9.55161 6.75075H6.64387V4.5465C6.64462 3.62175 6.89361 2.98875 8.18211 2.98875Z"
+                      fill="#202020"/>
+            </svg>
+
+        </a>
+        <a class="gh-mobile-header__social-icon">
+            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.6498 17.9999V11.4074C18.6498 8.16739 17.9523 5.69238 14.1722 5.69238C12.3497 5.69238 11.1347 6.68239 10.6397 7.62739H10.5947V5.98488H7.0172V17.9999H10.7522V12.0374C10.7522 10.4624 11.0447 8.9549 12.9797 8.9549C14.8922 8.9549 14.9147 10.7324 14.9147 12.1274V17.9774H18.6498V17.9999Z"
+                      fill="#202020"/>
+                <path d="M0.941376 5.98511H4.67639V18.0002H0.941376V5.98511Z" fill="#202020"/>
+                <path d="M2.81031 0C1.6178 0 0.650299 0.967505 0.650299 2.16001C0.650299 3.35252 1.6178 4.34252 2.81031 4.34252C4.00282 4.34252 4.97032 3.35252 4.97032 2.16001C4.97032 0.967505 4.00282 0 2.81031 0Z"
+                      fill="#202020"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelector('.gh-header__burger-icon-mobile').addEventListener('click', (e) => {
+            document.querySelector('.gh-mobile-header').classList.add('gh-mobile-header--opened');
+        });
+        document.querySelector('.gh-mobile-header__close-icon').addEventListener('click', (e) => {
+            document.querySelector('.gh-mobile-header').classList.remove('gh-mobile-header--opened');
+        });
+    });
+</script>
+
+<main class="gh-main">
+    {% block content %}
+    {% endblock %}
+</main>
+
+{% include '@landing/layout/_footer.html.twig' %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('landing') }}
+{% endblock %}
+
+{% if not isTimezoneDetected() %}
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            const url = "{{ url(constant("\\App\\Landing\\Service\\RouteNames::SAVE_USER_TIMEZONE")) }}";
+            const params = {
+                tz
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            }).then(res => res.json())
+                .then(json => {
+                    if (typeof mustRestartPageAfterDetectingTz !== 'undefined' && mustRestartPageAfterDetectingTz) {
+                        window.location.reload();
+                    }
+                });
+        });
+    </script>
+{% endif %}
+
+{% if not jivochat_disabled %}
+    <script type="text/javascript">
+        {#setTimeout(() => {#}
+        {#    (function(w,d){#}
+        {#        w.HelpCrunch=function(){w.HelpCrunch.q.push(arguments)};w.HelpCrunch.q=[];#}
+        {#        function r(){var s=document.createElement('script');s.async=1;s.type='text/javascript';s.src='https://widget.helpcrunch.com/';(d.body||d.head).appendChild(s);}#}
+        {#        if(w.attachEvent){w.attachEvent('onload',r)}else{w.addEventListener('load',r,false)}#}
+        {#    })(window, document)#}
+
+        {#    HelpCrunch('init', 'goodhelp', {#}
+        {#        applicationId: 2,#}
+        {#        applicationSecret: 'WBVHH8b4QvOQws0widlrx8Fji11Zm2lai4jEMYoBrtATe023bq6vniWQDEWfTlXupz4cquUX0os7P0a/gJGn+g=='#}
+        {#    })#}
+
+        {#    HelpCrunch('showChatWidget');#}
+
+        {#    HelpCrunch('setPhraseList', '{{ app.request.locale }}');#}
+
+        {#    HelpCrunch('onCustomerMessage', function () {#}
+        {#        const firstMessageSentCookieKey = 'hc_fms_ck_dl_cam';#}
+        {#        if (!Cookies.get(firstMessageSentCookieKey)) {#}
+        {#            Cookies.set(firstMessageSentCookieKey, '1', { expires: 365 * 10 });#}
+
+        {#            gtag("event", "live_chat_first_message_sent", {#}
+        {#                'event_category': 'Conversions'#}
+        {#            });#}
+        {#        }#}
+        {#    });#}
+        {#}, 100);#}
+    </script>
+{% endif %}
+</body>
+</html>

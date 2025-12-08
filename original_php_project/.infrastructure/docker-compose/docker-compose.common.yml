@@ -1,0 +1,33 @@
+version: "2"
+
+services:
+    goodhelp_app_db:
+      image: mariadb:10.4
+      container_name: goodhelp-db
+      working_dir: /application
+      volumes:
+        - ../.db:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=goodhelp
+        - MYSQL_USER=goodhelp
+        - MYSQL_PASSWORD=goodhelp
+      ports:
+        - "3615:3306"
+
+    goodhelp_rabbitmq:
+      image: "rabbitmq:3-management"
+      container_name: goodhelp-rabbitmq
+      environment:
+        RABBITMQ_DEFAULT_USER: "rabbitmq"
+        RABBITMQ_DEFAULT_PASS: "rabbitmq"
+        RABBITMQ_DEFAULT_VHOST: "/"
+      ports:
+        - "16672:15672"
+        - "5772:5672"
+
+    goodhelp_redis:
+      image: bitnami/redis
+      container_name: goodhelp-redis
+      environment:
+        - REDIS_PASSWORD=goodhelp

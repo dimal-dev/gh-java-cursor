@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<footer th:fragment="footer" class="gh-footer">
+    <div class="gh-footer__content">
+        <div class="gh-footer__section">
+            <h4 th:text="#{Pages}">Pages</h4>
+            <ul>
+                <li><a th:href="@{/about}" th:text="#{About}">About</a></li>
+                <li><a th:href="@{/consultation-conditions}" th:text="#{Consultation_conditions}">Consultation conditions</a></li>
+            </ul>
+        </div>
+        <div class="gh-footer__section">
+            <h4 th:text="#{Other}">Other</h4>
+            <ul>
+                <li><a th:href="@{/terms-of-use}" th:text="#{Terms}">Terms</a></li>
+                <li><a th:href="@{/privacy}" th:text="#{Privacy_policy}">Privacy</a></li>
+                <li><a th:href="@{/refund-policy}" th:text="#{Refund}">Refund</a></li>
+            </ul>
+        </div>
+        <div class="gh-footer__section">
+            <h4 th:text="#{Contacts}">Contacts</h4>
+            <p><a href="mailto:info@goodhelp.com.ua">info@goodhelp.com.ua</a></p>
+        </div>
+    </div>
+    <div class="gh-footer__copyright">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> GoodHelp</p>
+    </div>
+</footer>
+</html>

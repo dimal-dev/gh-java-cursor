@@ -114,10 +114,49 @@ public record TherapistDashboardDto(
 ---
 
 ## Verification
-- [ ] Use cases are single-responsibility
-- [ ] Commands validated with Bean Validation
-- [ ] DTOs are immutable records
-- [ ] Use cases coordinate domain logic, don't contain it
+- [x] Use cases are single-responsibility
+- [x] Commands validated with Bean Validation
+- [x] DTOs are immutable records
+- [x] Use cases coordinate domain logic, don't contain it
+
+---
+
+## Status: ✅ COMPLETED (2024-12-08)
+
+### Files Created:
+
+**Commands (`com.goodhelp.therapist.application.command`):**
+- `RequestLoginCommand.java` - Login link request
+- `AuthenticateCommand.java` - Token authentication
+- `UpdateSlotCommand.java` - Slot status update
+- `ToggleSlotCommand.java` - Slot availability toggle
+- `SaveUserNotesCommand.java` - Client notes save
+- `CancelConsultationCommand.java` - Consultation cancellation
+- `UpdateSettingsCommand.java` - Settings update
+
+**Queries (`com.goodhelp.therapist.application.query`):**
+- `GetScheduleQuery.java` - Schedule retrieval
+- `GetClientsQuery.java` - Client list
+- `GetChatQuery.java` - Chat messages
+- `GetPaymentsHistoryQuery.java` - Payment history
+
+**DTOs (`com.goodhelp.therapist.application.dto`):**
+- `ScheduleSlotDto.java` - Slot data
+- `ClientDto.java` - Client data
+- `TherapistDashboardDto.java` - Dashboard summary
+- `TherapistDto.java` - Therapist data
+- `AuthenticationResultDto.java` - Auth result
+- `UserNotesDto.java` - Notes data
+- `PaymentHistoryItemDto.java` - Payment item
+
+**Use Cases (`com.goodhelp.therapist.application.usecase`):**
+- `AuthenticateTherapistUseCase.java` - Token auth
+- `RequestLoginLinkUseCase.java` - Login link
+- `GetScheduleUseCase.java` - Schedule retrieval
+- `ToggleSlotUseCase.java` - Slot toggle
+- `SaveUserNotesUseCase.java` - Save notes
+- `GetUserNotesUseCase.java` - Get notes
+- `UpdateSettingsUseCase.java` - Update settings
 
 ---
 

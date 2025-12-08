@@ -1,0 +1,138 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="gh-request-psiholog-success__container-outer">
+        <div class="gh-request-psiholog-success__container-inner">
+            <div class="gh-request-psiholog-success__soft-light"></div>
+            <div class="state-container" id="state-pending">
+                <h3 class="gh-request-psiholog-success__header">
+                    {{ 'Payment_system_is_processing'|trans|raw }}
+                </h3>
+                <div class="gh-request-psiholog-success__description">
+                    {{ 'Please_wait_it_takes_about_minute'|trans|raw }}
+                </div>
+            </div>
+            
+            <div class="state-container gh-d-none" id="state-approved">
+                <h3 class="gh-request-psiholog-success__header">
+                    {{ 'Payment_has_been_successful'|trans|raw }}
+                </h3>
+                <div class="gh-request-psiholog-success__description">
+                    <a href="" id="go-to-personal-cabinet-button" class="gh-button">
+                        {{ 'Redirecting_to_personal_cabinet'|trans|raw }}
+                    </a>
+                </div>
+            </div>
+            
+            <div class="state-container gh-d-none" id="state-failed">
+                <h3 class="gh-request-psiholog-success__header">
+                    {{ 'Payment_has_failed'|trans|raw }}
+                </h3>
+                <div class="gh-request-psiholog-success__description">
+                    {{ 'Please_try_again'|trans|raw }}
+                </div>
+            </div>
+            <div class="gh-request-psiholog-success__photo">
+                <img class="gh-img" src="{{ asset('img/checkout-thank-you-dima.jpg', 'landing') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const failedContainer = document.querySelector('#state-failed');
+            const approvedContainer = document.querySelector('#state-approved');
+            let checkingStateIntervalId;
+
+            async function get(url, data) {
+                url = `${url}`;
+                url += '?' + (new URLSearchParams(data)).toString();
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'include',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer'
+                });
+
+                if (!response.ok) {
+                    //todo: handle 401
+                    throw Error('Failed to complete post');
+                }
+
+                return response.json();
+            }
+
+            function show(el) {
+                for (const item of document.querySelectorAll(('.state-container'))) {
+                    item.classList.add('gh-d-none');
+                }
+                el.classList.remove('gh-d-none');
+            }
+
+            const checkState = () => {
+                const url = '{{ url(constant("\\App\\Landing\\Service\\RouteNames::CHECKOUT_THANK_YOU_CHECK_STATUS_AJAX")) }}';
+                const params = {
+                    "invoice": '{{ invoice }}'
+                };
+
+                const callback = (json) => {
+                    const state = json.state;
+                    if (!state) return;
+
+                    if (state === {{ constant("\\App\\Landing\\Controller\\CheckoutThankYouCheckStatusAjaxController::STATE_FAILED") }}) {
+                        show(failedContainer);
+                        stopCheckingState();
+                        gtag("event", "thank_you_page_payment_failed", {
+                            'event_category': 'Thank you page'
+                        });
+                    } else if (state === {{ constant("\\App\\Landing\\Controller\\CheckoutThankYouCheckStatusAjaxController::STATE_APPROVED") }}) {
+                        show(approvedContainer);
+                        stopCheckingState();
+
+                        document.querySelector('#go-to-personal-cabinet-button').setAttribute('href', json.l);
+                        // window.location.href = json.l;
+
+                        gtag("event", "purchase", {
+                            transaction_id: "{{ invoice }}",
+                            value: {{ price }},
+                            currency: "UAH",
+                            // coupon: "SUMMER_SALE",
+                            items: [
+                                {
+                                    item_name: "{{ psihologName }}",
+                                    // coupon: "SUMMER_FUN",
+                                    // currency: "USD",
+                                    // discount: 2.22,
+                                    // price: 9.99,
+                                    // quantity: 1
+                                },
+                                ]
+                        });
+                    }
+                };
+
+                get(url, params).then(callback).catch(reason => {
+
+                });
+            };
+
+            const startCheckingState = () => {
+                checkState();
+                checkingStateIntervalId = setInterval(checkState, 5000);
+            };
+
+            const stopCheckingState = () => {
+                if (checkingStateIntervalId) {
+                    clearInterval(checkingStateIntervalId);
+                }
+            };
+
+            startCheckingState();
+        });
+    </script>
+{% endblock %}

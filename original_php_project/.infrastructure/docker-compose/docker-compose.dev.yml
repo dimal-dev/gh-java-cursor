@@ -1,0 +1,26 @@
+version: "2"
+
+services:
+    goodhelp_nginx:
+      ports:
+        - "4333:80"
+      build:
+        args:
+          env: dev
+
+    goodhelp_php_fpm:
+      build:
+        args:
+          env: dev
+      volumes:
+         - ~/.composer/docker-cache/:/root/.composer:cached
+         - ../../:/application
+
+    goodhelp_redis:
+      ports:
+        - '7379:6379'
+
+networks:
+  default:
+    external:
+      name: goodhelp-network

@@ -1,0 +1,51 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'О сервисе'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div style="max-width: 60rem; margin: 2rem auto;">
+
+            {% if app.request.locale == 'ru' %}
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Физическое лицо предприниматель Лось Дмитрий Владимирович</font></font></span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Адрес: Украина, 14032, Украина, 14032, Черниговская обл., город Чернигов, УЛИЦА ГЕНЕРАЛА БЕЛОВА, дом 18, квартира 109</font></font></span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Код по ЕГРПОУ: 3296817850</font></font></span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">IBAN: UA513220010000026003320056004 в АО "УНИВЕРСАЛ БАНК"</font></font></span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">e-mail: goodhelpua@gmail.com</font></font></span>
+                </p>
+            {% else %}
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);">Фізична особа підприємець Лось Дмитро Володимирович</span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);">Адреса: Україна, 14032, Україна, 14032, Чернігівська обл., місто Чернігів, ВУЛИЦЯ ГЕНЕРАЛА БЄЛОВА, будинок 18, квартира 109</span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);">Код ЄДРПОУ: 3296817850</span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);">IBAN: UA513220010000026003320056004 в АТ "УНІВЕРСАЛ БАНК"</span>
+                </p>
+                <p style="line-height: 1.86; margin-top: 0pt; margin-right: 15pt; margin-bottom: 0pt; background-color: rgb(255, 255, 255); padding-left: 20px;">
+                    <span style="font-size: 15pt; font-family: Roboto, sans-serif; color: rgb(69, 69, 69);">e-mail: goodhelpua@gmail.com</span>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

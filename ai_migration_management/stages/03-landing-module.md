@@ -27,12 +27,12 @@ This stage implements the public-facing website including the home page, therapi
 
 | Sub-Stage | Description | Status |
 |-----------|-------------|--------|
-| 3.1 | Main layout template | NOT_STARTED |
-| 3.2 | Home page | NOT_STARTED |
-| 3.3 | Therapist list page | NOT_STARTED |
-| 3.4 | Therapist profile pages | NOT_STARTED |
-| 3.5 | Book consultation page | NOT_STARTED |
-| 3.6 | Checkout page | NOT_STARTED |
+| 3.1 | Main layout template | COMPLETED |
+| 3.2 | Home page | COMPLETED |
+| 3.3 | Therapist list page | COMPLETED |
+| 3.4 | Therapist profile pages | COMPLETED |
+| 3.5 | Book consultation page | COMPLETED |
+| 3.6 | Checkout page | COMPLETED |
 | 3.7 | Thank you page | NOT_STARTED |
 | 3.8 | Static pages | NOT_STARTED |
 | 3.9 | Request therapist form | NOT_STARTED |

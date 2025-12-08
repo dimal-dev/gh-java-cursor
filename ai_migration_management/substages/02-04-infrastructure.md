@@ -129,10 +129,38 @@ public class JpaTherapistRepository implements TherapistRepository {
 ---
 
 ## Verification
-- [ ] All JPA entities map correctly to database
-- [ ] Enum converters work for state fields
-- [ ] Domain repositories delegate to JPA repos
-- [ ] Mappers convert between domain and JPA entities
+- [x] All JPA entities map correctly to database
+- [x] Enum converters work for state fields
+- [x] Domain repositories delegate to JPA repos
+- [x] Domain entities already have JPA annotations (no separate JPA entities needed)
+
+## Implementation Notes
+
+Since domain entities already include JPA annotations (`@Entity`, `@Table`, etc.), we followed a streamlined approach:
+
+1. **Domain entities ARE the JPA entities** - No need for separate JPA entity classes
+2. **Spring Data JPA interfaces** - Extend `JpaRepository` for low-level data access
+3. **Repository adapters** - Implement domain repository interfaces and delegate to JPA repos
+
+### Created Files:
+
+**Therapist Module (`com.goodhelp.therapist.infrastructure.persistence`):**
+- `JpaTherapistRepository` - Spring Data interface for Therapist
+- `TherapistRepositoryAdapter` - Implements TherapistRepository
+- `JpaTherapistAutologinTokenRepository` - Spring Data interface for tokens
+- `TherapistAutologinTokenRepositoryAdapter` - Implements token repository
+- `JpaTherapistUserNotesRepository` - Spring Data interface for notes
+- `TherapistUserNotesRepositoryAdapter` - Implements notes repository
+- `JpaTherapistSettingsRepository` - Spring Data interface for settings
+- `TherapistSettingsRepositoryAdapter` - Implements settings repository
+
+**Booking Module (`com.goodhelp.booking.infrastructure.persistence`):**
+- `JpaScheduleSlotRepository` - Spring Data interface for slots
+- `ScheduleSlotRepositoryAdapter` - Implements ScheduleSlotRepository
+- `JpaTherapistPriceRepository` - Spring Data interface for prices
+- `TherapistPriceRepositoryAdapter` - Implements TherapistPriceRepository
+
+## Status: COMPLETED ✅
 
 ---
 

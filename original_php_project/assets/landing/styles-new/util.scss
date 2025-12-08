@@ -1,0 +1,156 @@
+.gh-img {
+  max-width: 100%;
+}
+
+.gh-text-color-carrot-1 {
+  color: $color-primary-carrot-1;
+}
+
+.gh-text-color-grey-4 {
+  color: $color-grey-4;
+}
+
+.gh-text-color-black-2 {
+  color: $color-black-2;
+}
+
+.gh-text-bold {
+  font-weight: 700;
+}
+
+.gh-d-flex {
+  display: flex;
+}
+
+.gh-align-items-center {
+  align-items: center;
+}
+
+.gh-order-md-1 {
+  @include mobile {
+    order: 1;
+  }
+}
+
+.gh-d-none {
+  display: none !important;
+
+}
+
+.gh-md-d-none {
+  @include mobile {
+    display: none;
+  }
+}
+
+.gh-ld-display {
+  display: none;
+
+  @include tablet-full {
+    display: initial !important;
+  }
+}
+
+.gh-ds-display {
+  display: none;
+
+  @include desktop-small {
+    display: initial !important;
+  }
+}
+
+.gh-ld-d-none {
+  @include tablet-full {
+    display: none;
+  }
+}
+
+.gh-container {
+  max-width: 117rem;
+  margin: 0 auto;
+
+  @include mobile {
+    max-width: 28.9rem;
+  }
+
+  @include tablet-full {
+    max-width: 69.1rem;
+  }
+}
+
+.gh-horizontal-divider {
+  height: .1rem;
+  width: 100%;
+  background-color: $color-grey-3;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  @include tablet-full {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @include mobile {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.gh-vertical-divider {
+  width: .1rem;
+  background-color: $color-grey-3;
+}
+
+.gh-display-only-desktop {
+  @include media(tablet-full, mobile) {
+    display: none !important;
+  }
+}
+
+.gh-mt-0 {
+  margin-top: 0 !important;
+}
+
+.gh-mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.gh-mb-1-5 {
+  margin-bottom: 1.5rem !important;
+}
+
+.gh-mb-2 {
+  margin-bottom: 2rem !important;
+}
+
+.gh-mt-1 {
+  margin-top: 1rem !important;
+}
+
+.gh-mt-1-5 {
+  margin-top: 1.5rem !important;
+}
+
+.gh-mt-2 {
+  margin-top: 2rem !important;
+}
+
+.gh-mt-3 {
+  margin-top: 3rem !important;
+}
+
+.gh-stretched-link {
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: "";
+  }
+}
+
+.gh-position-relative {
+  position: relative;
+}

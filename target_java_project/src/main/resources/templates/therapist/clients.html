@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.clients.title}">Clients - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page clients-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.clients.heading}">My Clients</h1>
+    </div>
+
+    <!-- Search box -->
+    <div class="search-box mb-4">
+        <input type="text" 
+               id="search-input" 
+               class="form-control" 
+               th:placeholder="#{therapist.clients.searchPlaceholder}"
+               placeholder="Search by name or email...">
+    </div>
+
+    <!-- Clients list table -->
+    <div class="clients-table-container">
+        <table class="clients-table" id="clients-table">
+            <thead>
+                <tr>
+                    <th th:text="#{therapist.clients.columnName}">Name</th>
+                    <th th:text="#{therapist.clients.columnSessions}">Sessions</th>
+                    <th th:text="#{therapist.clients.columnNextSession}">Next Session</th>
+                    <th th:text="#{therapist.clients.columnActions}">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="clients-body">
+                <tr class="loading-row">
+                    <td colspan="4">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <span th:text="#{common.loading}">Loading...</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Empty state (hidden by default) -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-state__icon">👥</div>
+        <h3 th:text="#{therapist.clients.empty.title}">No clients yet</h3>
+        <p th:text="#{therapist.clients.empty.description}">
+            Clients will appear here after they book consultations with you.
+        </p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" id="pagination" style="display: none;">
+        <button type="button" id="prev-page" class="btn btn-outline" disabled>&laquo; <span th:text="#{common.previous}">Previous</span></button>
+        <span id="page-info" class="page-info"></span>
+        <button type="button" id="next-page" class="btn btn-outline"><span th:text="#{common.next}">Next</span> &raquo;</button>
+    </div>
+
+    <!-- Client row template -->
+    <template id="client-row-template">
+        <tr class="client-row">
+            <td class="client-name-cell">
+                <span class="client-name"></span>
+                <span class="client-email text-muted"></span>
+            </td>
+            <td class="sessions-count"></td>
+            <td class="next-session"></td>
+            <td class="actions-cell">
+                <a href="#" class="btn btn-sm btn-outline notes-link" th:text="#{therapist.clients.viewNotes}">Notes</a>
+                <a href="#" class="btn btn-sm btn-outline chat-link" th:text="#{therapist.clients.openChat}">Chat</a>
+            </td>
+        </tr>
+    </template>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const tableBody = document.getElementById('clients-body');
+            const emptyState = document.getElementById('empty-state');
+            const pagination = document.getElementById('pagination');
+            const rowTemplate = document.getElementById('client-row-template');
+            const searchInput = document.getElementById('search-input');
+            const prevBtn = document.getElementById('prev-page');
+            const nextBtn = document.getElementById('next-page');
+            const pageInfo = document.getElementById('page-info');
+
+            let currentPage = 0;
+            let totalPages = 0;
+            let searchTimeout = null;
+
+            const messages = {
+                chatUrl: /*[[@{/therapist/chat}]]*/ '/therapist/chat',
+                notesUrl: /*[[@{/therapist/clients}]]*/ '/therapist/clients',
+                noNextSession: /*[[#{therapist.clients.noNextSession}]]*/ 'No scheduled session',
+                pageOf: /*[[#{therapist.clients.pageOf}]]*/ 'Page {page} of {total}'
+            };
+
+            async function loadClients(page = 0, search = '') {
+                try {
+                    tableBody.innerHTML = '<tr class="loading-row"><td colspan="4"><div class="loading-spinner"><div class="spinner"></div></div></td></tr>';
+                    
+                    const url = `/therapist/clients/list?page=${page}&perpage=20&search=${encodeURIComponent(search)}`;
+                    const response = await fetch(url);
+                    const result = await response.json();
+
+                    tableBody.innerHTML = '';
+
+                    if (!result.data || result.data.length === 0) {
+                        document.querySelector('.clients-table-container').style.display = 'none';
+                        pagination.style.display = 'none';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    document.querySelector('.clients-table-container').style.display = 'block';
+
+                    result.data.forEach(client => {
+                        const row = createClientRow(client);
+                        tableBody.appendChild(row);
+                    });
+
+                    // Update pagination
+                    currentPage = result.meta.page;
+                    totalPages = result.meta.totalPages;
+                    updatePagination(result.meta);
+
+                } catch (error) {
+                    console.error('Failed to load clients:', error);
+                    tableBody.innerHTML = '<tr><td colspan="4" class="error-message">Failed to load clients. Please refresh the page.</td></tr>';
+                }
+            }
+
+            function createClientRow(client) {
+                const template = rowTemplate.content.cloneNode(true);
+                const row = template.querySelector('.client-row');
+
+                // Name
+                row.querySelector('.client-name').textContent = client.name || 'клиент не указал';
+                
+                // Email
+                if (client.email) {
+                    row.querySelector('.client-email').textContent = client.email;
+                }
+
+                // Session count
+                row.querySelector('.sessions-count').textContent = client.consultationCount || 0;
+
+                // Next session
+                const nextSession = row.querySelector('.next-session');
+                if (client.lastConsultation) {
+                    nextSession.textContent = formatDateTime(client.lastConsultation);
+                } else {
+                    nextSession.textContent = messages.noNextSession;
+                    nextSession.classList.add('text-muted');
+                }
+
+                // Notes link
+                const notesLink = row.querySelector('.notes-link');
+                notesLink.href = messages.notesUrl + '/' + client.userId + '/notes';
+                if (client.hasNotes) {
+                    notesLink.classList.add('has-notes');
+                }
+
+                // Chat link
+                row.querySelector('.chat-link').href = messages.chatUrl + '?userId=' + client.userId;
+
+                return row;
+            }
+
+            function formatDateTime(dateTimeStr) {
+                const date = new Date(dateTimeStr);
+                return date.toLocaleDateString('uk-UA', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function updatePagination(meta) {
+                if (meta.totalPages <= 1) {
+                    pagination.style.display = 'none';
+                    return;
+                }
+
+                pagination.style.display = 'flex';
+                pageInfo.textContent = messages.pageOf
+                    .replace('{page}', meta.page + 1)
+                    .replace('{total}', meta.totalPages);
+
+                prevBtn.disabled = meta.page <= 0;
+                nextBtn.disabled = meta.page >= meta.totalPages - 1;
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    loadClients(0, this.value);
+                }, 300);
+            });
+
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    loadClients(currentPage - 1, searchInput.value);
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < totalPages - 1) {
+                    loadClients(currentPage + 1, searchInput.value);
+                }
+            });
+
+            // Initial load
+            document.addEventListener('DOMContentLoaded', () => loadClients());
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+
+<th:block layout:fragment="styles">
+    <style>
+        .clients-page .search-box {
+            max-width: 400px;
+        }
+
+        .clients-table-container {
+            overflow-x: auto;
+        }
+
+        .clients-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .clients-table th,
+        .clients-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .clients-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .client-row:hover {
+            background-color: #f9f9f9;
+        }
+
+        .client-name-cell {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .client-name {
+            font-weight: 500;
+        }
+
+        .client-email {
+            font-size: 0.85em;
+        }
+
+        .text-muted {
+            color: #888;
+        }
+
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        .actions-cell .btn {
+            margin-right: 8px;
+        }
+
+        .notes-link.has-notes {
+            background-color: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            padding: 16px;
+        }
+
+        .page-info {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .loading-row td {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state__icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+    </style>
+</th:block>
+</body>
+</html>
+

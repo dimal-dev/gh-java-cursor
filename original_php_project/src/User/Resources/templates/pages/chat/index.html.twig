@@ -1,0 +1,173 @@
+{% extends '@user/layout/main.html.twig' %}
+
+{% block content %}
+    {% if psihologList is not empty %}
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-xl-3">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body kt-portlet__body--fit-x" style="padding:0">
+                        <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-nav--lg-font kt-nav--v3" style="padding:0">
+                            {% for psiholog in psihologList %}
+                                <li class="kt-nav__item {{ psiholog.psiholog_id == selectedPsihologId ? 'active' : '' }}">
+                                    <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::CHAT'), {pid: psiholog.psiholog_id}) }}"
+                                       class="kt-nav__link ">
+                                    <span class="kt-nav__link-text">
+                                        <img class="psiholog-profile-img"
+                                             src="{{ getPsihologProfileSrc(psiholog.psiholog_id) }}"
+                                             alt="">
+                                        {{ getPsihologFullName(psiholog.psiholog_id) }}
+                                    </span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body row">
+                        <div class="col-12" id="chat-container">
+                            <div class="kt-notes">
+                                <div class="kt-notes__items">
+                                    <div id="chat-messages-container">
+                                        {% include '@user/pages/chat/chat_messages.html.twig' with {chatMessages: chatMessages} %}
+                                    </div>
+                                    <div id="send-message-container">
+                                        <div class="kt-notes__item">
+                                            <div class="kt-notes__media">
+                                                <span class="kt-notes__icon kt-font-boldest kt-hidden">
+                                                    <i class="flaticon2-cup"></i>
+                                                </span>
+                                                <span class="kt-notes__circle kt-hidden-"
+                                                      style="margin-top: 16px;"></span>
+                                            </div>
+                                            <div class="kt-notes__content" style="margin-top: -30px;">
+                                                <div class="kt-notes__section">
+                                                    <div class="kt-notes__info w-100">
+                                                        <form class="kt-form w-100" method="post"
+                                                              action="{{ url(constant('\\App\\User\\Service\\RouteNames::CHAT_SEND_MESSAGE')) }}"
+                                                              id="chat-message-form"
+                                                        >
+                                                            <input type="hidden" name="pid" value="{{ selectedPsihologId }}">
+                                                            <div class="chat-message-send-wrapper">
+                                                                <textarea class="form-control"
+                                                                          id="chat-message-body"
+                                                                          rows="3"
+                                                                          name="body"
+                                                                          placeholder="Написать психологу"></textarea>
+
+                                                                    <button type="submit"
+                                                                            id="chat-message-send-btn"
+                                                                            class="btn btn-brand">
+                                                                        Отправить
+                                                                    </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chatBottom"></div>
+    {% endif %}
+
+    <script>
+        const chatMessagesContainer = document.querySelector('#chat-messages-container');
+
+        const scrollChatToBottom = (el) => {
+            setTimeout(() => {
+                el.scrollTop = el.scrollHeight;
+            }, 0);
+        };
+
+        scrollChatToBottom(document.querySelector('#chat-container'));
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            let latestChatMessageId = {{ latestChatMessageId }};
+
+            const fetchAndRenderMessages = () => {
+                const url = '{{ url(constant('\\App\\User\\Service\\RouteNames::CHAT_GET_MESSAGES_AJAX')) }}';
+                const callback = (json) => {
+                    if (json.messagesHtml.length > 0) {
+                        $(chatMessagesContainer).append(json.messagesHtml);
+                    }
+                    if (json.latestChatMessageId > 0) {
+                        latestChatMessageId = json.latestChatMessageId;
+                    }
+                };
+                const params = {
+                    latestChatMessageId: latestChatMessageId,
+                    pid: {{ selectedPsihologId }}
+                };
+
+                $.get(url, params, callback, 'json');
+            };
+
+            setInterval(fetchAndRenderMessages, 10 * 1000);
+
+            $('#chat-message-form').submit(function () {
+                $('#chat-message-send-btn').attr('disabled', 'disabled');
+            });
+        });
+    </script>
+
+    <style>
+        .ms-auto {
+            margin-left: auto;
+        }
+
+        .kt-notes .kt-notes__items .kt-notes__item:not(:last-child) {
+            padding-bottom: 20px;
+        }
+
+        .psiholog-profile-img {
+            border-radius: 50%;
+            width: 3rem;
+        }
+
+        #chat-container {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        #chat-message-body {
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 68px;
+        }
+
+        .chat-message-send-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #chat-message-send-btn {
+            margin-left: 15px;
+        }
+
+        #send-message-container > .kt-notes__item {
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .chat-message-send-wrapper {
+                flex-direction: column;
+            }
+
+            #chat-message-send-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+    </style>
+{% endblock %}

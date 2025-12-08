@@ -124,11 +124,24 @@ public record UserNotesDto(
 ---
 
 ## Verification
-- [ ] Clients list loads with pagination
-- [ ] Search filters clients
-- [ ] Notes page shows existing notes
-- [ ] Can save/update notes
-- [ ] Empty notes handled properly
+- [x] Clients list loads with pagination
+- [x] Search filters clients
+- [x] Notes page shows existing notes
+- [x] Can save/update notes
+- [x] Empty notes handled properly
+
+## Implementation Summary (Completed 2024-12-08)
+
+**Files Created:**
+- `GetClientsUseCase.java` - Use case for fetching paginated client list with search
+- `TherapistClientsController.java` - Controller with all endpoints
+- `clients.html` - Thymeleaf template with AJAX-loaded table
+- `user-notes.html` - Form template for editing client notes
+
+**Files Modified:**
+- `TherapistRepository.java` - Added `existsById()` method
+- `TherapistRepositoryAdapter.java` - Implemented `existsById()`
+- `messages.properties`, `messages_uk.properties`, `messages_ru.properties` - Added i18n
 
 ---
 

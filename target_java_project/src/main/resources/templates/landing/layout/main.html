@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="facebook-domain-verification" content="ajfkivuf06pbclw682k901t9uutboi" />
+    
+    <!-- SEO Meta -->
+    <title layout:title-pattern="$CONTENT_TITLE | GoodHelp">GoodHelp</title>
+    <meta name="description" th:content="${metaDescription != null} ? ${metaDescription} : #{landing.defaultDescription}">
+    <link rel="canonical" th:href="${canonicalUrl}">
+    
+    <!-- Alternate languages -->
+    <link rel="alternate" th:href="${ukUrl}" hreflang="x-default">
+    <link rel="alternate" th:href="${ukUrl}" hreflang="uk">
+    <link rel="alternate" th:href="${ruUrl}" hreflang="ru">
+    <link rel="alternate" th:href="${enUrl}" hreflang="en">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/favicon/apple-touch-icon.png}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" th:href="@{/css/landing/main.css}">
+    
+    <!-- Additional head content -->
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+    <!-- Desktop Header -->
+    <header class="gh-header" th:classappend="${headerWithoutShadow} ? '' : 'gh-header--with-shadow'">
+        <a th:href="@{/}" class="gh-header__logo">
+            <img class="gh-img" th:src="@{/img/logo/logo-olive.svg}" alt="GoodHelp">
+        </a>
+        
+        <nav class="gh-header__nav">
+            <ul class="gh-header__nav-menu">
+                <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/therapist-list')} ? 'active' : ''">
+                    <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       th:text="#{our_specialists}">Our Specialists</a>
+                </li>
+                <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/blog')} ? 'active' : ''">
+                    <a th:href="@{/{lang}/blog(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       th:text="#{Blog}">Blog</a>
+                </li>
+                <li>
+                    <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
+                       th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/user/dashboard}" th:text="#{landing.header.user_dashboard}">My Cabinet</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/user/login}" th:text="#{landing.header.user_login}">Login</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="gh-header__lang-and-select-block-container">
+            <!-- Language Picker -->
+            <div class="gh-header__lang-picker" th:replace="~{landing/fragments/language-switcher :: switcher}"></div>
+            
+            <!-- CTA Button -->
+            <div class="gh-header__select-psiholog-btn-container">
+                <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                   class="select-psiholog-btn select-psiholog-btn--no-shadow select-psiholog-btn--header gh-button"
+                   th:text="#{landing.request_psiholog}">
+                    Find a Psychologist
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Toggle -->
+        <div class="gh-header__burger-icon-mobile" id="mobile-menu-toggle">
+            <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.481934" width="20" height="2" rx="1" fill="#202020"/>
+                <rect x="0.481934" y="8" width="20" height="2" rx="0.999999" fill="#202020"/>
+                <rect x="5.48193" y="16" width="15" height="2" rx="1" fill="#202020"/>
+            </svg>
+        </div>
+    </header>
+    
+    <!-- Mobile Header/Menu -->
+    <div class="gh-mobile-header" id="mobile-header">
+        <div class="gh-mobile-header__close-icon" id="mobile-menu-close">
+            <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32.8245" height="3" rx="1.5" transform="matrix(0.695973 0.718068 -0.695973 0.718068 1.99998 0)" fill="#EF9665"/>
+                <rect width="32.7942" height="3" rx="1.5" transform="matrix(0.695973 -0.718068 0.695973 0.718068 1.52588e-05 24)" fill="#EF9665"/>
+            </svg>
+        </div>
+        
+        <div class="gh-mobile-header__menu">
+            <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="gh-mobile-header__menu-item"
+               th:text="#{our_specialists}">Our Specialists</a>
+            <a th:href="@{/{lang}/blog(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="gh-mobile-header__menu-item"
+               th:text="#{Blog}">Blog</a>
+            <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
+               class="gh-mobile-header__menu-item"
+               th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+            <a sec:authorize="isAuthenticated()" 
+               th:href="@{/user/dashboard}" 
+               class="gh-mobile-header__menu-item"
+               th:text="#{landing.header.user_dashboard}">My Cabinet</a>
+            <a sec:authorize="!isAuthenticated()" 
+               th:href="@{/user/login}" 
+               class="gh-mobile-header__menu-item"
+               th:text="#{landing.header.user_login}">Login</a>
+        </div>
+        
+        <div>
+            <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="select-psiholog-btn gh-button"
+               th:text="#{landing.request_psiholog}">
+                Find a Psychologist
+            </a>
+        </div>
+        
+        <!-- Mobile Language Picker -->
+        <div class="gh-header__lang-picker gh-header__lang-picker--mobile" 
+             th:replace="~{landing/fragments/language-switcher :: switcher-mobile}"></div>
+        
+        <!-- Social Icons -->
+        <div class="gh-mobile-header__social">
+            <a href="https://www.instagram.com/goodhelp.ua/" class="gh-mobile-header__social-icon" target="_blank">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.9824 5.29205C17.9402 4.33564 17.7855 3.67812 17.564 3.10836C17.3354 2.50359 16.9838 1.96213 16.5231 1.51201C16.073 1.05489 15.5279 0.699691 14.9302 0.474702C14.3571 0.253147 13.703 0.0984842 12.7466 0.0563159C11.7831 0.0105764 11.4772 0 9.03334 0C6.5895 0 6.28361 0.0105764 5.32363 0.0527447C4.36722 0.0949129 3.7097 0.249713 3.14009 0.471131C2.53517 0.699691 1.99371 1.05132 1.5436 1.51201C1.08648 1.96213 0.731414 2.50716 0.506288 3.10493C0.284733 3.67812 0.13007 4.33207 0.0879016 5.28848C0.0421621 6.25203 0.0315857 6.55792 0.0315857 9.00176C0.0315857 11.4456 0.0421621 11.7515 0.0843304 12.7115C0.126499 13.6679 0.281299 14.3254 0.502854 14.8952C0.731414 15.4999 1.08648 16.0414 1.5436 16.4915C1.99371 16.9486 2.53874 17.3038 3.13652 17.5288C3.7097 17.7504 4.36365 17.905 5.3202 17.9472C6.28004 17.9895 6.58607 17.9999 9.02991 17.9999C11.4737 17.9999 11.7796 17.9895 12.7396 17.9472C13.696 17.905 14.3535 17.7504 14.9232 17.5288C16.1329 17.0611 17.0893 16.1047 17.557 14.8952C17.7784 14.322 17.9332 13.6679 17.9753 12.7115C18.0175 11.7515 18.0281 11.4456 18.0281 9.00176C18.0281 6.55792 18.0245 6.25203 17.9824 5.29205Z" fill="#202020"/>
+                    <path d="M9.03331 4.37769C6.48055 4.37769 4.40936 6.44874 4.40936 9.00163C4.40936 11.5545 6.48055 13.6256 9.03331 13.6256C11.5862 13.6256 13.6573 11.5545 13.6573 9.00163C13.6573 6.44874 11.5862 4.37769 9.03331 4.37769Z" fill="white"/>
+                    <path d="M14.9197 4.19496C14.9197 4.79108 14.4364 5.27444 13.8401 5.27444C13.244 5.27444 12.7607 4.79108 12.7607 4.19496C12.7607 3.5987 13.244 3.11548 13.8401 3.11548C14.4364 3.11548 14.9197 3.5987 14.9197 4.19496Z" fill="white"/>
+                </svg>
+            </a>
+            <a href="https://www.facebook.com/goodhelpua" class="gh-mobile-header__social-icon" target="_blank">
+                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.18211 2.98875H9.82536V0.12675C9.54186 0.08775 8.56686 0 7.43137 0C5.06212 0 3.43912 1.49025 3.43912 4.22925V6.75H0.824615V9.9495H3.43912V18H6.64461V9.95025H9.15336L9.55161 6.75075H6.64387V4.5465C6.64462 3.62175 6.89361 2.98875 8.18211 2.98875Z" fill="#202020"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/goodhelpua/" class="gh-mobile-header__social-icon" target="_blank">
+                <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.6498 17.9999V11.4074C18.6498 8.16739 17.9523 5.69238 14.1722 5.69238C12.3497 5.69238 11.1347 6.68239 10.6397 7.62739H10.5947V5.98488H7.0172V17.9999H10.7522V12.0374C10.7522 10.4624 11.0447 8.9549 12.9797 8.9549C14.8922 8.9549 14.9147 10.7324 14.9147 12.1274V17.9774H18.6498V17.9999Z" fill="#202020"/>
+                    <path d="M0.941376 5.98511H4.67639V18.0002H0.941376V5.98511Z" fill="#202020"/>
+                    <path d="M2.81031 0C1.6178 0 0.650299 0.967505 0.650299 2.16001C0.650299 3.35252 1.6178 4.34252 2.81031 4.34252C4.00282 4.34252 4.97032 3.35252 4.97032 2.16001C4.97032 0.967505 4.00282 0 2.81031 0Z" fill="#202020"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="gh-main" layout:fragment="content">
+        <p>Content goes here</p>
+    </main>
+    
+    <!-- Footer -->
+    <footer th:replace="~{landing/fragments/footer :: footer}"></footer>
+    
+    <!-- Scripts -->
+    <script th:src="@{/js/landing/main.js}"></script>
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const menuClose = document.getElementById('mobile-menu-close');
+            const mobileHeader = document.getElementById('mobile-header');
+            
+            if (menuToggle && mobileHeader) {
+                menuToggle.addEventListener('click', function() {
+                    mobileHeader.classList.add('gh-mobile-header--opened');
+                });
+            }
+            
+            if (menuClose && mobileHeader) {
+                menuClose.addEventListener('click', function() {
+                    mobileHeader.classList.remove('gh-mobile-header--opened');
+                });
+            }
+        });
+    </script>
+    
+    <!-- Timezone detection -->
+    <script th:if="${!timezoneDetected}">
+        document.addEventListener('DOMContentLoaded', function() {
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            fetch('/api/save-timezone', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tz: tz })
+            });
+        });
+    </script>
+    
+    <!-- Additional scripts -->
+    <th:block layout:fragment="scripts"></th:block>
+</body>
+</html>
+

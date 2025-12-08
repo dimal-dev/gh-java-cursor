@@ -1,0 +1,16 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp: asset('img/profile/0001-alice-chizikova/002-alice-chizikova.webp', 'landing'),
+            fallback:  asset('img/profile/0001-alice-chizikova/002-alice-chizikova.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0001-alice-chizikova/001-alice-chizikova.webp', 'landing'),
+            fallback:  asset('img/profile/0001-alice-chizikova/001-alice-chizikova.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0001-alice-chizikova/003-alice-chizikova.webp', 'landing'),
+            fallback:  asset('img/profile/0001-alice-chizikova/003-alice-chizikova.jpg', 'landing'),
+        },
+    ]
+} %}

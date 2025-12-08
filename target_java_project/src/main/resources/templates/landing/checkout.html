@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{Consultation_booking} + ' | GoodHelp'">Consultation booking | GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/checkout.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="gh-checkout">
+        <h1 class="gh-checkout__h1" th:text="#{Consultation_booking}">Consultation booking</h1>
+
+        <div class="gh-checkout__prepayment" th:text="#{Need_to_make_prepayment}">
+            You need to make a prepayment so the selected time is reserved for you
+        </div>
+
+        <div class="gh-checkout__prepayment-description" th:text="#{After_successful_prepayment_what_happens}">
+            After successful prepayment, the therapist will send you instructions
+        </div>
+
+        <div class="gh-checkout__summary-container">
+            <div class="gh-checkout__summary">
+                <div class="gh-avatar">
+                    <img class="gh-img"
+                         th:src="${checkout.therapist().photoUrl()}"
+                         th:alt="${checkout.therapist().fullName()}">
+                </div>
+
+                <div class="gh-checkout__summary-info">
+                    <div class="gh-checkout__summary-name" th:text="${checkout.therapist().fullName()}">Therapist</div>
+                    <div class="gh-checkout__summary-trait" th:text="#{${checkout.therapist().singlePhraseKey()}}">Trait</div>
+
+                    <div class="gh-horizontal-divider"></div>
+
+                    <div class="gh-checkout__summary-session">
+                        <div class="gh-checkout__summary-session-header" th:text="#{Session_info}">Session info</div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label" th:text="#{Session_type} + ':'">Session type:</div>
+                            <div class="gh-checkout__summary-session-row-value"
+                                 th:text="#{${checkout.therapist().sessionTypeLabelKey()}}">Individual</div>
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label" th:text="#{Time} + ':'">Time:</div>
+                            <div class="gh-checkout__summary-session-row-value"
+                                 th:text="${checkout.session().dayOfMonth()} + ' ' + ${checkout.session().monthLabel()} + ', ' + ${checkout.session().dayFull()} + ' ' + #{at} + ' ' + ${checkout.session().time()}">
+                                12 March, Sunday at 14:00
+                            </div>
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label" th:text="#{Session_duration} + ':'">Duration:</div>
+                            <div class="gh-checkout__summary-session-row-value"
+                                 th:text="${checkout.therapist().sessionDurationMinutes()} + ' ' + #{minutes}">50 minutes</div>
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label" th:text="#{Timezone} + ':'">Timezone:</div>
+                            <div class="gh-checkout__summary-session-row-value"
+                                 th:text="${checkout.session().timezoneLabel()}">UTC+2</div>
+                        </div>
+                    </div>
+
+                    <div class="gh-horizontal-divider"></div>
+
+                    <div class="gh-checkout__summary-price">
+                        <div class="gh-checkout__summary-price-header" th:text="#{Consultation_price}">Consultation price</div>
+
+                        <div class="gh-checkout__summary-old-price-content"
+                             th:if="${checkout.price().hasDiscount()}">
+                            <div class="gh-checkout__summary-old-price-value"
+                                 th:text="${#numbers.formatInteger(checkout.price().basePrice())}">800</div>
+                            <div class="gh-checkout__summary-old-price-currency"
+                                 th:text="${checkout.price().currencySymbol()}">₴</div>
+                        </div>
+
+                        <div class="gh-checkout__summary-price-content">
+                            <div class="gh-checkout__summary-price-value"
+                                 th:text="${#numbers.formatInteger(checkout.price().finalPrice())}">700</div>
+                            <div class="gh-checkout__summary-price-currency"
+                                 th:text="${checkout.price().currencySymbol()}">₴</div>
+                        </div>
+
+                        <div class="gh-checkout__summary-promo-info"
+                             th:if="${checkout.price().hasDiscount()}"
+                             th:text="#{Promocode_applied} + ' ' + ${checkout.price().promocodeCode()}">
+                            Promocode applied PROMO
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="payment-form"
+                  method="POST"
+                  th:action="${payment.actionUrl()}"
+                  accept-charset="UTF-8"
+                  class="gh-checkout__pay-btn-wrapper">
+                <input type="hidden" name="merchantAccount" th:value="${payment.merchantAccount()}">
+                <input type="hidden" name="merchantDomainName" th:value="${payment.merchantDomain()}">
+                <input type="hidden" name="orderReference" th:value="${payment.orderReference()}">
+                <input type="hidden" name="orderDate" th:value="${payment.orderDate()}">
+                <input type="hidden" name="amount" th:value="${payment.amount()}">
+                <input type="hidden" name="currency" th:value="${payment.currency()}">
+                <input type="hidden" name="productName[]" th:value="${payment.productName()}">
+                <input type="hidden" name="productPrice[]" th:value="${payment.productPrice()}">
+                <input type="hidden" name="productCount[]" value="1">
+                <input type="hidden" name="clientFirstName" th:value="${checkout.client().name()}">
+                <input type="hidden" name="clientEmail" th:value="${checkout.client().email()}">
+                <input type="hidden" name="clientPhone" th:value="${checkout.client().phone()}">
+                <input type="hidden" name="returnUrl" th:value="${payment.returnUrl()}">
+                <input type="hidden" name="serviceUrl" th:value="${payment.serviceUrl()}">
+                <input type="hidden" name="merchantSignature" th:value="${payment.signature()}">
+
+                <button type="submit" class="gh-button">
+                    <span th:text="#{Prepay_and_book}">Prepay and book</span>
+                </button>
+            </form>
+
+            <div class="gh-checkout__agree-with-terms" th:text="#{I_agree_clicking_that_button}">
+                By clicking you confirm you are 18 and agree to the Terms of Use.
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/landing/checkout.js}"></script>
+</main>
+</body>
+</html>
+

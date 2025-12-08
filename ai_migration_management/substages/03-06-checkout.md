@@ -3,6 +3,8 @@
 ## Goal
 Implement checkout page with payment form and WayForPay integration.
 
+**Status:** COMPLETED (2025-12-08)
+
 ---
 
 ## Routes
@@ -152,12 +154,12 @@ public class Checkout {
 ---
 
 ## Verification
-- [ ] Checkout created from booking form
-- [ ] Order summary displayed correctly
-- [ ] Payment form has correct fields
-- [ ] Signature generated correctly
-- [ ] Form submits to WayForPay
-- [ ] Checkout resumable via slug
+- [x] Checkout created from booking form
+- [x] Order summary displayed correctly
+- [x] Payment form has correct fields
+- [x] Signature generated correctly
+- [x] Form submits to WayForPay
+- [x] Checkout resumable via slug
 
 ---
 

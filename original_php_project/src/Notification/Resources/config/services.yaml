@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+
+  App\Notification\:
+    resource: '%kernel.project_dir%/src/Notification/*'
+    exclude: '%kernel.project_dir%/src/Notification/{DependencyInjection,Entity,Migrations,Tests}'
+
+  Telegram\Bot\Api:
+    arguments:
+      - '%env(TELEGRAM_API_TOKEN)%'
+
+  sendpulse.file-storage:
+    class: Sendpulse\RestApi\Storage\FileStorage
+    arguments:
+      - '%kernel.build_dir%'
+
+  Sendpulse\RestApi\ApiClient:
+    arguments:
+      - '%env(SENDPULSE_USER_ID)%'
+      - '%env(SENDPULSE_TOKEN)%'
+      - '@sendpulse.file-storage'

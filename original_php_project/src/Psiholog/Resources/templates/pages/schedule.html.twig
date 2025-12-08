@@ -1,0 +1,211 @@
+{% extends '@psiholog/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+
+            <div class="kt_datatable text-left" id="schedule"></div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Class definition
+            var datatable;
+
+            $('.kt_datatable').on('submit', '.cancel-schedule', function(e) {
+                const $this = $(this);
+                const consultationTs = parseInt($this.attr('data-available-at-ts-utc'));
+                const currentTs = Math.floor(((new Date).getTime() + (new Date()).getTimezoneOffset()) / 1000)
+                const delta = (consultationTs - currentTs);
+                const minimumDelta = {{ constant('\\App\\Common\\Service\\ConsultationAllowedCancelTimeChecker::MINIMUM_DELTA') }};
+                const willCharge = delta < minimumDelta;
+
+                if (willCharge) {
+                    if (!confirm("Осталось меньше чем 24 часа до консультации. В этом случае при отмене по условиям вы заплатите штраф. Вы все равно хотите отменить?")) {
+                        e.preventDefault();
+                        return;
+                    }
+                    console.log('willCharge');
+                } else {
+                    if (!confirm("Вы уверены что хотите отменить консультацию?")) {
+                        e.preventDefault();
+                        return;
+                    }
+                    console.log('willNotCharge');
+                }
+
+                const submitBtn = $this.find('.cancel-schedule-submit-btn');
+                submitBtn.attr('disabled', 'disabled');
+                submitBtn.prepend(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;`);
+            });
+
+            var KTUsersListDatatable = function() {
+                var init = function() {
+
+                    datatable = $('.kt_datatable').KTDatatable({
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    url: '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::SCHEDULE_LIST_AJAX')) }}',
+                                    method: 'GET',
+                                    timeout: 30000
+                                },
+                            },
+                            pageSize: 50,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                        },
+                        layout: {
+                            scroll: false,
+                            footer: false,
+                            spinner: {
+                                message: '{{ 'Please wait'|trans({}, 'userspace') }}',
+                            }
+                        },
+                        translate: {
+                            records: {
+                                noRecords: 'Пока встреч нет',
+                            },
+                            toolbar: {
+                                pagination: {
+                                    items: {
+                                        info: '{{ "Displaying {{start}} - {{end}} of {{total}} records"|trans({}, 'userspace') }}',
+                                        default: {
+                                            first: '{{ 'First'|trans({}, 'userspace') }}',
+                                            prev: '{{ 'Previous'|trans({}, 'userspace') }}',
+                                            next: '{{ 'Next'|trans({}, 'userspace') }}',
+                                            last: '{{ 'Last'|trans({}, 'userspace') }}',
+                                            more: '{{ 'More pages'|trans({}, 'userspace') }}',
+                                            input: '{{ 'Page number'|trans({}, 'userspace') }}',
+                                            select: '{{ 'Select page size'|trans({}, 'userspace') }}'
+                                        },
+                                    }
+                                }
+                            }
+                        },
+                        sortable: false,
+                        pagination: true,
+                        columns: [
+                            {
+                                field: 'chat',
+                                title: 'Чат',
+                                template: (row) => {
+                                    const urlPart = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::CHAT')) }}';
+                                    let name = row.full_name;
+                                    let html = `
+
+                                        <a href="${urlPart}?userId=${row.user_id}" class="kt-link kt-link--brand" target="_blank">
+                                             Открыть чат
+                                        </a>
+                                    `;
+
+                                    if (row.psiholog_user_notes_name.length > 0) {
+                                        name += ' / ' + row.psiholog_user_notes_name;
+                                    }
+
+                                    if (name.length < 1) {
+                                        const url = `{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::USER_NOTES')) }}?userId=${row.user_id}`;
+                                        html = `<a class="btn btn-brand btn-sm" href="${url}">Назвать клиента</a>&nbsp;&nbsp;` + html;
+                                    } else {
+                                        if (row.is_full_name_set_by_user != 1 && row.full_name && row.full_name.length > 0) {
+                                            name = `Возможное имя пользователя (мы определили, а не он сам поставил): <br> ${name}`;
+                                        } else {
+                                            name = `<b>${name}</b>`;
+                                        }
+
+                                        html = name + html;
+                                    }
+
+                                    return html;
+                                },
+                            },
+                            {
+                                field: 'available_at_label',
+                                title: 'Дата встречи',
+                                template: (row) => {
+                                    return `<div class="next_session_at">${row.available_at_label}</div>`;
+                                },
+                            },
+                            {
+                                field: 'type',
+                                title: 'Тип консультации',
+                                template: (row) => {
+                                    if (row.type == '{{ constant('\\App\\User\\Entity\\UserConsultation::TYPE_INDIVIDUAL') }}') {
+                                        return 'Индивидуальная<br>(50 минут)';
+                                    } else if (row.type == '{{ constant('\\App\\User\\Entity\\UserConsultation::TYPE_COUPLE') }}') {
+                                        return 'Парная/Семейная<br>(80 минут)';
+                                    }
+
+                                    return 'Тут что-то пошло не так, напишите Диме';
+                                },
+                            },
+                            {
+                                field: 'user_notes',
+                                title: 'Пометки',
+                                template: (row) => {
+                                    const urlPart = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::USER_NOTES')) }}';
+                                    return `
+                                        <a href="${urlPart}?userId=${row.user_id}" class="btn btn-brand btn-sm">Изменить имя клиента</a>
+                                    `;
+                                },
+                            },
+                            {
+                                field: 'cancel',
+                                title: 'Отменить',
+                                template: (row) => {
+                                    let html = `
+<form class="cancel-schedule" method="post" action="{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::CANCEL_CONSULTATION')) }}"
+data-available-at-ts-utc="${row.available_at_timestamp_utc}"
+>
+    <input type="hidden" name="user_consultation_id" value="${row.id}" />
+<button type="submit" class="btn btn-danger  btn-sm cancel-schedule-submit-btn">Отменить</button>
+</form>
+                                    `;
+
+                                    return html;
+                                },
+                            },
+                            {
+                                field: 'id',
+                                title: 'ID',
+                                type: 'number',
+                                selector: false,
+                                textAlign: 'center',
+                            },
+                        ],
+
+                    });
+                };
+
+                return {
+                    // public functions
+                    init: function() {
+                        init();
+                    },
+                };
+            }();
+
+            jQuery(document).ready(function() {
+                KTUsersListDatatable.init();
+            });
+        });
+    </script>
+
+    <style>
+        .kt-datatable.kt-datatable--default > .kt-datatable__table {
+            overflow: auto;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head, .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__foot {
+            overflow: initial;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {
+            overflow: initial;
+        }
+    </style>
+{% endblock %}

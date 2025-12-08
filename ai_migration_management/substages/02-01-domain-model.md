@@ -98,10 +98,40 @@ See `02-ENTITY-MAPPING.md` for complete field mapping.
 ---
 
 ## Verification
-- [ ] All entities compile without errors
-- [ ] Value objects are immutable (records or final fields)
-- [ ] Enums have proper value mapping for JPA
-- [ ] Business logic in domain, not in services
+- [x] All entities compile without errors
+- [x] Value objects are immutable (records or final fields)
+- [x] Enums have proper value mapping for JPA
+- [x] Business logic in domain, not in services
+
+---
+
+## Status: ✅ COMPLETED (2024-12-08)
+
+### Files Created:
+
+**Shared Value Objects (`com.goodhelp.shared.domain.valueobject`):**
+- `Email.java` - Validated email address
+- `Money.java` - Monetary amounts with currency operations
+- `TimeSlot.java` - Time period for scheduling
+
+**Therapist Domain (`com.goodhelp.therapist.domain.model`):**
+- `Therapist.java` - Aggregate root
+- `TherapistProfile.java` - Embedded value object
+- `TherapistSettings.java` - Settings entity
+- `TherapistAutologinToken.java` - Auth token entity
+- `TherapistUserNotes.java` - Client notes entity
+- `TherapistRole.java` - Enum (THERAPIST, TEST_THERAPIST)
+- `TherapistStatus.java` - Enum (ACTIVE)
+- `Sex.java` - Enum (FEMALE, MALE)
+- JPA Converters for all enums
+
+**Booking Domain (`com.goodhelp.booking.domain.model`):**
+- `ScheduleSlot.java` - Time slot entity with rich behavior
+- `TherapistPrice.java` - Pricing entity
+- `SlotStatus.java` - Enum (AVAILABLE, BOOKED, etc.)
+- `PriceType.java` - Enum (INDIVIDUAL, COUPLE)
+- `PriceState.java` - Enum (CURRENT, PAST, UNLISTED)
+- JPA Converters for all enums
 
 ---
 

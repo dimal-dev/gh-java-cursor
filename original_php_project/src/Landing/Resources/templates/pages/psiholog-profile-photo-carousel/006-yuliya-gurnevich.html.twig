@@ -1,0 +1,16 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp: asset('img/profile/0006-yuliya-gurnevich/001-yuliya-gurnevich.webp', 'landing'),
+            fallback:  asset('img/profile/0006-yuliya-gurnevich/001-yuliya-gurnevich.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0006-yuliya-gurnevich/002-yuliya-gurnevich.webp', 'landing'),
+            fallback:  asset('img/profile/0006-yuliya-gurnevich/002-yuliya-gurnevich.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0006-yuliya-gurnevich/003-yuliya-gurnevich.webp', 'landing'),
+            fallback:  asset('img/profile/0006-yuliya-gurnevich/003-yuliya-gurnevich.jpg', 'landing'),
+        },
+    ]
+} %}

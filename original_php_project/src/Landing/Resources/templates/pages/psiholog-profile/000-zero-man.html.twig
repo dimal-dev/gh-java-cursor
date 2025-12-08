@@ -1,0 +1,39 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    Семейный психолог, психолог для пар. Подростковый психолог. GoodHelp
+{% endblock %}
+
+{% block meta_tags %}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block content %}
+    <div class="profile">
+        <div class="container-lg pt-5" style="max-width: 1140px">
+            <div class="row">
+                <div class="col-sm-5">
+                    {% include '@landing/pages/psiholog-profile-photo-carousel/' ~ psihologProfile.profileTemplate ~ '.html.twig' %}
+                </div>
+                <div class="col-sm-7">
+                    {% include '@landing/partials/psiholog-profile/_name-and-price.html.twig' with {
+                        name: psihologProfile.firstName ~ " " ~ psihologProfile.lastName,
+                        price: priceIndividual.price,
+                        currency: 'грн'
+                    } %}
+
+
+                    {% include '@landing/partials/psiholog-profile/_book-consultation-btn.html.twig' %}
+                </div>
+            </div>
+
+            {% include '@landing/partials/psiholog-profile/_failed-to-book.html.twig' %}
+
+            <div class="row">
+                <div class="col-12">
+                    {% include '@landing/partials/psiholog-profile/_book-consultation.html.twig' with {schedule: schedule} %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

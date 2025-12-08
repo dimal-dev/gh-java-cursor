@@ -1,0 +1,612 @@
+/* ===========================================
+   GoodHelp - Therapist Cabinet Styles
+   =========================================== */
+
+:root {
+    --cabinet-sidebar-width: 260px;
+    --cabinet-bg: #f5f7fa;
+    --cabinet-sidebar-bg: #1a1d2e;
+    --cabinet-sidebar-text: #e0e0e0;
+    --cabinet-sidebar-active: #6c63ff;
+    --cabinet-card-bg: #ffffff;
+    --cabinet-primary: #6c63ff;
+    --cabinet-success: #10b981;
+    --cabinet-warning: #f59e0b;
+    --cabinet-danger: #ef4444;
+    --cabinet-muted: #9ca3af;
+    --cabinet-border: #e5e7eb;
+    --cabinet-text: #1f2937;
+    --cabinet-text-light: #6b7280;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.therapist-cabinet {
+    margin: 0;
+    padding: 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--cabinet-bg);
+    color: var(--cabinet-text);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===========================================
+   Sidebar
+   =========================================== */
+
+.cabinet-sidebar {
+    width: var(--cabinet-sidebar-width);
+    background: var(--cabinet-sidebar-bg);
+    color: var(--cabinet-sidebar-text);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+.cabinet-sidebar__header {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cabinet-sidebar__logo img {
+    height: 32px;
+    width: auto;
+}
+
+.cabinet-sidebar__nav {
+    flex: 1;
+    padding: 20px 0;
+}
+
+.cabinet-sidebar__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cabinet-sidebar__nav li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: var(--cabinet-sidebar-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.cabinet-sidebar__nav li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cabinet-sidebar__nav li a.active {
+    background: rgba(108, 99, 255, 0.15);
+    border-left-color: var(--cabinet-sidebar-active);
+    color: #fff;
+}
+
+.cabinet-sidebar__nav .icon {
+    font-size: 1.2em;
+}
+
+.cabinet-sidebar__footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cabinet-sidebar__user {
+    margin-bottom: 16px;
+}
+
+.cabinet-sidebar__user .user-name {
+    display: block;
+    font-weight: 600;
+    color: #fff;
+}
+
+.cabinet-sidebar__user .user-email {
+    display: block;
+    font-size: 0.85em;
+    color: var(--cabinet-muted);
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: var(--cabinet-sidebar-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===========================================
+   Main Content
+   =========================================== */
+
+.cabinet-content {
+    flex: 1;
+    margin-left: var(--cabinet-sidebar-width);
+    padding: 32px 40px;
+    min-height: 100vh;
+}
+
+.cabinet-page {
+    max-width: 1200px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.page-description {
+    color: var(--cabinet-text-light);
+    margin-bottom: 24px;
+}
+
+/* ===========================================
+   Buttons
+   =========================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+}
+
+.btn-primary {
+    background: var(--cabinet-primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #5a52d4;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--cabinet-border);
+    color: var(--cabinet-text);
+}
+
+.btn-outline:hover {
+    background: var(--cabinet-bg);
+}
+
+.btn-danger {
+    background: var(--cabinet-danger);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cabinet-text-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-right: 16px;
+}
+
+.btn-back:hover {
+    color: var(--cabinet-text);
+}
+
+/* ===========================================
+   Loading & Empty States
+   =========================================== */
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 60px 20px;
+    color: var(--cabinet-text-light);
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--cabinet-border);
+    border-top-color: var(--cabinet-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.spinner-small {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--cabinet-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--cabinet-border);
+}
+
+.empty-state__icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+}
+
+.empty-state p {
+    color: var(--cabinet-text-light);
+    margin: 0;
+}
+
+.error-message {
+    padding: 20px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    text-align: center;
+}
+
+/* ===========================================
+   Schedule Page - Consultation Cards
+   =========================================== */
+
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.consultation-card {
+    background: var(--cabinet-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--cabinet-border);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.consultation-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.consultation-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+}
+
+.consultation-card__time {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.consultation-card__type {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.consultation-card__body {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consultation-card__client {
+    flex: 1;
+}
+
+.client-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.consultation-card__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.cancel-form {
+    display: inline;
+}
+
+/* ===========================================
+   Schedule Settings Page
+   =========================================== */
+
+.week-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.week-btn {
+    flex: 1;
+    min-width: 180px;
+    padding: 16px 20px;
+    background: var(--cabinet-card-bg);
+    border: 2px solid var(--cabinet-border);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.week-btn:hover {
+    border-color: var(--cabinet-primary);
+}
+
+.week-btn--active {
+    background: var(--cabinet-primary);
+    border-color: var(--cabinet-primary);
+    color: #fff;
+}
+
+.week-btn__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.week-btn__dates {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.week-grid-container {
+    margin-bottom: 24px;
+}
+
+/* ===========================================
+   Schedule Grid Table
+   =========================================== */
+
+.table-responsive {
+    overflow-x: auto;
+    background: var(--cabinet-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--cabinet-border);
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.schedule-table__header th {
+    padding: 16px 12px;
+    background: #f9fafb;
+    border-bottom: 1px solid var(--cabinet-border);
+    text-align: center;
+}
+
+.day-header__date {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.day-header__name {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--cabinet-text-light);
+    text-transform: capitalize;
+}
+
+.time-cell {
+    position: relative;
+    padding: 8px 4px;
+    text-align: center;
+    border: 1px solid var(--cabinet-border);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    font-size: 0.85rem;
+}
+
+.time-cell:hover {
+    background: #f0f0ff;
+}
+
+.time-cell__time {
+    display: block;
+}
+
+.time-cell__loader {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Slot States */
+.slot-unused {
+    background: #fff;
+    color: var(--cabinet-text);
+}
+
+.slot-available {
+    background: var(--cabinet-success);
+    color: #fff;
+    font-weight: 600;
+}
+
+.slot-booked {
+    background: var(--cabinet-primary);
+    color: #fff;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.slot-done {
+    background: var(--cabinet-warning);
+    color: #fff;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.slot-passed {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ===========================================
+   Legend
+   =========================================== */
+
+.schedule-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 20px;
+    background: var(--cabinet-card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--cabinet-border);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.legend-color--available {
+    background: var(--cabinet-success);
+}
+
+.legend-color--booked {
+    background: var(--cabinet-primary);
+}
+
+.legend-color--done {
+    background: var(--cabinet-warning);
+}
+
+.legend-color--passed {
+    background: #e5e7eb;
+}
+
+/* ===========================================
+   Responsive
+   =========================================== */
+
+@media (max-width: 1024px) {
+    .cabinet-sidebar {
+        width: 220px;
+    }
+    
+    .cabinet-content {
+        margin-left: 220px;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cabinet-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .cabinet-sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .cabinet-content {
+        margin-left: 0;
+        padding: 20px 16px;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .consultation-card__body {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    
+    .consultation-card__actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .week-selector {
+        flex-direction: column;
+    }
+    
+    .week-btn {
+        min-width: 100%;
+    }
+}
+

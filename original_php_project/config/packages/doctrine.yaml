@@ -1,0 +1,50 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_APP_URL)%'
+        driver: 'pdo_mysql'
+        charset: utf8mb4
+        server_version: '5.7'
+        options:
+            # PDO::MYSQL_ATTR_INIT_COMMAND
+            1002: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            User:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/User/Entity'
+                prefix: 'App\User\Entity'
+                alias: user
+            Psiholog:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Psiholog/Entity'
+                prefix: 'App\Psiholog\Entity'
+                alias: Psiholog
+            Staff:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Staff/Entity'
+                prefix: 'App\Staff\Entity'
+                alias: Staff
+            Common:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Common/Entity'
+                prefix: 'App\Common\Entity'
+                alias: Common
+            Landing:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Landing/Entity'
+                prefix: 'App\Landing\Entity'
+                alias: Landing
+            Billing:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Billing/Entity'
+                prefix: 'App\Billing\Entity'
+                alias: Billing

@@ -1,0 +1,136 @@
+{% extends '@staff/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="kt_datatable table-responsive" id="psihologs-list"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Class definition
+            var datatable;
+
+            var KTUsersListDatatable = function() {
+                var init = function() {
+
+                    datatable = $('.kt_datatable').KTDatatable({
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    url: '{{ url(constant('\\App\\Staff\\Service\\RouteNames::THERAPISTS_LIST_AJAX')) }}',
+                                    method: 'GET',
+                                    timeout: 30000
+                                },
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                        },
+                        layout: {
+                            scroll: true,
+                            footer: false,
+                            customScrollbar: false,
+                            spinner: {
+                                message: '{{ 'Please wait'|trans({}, 'userspace') }}',
+                            }
+                        },
+                        translate: {
+                            records: {
+                                noRecords: 'У вас пока ни одного клиента',
+                            },
+                            toolbar: {
+                                pagination: {
+                                    items: {
+                                        info: '{{ "Displaying {{start}} - {{end}} of {{total}} records"|trans({}, 'userspace') }}',
+                                        default: {
+                                            first: '{{ 'First'|trans({}, 'userspace') }}',
+                                            prev: '{{ 'Previous'|trans({}, 'userspace') }}',
+                                            next: '{{ 'Next'|trans({}, 'userspace') }}',
+                                            last: '{{ 'Last'|trans({}, 'userspace') }}',
+                                            more: '{{ 'More pages'|trans({}, 'userspace') }}',
+                                            input: '{{ 'Page number'|trans({}, 'userspace') }}',
+                                            select: '{{ 'Select page size'|trans({}, 'userspace') }}'
+                                        },
+                                    }
+                                }
+                            }
+                        },
+                        sortable: false,
+                        pagination: true,
+                        columns: [
+                            {
+                                field: 'name',
+                                title: 'Кто',
+                                template: (row) => {
+                                    return `
+                                        <div class="kt-media kt-media--lg kt-media--circle d-flex align-items-center">
+                                            <div>
+											    <img src="{{ asset('media/user/100_6.jpg', 'uspace') }}" alt="image">
+                                            </div>
+                                            <div class="ml-3">
+                                                <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::THERAPIST_SETTINGS')) }}?id=${row.id}" class="kt-link kt-link--brand" target="_blank">${row.name}</a>
+                                            </div>
+										</div>
+                                    `;
+                                },
+                            },
+                            {
+                                field: 'price',
+                                title: 'Стоимость встречи, ₴',
+                            },
+                            {
+                                field: 'commission',
+                                title: 'Наша комиссия, %',
+                            },
+                            {
+                                field: 'sessions_amount',
+                                title: 'Встреч провел',
+                            },
+                            {
+                                field: 'date_created',
+                                title: 'Зарегистрирован у нас',
+                            },
+                            {
+                                field: 'id',
+                                title: 'ID',
+                                width: 30,
+                                type: 'number',
+                                selector: false,
+                                textAlign: 'center',
+                            },
+                        ],
+
+                    });
+                };
+
+                return {
+                    // public functions
+                    init: function() {
+                        init();
+                    },
+                };
+            }();
+
+            jQuery(document).ready(function() {
+                KTUsersListDatatable.init();
+            });
+        });
+    </script>
+
+    <style>
+        .kt-datatable.kt-datatable--default > .kt-datatable__table {
+            overflow: auto;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head, .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__foot {
+            overflow: initial;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {
+            overflow: initial;
+        }
+    </style>
+{% endblock %}

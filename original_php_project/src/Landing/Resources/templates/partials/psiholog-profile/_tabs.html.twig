@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs card-header-tabs" id="psiholog-profile-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="about-psiholog-tab" data-bs-toggle="tab"
+                data-bs-target="#about-psiholog" type="button" role="tab"
+                aria-controls="about-psiholog" aria-selected="false">
+            {{ 'О психологе'|trans }}
+        </button>
+    </li>
+    {% if reviews|length > 0 %}
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="psiholog-reviews-tab" data-bs-toggle="tab"
+                data-bs-target="#psiholog-reviews" type="button" role="tab"
+                aria-controls="psiholog-reviews" aria-selected="true">
+            {{ 'Отзывы'|trans }}
+            ({{ reviews|length }})
+        </button>
+    </li>
+    {% endif %}
+</ul>

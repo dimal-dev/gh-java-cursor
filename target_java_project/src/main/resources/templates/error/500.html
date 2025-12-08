@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Server Error - GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/main.css}" />
+    <style>
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-page h1 {
+            font-size: 6rem;
+            margin: 0;
+            color: #6B8E7B;
+        }
+        .error-page h2 {
+            margin-top: 1rem;
+            color: #333;
+        }
+        .error-page p {
+            color: #666;
+            margin: 1rem 0 2rem;
+        }
+        .gh-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #6B8E7B;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .gh-button:hover {
+            background-color: #5a7a68;
+        }
+    </style>
+</head>
+<body>
+<div class="error-page">
+    <h1>500</h1>
+    <h2 th:text="#{message.error}">Server Error</h2>
+    <p>An unexpected error occurred. Please try again later.</p>
+    <a th:href="@{/}" class="gh-button">Go to Home</a>
+</div>
+</body>
+</html>

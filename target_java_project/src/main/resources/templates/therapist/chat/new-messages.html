@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.chat.newMessages.title}">New Messages - GoodHelp</title>
+    <style>
+        .new-messages-page {
+            padding: 20px;
+        }
+
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .new-messages-table {
+            width: 100%;
+            background: var(--card-bg, #fff);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .new-messages-table th,
+        .new-messages-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border, #eee);
+        }
+
+        .new-messages-table th {
+            background: var(--table-header-bg, #f8f9fa);
+            font-weight: 600;
+            color: var(--text-muted, #666);
+        }
+
+        .new-messages-table tr:hover {
+            background: var(--hover-bg, #f8f9fa);
+        }
+
+        .message-preview {
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .unread-count {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--danger, #dc3545);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+
+        .btn-brand {
+            background: var(--primary, #2196f3);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-brand:hover {
+            background: var(--primary-dark, #1976d2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted, #666);
+        }
+
+        .empty-state__icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border, #ddd);
+            border-top-color: var(--primary, #2196f3);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .client-name-warning {
+            color: var(--warning, #ffc107);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page new-messages-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.chat.newMessages.heading}">New Messages</h1>
+    </div>
+
+    <div id="messages-container">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <span th:text="#{common.loading}">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Empty state (hidden by default) -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-state__icon">✉️</div>
+        <h3 th:text="#{therapist.chat.noNewMessages}">No new messages</h3>
+        <p th:text="#{therapist.chat.noNewMessagesDesc}">
+            When users send you messages, they will appear here.
+        </p>
+    </div>
+
+    <!-- Table template -->
+    <table class="new-messages-table" id="messages-table" style="display: none;">
+        <thead>
+            <tr>
+                <th th:text="#{therapist.chat.columnName}">Name</th>
+                <th th:text="#{therapist.chat.columnMessage}">Message</th>
+                <th th:text="#{therapist.chat.columnSentAt}">Sent</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody id="messages-tbody">
+        </tbody>
+    </table>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const container = document.getElementById('messages-container');
+            const emptyState = document.getElementById('empty-state');
+            const table = document.getElementById('messages-table');
+            const tbody = document.getElementById('messages-tbody');
+
+            const urls = {
+                chat: /*[[@{/therapist/chat}]]*/ '/therapist/chat',
+                notes: /*[[@{/therapist/clients}]]*/ '/therapist/clients',
+                list: /*[[@{/therapist/chat/new-messages-list-ajax}]]*/ '/therapist/chat/new-messages-list-ajax'
+            };
+
+            const labels = {
+                openChat: /*[[#{therapist.chat.openChat}]]*/ 'Open Chat',
+                nameClient: /*[[#{therapist.chat.nameClient}]]*/ 'Name Client',
+                possibleName: /*[[#{therapist.chat.possibleName}]]*/ 'Possible name (not set by user):'
+            };
+
+            async function loadMessages() {
+                try {
+                    const response = await fetch(urls.list);
+                    const data = await response.json();
+
+                    container.innerHTML = '';
+
+                    if (!data || data.length === 0) {
+                        container.style.display = 'none';
+                        table.style.display = 'none';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    table.style.display = 'table';
+                    tbody.innerHTML = '';
+
+                    data.forEach(item => {
+                        const row = createMessageRow(item);
+                        tbody.appendChild(row);
+                    });
+                } catch (error) {
+                    console.error('Failed to load messages:', error);
+                    container.innerHTML = '<div class="error-message">Failed to load messages. Please refresh the page.</div>';
+                }
+            }
+
+            function createMessageRow(item) {
+                const row = document.createElement('tr');
+
+                // Name cell
+                const nameCell = document.createElement('td');
+                let nameHtml = '';
+
+                // Build display name
+                let displayName = item.fullName || '';
+                if (item.psihologUserNotesName) {
+                    displayName += displayName ? ' / ' + item.psihologUserNotesName : item.psihologUserNotesName;
+                }
+
+                if (!displayName) {
+                    nameHtml = `<a class="btn btn-brand btn-sm" href="${urls.notes}/${item.userId}/notes">${labels.nameClient}</a>&nbsp;&nbsp;`;
+                } else {
+                    if (!item.isFullNameSetByUser && item.fullName) {
+                        nameHtml = `<span class="client-name-warning">${labels.possibleName}</span><br><b>${displayName}</b>`;
+                    } else {
+                        nameHtml = `<b>${displayName}</b>`;
+                    }
+                }
+
+                nameHtml += `&nbsp;&nbsp;<a href="${urls.chat}?userId=${item.userId}" class="btn btn-brand btn-sm">
+                    ${labels.openChat} (<span class="unread-count">${item.unreadMessagesAmount}</span>)
+                </a>`;
+
+                nameCell.innerHTML = nameHtml;
+                row.appendChild(nameCell);
+
+                // Message preview cell
+                const msgCell = document.createElement('td');
+                msgCell.className = 'message-preview';
+                msgCell.textContent = item.body;
+                row.appendChild(msgCell);
+
+                // Sent at cell
+                const sentCell = document.createElement('td');
+                const sentDate = new Date(item.sentAt);
+                sentCell.textContent = sentDate.toLocaleString();
+                row.appendChild(sentCell);
+
+                // ID cell
+                const idCell = document.createElement('td');
+                idCell.textContent = item.id;
+                row.appendChild(idCell);
+
+                return row;
+            }
+
+            // Load on page ready
+            document.addEventListener('DOMContentLoaded', loadMessages);
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>
+

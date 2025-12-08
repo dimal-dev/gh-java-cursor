@@ -1,0 +1,40 @@
+<div class="kt-aside__primary">
+    <div class="kt-aside__middle mt-3">
+        <ul class="kt-aside__nav primary-aside-nav">
+            {% for route, config in staffGetSidebarMenuItems() %}
+                <li class="kt-aside__nav-item  primary-aside-nav--item">
+                    <a class="kt-aside__nav-link" href="{{ url(route) }}" data-toggle="kt-tooltip"
+                       data-title="{{ config.label }}" data-placement="right" data-container="body"
+                       data-boundary="window">
+                        <i class="{{ config.icon }}"></i>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="kt-aside__bottom">
+        <ul class="kt-aside__nav">
+            <li class="kt-aside__nav-item">
+                <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::LOGOUT')) }}" class="kt-aside__nav-link" id="kt_offcanvas_toolbar_profile_toggler_btn"
+                   data-toggle="kt-tooltip"
+                   data-title="Выйти"
+                   data-placement="right"
+                   data-container="body"
+                   data-boundary="window" data-original-title="" title=""
+                >
+                    <i class="flaticon-logout"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .kt-aside__primary .kt-aside__middle .kt-aside__nav.primary-aside-nav {
+        margin-top: 85px;
+    }
+
+    .kt-aside__primary .kt-aside__middle .kt-aside__nav .kt-aside__nav-item.primary-aside-nav--item {
+        margin-top:7px;
+    }
+</style>

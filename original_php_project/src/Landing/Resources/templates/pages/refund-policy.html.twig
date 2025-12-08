@@ -1,0 +1,118 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'Условия возврата'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div style="max-width: 60rem; margin: 2rem auto;">
+            {% if app.request.locale == 'ru' %}
+                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;">
+                    <span style="font-size: 16pt; font-family: Arial; color: rgb(33, 37, 41);"><font
+                                style="vertical-align: inherit;"><font style="vertical-align: inherit;">Для того чтобы вернуть деньги за консультацию нужно:</font></font></span>
+                </p>
+                <ol style="margin-top: 0px; margin-bottom: 0px; padding-inline-start: 48px;">
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                            style="vertical-align: inherit;">Не позднее чем за 24 часа до начала консультации отменить в личном кабинете консультацию и отправить письмо на электронную почту goodhelpua@gmail.com с темой "Возврат:" и именем и фамилией указанных при регистрации.</font></font></span>
+                        </p>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                            style="vertical-align: inherit;">В теле письма указать следующие данные:</font></font></span>
+                        </p>
+                        <ol style="padding-inline-start: 48px;">
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Сумма платежа за консультацию, за которую вы хотите получить возврат средств.</font></font></span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Карту, с которой была произведена оплата консультации.</font></font></span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Серию и номер паспорта владельца карты.</font></font></span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Причина отмены консультации и возврата средств.</font></font></span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                                    style="vertical-align: inherit;">Номер телефона и/или facebook/телеграмм аккаунта для того, чтобы мы могли связаться о подтверждении возврата средств.</font></font></span>
+                                </p>
+                            </li>
+                        </ol>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;"><font style="vertical-align: inherit;"><font
+                                            style="vertical-align: inherit;">Возврат средств производится в течение 30 дней с даты подачи заявки.</font></font></span>
+                        </p>
+                    </li>
+                </ol>
+            {% else %}
+                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;">
+                <span
+                        style="font-size: 16pt; font-family: Arial; color: rgb(33, 37, 41);">Для того щоб повернути гроші за консультацію потрібно:</span>
+                </p>
+                <ol style="margin-top: 0px; margin-bottom: 0px; padding-inline-start: 48px;">
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;">Не пізніше ніж за 24 години до початку консультації скасувати в особистому кабінеті консультацію та надіслати листа на електронну пошту goodhelpua@gmail.com з темою &ldquo;Повернення:&rdquo; та ім'ям та прізвищем зазначених при реєстрації.</span>
+                        </p>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;">У тілі листа вказати такі дані:</span>
+                        </p>
+                        <ol style="padding-inline-start: 48px;">
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;">Суму платежу за консультацію, за яку ви хочете отримати повернення коштів.</span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;">Карту, з якою було проведено оплату консультації.</span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;">Серію та номер паспорта власника картки.</span></p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;">Причину скасування консультації та повернення коштів.</span>
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                            style="font-size: 13pt;">Номер телефону та/або facebook/телеграм обліковий запис для того, щоб ми могли зв'язатися про підтвердження повернення коштів.</span>
+                                </p>
+                            </li>
+                        </ol>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"><span
+                                    style="font-size: 13pt;">Повернення коштів здійснюється впродовж 30 днів з дати подачі заявки.</span>
+                        </p>
+                    </li>
+                </ol>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+user_routes:
+  resource: ../../src/User/Controller
+  type: 'annotation'
+  name_prefix: 'user_'
+  prefix: user
+  defaults:
+    is_userspace_route: true
+user_login:
+  path:
+    ua: /user/login
+    ru: /ru/user/login
+  controller: \App\User\Controller\LoginController::__invoke
+  defaults:
+    is_userspace_route: true

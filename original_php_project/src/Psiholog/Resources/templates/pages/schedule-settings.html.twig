@@ -1,0 +1,134 @@
+{% extends '@psiholog/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-outline-primary show-week-button"
+                    data-week-number="1"
+                    data-week-day-first="{{ zeroWeek.startDateFull }}"
+            >
+                <span>
+                    (1) Текущая неделя
+                </span>
+                <br>
+                <span>
+                    {{ zeroWeek.startDate }} - {{ zeroWeek.endDate }}
+                </span>
+            </button>
+            <button class="btn btn-outline-primary show-week-button"
+                    data-week-number="2"
+                    data-week-day-first="{{ oneWeek.startDateFull }}"
+            >
+                <span>
+                    (2) Следующая неделя
+                </span>
+                <br>
+                <span>
+                    {{ oneWeek.startDate }} - {{ oneWeek.endDate }}
+                </span>
+            </button>
+            <button class="btn btn-outline-primary show-week-button"
+                    data-week-number="3"
+                    data-week-day-first="{{ twoWeek.startDateFull }}"
+            >
+                <span>
+                    (3) Третья неделя
+                </span>
+                <br>
+                <span>
+                    {{ twoWeek.startDate }} - {{ twoWeek.endDate }}
+                </span>
+            </button>
+            <button class="btn btn-outline-primary show-week-button"
+                    data-week-number="4"
+                    data-week-day-first="{{ threeWeek.startDateFull }}"
+            >
+                <span>
+                    (4) Четвертая неделя
+                </span>
+                <br>
+                <span>
+                    {{ threeWeek.startDate }} - {{ threeWeek.endDate }}
+                </span>
+            </button>
+        </div>
+
+        <div id="displaying-week-content" class="p-3">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const displayingWeekContentEl = document.querySelector('#displaying-week-content');
+            const activeWeekButtonClassName = 'btn-brand';
+            const inactiveWeekButtonClassName = 'btn-outline-primary';
+            let loadingWeek = false;
+
+            function removeActiveStateFromAllWeekButtons()
+            {
+                document.querySelectorAll('.show-week-button').forEach((el) => {
+                    el.classList.remove(activeWeekButtonClassName);
+                    el.classList.remove("text-white");
+                    el.classList.add(inactiveWeekButtonClassName);
+                });
+            }
+
+            function addActiveStateToWeekButton(weekButton)
+            {
+                weekButton.classList.add(activeWeekButtonClassName);
+                weekButton.classList.add("text-white");
+            }
+
+            function showSpinner()
+            {
+                displayingWeekContentEl.innerHTML = `
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden"></span>
+                    </div>
+                `;
+            }
+
+            document.querySelectorAll('.show-week-button').forEach((weekButton) => {
+                weekButton.addEventListener('click', () => {
+                    if (loadingWeek) return;
+
+                    showSpinner();
+
+                    const weekNumber = weekButton.getAttribute('data-week-number');
+                    const weekDayFirst = weekButton.getAttribute('data-week-day-first');
+
+                    removeActiveStateFromAllWeekButtons();
+                    loadingWeek = true;
+                    weekButton.setAttribute("disabled", '');
+
+
+                    const url = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::SCHEDULE_SETTINGS_WEEK')) }}';
+                    const callback = (html) => {
+                        weekButton.removeAttribute("disabled");
+                        loadingWeek = false;
+
+                        addActiveStateToWeekButton(weekButton);
+                        $(displayingWeekContentEl).html(html);
+                    };
+                    const params = {
+                        weekNumber,
+                        weekDayFirst,
+                    };
+                    $.get(url, params, callback);
+                });
+            });
+
+            document.querySelectorAll('.show-week-button')[0].click();
+        });
+    </script>
+
+    <style>
+        /*.bg-brand {*/
+        /*    background: #1cac81;*/
+        /*}*/
+    </style>
+{% endblock %}

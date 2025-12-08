@@ -1,0 +1,107 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ 'landing.psiholog_list.title'|trans }} GoodHelp
+{% endblock %}
+
+{% block content %}
+    <section class="gh-teenage-psiholog">
+        <div class="gh-teenage-psiholog__soft-light-container">
+            <div class="gh-teenage-psiholog__soft-light"></div>
+        </div>
+        <div class="gh-container">
+            <h1 class="gh-teenage-psiholog__h1">
+                {{ 'teenage_psiholog'|trans }}
+            </h1>
+            <div class="gh-teenage-psiholog__box">
+                <img src="{{ asset('img/pages/teenage-photo.png', 'landing') }}"
+                     class="gh-teenage-psiholog__box-teenage-photo">
+                <div class="gh-teenage-psiholog__box-info">
+                    <h3>
+                        {{ 'teenage_psiholog.why'|trans }}
+                    </h3>
+
+                    <p>
+                        {{ 'teenage_psiholog.pharse_1'|trans }}
+                    </p>
+
+                    <p class="gh-teenage-psiholog__box-frame">
+                        {{ 'teenage_psiholog.pharse_2'|trans }}
+                    </p>
+
+                    <p>
+                        {{ 'teenage_psiholog.pharse_3'|trans }}
+                    </p>
+
+                    <h3>
+                        {{ "teenage_psiholog.right_now"|trans }}
+                    </h3>
+
+                    <ul>
+                        <li>{{ 'teenage_psiholog.reasons_1'|trans }}</li>
+                        <li>{{ 'teenage_psiholog.reasons_2'|trans }}</li>
+                        <li>{{ 'teenage_psiholog.reasons_3'|trans }}</li>
+                        <li>{{ 'teenage_psiholog.reasons_4'|trans }}</li>
+                        <li>{{ 'teenage_psiholog.reasons_5'|trans }}</li>
+                    </ul>
+
+                    <p class="gh-teenage-psiholog__box-frame">
+                        {{ 'teenage_psiholog.pharse_4'|trans }}
+                    </p>
+
+                    <p class="gh-teenage-psiholog__box-result">
+                        {{ 'teenage_psiholog.pharse_5'|trans }}
+                    </p>
+                </div>
+            </div>
+            <h2 class="gh-teenage-psiholog__h2">
+                {{'teenage_psiholog.our-psychologists'|trans}}
+            </h2>
+            <div class="gh-psiholog-list__list">
+                {% for index, psiholog in psihologList %}
+
+                    {% include '@landing/partials/pages/_psiholog-short-profile.html.twig' with {
+                        psiholog : psiholog,
+                        viewPsihologBtnClass: 'view-specific-psiholog-btn'
+                    } %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('.view-specific-psiholog-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gtag("event", "view_specific_psiholog_btn_clicked_on_select_psiholog_page", {
+                        'event_category': 'Conversions'
+                    });
+                });
+            });
+
+            document.querySelectorAll('.open-live-chat').forEach(element => {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    HelpCrunch('openChat');
+                });
+            });
+
+            const viewItemListData = [];
+            {% for index, psiholog in psihologList %}
+            viewItemListData.push({
+                "id": "P{{ psiholog.id }}",
+                "name": "{{ psiholog.fullName }}",
+                "list_name": "Выбрать психолога. Все психологи список",
+                "category": "Все психологи",
+                "list_position": {{ index + 1 }},
+                "quantity": 1,
+                "price": {{ psiholog.price }}
+            });
+            {% endfor %}
+
+            gtag('event', 'view_item_list', {
+                "items": viewItemListData
+            });
+        });
+    </script>
+{% endblock %}

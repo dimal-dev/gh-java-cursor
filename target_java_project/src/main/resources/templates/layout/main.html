@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title layout:title-pattern="$CONTENT_TITLE - GoodHelp">GoodHelp</title>
+    
+    <!-- Language alternates -->
+    <link rel="alternate" th:href="@{''(lang='en')}" hreflang="en" />
+    <link rel="alternate" th:href="@{''(lang='uk')}" hreflang="uk" />
+    <link rel="alternate" th:href="@{''(lang='ru')}" hreflang="ru" />
+    <link rel="alternate" th:href="@{''(lang='en')}" hreflang="x-default" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" th:href="@{/css/landing/main.css}" />
+    
+    <!-- Additional head content -->
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+    <!-- Header -->
+    <header class="gh-header">
+        <a th:href="@{/}" class="gh-header__logo">
+            <img class="gh-img" th:src="@{/img/logo/logo-olive.svg}" alt="GoodHelp">
+        </a>
+        <nav class="gh-header__nav">
+            <ul class="gh-header__nav-menu">
+                <li>
+                    <a th:href="@{/therapist-list}" th:text="#{our_specialists}">Our Specialists</a>
+                </li>
+                <li>
+                    <a th:href="@{/blog}" th:text="#{Blog}">Blog</a>
+                </li>
+                <li>
+                    <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
+                       th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/user/}" th:text="#{landing.header.user_dashboard}">My Cabinet</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/user/login}" th:text="#{landing.header.user_login}">Login</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="gh-header__lang-picker">
+            <a th:href="@{''(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'active'">EN</a>
+            <a th:href="@{''(lang='uk')}" th:classappend="${#locale.language == 'uk'} ? 'active'">UA</a>
+            <a th:href="@{''(lang='ru')}" th:classappend="${#locale.language == 'ru'} ? 'active'">RU</a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="gh-main" layout:fragment="content">
+        <p>Content goes here</p>
+    </main>
+    
+    <!-- Footer -->
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    
+    <!-- Scripts -->
+    <script th:src="@{/js/landing.js}"></script>
+    <th:block layout:fragment="scripts"></th:block>
+</body>
+</html>

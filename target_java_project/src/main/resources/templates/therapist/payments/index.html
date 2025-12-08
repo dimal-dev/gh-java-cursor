@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.payments.title}">Payments - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page payments-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.payments.heading}">Payments</h1>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="payments-tabs">
+        <div class="tabs-nav">
+            <a th:href="@{/therapist/payments}" 
+               th:class="${activeTab == 'current'} ? 'tab-link active' : 'tab-link'">
+                <i class="fa fa-money-bill-alt"></i>
+                <span th:text="#{therapist.payments.tab.current}">Current Payout</span>
+            </a>
+            <a th:href="@{/therapist/payments/history}" 
+               th:class="${activeTab == 'history'} ? 'tab-link active' : 'tab-link'">
+                <i class="fa fa-clipboard-list"></i>
+                <span th:text="#{therapist.payments.tab.history}">Payout History</span>
+            </a>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Current Payout Panel -->
+            <div class="payout-panel">
+                <div class="payout-header">
+                    <div class="payout-total">
+                        <span class="payout-label" th:text="#{therapist.payments.totalPending}">Total pending:</span>
+                        <span class="payout-amount">
+                            <span th:text="${summary.totalPendingPayout()}">0</span>
+                            <span th:text="${summary.currency()}">₴</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Period Info -->
+                <div class="period-info" th:if="${summary.periodStart() != null}">
+                    <p>
+                        <span th:text="#{therapist.payments.periodInfo}">Period:</span>
+                        <span th:text="${summary.periodStart()}">2024-01-01</span>
+                        <span> - </span>
+                        <span th:text="${summary.periodEnd()}">2024-01-15</span>.
+                        <span th:text="#{therapist.payments.nextPayout}">Next payout:</span>
+                        <span th:text="${summary.nextPayoutDate()}">2024-01-17</span>
+                    </p>
+                    <p class="payout-schedule-note" th:text="#{therapist.payments.schedule.note}">
+                        (Payouts are processed on the 15th and last day of each month)
+                    </p>
+                </div>
+
+                <!-- Pending Items List -->
+                <div class="payout-items" th:if="${summary.items() != null and !summary.items().isEmpty()}">
+                    <div class="items-list">
+                        <div class="payout-item" th:each="item : ${summary.items()}">
+                            <span class="item-status">
+                                <span class="status-badge" th:classappend="${item.status()}"></span>
+                            </span>
+                            <span class="item-info">
+                                <span class="client-name" th:text="${item.clientName()}">Client Name</span>.
+                                <span class="item-date" th:text="${item.dateTime()}">2024-01-01 14:00</span>
+                            </span>
+                            <span class="item-amount">
+                                <span th:text="${item.amount()}">1500</span>
+                                <span th:text="${summary.currency()}">₴</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" th:if="${summary.items() == null or summary.items().isEmpty()}">
+                    <div class="empty-state__icon">💰</div>
+                    <h3 th:text="#{therapist.payments.empty.title}">No pending payouts</h3>
+                    <p th:text="#{therapist.payments.empty.description}">
+                        Completed consultations will appear here and be paid out according to the schedule.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="styles">
+    <style>
+        .payments-page .page-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .payments-tabs {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab-link:hover {
+            color: #333;
+            background: #fff;
+        }
+
+        .tab-link.active {
+            color: #5867dd;
+            border-bottom-color: #5867dd;
+            background: white;
+        }
+
+        .tab-link i {
+            font-size: 1.1rem;
+        }
+
+        .tab-content {
+            padding: 1.5rem;
+        }
+
+        /* Payout Panel */
+        .payout-panel {
+            padding: 0;
+        }
+
+        .payout-header {
+            padding: 1rem;
+            background: linear-gradient(135deg, #5867dd 0%, #6f80f0 100%);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .payout-total {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .payout-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        .payout-amount {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .period-info {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .payout-schedule-note {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        /* Items List */
+        .items-list {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .payout-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .payout-item:last-child {
+            border-bottom: none;
+        }
+
+        .payout-item:hover {
+            background: #f9f9f9;
+        }
+
+        .item-status {
+            margin-right: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+
+        .status-badge.pending {
+            background: #ffc107;
+        }
+
+        .status-badge.cancelled {
+            background: #dc3545;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .item-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .item-amount {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state__icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #666;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</th:block>
+</body>
+</html>
+

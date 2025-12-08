@@ -1,0 +1,29 @@
+@import "landing/styles-new/base/variables";
+@import "landing/styles-new/mixins";
+
+@import "landing/styles-new/base/base";
+@import "landing/styles-new/base/typography";
+@import "landing/styles-new/util";
+
+@import "landing/styles-new/components/header";
+@import "landing/styles-new/components/footer";
+@import "landing/styles-new/components/social-icon";
+@import "landing/styles-new/components/breadcrumbs";
+@import "landing/styles-new/components/button";
+@import "landing/styles-new/components/switch";
+@import "landing/styles-new/components/input";
+@import "landing/styles-new/components/error";
+@import "landing/styles-new/components/avatar";
+@import "landing/styles-new/components/select-psiholog-btn";
+@import "landing/styles-new/components/soft-light";
+
+@import "landing/styles-new/pages/main";
+@import "landing/styles-new/pages/psiholog-list";
+@import "landing/styles-new/pages/psiholog-profile";
+@import "landing/styles-new/pages/book-consultation";
+@import "landing/styles-new/pages/checkout";
+@import "landing/styles-new/pages/request-psiholog";
+@import "landing/styles-new/pages/request-psiholog-success";
+@import "landing/styles-new/pages/blog";
+@import "landing/styles-new/pages/family-psiholog";
+@import "landing/styles-new/pages/teenage-psiholog";

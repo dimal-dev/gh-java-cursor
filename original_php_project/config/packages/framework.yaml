@@ -1,0 +1,26 @@
+framework:
+    secret: '%env(resolve:APP_SECRET)%'
+    #csrf_protection: true
+    #http_method_override: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
+    session:
+        enabled: true
+        # ID of the service used for session storage.
+        # improves the security of the cookies used for sessions
+        cookie_secure: 'auto'
+        cookie_samesite: 'lax'
+        cookie_lifetime: 31536000
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
+
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: false
+
+    trusted_proxies: '%env(resolve:TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for']
+    default_locale: 'ua'
+    translator:
+        default_path: '%kernel.project_dir%/resources/translations'

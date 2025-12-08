@@ -1,0 +1,137 @@
+{% extends '@staff/layout/main.html.twig' %}
+
+{% block content %}
+    <!-- Include Editor style. -->
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Новый пост</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <form class="kt-form kt-form--label-right" method="post">
+                        <div class="kt-portlet__body">
+                            {% if errors is defined %}
+                            <div class="form-group">
+                                <div class="alert alert-danger" role="alert">
+                                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                                    <div class="alert-text">
+                                        {% for error in errors %}
+                                            <div>
+                                                {{ error }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Заголовок</label>
+                                <div class="col-10">
+                                    <input class="form-control" required type="text" name="header"
+                                           value="{{ postSubmittedData.header is defined ? postSubmittedData.header : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Автор (нужно выбрать или автора или психолога)</label>
+                                <div class="col-10">
+                                    <input class="form-control" type="text" name="author"
+                                           value="{{ postSubmittedData.author is defined ? postSubmittedData.author : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="psiholog_id-field" class="col-2 col-form-label">Психолог (Автор поста)</label>
+                                <div class="col-10">
+                                    <select class="form-control" name="psiholog_id" id="psiholog_id-field">
+                                        <option value="">Выберите психолога</option>
+                                        {% for id, name in psihologList %}
+                                            <option value="{{ id }}"
+                                                    {% if postSubmittedData.psiholog_id is defined and postSubmittedData.psiholog_id == id %}
+                                                        selected="selected"
+                                                    {% endif %}
+
+
+                                            >{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Описание</label>
+                                <div class="col-10">
+                                    <textarea name="preview" class="reachtextarea">{{ postSubmittedData.preview is defined ? postSubmittedData.preview : '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Содержимое</label>
+                                <div class="col-10">
+                                    <textarea name="body" class="reachtextarea">{{ postSubmittedData.body is defined ? postSubmittedData.body : '' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="locale" value="{{ locale }}">
+                        <input type="hidden" name="post_i18n_id" value="{{ post_i18n_id }}">
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <div class="row">
+                                    <div class="col-2">
+                                    </div>
+                                    <div class="col-10">
+                                        <button type="submit" class="btn btn-brand">Создать</button>
+                                        <a href="{{ url(constant('\\App\\Staff\\Service\\RouteNames::BLOG_POST_LIST')) }}"
+                                           class="btn btn-secondary">Назад к постам</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteImage = ($img) => {
+            $.ajax({
+                // Request method.
+                method: 'POST',
+
+                // Request URL.
+                url: '{{ path(constant('\\App\\Staff\\Service\\RouteNames::FROALA_IMAGE_DELETE_CONTROLLER')) }}',
+
+                // Request params.
+                data: {
+                    src: $img.attr('src')
+                }
+            })
+                .done(function (data) {
+                    console.log('Image was deleted');
+                })
+                .fail(function (err) {
+                    console.log('Image delete problem: ' + JSON.stringify(err));
+                })
+        };
+
+        new FroalaEditor('.reachtextarea', {
+            placeholderText: 'Туть редактировать',
+            imageUploadURL: '{{ path(constant('\\App\\Staff\\Service\\RouteNames::FROALA_IMAGE_UPLOAD_CONTROLLER')) }}',
+            events: {
+                'image.removed': function ($img) {
+                    deleteImage($img);
+                },
+                'image.replaced': function ($img, response) {
+                    deleteImage($img);
+                }
+            }
+        });
+    </script>
+{% endblock %}

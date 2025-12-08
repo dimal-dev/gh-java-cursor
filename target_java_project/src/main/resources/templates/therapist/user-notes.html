@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.notes.title}">Client Notes - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page user-notes-page">
+    <div class="page-header">
+        <a th:href="@{/therapist/clients}" class="back-link">
+            <span>&larr;</span> <span th:text="#{common.back}">Back</span>
+        </a>
+        <h1 th:text="#{therapist.notes.heading}">Client Notes</h1>
+    </div>
+
+    <!-- Success message -->
+    <div th:if="${success}" class="alert alert-success" th:text="#{message.success}">
+        Successfully saved
+    </div>
+
+    <!-- Notes form -->
+    <div class="notes-form-container">
+        <form th:action="@{/therapist/clients/{userId}/notes(userId=${userId})}" method="post" class="notes-form">
+            
+            <!-- Client name field -->
+            <div class="form-group">
+                <label for="newName" th:text="#{therapist.notes.clientName}">Client Name</label>
+                <input type="text" 
+                       id="newName" 
+                       name="newName" 
+                       class="form-control"
+                       th:value="${notes.clientName()}"
+                       th:placeholder="#{therapist.notes.clientNamePlaceholder}">
+                <small class="form-text" th:text="#{therapist.notes.clientNameHelp}">
+                    Your own name for this client (visible only to you)
+                </small>
+            </div>
+
+            <!-- Notes field -->
+            <div class="form-group">
+                <label for="notes" th:text="#{therapist.notes.notesLabel}">Session Notes</label>
+                <textarea id="notes" 
+                          name="notes" 
+                          class="form-control notes-textarea"
+                          rows="12"
+                          th:placeholder="#{therapist.notes.notesPlaceholder}"
+                          th:text="${notes.notes()}"></textarea>
+                <small class="form-text" th:text="#{therapist.notes.notesHelp}">
+                    Private notes about your sessions with this client
+                </small>
+            </div>
+
+            <!-- Form actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" th:text="#{form.save}">Save</button>
+                <a th:href="@{/therapist/clients}" class="btn btn-outline" th:text="#{form.cancel}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Last updated info -->
+    <div th:if="${notes.updatedAt() != null}" class="notes-meta">
+        <span th:text="#{therapist.notes.lastUpdated}">Last updated:</span>
+        <time th:datetime="${notes.updatedAt()}" 
+              th:text="${#temporals.format(notes.updatedAt(), 'd MMMM yyyy, HH:mm')}">
+        </time>
+    </div>
+</main>
+
+<th:block layout:fragment="styles">
+    <style>
+        .user-notes-page .page-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .back-link:hover {
+            color: #333;
+        }
+
+        .notes-form-container {
+            max-width: 800px;
+        }
+
+        .notes-form .form-group {
+            margin-bottom: 24px;
+        }
+
+        .notes-form label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .notes-form .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .notes-form .form-control:focus {
+            outline: none;
+            border-color: #2196f3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .notes-textarea {
+            min-height: 300px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        .form-text {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .notes-meta {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        .notes-meta time {
+            color: #666;
+        }
+    </style>
+</th:block>
+</body>
+</html>
+

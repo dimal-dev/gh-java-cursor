@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $adminTelegramNotificationsEnabled: '%admin_telegram_notifications_enabled%'
+
+
+  App\Psiholog\:
+    resource: '%kernel.project_dir%/src/Psiholog/*'
+    exclude: '%kernel.project_dir%/src/Psiholog/{DependencyInjection,Entity,Migrations,Tests}'
+

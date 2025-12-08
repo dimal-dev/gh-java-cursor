@@ -1,0 +1,171 @@
+{% extends '@staff/pages/psiholog/psiholog-layout.html.twig' %}
+
+{% block psihologLayoutContent %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-outline-brand fade show" role="alert">
+                <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                <div class="alert-text">Тут будут те же поля, что и при добавлении терапевта, просто заполненные и их можно будет менять</div>
+            </div>
+            <form action="" method="post">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Добавляем терапевта</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="kt-section kt-section--first">
+                            <div class="kt-section__body">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Имя</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Имя">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Фамилия</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Фамилия">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Отчество</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Отчество">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Дата рождения</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Дата рождения">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Пол терапевта</label>
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <div>
+                                                <label class="kt-radio kt-radio--bold kt-radio--brand">
+                                                    <input type="radio" name="sex" value="1"> Женщина
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="kt-radio kt-radio--bold kt-radio--brand">
+                                                    <input type="radio" name="sex" value="2"> Мужчина
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="kt-radio kt-radio--bold kt-radio--brand">
+                                                    <input type="radio" name="sex" value="3"> Другой (походу для LGBT важно будет спрашивать)
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Стоимость встречи</label>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control"  placeholder="Стоимость встречи">
+                                            <div class="input-group-append"><span class="input-group-text">₴</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Наша комиссия</label>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="30"  placeholder="Наша комиссия">
+                                            <div class="input-group-append"><span class="input-group-text">%</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Email</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Номер телефона</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Номер телефона">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Skype</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Skype">
+                                    </div>
+                                </div>
+
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Паспорт. Серия. Номер</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Паспорт. Серия. Номер">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Паспорт. Кем выдан</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Паспорт. Кем выдан">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Паспорт. Когда выдан</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Паспорт. Когда выдан">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">ИНН</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="ИНН">
+                                    </div>
+                                </div>
+
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Город проживания</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" placeholder="Город проживания">
+                                    </div>
+                                </div>
+                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Наши коментарии к терапевту</label>
+                                    <div class="col-lg-6">
+                                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <button type="submit" class="btn btn-brand">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

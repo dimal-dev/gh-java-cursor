@@ -1,0 +1,466 @@
+.gh-book-consultation {
+  margin-top: 4rem;
+  margin-bottom: 12rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+}
+
+.gh-book-consultation__header-block {
+  display: grid;
+  grid-template-columns: 77rem 34rem;
+  column-gap: 5.5rem;
+  align-items: center;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .gh-book-consultation__header-block {
+    grid-template-columns: 45rem 21rem;
+    column-gap: 3rem;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__header-block {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.gh-book-consultation__h1 {
+  font-weight: 500;
+  font-size: 4.5rem;
+  line-height: 1.2;
+  margin: 0;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__h1 {
+    font-size: 3.5rem;
+  }
+}
+
+.gh-book-consultation__back-btn-container .gh-button--outlined {
+  width: 100%;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__back-btn-container .gh-button--outlined {
+    width: auto;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    padding: 1rem 1.5rem;
+  }
+}
+
+.gh-book-consultation__content-block {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 77rem 34rem;
+  column-gap: 5.5rem;
+  align-items: flex-start;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .gh-book-consultation__content-block {
+    grid-template-columns: 45rem 21rem;
+    column-gap: 3rem;
+    margin-top: 3rem;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__content-block {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.gh-book-consultation__h2 {
+  position: relative;
+  font-weight: 500;
+  font-size: 3rem;
+  line-height: 1.2;
+  margin: 0;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__h2 {
+    font-size: 2.4rem;
+  }
+}
+
+.gh-book-consultation__h3 {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: #B7B7B7;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gh-book-consultation__choose-type-container {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  display: flex;
+  gap: 3rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__choose-type-container {
+    margin-top: 2rem;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__choose-type-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.gh-book-consultation__choose-type-specific {
+  max-width: 50%;
+  flex-grow: 1;
+  display: flex;
+  gap: 1.3rem;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__choose-type-specific {
+    max-width: initial;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__choose-type-specific {
+    gap: .7rem;
+  }
+}
+.gh-book-consultation__choose-type-specific > .gh-switch-new {
+  width: 100%;
+}
+.gh-book-consultation__choose-type-specific-info {
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+.gh-book-consultation__summary {
+  position: sticky;
+  top: 2rem;
+  padding: 4rem 3rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 5.4rem 11.6rem rgba(0, 0, 0, 0.05), 0 .676164rem 1.56937rem rgba(0, 0, 0, 0.025);
+  border-radius: 2rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary {
+    padding: 3rem 1.5rem 2rem 1.5rem;
+    border-radius: 1rem;
+  }
+}
+
+.gh-book-consultation__summary-short-info {
+  text-align: center;
+  margin-top: 3rem;
+}
+.gh-book-consultation__summary-short-name {
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1.2;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-short-name {
+    font-size: 2rem;
+  }
+}
+.gh-book-consultation__summary-short-trait {
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin-top: 1rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-short-trait {
+    font-size: 1.4rem;
+  }
+}
+
+.gh-book-consultation__summary-session-info {
+  width: 100%;
+}
+.gh-book-consultation__summary-session-header {
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-session-header {
+    margin-bottom: 1.5rem;
+  }
+}
+.gh-book-consultation__summary-session-row {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  display: flex;
+  justify-content: space-between;
+}
+.gh-book-consultation__summary-session-row-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.gh-book-consultation__summary-price-header {
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 120%;
+  color: #EF9665;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-price-header {
+    font-size: 1.2rem;
+  }
+}
+.gh-book-consultation__summary-price-content {
+  display: flex;
+  justify-content: center;
+  margin-top: .7rem;
+}
+.gh-book-consultation__summary-price-value {
+  font-size: 2.4rem;
+  line-height: .9;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-price-value {
+    font-size: 2rem;
+  }
+}
+.gh-book-consultation__summary-price-currency {
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  align-self: flex-end;
+}
+.gh-book-consultation__summary-old-price-content {
+  display: inline-flex;
+  color: #B7B7B7;
+  justify-content: center;
+  background: linear-gradient(10deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) calc(50% - 0.8px), #B7B7B7 50%, rgba(0, 0, 0, 0) calc(50% + 0.8px), rgba(0, 0, 0, 0) 100%);
+  margin-top: .7rem;
+}
+.gh-book-consultation__summary-old-price-value {
+  font-size: 1.4rem;
+  line-height: .9;
+}
+.gh-book-consultation__summary-old-price-currency {
+  font-size: 1.2rem;
+  line-height: 1.1;
+  align-self: flex-end;
+}
+.gh-book-consultation__summary-promo-info {
+  font-size: 1.3rem;
+  line-height: .9;
+  margin-top: 1.7rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-promo-info {
+    margin-top: .7rem;
+  }
+}
+
+.gh-book-consultation__summary-book-container {
+  margin-top: 2rem;
+  width: 100%;
+  position: relative;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-book-container {
+    margin-top: 1.5rem;
+  }
+}
+.gh-book-consultation__summary-book-container .gh-button {
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__summary-book-container .gh-button {
+    padding: 1rem 4rem;
+  }
+}
+
+.gh-book-consultation__summary-promo {
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__summary-promo {
+    margin-top: 1.5rem;
+  }
+}
+.gh-book-consultation__summary-promo-show-form {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.gh-book-consultation__summary-promo-form {
+  margin-top: 1.5rem;
+  position: relative;
+}
+.gh-book-consultation__summary-promo-add-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5.2rem;
+  height: 5.2rem;
+  background-color: #D4D45E;
+  border-radius: 50%;
+  border: none;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__summary-promo-add-btn {
+    width: 3.9rem;
+    height: 3.9rem;
+    right: -0.6rem;
+  }
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__summary-promo-add-btn {
+    right: 0;
+  }
+}
+.gh-book-consultation__summary-promo-add-btn:hover,
+.gh-book-consultation__summary-promo-add-btn:active {
+  background-color: #B6B626;
+  cursor: pointer;
+}
+
+.gh-book-consultation__schedule-container {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+.gh-book-consultation__schedule-day {
+  margin-top: 3rem;
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__schedule-day {
+    margin-top: 2rem;
+  }
+}
+.gh-book-consultation__schedule-day-title {
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+.gh-book-consultation__schedule-day-time-list {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .gh-book-consultation__schedule-day-time-list {
+    margin-top: 1.5rem;
+  }
+}
+.gh-book-consultation__schedule-day-time-list > .gh-switch-new {
+  min-width: 8.5rem;
+}
+
+.gh-book-consultation__schedule-no-time-available {
+  margin-top: 2.5rem;
+  background-color: #F5F5DE;
+  border-radius: 2rem;
+  padding: 3rem;
+  display: flex;
+  gap: 2rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__schedule-no-time-available {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin-top: 0;
+  }
+}
+.gh-book-consultation__schedule-no-time-available-label {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__schedule-no-time-available-label {
+    font-size: 1.6rem;
+  }
+}
+
+.gh-book-consultation__auth {
+  margin-top: 4rem;
+}
+.gh-book-consultation__auth-type-select {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__auth-type-select {
+    margin-top: 1.8rem;
+    flex-direction: column;
+  }
+}
+.gh-book-consultation__auth-form {
+  margin-top: 2.5rem;
+  background-color: #F5F5DE;
+  border-radius: 2rem;
+  padding: 3rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__auth-form {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+}
+.gh-book-consultation__auth-form-title {
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 1.4;
+}
+.gh-book-consultation__auth-form-fields {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+@media (max-width: 1199px) {
+  .gh-book-consultation__auth-form-fields {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.gh-horizontal-divider--schedule {
+  margin: 3rem 0;
+}
+
+.gh-d-none {
+  display: none !important;
+}
+

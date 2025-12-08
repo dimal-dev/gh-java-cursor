@@ -1,0 +1,113 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+
+{% block hrefLang %}
+{% endblock %}
+
+{% block content %}
+    <div class="profile">
+        <div class="container-lg pt-5" style="max-width: 1140px">
+            <div class="row gy-3">
+                <div class="col-sm-5">
+                    {% include '@landing/pages/psiholog-profile-photo-carousel/' ~ psihologProfile.profileTemplate ~ '.html.twig' %}
+                </div>
+                <div class="col-sm-7">
+                    <div class="card shadow-sm text-primary">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ 'Чтобы записаться на консультацию нужно внести предоплату'|trans }}
+                            </h5>
+                            <div class="card-text profile__specialization-container">
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include '@landing/partials/psiholog-profile/_list-card.html.twig' with {
+                        title: psihologProfile.fullName|trans ~ ', ' ~ 'ваш психолог'|trans,
+                        list: listItems
+                    } %}
+
+                    <div class="mt-4">
+                        <form method="post" action="https://secure.wayforpay.com/pay" accept-charset="utf-8">
+                            {% for paramName, paramValue in wayForPayParams %}
+                                <input type="hidden" name="{{ paramName }}" value="{{ paramValue }}">
+                            {% endfor %}
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" disabled="disabled" type="checkbox" value="" checked="checked" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{ 'Я соглашаюсь с'|trans }}
+
+                                    <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::TERMS_OF_USE')) }}" target="_blank">
+                                        {{ 'правилами использования'|trans }}
+                                    </a>
+
+                                    {{ 'и даю свое'|trans }}
+
+                                    <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::PRIVACY')) }}" target="_blank">
+                                        {{ 'согласие на обработку моих персональных данных'|trans }}
+                                    </a>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-lg btn-primary text-white shadow-sm
+                                order-consultation-btn
+">
+                                {{ 'Внести предоплату'|trans }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.addEventListener('DOMContentLoaded', (event) => {
+            if (typeof fbq === 'function') {
+                fbq('track', 'InitiateCheckout');
+            }
+
+            document.querySelectorAll('.order-consultation-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gtag("event", "checkout_order_consultation_btn_clicked", {
+                        'event_category': 'Conversions'
+                    });
+                });
+            });
+
+
+            const performCheck = () => {
+                const checkbox = document.querySelector('#flexCheckDefault');
+                const btn = document.querySelector('.order-consultation-btn');
+                if (checkbox.checked) {
+                    btn.removeAttribute('disabled');
+                } else {
+                    btn.setAttribute('disabled', 'disabled');
+                }
+            }
+            // setTimeout(performCheck, 10);
+            // setInterval(performCheck, 1000);
+            // document.querySelector('#flexCheckDefault').addEventListener('change', (e) => {
+            //     performCheck();
+            // });
+
+            gtag("event", "begin_checkout", {{ _gaCheckoutData|raw }});
+        });
+    </script>
+
+    {% if not jivochat_disabled %}
+        <script type="text/javascript">
+            window.addEventListener('DOMContentLoaded', (event) => {
+                HelpCrunch('onCustomerMessage', function () {
+                    const firstMessageSentCookieKey = 'hc_fms_on_checkout_ck_dl_cam';
+                    if (!Cookies.get(firstMessageSentCookieKey)) {
+                        Cookies.set(firstMessageSentCookieKey, '1', {expires: 365 * 10});
+
+                        gtag("event", "live_chat_first_message_sent_on_checkout", {
+                            'event_category': 'Conversions'
+                        });
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

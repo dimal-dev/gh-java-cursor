@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+
+
+  App\User\:
+    resource: '%kernel.project_dir%/src/User/*'
+    exclude: '%kernel.project_dir%/src/User/{DependencyInjection,Entity,Migrations,Tests}'
+

@@ -17,10 +17,10 @@ This file tracks the exact progress of the migration. **Update this file after c
 
 ## Current Status
 
-**Current Stage:** 1 - Project Foundation  
-**Current Sub-Stage:** Stage 1 COMPLETE - Ready for Stage 2  
-**Last Completed Sub-Stage:** 1.8 - Database schema (Stage 1 Complete)  
-**Last Update Timestamp:** 2024-12-08
+**Current Stage:** 3 - Landing Module  
+**Current Sub-Stage:** 3.7 - Thank you page  
+**Last Completed Sub-Stage:** 3.6 - Checkout page  
+**Last Update Timestamp:** 2025-12-08
 
 ### Development Approach
 > Building a **native Java/Spring Boot application with DDD**, not a PHP translation.
@@ -49,20 +49,20 @@ This file tracks the exact progress of the migration. **Update this file after c
 
 | Sub-Stage | Description | Status | Completed At |
 |-----------|-------------|--------|--------------|
-| 2.1 | Domain Model (Aggregates, Value Objects) | NOT_STARTED | - |
-| 2.2 | Domain Services & Repository Interfaces | NOT_STARTED | - |
-| 2.3 | Application Layer (Use Cases, Commands) | NOT_STARTED | - |
-| 2.4 | Infrastructure (JPA Repositories) | NOT_STARTED | - |
-| 2.5 | Security (Authentication) | NOT_STARTED | - |
-| 2.6 | Auth Controllers (Login/Logout) | NOT_STARTED | - |
-| 2.7 | Schedule Feature (Full Stack) | NOT_STARTED | - |
-| 2.8 | Clients Feature (Full Stack) | NOT_STARTED | - |
-| 2.9 | Chat Feature (Full Stack) | NOT_STARTED | - |
-| 2.10 | Settings & Payments | NOT_STARTED | - |
-| 2.11 | Thymeleaf Templates | NOT_STARTED | - |
-| 2.12 | CSS/SCSS Styles | NOT_STARTED | - |
+| 2.1 | Domain Model (Aggregates, Value Objects) | COMPLETED | 2024-12-08 |
+| 2.2 | Domain Services & Repository Interfaces | COMPLETED | 2024-12-08 |
+| 2.3 | Application Layer (Use Cases, Commands) | COMPLETED | 2024-12-08 |
+| 2.4 | Infrastructure (JPA Repositories) | COMPLETED | 2024-12-08 |
+| 2.5 | Security (Authentication) | COMPLETED | 2024-12-08 |
+| 2.6 | Auth Controllers (Login/Logout) | COMPLETED | 2024-12-08 |
+| 2.7 | Schedule Feature (Full Stack) | COMPLETED | 2024-12-08 |
+| 2.8 | Clients Feature (Full Stack) | COMPLETED | 2024-12-08 |
+| 2.9 | Chat Feature (Full Stack) | COMPLETED | 2024-12-08 |
+| 2.10 | Settings & Payments | COMPLETED | 2024-12-08 |
+| 2.11 | Thymeleaf Templates | COMPLETED | 2024-12-08 |
+| 2.12 | CSS/SCSS Styles | COMPLETED | 2024-12-08 |
 
-**Stage 2 Progress:** 0/12 complete
+**Stage 2 Progress:** 12/12 complete ✅
 
 ---
 
@@ -70,19 +70,19 @@ This file tracks the exact progress of the migration. **Update this file after c
 
 | Sub-Stage | Description | Status | Completed At |
 |-----------|-------------|--------|--------------|
-| 3.1 | Main layout template | NOT_STARTED | - |
-| 3.2 | Home page | NOT_STARTED | - |
-| 3.3 | Therapist list page | NOT_STARTED | - |
-| 3.4 | Therapist profile pages | NOT_STARTED | - |
-| 3.5 | Book consultation page | NOT_STARTED | - |
-| 3.6 | Checkout page | NOT_STARTED | - |
+| 3.1 | Main layout template | COMPLETED | 2024-12-08 |
+| 3.2 | Home page | COMPLETED | 2024-12-08 |
+| 3.3 | Therapist list page | COMPLETED | 2024-12-08 |
+| 3.4 | Therapist profile pages | COMPLETED | 2024-12-08 |
+| 3.5 | Book consultation page | COMPLETED | 2025-12-08 |
+| 3.6 | Checkout page | COMPLETED | 2025-12-08 |
 | 3.7 | Thank you page | NOT_STARTED | - |
 | 3.8 | Static pages (about, terms, etc.) | NOT_STARTED | - |
 | 3.9 | Request therapist form | NOT_STARTED | - |
 | 3.10 | Landing styles (all SCSS) | NOT_STARTED | - |
 | 3.11 | JavaScript functionality | NOT_STARTED | - |
 
-**Stage 3 Progress:** 0/11 complete
+**Stage 3 Progress:** 6/11 complete
 
 ---
 
@@ -175,8 +175,8 @@ This file tracks the exact progress of the migration. **Update this file after c
 | Stage | Name | Progress | Status |
 |-------|------|----------|--------|
 | 1 | Project Foundation | 100% | COMPLETED |
-| 2 | Therapist Module | 0% | NOT_STARTED |
-| 3 | Landing Module | 0% | NOT_STARTED |
+| 2 | Therapist Module | 100% | COMPLETED |
+| 3 | Landing Module | 55% | IN_PROGRESS |
 | 4 | User Module | 0% | NOT_STARTED |
 | 5 | Staff Module | 0% | NOT_STARTED |
 | 6 | Billing Module | 0% | NOT_STARTED |
@@ -184,8 +184,8 @@ This file tracks the exact progress of the migration. **Update this file after c
 | 8 | Integration & Polish | 0% | NOT_STARTED |
 
 **Total Sub-Stages:** 70  
-**Completed Sub-Stages:** 8  
-**Overall Progress:** 11%
+**Completed Sub-Stages:** 26  
+**Overall Progress:** 37%
 
 ---
 
@@ -209,4 +209,22 @@ This file tracks the exact progress of the migration. **Update this file after c
 | 2024-12-08 | Created Thymeleaf & i18n setup with 3 languages | 1.6 |
 | 2024-12-08 | Created common module (BaseEntity, exceptions, utilities) | 1.7 |
 | 2024-12-08 | Created database schema V1__Initial_Schema.sql | 1.8 |
+| 2024-12-08 | Created domain model: Therapist aggregate, ScheduleSlot, TherapistPrice, shared value objects (Email, Money, TimeSlot), enums with JPA converters | 2.1 |
+| 2024-12-08 | Created repository interfaces and ScheduleDomainService | 2.2 |
+| 2024-12-08 | Created application layer: commands, queries, DTOs, and use cases | 2.3 |
+| 2024-12-08 | Created infrastructure layer: JPA repositories and adapters for Therapist and Booking modules | 2.4 |
+| 2024-12-08 | Created security layer: TherapistUserDetails, TherapistUserDetailsService, TherapistAutoLoginFilter, CurrentTherapist annotation | 2.5 |
+| 2024-12-08 | Created auth controllers: TherapistLoginController, LoginForm, login template, i18n messages | 2.6 |
+| 2024-12-08 | Created schedule feature: TherapistScheduleController, DTOs, use cases, templates, CSS, i18n | 2.7 |
+| 2024-12-08 | Created clients feature: GetClientsUseCase, TherapistClientsController, clients.html, user-notes.html, i18n for all 3 languages | 2.8 |
+| 2024-12-08 | Created chat feature: ChatMessage entity, SenderType/MessageStatus enums, ChatMessageRepository, GetChatMessagesUseCase, SendChatMessageUseCase, GetUnreadMessagesUseCase, TherapistChatController, chat.html, chat-messages.html, new-messages.html templates, i18n for all 3 languages | 2.9 |
+| 2024-12-08 | Created settings and payments: TherapistSettingsController, TherapistPaymentsController, SettingsDto, PaymentsSummaryDto, PaymentHistoryResponse, GetSettingsUseCase, GetPaymentsSummaryUseCase, GetPaymentHistoryUseCase, TimezoneService, settings.html, payments/index.html, payments/history.html, i18n for all 3 languages | 2.10 |
+| 2024-12-08 | Completed all Thymeleaf templates: layout/therapist.html (main layout with sidebar), login.html, schedule.html, schedule-settings.html, fragments/schedule-settings-week.html, clients.html, user-notes.html, settings.html, chat/chat.html, chat-messages.html, new-messages.html, payments/index.html, history.html | 2.11 |
+| 2024-12-08 | Completed CSS styles: cabinet.css (comprehensive CSS covering layout, sidebar, schedule, consultation cards, clients table, chat, payments, settings, buttons, loading states, responsive design). Templates include page-specific inline styles for maintainability | 2.12 |
+| 2024-12-08 | Created landing main layout: layout/main.html, fragments (header, footer, language-switcher), error pages (404, 500), main.css (500+ lines), main.js, BaseLandingController.java | 3.1 |
+| 2024-12-08 | Created home page: HomeController.java, index.html template with 7 sections (hero, problems, therapists, benefits, reviews, FAQ, final CTA), problem-category.html fragment, index.css (600+ lines), i18n messages (60+ keys in all 3 languages) | 3.2 |
+| 2024-12-08 | Created therapist list page: TherapistPrice entity with enums/converters, TherapistPriceRepository, GetTherapistCatalogUseCase, TherapistListItemDto, TherapistListController, psiholog-list.html, psiholog-card.html fragment, psiholog-list.css (400+ lines), i18n (25+ keys) | 3.3 |
+| 2024-12-08 | Created therapist profile page: TherapistProfileDto (with nested records for education, reviews, prices), TherapistProfileData (static profile data provider with topic grouping), GetTherapistProfileUseCase, TherapistProfileController with 3 language routes, therapist-profile.html template (full profile with tabs, accordion on mobile), profile-icons.html fragment (SVG icons), therapist-profile.css (responsive styles), i18n messages for methods, topics, and profile sections | 3.4 |
+| 2025-12-08 | Implemented checkout page: checkout creation and validation, billing checkout/order persistence, WayForPay payment form/signature, Thymeleaf template, styles, GA events, and i18n updates | 3.6 |
+
 

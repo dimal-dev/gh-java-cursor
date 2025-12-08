@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+
+
+  App\Staff\:
+    resource: '%kernel.project_dir%/src/Staff/*'
+    exclude: '%kernel.project_dir%/src/Staff/{DependencyInjection,Entity,Migrations,Tests}'
+

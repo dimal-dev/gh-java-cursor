@@ -1,0 +1,65 @@
+.gh-request-psiholog-success {
+  &__container-outer {
+    overflow: hidden;
+    //min-height: 50vh;
+    display: flex;
+    align-items: center;
+    //position: relative;
+    flex-grow: 1;
+  }
+
+  &__container-inner {
+    background: $color-white-1;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: $box-shadow-1;
+    width: 55rem;
+    margin: 5rem auto 10rem;
+    padding: 2rem 3rem;
+
+    @include mobile {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      width: 29rem;
+
+      flex-direction: column;
+      padding: 1rem 2rem 2rem;
+    }
+    line-height: 1.6;
+  }
+
+  &__soft-light {
+    z-index: -1;
+    position: absolute;
+    left: -98rem;
+    top: -13rem;
+    width: 127rem;
+    height: 96.3rem;
+    background: $soft-light-gradient;
+  }
+
+  &__header {
+    font-size: 1.6rem;
+  }
+
+  &__description {
+    font-size: 1.4rem;
+  }
+
+  &__photo {
+    border-radius: 50%;
+    overflow:hidden;
+    width:15rem;
+    height:auto;
+    margin-left: auto;
+    flex-shrink: 0;
+    align-self: center;
+
+    @include mobile {
+      margin-right: auto;
+      margin-top: 1rem;
+    }
+  }
+}

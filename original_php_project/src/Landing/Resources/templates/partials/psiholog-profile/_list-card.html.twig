@@ -1,0 +1,21 @@
+<div class="card {{ cardClass is defined ? cardClass : ' mt-2 shadow-sm'}}">
+    <div class="card-body {{ cardBodyClass is defined ? cardBodyClass : ' '}}">
+        {% if title is defined %}
+            <h5 class="card-title">{{ title|trans }}</h5>
+        {% endif %}
+        <div class="card-text {{ cardTextClass is defined ? cardTextClass : ' '}}">
+            <div class="list-card__wrapper">
+                {% for label in list %}
+                    <div class="list-card__item mt-2">
+                        <div class="list-card__item-check">
+                            <i class="fas {{ iconClass is defined ? iconClass : ' fa-check'}}"></i>
+                        </div>
+                        <div class="list-card__item-label">
+                            {{ label|trans }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp:         asset('img/profile/0005-valentina-dovbysh/001-valentina-dovbysh.webp', 'landing'),
+            fallback:          asset('img/profile/0005-valentina-dovbysh/001-valentina-dovbysh.jpg', 'landing'),
+        },
+        {
+            webp:         asset('img/profile/0005-valentina-dovbysh/002-valentina-dovbysh.webp', 'landing'),
+            fallback:          asset('img/profile/0005-valentina-dovbysh/002-valentina-dovbysh.jpg', 'landing'),
+        },
+        {
+            webp:         asset('img/profile/0005-valentina-dovbysh/003-valentina-dovbysh.webp', 'landing'),
+            fallback:          asset('img/profile/0005-valentina-dovbysh/003-valentina-dovbysh.jpg', 'landing'),
+        },
+    ]
+} %}

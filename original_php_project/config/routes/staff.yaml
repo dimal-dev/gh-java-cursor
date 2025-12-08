@@ -1,0 +1,5 @@
+staff_routes:
+  resource: ../../src/Staff/Controller
+  type: 'annotation'
+  name_prefix: 'staff_'
+  prefix: staff

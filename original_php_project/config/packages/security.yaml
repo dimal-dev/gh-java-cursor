@@ -1,0 +1,60 @@
+security:
+    providers:
+        user_provider:
+            id: App\User\Repository\SecurityUserProviderRepository
+        staff_user_provider:
+            id: App\Staff\Repository\SecurityUserProviderRepository
+        psiholog_provider:
+            id: App\Psiholog\Repository\SecurityPsihologProviderRepository
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        staff:
+            pattern: ^/staff/
+            anonymous: ~
+            provider: staff_user_provider
+            context: shared
+            guard:
+                authenticators:
+                    - App\Staff\Service\Authenticator\UserAutoLoginAuthenticator
+        psiholog:
+            pattern: ^/psiholog/
+            anonymous: lazy
+            provider: psiholog_provider
+            guard:
+                authenticators:
+                    - App\Psiholog\Service\Authenticator\PsihologAutoLoginAuthenticator
+            logout:
+                path: psiholog_logout
+                target: psiholog_login
+        main:
+            pattern: ^/
+            anonymous: ~
+            provider: user_provider
+            context: shared
+            guard:
+                authenticators:
+                    - App\User\Service\Authenticator\UserAutoLoginAuthenticator
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 31104000 # 1 week in seconds
+                path:     /
+                always_remember_me: true
+                samesite: 'none'
+
+            logout:
+                path: user_logout
+                target: user_login
+    access_control:
+        - { path: ^/$, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/(about|contacts|faq|find-psiholog)$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/(.*?), roles: [ROLE_USER] }
+        - { path: ^/staff/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/staff/(.*?), roles: [ROLE_STAFF_USER] }
+        - { path: ^/psiholog/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/psiholog/(.*?), roles: [ROLE_PSIHOLOG, ROLE_TEST_PSIHOLOG] }
+
+    role_hierarchy:
+        ROLE_STAFF_SUPERUSER: [ROLE_STAFF_USER]

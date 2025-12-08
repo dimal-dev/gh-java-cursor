@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.payments.history.title}">Payment History - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page payments-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.payments.heading}">Payments</h1>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="payments-tabs">
+        <div class="tabs-nav">
+            <a th:href="@{/therapist/payments}" 
+               th:class="${activeTab == 'current'} ? 'tab-link active' : 'tab-link'">
+                <i class="fa fa-money-bill-alt"></i>
+                <span th:text="#{therapist.payments.tab.current}">Current Payout</span>
+            </a>
+            <a th:href="@{/therapist/payments/history}" 
+               th:class="${activeTab == 'history'} ? 'tab-link active' : 'tab-link'">
+                <i class="fa fa-clipboard-list"></i>
+                <span th:text="#{therapist.payments.tab.history}">Payout History</span>
+            </a>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- History Table Container -->
+            <div class="history-container">
+                <table class="history-table" id="history-table">
+                    <thead>
+                        <tr>
+                            <th th:text="#{therapist.payments.history.amount}">Amount</th>
+                            <th th:text="#{therapist.payments.history.date}">Date</th>
+                            <th th:text="#{therapist.payments.history.id}">ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <tr class="loading-row">
+                            <td colspan="3">
+                                <div class="loading-spinner">
+                                    <div class="spinner"></div>
+                                    <span th:text="#{common.loading}">Loading...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination-container" id="pagination" style="display: none;">
+                    <button type="button" id="prev-page" class="btn btn-outline" disabled>
+                        &laquo; <span th:text="#{common.previous}">Previous</span>
+                    </button>
+                    <span id="page-info" class="page-info"></span>
+                    <button type="button" id="next-page" class="btn btn-outline">
+                        <span th:text="#{common.next}">Next</span> &raquo;
+                    </button>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-state__icon">📊</div>
+                    <h3 th:text="#{therapist.payments.history.empty.title}">No payment history</h3>
+                    <p th:text="#{therapist.payments.history.empty.description}">
+                        Your payout history will appear here after your first payout.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const tableBody = document.getElementById('history-body');
+            const historyTable = document.getElementById('history-table');
+            const emptyState = document.getElementById('empty-state');
+            const pagination = document.getElementById('pagination');
+            const prevBtn = document.getElementById('prev-page');
+            const nextBtn = document.getElementById('next-page');
+            const pageInfo = document.getElementById('page-info');
+
+            let currentPage = 0;
+            let totalPages = 0;
+            const pageSize = 10;
+
+            const messages = {
+                currency: /*[[#{currency.uah}]]*/ '₴',
+                noRecords: /*[[#{therapist.payments.history.noRecords}]]*/ 'No payment records',
+                pageOf: /*[[#{therapist.clients.pageOf}]]*/ 'Page {0} of {1}'
+            };
+
+            async function loadHistory(page = 0) {
+                try {
+                    showLoading();
+                    
+                    const url = `/therapist/payments/history/items?page=${page}&perpage=${pageSize}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    tableBody.innerHTML = '';
+
+                    if (!data || data.length === 0) {
+                        historyTable.style.display = 'none';
+                        pagination.style.display = 'none';
+                        emptyState.style.display = 'block';
+                        return;
+                    }
+
+                    emptyState.style.display = 'none';
+                    historyTable.style.display = 'table';
+
+                    data.forEach(item => {
+                        const row = createHistoryRow(item);
+                        tableBody.appendChild(row);
+                    });
+
+                    // Update pagination (simplified for demo)
+                    currentPage = page;
+                    updatePagination(data.length >= pageSize);
+
+                } catch (error) {
+                    console.error('Failed to load history:', error);
+                    tableBody.innerHTML = '<tr><td colspan="3" class="error-message">Failed to load history. Please refresh.</td></tr>';
+                }
+            }
+
+            function showLoading() {
+                tableBody.innerHTML = `
+                    <tr class="loading-row">
+                        <td colspan="3">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            function createHistoryRow(item) {
+                const row = document.createElement('tr');
+                row.className = 'history-row';
+                
+                // Amount
+                const amountCell = document.createElement('td');
+                amountCell.className = 'amount-cell';
+                amountCell.innerHTML = `<strong>${item.amount}</strong> ${messages.currency}`;
+                row.appendChild(amountCell);
+                
+                // Date
+                const dateCell = document.createElement('td');
+                dateCell.className = 'date-cell';
+                dateCell.textContent = formatDate(item.date_created);
+                row.appendChild(dateCell);
+                
+                // ID
+                const idCell = document.createElement('td');
+                idCell.className = 'id-cell';
+                idCell.textContent = item.id;
+                row.appendChild(idCell);
+                
+                return row;
+            }
+
+            function formatDate(dateStr) {
+                if (!dateStr) return '-';
+                const date = new Date(dateStr);
+                return date.toLocaleDateString('uk-UA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function updatePagination(hasMore) {
+                if (currentPage === 0 && !hasMore) {
+                    pagination.style.display = 'none';
+                    return;
+                }
+
+                pagination.style.display = 'flex';
+                prevBtn.disabled = currentPage <= 0;
+                nextBtn.disabled = !hasMore;
+                pageInfo.textContent = `Page ${currentPage + 1}`;
+            }
+
+            // Event listeners
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    loadHistory(currentPage - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                loadHistory(currentPage + 1);
+            });
+
+            // Initial load
+            document.addEventListener('DOMContentLoaded', () => loadHistory());
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+
+<th:block layout:fragment="styles">
+    <style>
+        .payments-page .page-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .payments-tabs {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab-link:hover {
+            color: #333;
+            background: #fff;
+        }
+
+        .tab-link.active {
+            color: #5867dd;
+            border-bottom-color: #5867dd;
+            background: white;
+        }
+
+        .tab-link i {
+            font-size: 1.1rem;
+        }
+
+        .tab-content {
+            padding: 1.5rem;
+        }
+
+        /* History Table */
+        .history-container {
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .history-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .history-row:hover {
+            background-color: #f9f9f9;
+        }
+
+        .amount-cell {
+            font-weight: 500;
+        }
+
+        .amount-cell strong {
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .id-cell {
+            color: #888;
+            text-align: center;
+            width: 60px;
+        }
+
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            padding: 16px;
+        }
+
+        .page-info {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Loading */
+        .loading-row td {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #5867dd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state__icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #666;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</th:block>
+</body>
+</html>
+

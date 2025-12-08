@@ -1,0 +1,109 @@
+.gh-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: $color-primary-carrot-1;
+  color: $color-white-1;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  border-radius: 6.3rem;
+  padding: 1.5rem 3rem;
+  border: none;
+
+  transition: all .2s;
+
+  box-shadow: 0 1.4rem 4rem rgba($color-black-1, 0.1);
+
+  &--big {
+    font-size: 1.8rem;
+    padding: 1.8rem 3rem;
+  }
+
+  &--small {
+    padding: .9rem 2rem;
+  }
+
+  &--small-mobile {
+    @include mobile {
+      padding: .9rem 2rem;
+    }
+  }
+
+  &--small-tablet {
+    @include tablet-full {
+      padding: .9rem 2rem;
+    }
+  }
+
+  &:hover {
+    background-color: $color-primary-carrot-3;
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scaleX(.95) scaleY(.95);
+  }
+
+  &[disabled], &[disabled]:active, &[disabled]:hover {
+    opacity: .7;
+    transform: initial;
+    background-color: $color-primary-carrot-1;
+  }
+
+  &--olive {
+    background-color: $color-primary-olive-2;
+    color: $color-black-2;
+
+    &:hover {
+      background-color: $color-primary-olive-5;
+    }
+  }
+
+  &--white {
+    background-color: $color-white-1;
+    color: $color-black-2;
+
+    &:hover {
+      background-color: scale-color($color-white-1, $lightness: -3%);
+    }
+  }
+
+  &--outlined-olive {
+    background-color: initial;
+    border: .1rem solid $color-primary-olive-2;
+    color: $color-black-2;
+    box-shadow: none;
+
+
+    &:hover {
+      background-color: $color-primary-olive-2;
+      color: $color-black-2;
+      cursor: pointer;
+
+      & path {
+        fill: $color-black-2;
+      }
+    }
+  }
+
+  &--outlined {
+    background-color: initial;
+    border: .1rem solid $color-primary-carrot-1;
+    color: $color-black-2;
+    box-shadow: none;
+
+
+    &:hover {
+      background-color: $color-primary-carrot-1;
+      color: $color-black-2;
+      cursor: pointer;
+
+      & path {
+        fill: $color-black-2;
+      }
+    }
+  }
+}

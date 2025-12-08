@@ -1,0 +1,161 @@
+<div class="card mt-2 shadow-sm">
+    <div class="card-body py-4 mb-2">
+        <h5 class="card-title text-center"
+            id="{{ constant('\\App\\Landing\\Controller\\PsihologProfileController::BOOK_CONSULTATION_HTML_ID') }}">
+            {{ 'Запись на консультацию'|trans }}
+        </h5>
+        {% if priceCouple is defined and priceCouple %}
+            <div class="consultation-type-select-wrapper mt-2">
+                <h6 class="card-subtitle mb-3 text-muted text-center mt-2">
+                    <i class="fas fa-info-circle"></i>
+                    {{ 'Выберите тип консультации'|trans }}
+                </h6>
+
+                <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
+                    <div>
+                        <button class="btn btn-primary text-white consultation-type-select-btn
+                    nowrap text-center py-2 px-5 select-individual-consultation-btn"
+                                data-price-id="{{ priceIndividual.id }}"
+                                data-target-id="consultation-select-date-individual">
+                            {{ 'Индивидуальная'|trans }}
+                            <br>
+                            {{ '%minutes%&nbsp;минут'|trans({'%minutes%': 50})|raw }}, {{ priceIndividual.price }}&nbsp;грн
+                        </button>
+                    </div>
+                    <div class="ms-md-3 mt-md-0 mt-2">
+                        <button class="btn btn-primary text-white consultation-type-select-btn
+                    py-2 px-5 select-couple-consultation-btn"
+                                data-price-id="{{ priceCouple.id }}"
+                                data-target-id="consultation-select-date-couple">
+                            {{ 'Парная/семейная'|trans }}
+                            <br>
+                            {{ '%minutes%&nbsp;минут'|trans({'%minutes%': 80})|raw }}, {{ priceCouple.price }}&nbsp;грн
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {% include '@landing/partials/psiholog-profile/_book-consultation-type-block.html.twig' with {
+                blockId: "consultation-select-date-individual",
+                consultationTypeTitle: "Индивидуальная консультация, длится 50 минут, стоит"|trans ~ " " ~ priceIndividual.price ~" грн",
+                timeListName: "indiv",
+                price: priceIndividual,
+                blockDaySelectionBtnClass: "individual-day-selection-btn",
+                blockTimeSelectionBtnClass: "individual-time-selection-btn",
+                blockBookBtnClass: "individual-book-btn",
+            } %}
+
+            {% include '@landing/partials/psiholog-profile/_book-consultation-type-block.html.twig' with {
+                blockId: "consultation-select-date-couple",
+                consultationTypeTitle: "Парная/семейная консультация, длится 80 минут, стоит"|trans ~ " " ~ priceCouple.price ~" грн",
+                timeListName: "couple",
+                price: priceCouple,
+                blockDaySelectionBtnClass: "couple-day-selection-btn",
+                blockTimeSelectionBtnClass: "couple-time-selection-btn",
+                blockBookBtnClass: "couple-book-btn",
+            } %}
+        {% else %}
+            {% include '@landing/partials/psiholog-profile/_book-consultation-type-block.html.twig' with {
+                blockId: "consultation-select-date-individual",
+                consultationTypeTitle: "Индивидуальная консультация, длится 50 минут, стоит"|trans ~ " " ~ priceIndividual.price ~" грн",
+                timeListName: "indiv",
+                price: priceIndividual,
+                showOnlyThisBlock: true,
+                blockDaySelectionBtnClass: "individual-day-selection-btn",
+                blockTimeSelectionBtnClass: "individual-time-selection-btn",
+                blockBookBtnClass: "individual-book-btn",
+            } %}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    const mustRestartPageAfterDetectingTz = true;
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('.open-live-chat').forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                HelpCrunch('openChat');
+            });
+        });
+
+        document.querySelectorAll('.consultation-type-select-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target-id');
+                document.querySelector(`#${targetId}`).classList.remove('d-none');
+
+                document.querySelector('.consultation-type-select-wrapper').classList.add('d-none');
+            })
+        });
+
+        document.querySelectorAll('.schedule-consultation__back-from-date-selection').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.consultation-type-schedule').forEach(el => {
+                    el.classList.add('d-none');
+                });
+
+                document.querySelector('.consultation-type-select-wrapper').classList.remove('d-none');
+            });
+        });
+
+        document.querySelectorAll('.consultation-type-schedule').forEach(scheduleContainer => {
+            let currentSelectedTimeId = null;
+            const $bookBtn = scheduleContainer.querySelector('.schedule-consultation__book');
+
+            scheduleContainer.querySelectorAll('.schedule-consultation__select-time').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    console.log('click')
+                    const time = button.getAttribute('data-time');
+                    const date = button.getAttribute('data-date-label');
+                    const dateAndTimeLabel = `{{ 'Выбрать'|trans }} ${date}, ${time}`;
+                    currentSelectedTimeId = button.getAttribute('data-time-id');
+
+                    scheduleContainer.querySelector('.formTimeInput').value = currentSelectedTimeId;
+                    $bookBtn.innerHTML = dateAndTimeLabel;
+                    $bookBtn.removeAttribute('disabled');
+                });
+
+            });
+
+            const bookBtn = scheduleContainer.querySelector('.schedule-consultation__book');
+            const bookForm = scheduleContainer.querySelector('.schedule-consultation__book-form');
+            if (bookForm) {
+                bookForm.addEventListener('submit', (e) => {
+                    bookBtn.setAttribute('disabled', 'disabled');
+                });
+            }
+        });
+
+        document.querySelectorAll('.select-individual-consultation-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                gtag("event", "select_individual_consultation_btn_clicked", {
+                    'event_category': 'Conversions'
+                });
+            });
+        });
+
+        document.querySelectorAll('.select-couple-consultation-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                gtag("event", "select_couple_consultation_btn_clicked", {
+                    'event_category': 'Conversions'
+                });
+            });
+        });
+
+        const gaItems = [
+            {
+                "id": "P{{ psiholog.id }}",
+                "name": "{{ psihologProfile.getFullName() }}",
+                "list_name": "View profile",
+                "list_position": 1,
+                "quantity": 1,
+                "price": '{{ priceIndividual.price }}'
+            }
+        ];
+
+        gtag('event', 'view_item', {
+            "items": gaItems
+        });
+    });
+</script>

@@ -1,0 +1,110 @@
+{
+    "froala/wysiwyg-editor-php-sdk": {
+        "version": "4.0.13"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "7.4.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.5.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.2.1"
+    },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.2.0"
+    },
+    "illuminate/collections": {
+        "version": "v9.13.0"
+    },
+    "illuminate/conditionable": {
+        "version": "v9.13.0"
+    },
+    "illuminate/contracts": {
+        "version": "v9.13.0"
+    },
+    "illuminate/macroable": {
+        "version": "v9.13.0"
+    },
+    "illuminate/support": {
+        "version": "v9.13.0"
+    },
+    "irazasyed/telegram-bot-sdk": {
+        "version": "v3.6"
+    },
+    "jbroadway/urlify": {
+        "version": "1.2.4-stable"
+    },
+    "jean85/pretty-package-versions": {
+        "version": "2.0.5"
+    },
+    "league/event": {
+        "version": "2.2.0"
+    },
+    "league/flysystem": {
+        "version": "3.0.3"
+    },
+    "league/flysystem-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "913dc3d7a5a1af0d2b044c5ac3a16e2f851d7380"
+        }
+    },
+    "league/mime-type-detection": {
+        "version": "1.9.0"
+    },
+    "nesbot/carbon": {
+        "version": "2.58.0"
+    },
+    "php-http/client-common": {
+        "version": "2.5.0"
+    },
+    "phpstan/phpstan": {
+        "version": "1.6.7"
+    },
+    "psr/simple-cache": {
+        "version": "3.0.0"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "rector/rector": {
+        "version": "0.12.23"
+    },
+    "sentry/sdk": {
+        "version": "3.2.0"
+    },
+    "sentry/sentry": {
+        "version": "3.5.0"
+    },
+    "sentry/sentry-symfony": {
+        "version": "4.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
+    "symfony/polyfill-uuid": {
+        "version": "v1.25.0"
+    },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.2"
+    },
+    "theiconic/php-ga-measurement-protocol": {
+        "version": "v2.9.0"
+    },
+    "voku/portable-ascii": {
+        "version": "2.0.1"
+    },
+    "voku/stop-words": {
+        "version": "2.0.1"
+    }
+}

@@ -1,0 +1,146 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+{% block page_title %}
+    {{ post.header }} - GoodHelp
+{% endblock %}
+
+{% block headerLangPicker %}
+    {% if post_i18n_short is defined and post_i18n_short %}
+        {% set postUA = locale == 'ua' ? post : post_i18n_short %}
+        {% set postRU = locale == 'ru' ? post : post_i18n_short %}
+
+        <div class="gh-header__lang-picker">
+            <div class="gh-header__lang-picker-item {{ locale == 'ua' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ua', postId: postUA.id, slug: postUA.slug}) }}">UA</a>
+            </div>
+            <div class="gh-header__lang-picker-item {{ locale == 'ru' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ru', postId: postRU.id, slug: postRU.slug}) }}">RU</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block headerMobileLangPicker %}
+    {% if post_i18n_short is defined and post_i18n_short %}
+        {% set postUA = locale == 'ua' ? post : post_i18n_short %}
+        {% set postRU = locale == 'ru' ? post : post_i18n_short %}
+
+        <div class="gh-header__lang-picker gh-header__lang-picker--mobile">
+            <div class="gh-header__lang-picker-item {{ locale == 'ua' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ua', postId: postUA.id, slug: postUA.slug}) }}">UA</a>
+            </div>
+            <div class="gh-header__lang-picker-item {{ locale == 'ru' ? 'gh-header__lang-picker-item--active' : '' }}">
+                <a href="{{ currentRouteLocalized({_locale: 'ru', postId: postRU.id, slug: postRU.slug}) }}">RU</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="gh-blog__main-block">
+        <h1 class="gh-h2 gh-mt-3  gh-mb-1-5">
+            {{ post.header }}
+        </h1>
+        <div class="gh-soft-light__container">
+            <div class="gh-soft-light__actual-light gh-soft-light__actual-light--left-first"></div>
+        </div>
+
+        <div class="gh-post-list-wrapper">
+            <div class="gh-post-list">
+                <div class="gh-post-list__item">
+                    <div class="gh-post-list__item-author-date gh-mb-2">
+                        {% set author = post.psihologFullName is defined and post.psihologFullName ? post.psihologFullName : post.author %}
+                        {% if author|length > 0 %}
+                            <span class="gh-post-list__item-author">
+                                Автор: {{ author }},
+                            </span>
+                        {% endif %}
+                        <span class="gh-post-list__item-date">
+                                {% set goodLookingDatetimeParts = toGoodLookingDatetimeParts(post.posted_at, app.request.locale) %}
+                            {{ goodLookingDatetimeParts.dayOfMonth }} {{ goodLookingDatetimeParts.month|lower }}, {{ goodLookingDatetimeParts.year }}
+                        </span>
+                    </div>
+
+                    <div class="gh-post-list__item-preview">
+                        {{ post.preview|raw }}
+                        {{ post.body|raw }}
+                    </div>
+                    <div class="gh-mb-2"></div>
+                </div>
+            </div>
+
+            <div class="gh-blog-sale">
+                <div class="gh-blog-sale__logo">
+                    <img class="gh-img" src="{{ asset('img/logo/logo-olive.svg', 'landing') }}" alt="">
+                </div>
+                <div class="gh-blog-sale__heading">
+                    {{ 'Psiholog_consultation_online'|trans }}
+                </div>
+
+                <div class="gh-blog-sale__advantage-list">
+                    <div class="gh-blog-sale__advantage-list-item">
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M10.5 0C4.70859 0 0 4.70859 0 10.5C0 16.2914 4.70859 21 10.5 21C16.2914 21 21 16.2914 21 10.5C21 4.70859 16.2914 0 10.5 0Z"
+                                  fill="#D4D45E"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M15.5778 6.9604C15.8321 7.2147 15.8321 7.63306 15.5778 7.88735L9.42542 14.0397C9.29827 14.1668 9.1301 14.2325 8.96194 14.2325C8.79377 14.2325 8.62561 14.1668 8.49846 14.0397L5.42229 10.9635C5.16799 10.7092 5.16799 10.2909 5.42229 10.0366C5.67659 9.78228 6.09495 9.78228 6.34924 10.0366L8.96194 12.6493L14.6508 6.9604C14.9051 6.702 15.3235 6.702 15.5778 6.9604Z"
+                                  fill="#202020"></path>
+                        </svg>
+                        <div class="gh-blog-sale__advantage-list-item-text">
+                            {{ 'landing.index.recommend_professinals_we_confident_in'|trans }}
+                        </div>
+                    </div>
+                    <div class="gh-blog-sale__advantage-list-item">
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M10.5 0C4.70859 0 0 4.70859 0 10.5C0 16.2914 4.70859 21 10.5 21C16.2914 21 21 16.2914 21 10.5C21 4.70859 16.2914 0 10.5 0Z"
+                                  fill="#D4D45E"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M15.5778 6.9604C15.8321 7.2147 15.8321 7.63306 15.5778 7.88735L9.42542 14.0397C9.29827 14.1668 9.1301 14.2325 8.96194 14.2325C8.79377 14.2325 8.62561 14.1668 8.49846 14.0397L5.42229 10.9635C5.16799 10.7092 5.16799 10.2909 5.42229 10.0366C5.67659 9.78228 6.09495 9.78228 6.34924 10.0366L8.96194 12.6493L14.6508 6.9604C14.9051 6.702 15.3235 6.702 15.5778 6.9604Z"
+                                  fill="#202020"></path>
+                        </svg>
+                        <div class="gh-blog-sale__advantage-list-item-text">
+                            {{ 'landing.index.safe_and_comfortable_payments'|trans }}
+                        </div>
+                    </div>
+                    <div class="gh-blog-sale__advantage-list-item">
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M10.5 0C4.70859 0 0 4.70859 0 10.5C0 16.2914 4.70859 21 10.5 21C16.2914 21 21 16.2914 21 10.5C21 4.70859 16.2914 0 10.5 0Z"
+                                  fill="#D4D45E"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M15.5778 6.9604C15.8321 7.2147 15.8321 7.63306 15.5778 7.88735L9.42542 14.0397C9.29827 14.1668 9.1301 14.2325 8.96194 14.2325C8.79377 14.2325 8.62561 14.1668 8.49846 14.0397L5.42229 10.9635C5.16799 10.7092 5.16799 10.2909 5.42229 10.0366C5.67659 9.78228 6.09495 9.78228 6.34924 10.0366L8.96194 12.6493L14.6508 6.9604C14.9051 6.702 15.3235 6.702 15.5778 6.9604Z"
+                                  fill="#202020"></path>
+                        </svg>
+                        <div class="gh-blog-sale__advantage-list-item-text">
+                            {{ 'landing.index.care_about_results'|trans }}
+                        </div>
+                    </div>
+                    <div class="gh-blog-sale__advantage-list-item">
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M10.5 0C4.70859 0 0 4.70859 0 10.5C0 16.2914 4.70859 21 10.5 21C16.2914 21 21 16.2914 21 10.5C21 4.70859 16.2914 0 10.5 0Z"
+                                  fill="#D4D45E"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M15.5778 6.9604C15.8321 7.2147 15.8321 7.63306 15.5778 7.88735L9.42542 14.0397C9.29827 14.1668 9.1301 14.2325 8.96194 14.2325C8.79377 14.2325 8.62561 14.1668 8.49846 14.0397L5.42229 10.9635C5.16799 10.7092 5.16799 10.2909 5.42229 10.0366C5.67659 9.78228 6.09495 9.78228 6.34924 10.0366L8.96194 12.6493L14.6508 6.9604C14.9051 6.702 15.3235 6.702 15.5778 6.9604Z"
+                                  fill="#202020"></path>
+                        </svg>
+                        <div class="gh-blog-sale__advantage-list-item-text">
+                            {{ 'landing.index.different_prices'|trans }}
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::REQUEST_PSIHOLOG')) }}"
+                   class="gh-button">
+                    {{ 'Start'|trans }}
+                </a>
+
+                <div class="gh-blog-sale__phone-note">
+                    <img src="{{ asset('img/blog-phone-notebook.webp', 'landing') }}" class="gh-img">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

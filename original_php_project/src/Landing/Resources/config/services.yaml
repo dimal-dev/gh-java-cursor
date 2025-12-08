@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $wayForPayMerchantLogin: '%env(WAY_FOR_PAY_MERCHANT_LOGIN)%'
+      $wayForPayMerchantSecretKey: '%env(WAY_FOR_PAY_MERCHANT_SECRET_KEY)%'
+      $projectDir: '%kernel.project_dir%'
+
+
+  App\Landing\:
+    resource: '%kernel.project_dir%/src/Landing/*'
+    exclude: '%kernel.project_dir%/src/Landing/{DependencyInjection,Entity,Migrations,Tests}'
+

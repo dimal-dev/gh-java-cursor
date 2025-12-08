@@ -1,0 +1,16 @@
+<div class="card {{ cardClass is defined ? cardClass : ' mt-2 shadow-sm' }}">
+    <div class="card-body {{ cardBodyClass is defined ? cardBodyClass : ' ' }}">
+        {% if title is defined %}
+            <h5 class="card-title">{{ title|trans|raw }}</h5>
+        {% endif %}
+        <div class="card-text {{ cardTextClass is defined ? cardTextClass : ' ' }}">
+            <ol class="list-card__wrapper">
+                {% for label in list %}
+                    <li class="list-card__item-label">
+                        {{ label|trans|raw }}
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+</div>

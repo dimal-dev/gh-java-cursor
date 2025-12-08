@@ -1,0 +1,46 @@
+.select-psiholog-btn {
+  font-size: 1.63rem;
+  color: $color-white-1;
+  display: inline-block;
+
+  background-color: $color-primary-carrot-1;
+  box-shadow: 0 1.4rem 4rem rgba($color-black-1, 0.1);
+
+  padding: 1rem 3rem;
+  line-height: 1.25;
+
+  border-radius: 3rem;
+
+  @include mobile {
+    width: 100%;
+    text-align: center;
+  }
+
+  &--main {
+    font-size: 1.8rem;
+    padding: 2rem 4rem;
+
+    @include mobile {
+      font-size: 1.6rem;
+
+      padding: 1rem 2.9rem;
+    }
+
+    @include tablet-full {
+      font-size: 1.6rem;
+
+      padding: 1rem 2.9rem;
+    }
+  }
+
+  &--no-shadow {
+    box-shadow: none;
+  }
+
+  &--header {
+    @include tablet-full {
+      font-size: 1.3rem;
+      padding: 1rem 2rem;
+    }
+  }
+}

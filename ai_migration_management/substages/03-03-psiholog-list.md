@@ -108,12 +108,51 @@ public record TopicDto(
 ---
 
 ## Verification
-- [ ] List displays all active therapists
-- [ ] Topic filter works
-- [ ] Cards show correct information
-- [ ] Links to profile pages work
-- [ ] Responsive grid layout
-- [ ] i18n for all text
+- [x] List displays all active therapists
+- [ ] Topic filter works (basic structure, filtering to be enhanced later)
+- [x] Cards show correct information
+- [x] Links to profile pages work
+- [x] Responsive grid layout
+- [x] i18n for all text
+
+---
+
+## Implementation Summary (Completed 2024-12-08)
+
+### Files Created:
+
+**Domain Layer:**
+- `TherapistPrice.java` - Entity for therapist pricing
+- `PriceType.java` - Enum for price types (Individual, Couple, Teenager)
+- `PriceTypeConverter.java` - JPA converter for PriceType
+- `PriceState.java` - Enum for price states (Active, Inactive)
+- `PriceStateConverter.java` - JPA converter for PriceState
+- `TherapistPriceRepository.java` - Repository interface
+
+**Infrastructure Layer:**
+- `JpaTherapistPriceRepository.java` - Spring Data JPA repository
+- `TherapistPriceRepositoryAdapter.java` - Repository adapter
+
+**Application Layer:**
+- `TherapistListItemDto.java` - DTO for therapist list items
+- `GetTherapistCatalogUseCase.java` - Use case for fetching catalog
+
+**Presentation Layer:**
+- `TherapistListController.java` - Controller with routes /psiholog-list, /ru/psiholog-list, /en/psiholog-list
+
+**Templates:**
+- `landing/psiholog-list.html` - Main list page template
+- `landing/fragments/psiholog-card.html` - Reusable therapist card fragment
+
+**CSS:**
+- `css/landing/psiholog-list.css` - 400+ lines of responsive styles
+
+**i18n:**
+- Added 25+ new translation keys to all 3 language files:
+  - Page titles and labels
+  - Single phrases (therapist taglines)
+  - Specialties
+  - Experience/price labels
 
 ---
 

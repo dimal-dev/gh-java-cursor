@@ -1,0 +1,136 @@
+{% set manyBlocks = not (showOnlyThisBlock is defined and showOnlyThisBlock) %}
+<div class="consultation-type-schedule {{ manyBlocks ? 'd-none' : '' }}" id="{{ blockId }}">
+    <div class="d-flex flex-sm-row flex-column">
+        <div>
+            <h6 class="card-subtitle mb-3 mt-1 text-muted">
+                {{ consultationTypeTitle }}
+            </h6>
+            <h6 class="card-subtitle mb-2 text-muted">
+                <i class="fas fa-calendar-alt"></i>
+                {{ 'Ваш часовой пояс&nbsp;%tz%'|trans({'%tz%': timezoneOffsetLabel })|raw }}
+            </h6>
+
+            {% if schedule[timeListName]|length > 0 %}
+                <div class="mt-2 text-muted">
+                    {{ 'Если нет нужного для вас времени или дня'|trans }},
+                    <a href="#0" class="btn-link open-live-chat">
+                        {{ 'напишите&nbsp;нам'|trans|raw }}
+                    </a>
+                    {{ 'и мы подберем нужное время'|trans }}
+                </div>
+            {% endif %}
+        </div>
+        {% if manyBlocks %}
+            <div class="mt-2 mt-sm-0 ms-sm-auto">
+                <button type="button"
+                        class="btn btn-outline-primary schedule-consultation__back-from-date-selection hover-text-white">
+                    <i class="fas fa-arrow-alt-left"></i>
+                    {{ 'Назад к выбору консультации'|trans }}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-text">
+        <div class="schedule-consultation pt-0">
+            <div class="schedule-consultation__time-selection">
+                {% if schedule[timeListName]|length > 0 %}
+                {% for dayInfo in schedule[timeListName] %}
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between flex-wrap gap-2">
+                            <div>
+                                <div class="text-muted fs-5 schedule-consultation__time-selection-date-label">
+                                    {{ dayInfo.dayOfMonth }} {{ dayInfo.month }}, {{ dayInfo.dayFull }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="schedule-consultation__day-items d-flex flex-wrap gap-2 mt-2 day-item-{{ dayInfo.date }}"
+                    >
+                        {% for timeConfig in dayInfo['timeList'] %}
+                            <button class="btn btn-outline-primary bg-primary-7
+                                {{ blockTimeSelectionBtnClass is defined ? blockTimeSelectionBtnClass : '' }}
+                                schedule-consultation__select-time"
+                                    data-day-label="{{ dayInfo.dayFull }}, {{ dayInfo.dayOfMonth }} {{ dayInfo.month }}"
+                                    data-date-label="{{ dayInfo.dayOfMonth }} {{ dayInfo.month }}"
+                                    data-time="{{ timeConfig.time }}"
+                                    data-time-id="{{ timeConfig.scheduleId }}"
+                            >
+                                {{ timeConfig.time }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div class="select-consultation-time-container">
+                    <form action="{{ url(constant("\\App\\Landing\\Service\\RouteNames::CHECKOUT")) }}"
+                          class="schedule-consultation__book-form"
+                          method="post">
+                        <input type="hidden" name="time" value="" class="formTimeInput"/>
+                        <input type="hidden" name="price" value="{{ price.id }}"/>
+                        <button class="btn btn-primary btn-lg text-white schedule-consultation__book
+                                {{ blockBookBtnClass is defined ? blockBookBtnClass : '' }}"
+                                disabled="disabled"
+                                type="submit"
+                        >
+                            {{ 'Выбрать время консультации'|trans }}
+                        </button>
+                    </form>
+                </div>
+                {% else %}
+                <div style="
+    padding: 2rem;
+    font-style: italic;
+    font-size: 1.3rem;
+    border: 2px solid #6fb744;
+    margin: 2rem;
+    border-radius: .5rem;
+    text-align: center;
+">
+                    <div class="mt-2 text-muted">
+                        {{ 'Для того, чтобы записаться на консультацию к этому психологу'|trans }},
+                        <a href="#0" class="btn-link open-live-chat">
+                            {{ 'напишите&nbsp;нам'|trans|raw }}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            {% if blockDaySelectionBtnClass is defined %}
+            document.querySelectorAll('.{{ blockDaySelectionBtnClass }}').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gtag("event", "{{ blockDaySelectionBtnClass|replace({"-": "_"}) }}_clicked", {
+                        'event_category': 'Conversions'
+                    });
+                });
+            });
+            {% endif %}
+
+            {% if blockTimeSelectionBtnClass is defined %}
+            document.querySelectorAll('.{{ blockTimeSelectionBtnClass }}').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gtag("event", "{{ blockTimeSelectionBtnClass|replace({"-": "_"}) }}_clicked", {
+                        'event_category': 'Conversions'
+                    });
+                });
+            });
+            {% endif %}
+
+            {% if blockBookBtnClass is defined %}
+            document.querySelectorAll('.{{ blockBookBtnClass }}').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gtag("event", "{{ blockBookBtnClass|replace({"-": "_"}) }}_clicked", {
+                        'event_category': 'Conversions'
+                    });
+                    gtag("event", "schedule-consultation__book_clicked", {
+                        'event_category': 'Conversions'
+                    });
+                });
+            });
+            {% endif %}
+        });
+    </script>

@@ -1,0 +1,12 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp: asset('img/profile/0011-nadezhda-tordiya/001-nadezhda-tordiya.webp', 'landing'),
+            fallback:  asset('img/profile/0011-nadezhda-tordiya/001-nadezhda-tordiya.jpg', 'landing'),
+        },
+        {
+            webp: asset('img/profile/0011-nadezhda-tordiya/002-nadezhda-tordiya.webp', 'landing'),
+            fallback:  asset('img/profile/0011-nadezhda-tordiya/002-nadezhda-tordiya.jpg', 'landing'),
+        },
+    ]
+} %}

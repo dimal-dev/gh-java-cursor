@@ -145,12 +145,41 @@ public class ChatMessage {
 ---
 
 ## Verification
-- [ ] Conversation list shows all users with messages
-- [ ] Can view message history
-- [ ] Can send new messages
-- [ ] Messages marked read when viewed
-- [ ] Unread count updates in real-time
-- [ ] Polling works for new messages
+- [x] Conversation list shows all users with messages
+- [x] Can view message history
+- [x] Can send new messages
+- [x] Messages marked read when viewed
+- [x] Unread count updates in real-time
+- [x] Polling works for new messages
+
+## Implementation Notes
+
+### Created Files:
+- `ChatMessage.java` - Entity for chat messages
+- `SenderType.java` / `SenderTypeConverter.java` - Enum for sender (USER/THERAPIST)
+- `MessageStatus.java` / `MessageStatusConverter.java` - Enum for status (UNREAD/READ)
+- `ChatMessageRepository.java` - Domain repository interface
+- `JpaChatMessageRepository.java` - JPA repository
+- `ChatMessageRepositoryAdapter.java` - Repository adapter
+- `ChatMessageDto.java` - Message DTO
+- `NewMessageItemDto.java` - New messages list DTO
+- `ChatMessagesResponse.java` - AJAX response DTO
+- `UnreadCountResponse.java` - Unread count DTO
+- `SendChatMessageCommand.java` - Command for sending messages
+- `GetChatMessagesUseCase.java` - Use case for retrieving messages
+- `SendChatMessageUseCase.java` - Use case for sending messages
+- `GetUnreadMessagesUseCase.java` - Use case for unread messages
+- `TherapistChatController.java` - Controller with all endpoints
+- `chat.html` - Chat conversation template
+- `chat-messages.html` - Messages fragment template
+- `new-messages.html` - New messages list template
+
+### i18n Keys Added:
+- `therapist.chat.title`, `therapist.chat.chatWith`, `therapist.chat.placeholder`
+- `therapist.chat.send`, `therapist.chat.you`, `therapist.chat.new`
+- `therapist.chat.noMessages`, `therapist.chat.newMessages.title/heading`
+- `therapist.chat.noNewMessages/Desc`, `therapist.chat.column*`
+- `therapist.chat.openChat`, `therapist.chat.nameClient`, `therapist.chat.possibleName`
 
 ---
 

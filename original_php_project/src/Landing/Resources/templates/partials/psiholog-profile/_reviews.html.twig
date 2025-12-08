@@ -1,0 +1,46 @@
+<div class="psiholog-profile-reviews__items">
+    {% for review in reviews %}
+        <div class="psiholog-profile-reviews__item">
+            <div class="d-flex flex-column align-items-center psiholog-profile-reviews__item-person">
+                <div>
+                    <span class="psiholog-profile-reviews__item-name">
+                        {{ review.name|trans }}
+                    </span>
+                </div>
+                <div class="psiholog-profile-reviews__item-avatar">
+                    {% if review.profileUrl is defined %}
+                        <img class="img-fluid"
+                             src="{{ review.profileUrl }}"
+                             alt="">
+                    {% else %}
+                        <i class="fas fa-user-alt"></i>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="psiholog-profile-reviews__item-recommend-wrapper">
+                    {% if review.is_recommend %}
+                        <span class="psiholog-profile-reviews__item-recommend">
+                            <i class="fas fa-thumbs-up psiholog-profile-reviews__item-recommend-icon"></i>
+                            <span class="psiholog-profile-reviews__item-recommend-phrase">
+                                {{ 'Рекомендую'|trans }}
+                            </span>
+                        </span>
+                    {% endif %}
+                </div>
+                <div class="psiholog-profile-reviews__item-content text-start">
+                    <div>
+                        {% if review.body is defined %}
+                            <span>
+                            "{{ review.body|trans }}"
+                        </span>
+                        {% endif %}
+                        <span class="psiholog-profile-reviews__item-date">
+                            {{ review.created }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

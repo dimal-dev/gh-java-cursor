@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="">
+    <meta charset="utf-8"/>
+    <title>{% block page_title %}User{% endblock %}</title>
+    <meta name="description" content="Latest updates and statistic charts">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+
+    <link href="{{ asset('style.bundle.css', 'user') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('plugins.bundle.css', 'user') }}" rel="stylesheet" type="text/css"/>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,600;1,300;1,500&display=swap');
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+
+    {% include '@common/partials/_favicon.html.twig' %}
+</head>
+<body class="kt-demo-panel--right kt-header-mobile--fixed kt-page-content-white kt-subheader--enabled kt-aside--secondary-enabled kt-offcanvas-panel--left kt-aside--left kt-page--loading">
+<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed " style="background: #f4fdee;">
+    <div class="kt-header-mobile__logo">
+        <h3 class="kt-aside__secondary-title kt-font-brand kt-font-bold">
+            <a href="{{ url(constant('\App\\User\\Service\\RouteNames::DASHBOARD')) }}" class="kt-font-brand">
+                GoodHelp
+            </a>
+        </h3>
+    </div>
+    <div class="kt-header-mobile__toolbar">
+        <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler">
+            <span></span></button>
+    </div>
+</div>
+<div class="kt-grid kt-grid--hor kt-grid--root">
+
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+        <button class="kt-aside-close kt-hidden " id="kt_aside_close_btn"><i class="la la-close"></i></button>
+        <div class="kt-aside  kt-grid__item kt-grid kt-grid--ver" id="kt_aside" style="background: #f4fdee;">
+
+
+            {% block sidebarPrimary %}
+                {% include '@user/layout/_sidebar-primary.html.twig' %}
+            {% endblock %}
+
+            {% block sidebarSecondary %}
+                {% include '@user/layout/_sidebar-secondary.html.twig' %}
+            {% endblock %}
+
+        </div>
+
+
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+            <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+                <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid" id="content-container">
+
+
+                    {% block content %}
+                    {% endblock %}
+
+
+                </div>
+
+            </div>
+
+            <div class="kt-footer kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop">
+                <div class="kt-container  kt-container--fluid ">
+                    <div class="kt-footer__copyright">
+
+                        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                            2021-2022&nbsp;©&nbsp;<a href="/" target="_blank" class="kt-link">GoodHelp</a>
+                    </div>
+{#                    <div>#}
+{#                        Ссылки на соц сети#}
+{#                    </div>#}
+{#                    <div class="kt-footer__menu">#}
+{#                        <a href="http://keenthemes.com/keen" target="_blank" class="kt-footer__menu-link kt-link">Ссылка 1</a>#}
+{#                        <a href="http://keenthemes.com/keen" target="_blank" class="kt-footer__menu-link kt-link">Ссылка 2</a>#}
+{#                        <a href="http://keenthemes.com/keen" target="_blank" class="kt-footer__menu-link kt-link">Ссылка 3</a>#}
+{#                    </div>#}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    var KTAppOptions = {
+        "colors": {
+            "state": {
+                "brand": "#3699ff",
+                "metal": "#c4c5d6",
+                "light": "#ffffff",
+                "accent": "#00c5dc",
+                "primary": "#5867dd",
+                "success": "#34bfa3",
+                "info": "#36a3f7",
+                "warning": "#ffb822",
+                "danger": "#fd3995",
+                "focus": "#9816f4"
+            },
+            "base": {
+                "label": [
+                    "#c5cbe3",
+                    "#a1a8c3",
+                    "#3d4465",
+                    "#3e4466"
+                ],
+                "shape": [
+                    "#f0f3ff",
+                    "#d9dffa",
+                    "#afb4d4",
+                    "#646c9a"
+                ]
+            }
+        }
+    };
+</script>
+
+
+<script src="{{ asset('plugins.bundle.js', 'user') }}"></script>
+<script src="{{ asset('style.bundle.js', 'user') }}"></script>
+<script src="{{ asset('scripts.bundle.js', 'user') }}"></script>
+</body>
+</html>

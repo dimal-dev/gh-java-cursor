@@ -1,0 +1,11 @@
+framework:
+    cache:
+        app: cache.adapter.redis
+        default_redis_provider: 'redis://%env(REDIS_PASSWORD)%@%env(REDIS_HOST)%:%env(REDIS_PORT)%'
+
+services:
+    Psr\Cache\CacheItemPoolInterface:
+        class: Symfony\Component\Cache\Adapter\RedisAdapter
+        autowire: true
+        bind:
+            $redis: "@redis"

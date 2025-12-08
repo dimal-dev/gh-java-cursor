@@ -1,0 +1,471 @@
+/**
+ * Therapist List Page Styles
+ * Converted from SCSS to CSS for the Java project
+ */
+
+/* Variables (matching main.css) */
+:root {
+    --color-primary-olive-1: #D5D55E;
+    --color-primary-olive-3: #F4F8EB;
+    --color-primary-carrot-1: #EF9665;
+    --color-primary-carrot-4: #FFEEE6;
+    --color-black-2: #202020;
+    --box-shadow-1: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
+    --soft-light-gradient: radial-gradient(50% 50% at 50% 50%, rgba(255, 244, 224, 0.6) 0%, rgba(255, 244, 224, 0) 100%);
+}
+
+/* Main Container */
+.gh-psiholog-list {
+    padding-top: 3rem;
+    padding-bottom: 12rem;
+    position: relative;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list {
+        padding-bottom: 6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+    }
+}
+
+/* Soft Light Background Effect */
+.gh-psiholog-list__soft-light {
+    position: absolute;
+    width: 127rem;
+    height: 96rem;
+    left: -185.8rem;
+    top: 25.6rem;
+    background: var(--soft-light-gradient);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__soft-light {
+        width: 78.7rem;
+        height: 59.6rem;
+        left: -112rem;
+        top: 2.7rem;
+    }
+}
+
+.gh-psiholog-list__soft-light-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+}
+
+/* Page Title */
+.gh-psiholog-list__h1 {
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--color-black-2);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+}
+
+/* Therapist Cards Grid */
+.gh-psiholog-list__list {
+    display: grid;
+    grid-template-columns: repeat(3, 37rem);
+    gap: 3rem;
+    margin-top: 4rem;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .gh-psiholog-list__list {
+        grid-template-columns: repeat(2, 33.1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__list {
+        grid-template-columns: repeat(1, 29rem);
+        margin-top: 3rem;
+    }
+}
+
+/* Individual Therapist Card */
+.gh-psiholog-list__item {
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 3rem 3rem 3rem;
+    border-radius: 2rem;
+    justify-content: space-between;
+    box-shadow: var(--box-shadow-1);
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gh-psiholog-list__item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item {
+        padding: 3rem 1.5rem 1.5rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item {
+        padding: 3rem 1.5rem 1.5rem 2rem;
+    }
+}
+
+/* Avatar Section */
+.gh-psiholog-list__item-avatar-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Info Section (Name & Trait) */
+.gh-psiholog-list__item-info {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    min-height: 5.5rem;
+}
+
+.gh-psiholog-list__item-name {
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 1.2;
+    color: var(--color-black-2);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-name {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-name {
+        font-size: 2rem;
+    }
+}
+
+.gh-psiholog-list__item-trait {
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin-top: 1rem;
+    color: #666;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-trait {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-trait {
+        font-size: 1.3rem;
+    }
+}
+
+/* Specifics Section (Experience & Price) */
+.gh-psiholog-list__item-specifics {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Experience */
+.gh-psiholog-list__item-experience {
+    width: 13rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.gh-psiholog-list__item-experience-label {
+    color: var(--color-primary-carrot-1);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-experience-label {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-experience-label {
+        font-size: 1.2rem;
+    }
+}
+
+.gh-psiholog-list__item-experience-value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.gh-psiholog-list__item-experience-value-number {
+    font-size: 2.4rem;
+    line-height: 0.9;
+    font-weight: 400;
+    color: var(--color-black-2);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-experience-value-number {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-experience-value-number {
+        font-size: 2rem;
+    }
+}
+
+.gh-psiholog-list__item-experience-years {
+    font-size: 1.4rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-experience-years {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-experience-years {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+/* Price */
+.gh-psiholog-list__item-price {
+    width: 13rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.gh-psiholog-list__item-price-label {
+    color: var(--color-primary-carrot-1);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-price-label {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-price-label {
+        font-size: 1.2rem;
+    }
+}
+
+.gh-psiholog-list__item-price-value {
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-end;
+}
+
+.gh-psiholog-list__item-price-from {
+    font-size: 1.4rem;
+    line-height: 1.1;
+    font-weight: 600;
+    margin-right: 0.3rem;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-price-from {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-price-from {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+.gh-psiholog-list__item-price-value-number {
+    font-size: 2.4rem;
+    line-height: 0.9;
+    font-weight: 400;
+    color: var(--color-black-2);
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-price-value-number {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-price-value-number {
+        font-size: 2rem;
+    }
+}
+
+.gh-psiholog-list__item-price-currency {
+    font-size: 1.4rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .gh-psiholog-list__item-price-currency {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+@media (max-width: 768px) {
+    .gh-psiholog-list__item-price-currency {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+/* Specializations Section */
+.gh-psiholog-list__specializations {
+    flex-grow: 1;
+}
+
+.gh-psiholog-list__specializations-header {
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--color-black-2);
+}
+
+.gh-psiholog-list__specializations-list {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.gh-psiholog-list__specializations-list-item {
+    padding: 0.5rem 1.2rem;
+    line-height: 1.25;
+    font-size: 1.2rem;
+    font-weight: 400;
+    background-color: var(--color-primary-olive-3);
+    border-radius: 11rem;
+    color: var(--color-black-2);
+}
+
+.gh-psiholog-list__specializations-list-item--carrot {
+    background-color: var(--color-primary-carrot-4);
+}
+
+/* View Profile Button */
+.gh-psiholog-list__view-psiholog-button-wrapper {
+    margin-top: 3rem;
+}
+
+.gh-psiholog-list__view-psiholog-button-wrapper > .gh-button {
+    width: 100%;
+}
+
+/* Dividers */
+.gh-horizontal-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #e5e5e5;
+    margin: 1.5rem 0;
+}
+
+.gh-vertical-divider {
+    width: 1px;
+    height: 4rem;
+    background-color: #e5e5e5;
+    align-self: center;
+}
+
+/* Avatar Component */
+.gh-avatar {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.gh-avatar .gh-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .gh-avatar {
+        width: 14rem;
+        height: 14rem;
+    }
+}
+
+/* Stretched Link */
+.gh-stretched-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.gh-position-relative {
+    position: relative;
+}
+
+/* Empty State */
+.gh-psiholog-list__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--color-primary-olive-3);
+    border-radius: 2rem;
+}
+
+.gh-psiholog-list__empty p {
+    font-size: 1.6rem;
+    color: #666;
+    margin: 0;
+}
+

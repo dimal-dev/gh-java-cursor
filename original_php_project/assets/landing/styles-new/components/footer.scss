@@ -1,0 +1,100 @@
+.gh-footer {
+  margin-top: auto;
+  background: $color-primary-olive-4;
+  padding-top: 7rem;
+
+  @include mobile {
+    padding-top: 4rem;
+  }
+
+  &__main-block {
+    display: flex;
+    gap: 8rem;
+
+    @include mobile {
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    @include tablet-full {
+      gap: 4rem;
+    }
+  }
+
+  &__logo-container {
+    max-width: 22rem;
+
+    @include mobile {
+      order: 1;
+      max-width: initial;
+    }
+  }
+
+  &__logo-description {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    @include mobile {
+      order: 10;
+      gap: 2rem;
+    }
+
+    &-header {
+      font-size: 2rem;
+      font-weight: 500;
+
+      line-height: 1.2;
+    }
+
+    &-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      font-size: 1.4rem;
+      line-height: 1.2;
+
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      &-subheader {
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__social-icons-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__copyright {
+    margin-top: 7rem;
+    background: $color-white-1;
+    padding: 2.1rem 0 2rem;
+
+    @include mobile {
+      padding: 1rem 0;
+    }
+
+    font-size: 1.2rem;
+    line-height: 1.4;
+
+    text-align: center;
+  }
+
+  &__contacts {
+    order: 2;
+  }
+}

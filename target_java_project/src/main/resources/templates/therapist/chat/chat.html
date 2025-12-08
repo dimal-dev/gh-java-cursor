@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.chat.title}">Chat - GoodHelp</title>
+    <style>
+        .ms-auto {
+            margin-left: auto;
+        }
+
+        .kt-notes .kt-notes__items .kt-notes__item:not(:last-child) {
+            padding-bottom: 20px;
+        }
+
+        .psiholog-profile-img {
+            border-radius: 50%;
+            width: 3rem;
+        }
+
+        #chat-container {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        #chat-message-body {
+            margin-top: 0;
+            margin-bottom: 0;
+            height: 68px;
+        }
+
+        .chat-message-send-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #chat-message-send-btn {
+            margin-left: 15px;
+        }
+
+        #send-message-container > .kt-notes__item {
+            padding-bottom: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .chat-message-send-wrapper {
+                flex-direction: column;
+            }
+
+            #chat-message-send-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+
+        .chat-page {
+            padding: 20px;
+        }
+
+        .chat-header {
+            margin-bottom: 20px;
+        }
+
+        .chat-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .kt-portlet {
+            background: var(--card-bg, #fff);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .kt-portlet__body {
+            padding: 20px;
+        }
+
+        .kt-notes__item {
+            display: flex;
+            gap: 15px;
+        }
+
+        .kt-notes__media {
+            flex-shrink: 0;
+        }
+
+        .kt-notes__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-light, #e3f2fd);
+            color: var(--primary, #2196f3);
+        }
+
+        .kt-notes__content {
+            flex-grow: 1;
+        }
+
+        .kt-notes__section {
+            margin-bottom: 10px;
+        }
+
+        .kt-notes__info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .kt-notes__title {
+            font-weight: 600;
+            color: var(--primary, #2196f3);
+        }
+
+        .kt-notes__desc {
+            color: var(--text-muted, #666);
+            font-size: 0.875rem;
+        }
+
+        .kt-notes__body {
+            color: var(--text, #333);
+            line-height: 1.5;
+        }
+
+        .kt-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .kt-badge--brand {
+            background: var(--primary, #2196f3);
+            color: white;
+        }
+
+        .message-user {
+            background: var(--primary-light, #e3f2fd);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .message-therapist {
+            background: var(--success-light, #e8f5e9);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border, #ddd);
+            border-radius: 6px;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary, #2196f3);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .btn-brand {
+            background: var(--primary, #2196f3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-brand:hover {
+            background: var(--primary-dark, #1976d2);
+        }
+
+        .btn-brand:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .empty-chat {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted, #666);
+        }
+
+        .empty-chat i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page chat-page">
+    <div class="chat-header">
+        <h1>
+            <span th:text="#{therapist.chat.chatWith}">Chat with:</span>
+            <strong th:utext="${userName}">User</strong>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body row">
+                    <div class="col-12" id="chat-container">
+                        <div class="kt-notes">
+                            <div class="kt-notes__items">
+                                <div id="chat-messages-container">
+                                    <th:block th:replace="~{therapist/chat/chat-messages :: messages(${chatMessages}, ${userName}, ${therapistId})}"/>
+                                </div>
+                                <div id="send-message-container">
+                                    <div class="kt-notes__item">
+                                        <div class="kt-notes__media">
+                                            <span class="kt-notes__circle"></span>
+                                        </div>
+                                        <div class="kt-notes__content" style="margin-top: -30px;">
+                                            <div class="kt-notes__section">
+                                                <div class="kt-notes__info w-100">
+                                                    <form class="kt-form w-100" method="post"
+                                                          th:action="@{/therapist/chat/send-message}"
+                                                          id="chat-message-form">
+                                                        <div class="chat-message-send-wrapper">
+                                                            <textarea class="form-control"
+                                                                      id="chat-message-body"
+                                                                      rows="3"
+                                                                      name="body"
+                                                                      th:placeholder="#{therapist.chat.placeholder}"></textarea>
+                                                            <input type="hidden" name="userId" th:value="${userId}" />
+                                                            <button type="submit"
+                                                                    id="chat-message-send-btn"
+                                                                    class="btn btn-brand"
+                                                                    th:text="#{therapist.chat.send}">
+                                                                Send
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const chatMessagesContainer = document.querySelector('#chat-messages-container');
+            const chatContainer = document.querySelector('#chat-container');
+
+            const scrollChatToBottom = () => {
+                setTimeout(() => {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 0);
+            };
+
+            scrollChatToBottom();
+
+            document.addEventListener('DOMContentLoaded', function() {
+                let latestChatMessageId = [[${latestChatMessageId}]];
+                const userId = [[${userId}]];
+
+                const fetchAndRenderMessages = () => {
+                    const url = /*[[@{/therapist/chat/get-messages-ajax}]]*/ '/therapist/chat/get-messages-ajax';
+                    const params = new URLSearchParams({
+                        latestChatMessageId: latestChatMessageId,
+                        userId: userId
+                    });
+
+                    fetch(`${url}?${params}`)
+                        .then(response => response.json())
+                        .then(json => {
+                            if (json.messages && json.messages.length > 0) {
+                                json.messages.forEach(msg => {
+                                    const messageHtml = renderMessage(msg);
+                                    chatMessagesContainer.insertAdjacentHTML('beforeend', messageHtml);
+                                });
+                                scrollChatToBottom();
+                            }
+                            if (json.latestChatMessageId > 0) {
+                                latestChatMessageId = json.latestChatMessageId;
+                            }
+                        })
+                        .catch(error => console.error('Error fetching messages:', error));
+                };
+
+                const renderMessage = (msg) => {
+                    const isUserSent = msg.senderType === 'USER';
+                    const isUnread = msg.status === 'UNREAD';
+                    const sentDate = new Date(msg.sentAt);
+                    const time = sentDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    const date = sentDate.toLocaleDateString([], {day: 'numeric', month: 'short'});
+
+                    let html = `<div class="kt-notes__item ${isUserSent ? 'message-user' : 'message-therapist'}">
+                        <div class="kt-notes__media">
+                            <span class="kt-notes__icon">
+                                <i class="${isUserSent ? 'fas fa-user-alt' : 'fas fa-user-md'}"></i>
+                            </span>
+                        </div>
+                        <div class="kt-notes__content">
+                            <div class="kt-notes__section">
+                                <div class="kt-notes__info d-flex w-100">
+                                    <span class="kt-notes__title">
+                                        ${isUserSent ? /*[[${userName}]]*/ 'User' : /*[[#{therapist.chat.you}]]*/ 'You'}
+                                    </span>
+                                    ${isUnread && isUserSent ? '<span class="kt-badge kt-badge--brand">New</span>' : ''}
+                                    <span class="kt-notes__desc ms-auto">${time}, ${date}</span>
+                                </div>
+                            </div>
+                            <div class="kt-notes__body">
+                                <div>${msg.body.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                            </div>
+                        </div>
+                    </div>`;
+                    return html;
+                };
+
+                // Poll for new messages every 10 seconds
+                setInterval(fetchAndRenderMessages, 10 * 1000);
+
+                // Disable button on form submit
+                document.getElementById('chat-message-form').addEventListener('submit', function() {
+                    document.getElementById('chat-message-send-btn').setAttribute('disabled', 'disabled');
+                });
+            });
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>
+

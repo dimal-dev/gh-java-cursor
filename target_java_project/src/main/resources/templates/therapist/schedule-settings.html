@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.schedule.settings.title}">Schedule Settings - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page schedule-settings-page">
+    <div class="page-header">
+        <a th:href="@{/therapist/schedule}" class="btn-back">
+            <span>←</span> <span th:text="#{common.back}">Back</span>
+        </a>
+        <h1 th:text="#{therapist.schedule.settings.heading}">Schedule Settings</h1>
+    </div>
+
+    <p class="page-description" th:text="#{therapist.schedule.settings.description}">
+        Click on time slots to mark when you're available for consultations.
+    </p>
+
+    <!-- Week Selector Buttons -->
+    <div class="week-selector">
+        <button class="week-btn show-week-button"
+                data-week-number="1"
+                th:data-week-day-first="${zeroWeek.startDateFull}">
+            <span class="week-btn__label" th:text="#{therapist.schedule.week.current}">Current Week</span>
+            <span class="week-btn__dates" th:text="${zeroWeek.startDateLabel + ' - ' + zeroWeek.endDateLabel}">Dates</span>
+        </button>
+        <button class="week-btn show-week-button"
+                data-week-number="2"
+                th:data-week-day-first="${oneWeek.startDateFull}">
+            <span class="week-btn__label" th:text="#{therapist.schedule.week.next}">Next Week</span>
+            <span class="week-btn__dates" th:text="${oneWeek.startDateLabel + ' - ' + oneWeek.endDateLabel}">Dates</span>
+        </button>
+        <button class="week-btn show-week-button"
+                data-week-number="3"
+                th:data-week-day-first="${twoWeek.startDateFull}">
+            <span class="week-btn__label" th:text="#{therapist.schedule.week.third}">Week 3</span>
+            <span class="week-btn__dates" th:text="${twoWeek.startDateLabel + ' - ' + twoWeek.endDateLabel}">Dates</span>
+        </button>
+        <button class="week-btn show-week-button"
+                data-week-number="4"
+                th:data-week-day-first="${threeWeek.startDateFull}">
+            <span class="week-btn__label" th:text="#{therapist.schedule.week.fourth}">Week 4</span>
+            <span class="week-btn__dates" th:text="${threeWeek.startDateLabel + ' - ' + threeWeek.endDateLabel}">Dates</span>
+        </button>
+    </div>
+
+    <!-- Week Grid Container -->
+    <div id="displaying-week-content" class="week-grid-container">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="schedule-legend">
+        <div class="legend-item">
+            <span class="legend-color legend-color--available"></span>
+            <span th:text="#{therapist.schedule.legend.available}">Available</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color legend-color--booked"></span>
+            <span th:text="#{therapist.schedule.legend.booked}">Booked</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color legend-color--done"></span>
+            <span th:text="#{therapist.schedule.legend.done}">Completed</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color legend-color--passed"></span>
+            <span th:text="#{therapist.schedule.legend.passed}">Passed</span>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            'use strict';
+
+            const displayingWeekContentEl = document.getElementById('displaying-week-content');
+            const activeWeekButtonClassName = 'week-btn--active';
+            let loadingWeek = false;
+
+            const messages = {
+                weekUrl: /*[[@{/therapist/schedule/settings/week}]]*/ '/therapist/schedule/settings/week'
+            };
+
+            function removeActiveStateFromAllWeekButtons() {
+                document.querySelectorAll('.show-week-button').forEach(el => {
+                    el.classList.remove(activeWeekButtonClassName);
+                });
+            }
+
+            function addActiveStateToWeekButton(weekButton) {
+                weekButton.classList.add(activeWeekButtonClassName);
+            }
+
+            function showSpinner() {
+                displayingWeekContentEl.innerHTML = `
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+            }
+
+            function loadWeek(weekButton) {
+                if (loadingWeek) return;
+
+                showSpinner();
+
+                const weekDayFirst = weekButton.getAttribute('data-week-day-first');
+
+                removeActiveStateFromAllWeekButtons();
+                loadingWeek = true;
+                weekButton.disabled = true;
+
+                const url = messages.weekUrl + '?weekDayFirst=' + encodeURIComponent(weekDayFirst);
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        weekButton.disabled = false;
+                        loadingWeek = false;
+
+                        addActiveStateToWeekButton(weekButton);
+                        displayingWeekContentEl.innerHTML = html;
+
+                        // Initialize the week grid interactions
+                        initWeekGrid();
+                    })
+                    .catch(error => {
+                        weekButton.disabled = false;
+                        loadingWeek = false;
+                        console.error('Failed to load week:', error);
+                        displayingWeekContentEl.innerHTML = '<div class="error-message">Failed to load schedule. Please try again.</div>';
+                    });
+            }
+
+            // Attach click handlers to week buttons
+            document.querySelectorAll('.show-week-button').forEach(weekButton => {
+                weekButton.addEventListener('click', () => loadWeek(weekButton));
+            });
+
+            // Load the first week by default
+            document.addEventListener('DOMContentLoaded', () => {
+                const firstButton = document.querySelector('.show-week-button');
+                if (firstButton) {
+                    loadWeek(firstButton);
+                }
+            });
+        })();
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>
+

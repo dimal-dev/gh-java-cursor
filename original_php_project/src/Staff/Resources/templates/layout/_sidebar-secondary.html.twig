@@ -1,0 +1,38 @@
+<div class="kt-aside__secondary">
+    <div class="kt-aside__secondary-top">
+        <h3 class="kt-aside__secondary-title kt-font-brand kt-font-bold">
+            goodhelp
+        </h3>
+    </div>
+    <div class="kt-aside__secondary-bottom">
+
+        <div id="kt_aside_menu" class="kt-aside-menu" data-ktmenu-vertical="1"
+             data-ktmenu-scroll="1">
+            <ul class="kt-menu__nav secondary-sidebar-nav">
+                {% for route, config in staffGetSidebarMenuItems() %}
+                    <li class="kt-menu__item  kt-menu__item{{ app.request.attributes.get('_route') == route ? '--active' : '' }} secondary-sidebar-nav--item" aria-haspopup="true">
+                        <a href="{{ url(route) }}" class="kt-menu__link ">
+                        <span class="kt-menu__link-text">
+                            {{ config.label }}
+                        </span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .kt-menu__nav.secondary-sidebar-nav {
+        margin-top: 25px;
+    }
+
+    .kt-menu__nav.secondary-sidebar-nav .secondary-sidebar-nav--item {
+        margin-top: 6px;
+    }
+
+    .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__heading .kt-menu__link-text, .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__link .kt-menu__link-text {
+        font-size: 1.1rem;
+    }
+</style>

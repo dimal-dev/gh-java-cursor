@@ -1,0 +1,210 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+
+{% block hrefLang %}
+{% endblock %}
+
+{% block page_title %}
+    {{ 'Consultation_booking'|trans }} | GoodHelp
+{% endblock %}
+
+{% block content %}
+    <div class="gh-checkout">
+        <h1 class="gh-checkout__h1">
+            {{ 'Consultation_booking'|trans }}
+        </h1>
+
+        <div class="gh-checkout__prepayment">
+            {{ 'Need_to_make_prepayment'|trans }}
+        </div>
+
+        <div class="gh-checkout__prepayment-description">
+            {{ 'After_successful_prepayment_what_happens'|trans }}
+        </div>
+
+        <div class="gh-checkout__summary-container">
+            <div class="gh-checkout__summary">
+                <div class="gh-avatar">
+                    <img class="gh-img"
+                         src="{{ asset('img/select-psiholog/' ~ psihologProfile.profileTemplate ~ '.jpg', 'landing') }}"
+                         alt="">
+                </div>
+                <div class="gh-checkout__summary-info">
+                    <div class="gh-checkout__summary-name">
+                        {{ psihologProfile.fullName|trans }}
+                    </div>
+                    <div class="gh-checkout__summary-trait">
+                        {{ psihologProfileInfo.singlePhrase|trans|raw }}
+                    </div>
+
+                    <div class="gh-horizontal-divider"></div>
+
+                    <div class="gh-checkout__summary-session">
+                        <div class="gh-checkout__summary-session-header">
+                            {{ 'Session_info'|trans }}
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label">
+                                {{ 'Session_type'|trans|raw }}:
+                            </div>
+                            <div class="gh-checkout__summary-session-row-value">
+                                {{ price.typeLabel|trans }}
+                            </div>
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label">
+                                {{ 'Time'|trans }}:
+                            </div>
+                            <div class="gh-checkout__summary-session-row-value">
+                                {{ dateInfo.dayOfMonth ~ ' ' ~ dateInfo.month ~ ', ' ~ dateInfo.dayFull ~ ' ' ~ 'at'|trans }} {{ dateInfo.time }}
+                            </div>
+                        </div>
+                        <div class="gh-checkout__summary-session-row">
+                            <div class="gh-checkout__summary-session-row-label">
+                                {{ 'Session_duration'|trans }}:
+                            </div>
+                            <div class="gh-checkout__summary-session-row-value">
+                                {{ price.typeDuration }} {{ 'minutes'|trans }}
+                            </div>
+                        </div>
+                    </div>
+
+{#                    <div class="gh-horizontal-divider"></div>#}
+
+{#                    <div class="gh-checkout__summary-session">#}
+{#                        <div class="gh-checkout__summary-session-header">#}
+{#                            Інформація про вас#}
+{#                        </div>#}
+{#                        <div>#}
+{#                            Тут якесь кльово пояснюєче речення про те, що для користувача саме з цією указанною інфою буде проплата зарахована (і напевно треба кнопку "Редагувати")#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-session-row">#}
+{#                            <div class="gh-checkout__summary-session-row-label">#}
+{#                                Електронна пошта:#}
+{#                            </div>#}
+{#                            <div class="gh-checkout__summary-session-row-value">#}
+{#                                dartful.s@gmail.com#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-session-row">#}
+{#                            <div class="gh-checkout__summary-session-row-label">#}
+{#                                Імʼя:#}
+{#                            </div>#}
+{#                            <div class="gh-checkout__summary-session-row-value">#}
+{#                                Дмитро Самец#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-session-row">#}
+{#                            <div class="gh-checkout__summary-session-row-label">#}
+{#                                Телефон:#}
+{#                            </div>#}
+{#                            <div class="gh-checkout__summary-session-row-value">#}
+{#                                +380676666666#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+
+                    <div class="gh-horizontal-divider"></div>
+
+                    <div class="gh-checkout__summary-price">
+                        <div class="gh-checkout__summary-price-header">
+                            {{ 'Consultation_price'|trans }}
+                        </div>
+                        {% if promocode is defined and promocode %}
+                        <div class="gh-checkout__summary-old-price-content">
+                            <div class="gh-checkout__summary-old-price-value">
+                                {{ price.price| number_format(0, '.', ' ') }}
+                            </div>
+                            <div class="gh-checkout__summary-old-price-currency">
+                                ₴
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="gh-checkout__summary-price-content">
+                            <div class="gh-checkout__summary-price-value">
+                                {{ order.getPriceLarge | number_format(0, '.', ' ') }}
+                            </div>
+                            <div class="gh-checkout__summary-price-currency">
+                                ₴
+                            </div>
+                        </div>
+                        {% if promocode is defined and promocode %}
+                        <div class="gh-checkout__summary-promo-info">
+                            {{ 'Promocode_applied'|trans }} {{ promocode.name }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+{#                    <div class="gh-horizontal-divider"></div>#}
+
+{#                    <div class="gh-checkout__summary-price">#}
+{#                        <div class="gh-checkout__summary-price-header">#}
+{#                            Вартість консультації#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-price-content">#}
+{#                            <div class="gh-checkout__summary-price-value">#}
+{#                                2000#}
+{#                            </div>#}
+{#                            <div class="gh-checkout__summary-price-currency">#}
+{#                                ₴#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-promo-info">#}
+{#                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+{#                                <rect width="30" height="30" rx="15" fill="#F6CAB2"/>#}
+{#                                <path d="M14.036 17.464L13.748 9.8H15.556L15.252 17.464H14.036ZM14.66 21.096C14.3613 21.096 14.1107 20.9947 13.908 20.792C13.7053 20.5893 13.604 20.3493 13.604 20.072C13.604 19.7733 13.7053 19.528 13.908 19.336C14.1107 19.144 14.3613 19.048 14.66 19.048C14.9587 19.048 15.204 19.144 15.396 19.336C15.588 19.528 15.684 19.7733 15.684 20.072C15.684 20.3493 15.588 20.5893 15.396 20.792C15.204 20.9947 14.9587 21.096 14.66 21.096Z" fill="#202020"/>#}
+{#                            </svg>#}
+
+{#                            Промокод не працює. Ви вже використали промокод Promo15#}
+{#                        </div>#}
+{#                    </div>#}
+
+{#                    <div class="gh-horizontal-divider"></div>#}
+
+{#                    <div class="gh-checkout__summary-balance">#}
+{#                        <div class="gh-checkout__summary-price-header gh-checkout__summary-balance-header">#}
+{#                            На вашому рахунку GoodHelp зараз#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-price-content">#}
+{#                            <div class="gh-checkout__summary-price-value">#}
+{#                                2000#}
+{#                            </div>#}
+{#                            <div class="gh-checkout__summary-price-currency">#}
+{#                                ₴#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="gh-checkout__summary-promo-info">#}
+{#                            Знімемо сумму з вашого рахунку#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+            <form id="checkout-go-to-wayforpay-form" method="post" action="https://secure.wayforpay.com/pay" accept-charset="utf-8" class="gh-checkout__pay-btn-wrapper">
+                {% for paramName, paramValue in wayForPayParams %}
+                    <input type="hidden" name="{{ paramName }}" value="{{ paramValue }}">
+                {% endfor %}
+                <button class="gh-button">
+                    {{ 'Prepay_and_book'|trans }}
+                </button>
+            </form>
+
+            <div class="gh-checkout__agree-with-terms">
+                {{ 'I_agree_clicking_that_button'|trans }}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.addEventListener('DOMContentLoaded', (event) => {
+            gtag("event", "checkout_page_viewed", {
+                'event_category': 'Conversions'
+            });
+
+            document.querySelector('#checkout-go-to-wayforpay-form').addEventListener('submit', (e) => {
+                gtag("event", "checkout_order_consultation_btn_clicked", {
+                    'event_category': 'Conversions'
+                });
+            });
+        });
+    </script>
+{% endblock %}

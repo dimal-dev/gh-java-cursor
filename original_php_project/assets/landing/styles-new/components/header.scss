@@ -1,0 +1,238 @@
+.gh-header {
+  padding-top: $header-top-padding;
+  padding-left: 5rem;
+  padding-right: 5.35rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @include mobile {
+    padding: .8rem 1.5rem;
+  }
+
+  @include tablet-full {
+    padding: 1.5rem 2rem 0 3rem;
+  }
+
+  @include desktop-small {
+    padding: 1.5rem 2rem 0 3rem;
+  }
+
+  &--with-shadow {
+    box-shadow: $box-shadow-1;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+
+    @include mobile {
+      padding: .8rem 1.5rem;
+    }
+  }
+
+  &__logo {
+    display: block;
+    width: 18.7rem;
+    @include mobile {
+      width: calc(7.8rem + 16.14583vw - 5.1708rem);
+    }
+
+    @include tablet-full {
+      width: 12rem;
+    }
+
+    @include desktop-small {
+      width: 15rem;
+    }
+  }
+
+  &__nav {
+    margin-left: auto;
+
+    @include tablet-full {
+      margin-top: 0.3rem;
+    }
+
+    &-menu {
+      list-style: none;
+      padding: 0;
+
+      display: flex;
+      gap: 4rem;
+
+      @include tablet-full {
+        gap: 2rem;
+      }
+
+      @include desktop-small {
+        gap: 2rem;
+      }
+
+      & > li {
+        font-size: 1.6rem;
+        position: relative;
+
+        @include tablet-full {
+          font-size: 1.4rem;
+          text-align: center;
+        }
+
+        &:hover::before, &.active::before {
+          content: "";
+          position: absolute;
+          width: .9rem;
+          height: .9rem;
+          background-color: $color-primary-olive-1;
+          border-radius: 50%;
+          bottom: 0;
+          left: 50%;
+          transform: translateY(calc(50% + 1.4rem));
+        }
+      }
+    }
+
+    @include mobile {
+      display: none;
+    }
+
+    //@include max-990 {
+    //  display: none;
+    //}
+  }
+
+  &__lang-and-select-block-container {
+    margin-left: 7.3rem;
+    display: flex;
+
+    @include mobile {
+      display: none;
+    }
+
+    @include tablet-full {
+      margin-left: 2rem;
+      margin-top: 0.3rem;
+    }
+  }
+
+  &__lang-picker {
+    display: flex;
+    font-size: 1.4rem;
+    align-items: center;
+
+    &-item {
+      //margin: .65rem 0 .65rem .4rem;
+      padding-right: .9rem;
+      padding-left: .9rem;
+      opacity: .4;
+
+      border-right: .1rem solid $color-black-1;
+
+      &:last-child {
+        border: none;
+        //margin: .65rem  .65rem .4rem;
+        padding-right: 0;
+      }
+
+      &--active {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__select-psiholog-btn-container {
+    margin-left: 2rem;
+
+    @include tablet-small {
+      display: none;
+    }
+
+    @include tablet-big {
+      margin-left: 1.5rem;
+      font-size: 1.3rem;
+    }
+  }
+
+  &__burger-icon-mobile {
+    display: none;
+
+    @include mobile {
+      display: block;
+      margin-left: auto;
+
+      & > svg {
+        //height: 100%;
+
+
+      //(768 - 320) / 768 = 0.583
+      //10 (desirable increase in px) / 0.583 = 17.14px
+      //17.14 * (1 - 0.583) = 7.14px
+      //(7.14 - how many px show we subtract to start from 320 as 0px add)
+        width: calc(2rem + 2.23vw - 7.14px);
+      }
+    }
+  }
+}
+
+.gh-mobile-header {
+  &--opened {
+    display: flex;
+  }
+
+  position: fixed;
+  top:0;
+
+  background: $color-background-semi-white-1;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 9999;
+
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+
+  &__close-icon {
+    margin-top: 2.8rem;
+  }
+
+  &__menu {
+    margin-top: 3.2rem;
+    margin-bottom: 4rem;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 2rem;
+
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  &__social {
+    margin-top: 2.6rem;
+    display: flex;
+    gap: 1.2rem;
+
+    &-icon {
+      background: $color-white-1;
+      border-radius: 50%;
+      box-shadow: 0 1.5rem 5rem rgba($color-black-1, 0.05), 0 .3rem 1rem rgba($color-black-1, 0.025);
+
+      padding: 1.1rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & svg {
+        width: 1.8rem;
+      }
+    }
+  }
+}
+
+.gh-header__lang-picker--mobile {
+  margin-top: 2.6rem;
+}

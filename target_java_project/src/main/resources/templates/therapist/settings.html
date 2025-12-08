@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/therapist}">
+<head>
+    <title th:text="#{therapist.settings.title}">Settings - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content" class="cabinet-page settings-page">
+    <div class="page-header">
+        <h1 th:text="#{therapist.settings.heading}">Settings</h1>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <span th:text="#{${successMessage}}">Settings saved successfully</span>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="#{${errorMessage}}">An error occurred</span>
+    </div>
+
+    <div class="settings-container">
+        <!-- Telegram Setup Card -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{therapist.settings.telegram.title}">Telegram Notifications</h5>
+                <div class="card-text">
+                    <div th:if="${settings.telegramConnected()}" class="telegram-status connected">
+                        <span class="status-icon">✅</span>
+                        <span th:text="#{therapist.settings.telegram.connected}">Telegram connected</span>
+                    </div>
+                    <div th:unless="${settings.telegramConnected()}" class="telegram-setup-steps">
+                        <p th:text="#{therapist.settings.telegram.instructions}">To receive notifications in Telegram:</p>
+                        <ol class="setup-steps">
+                            <li>
+                                <a href="https://t.me/goodhelpua_bot" target="_blank" class="telegram-link">
+                                    <span th:text="#{therapist.settings.telegram.step1}">Open the bot in Telegram</span>
+                                </a>
+                            </li>
+                            <li th:text="#{therapist.settings.telegram.step2}">Click "Start"</li>
+                            <li th:text="#{therapist.settings.telegram.step3}">Click the field below and copy the text</li>
+                            <li>
+                                <div class="token-input-container">
+                                    <input type="text" 
+                                           th:value="${settings.telegramSetupToken()}" 
+                                           class="form-control token-input" 
+                                           readonly 
+                                           onclick="this.select();">
+                                    <button type="button" class="btn btn-outline copy-btn" onclick="copyToken(this)">
+                                        <span th:text="#{therapist.settings.telegram.copy}">Copy</span>
+                                    </button>
+                                </div>
+                            </li>
+                            <li th:text="#{therapist.settings.telegram.step4}">Send it as a message to the bot</li>
+                            <li th:text="#{therapist.settings.telegram.step5}">If successful, the bot will respond</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timezone Settings Card -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{therapist.settings.timezone.title}">Timezone Settings</h5>
+                <form th:action="@{/therapist/settings}" method="post" th:object="${settingsForm}">
+                    <div class="form-group row mb-3">
+                        <label class="col-lg-3 col-form-label" th:text="#{therapist.settings.timezone.label}">Timezone</label>
+                        <div class="col-lg-6">
+                            <select th:field="*{newTimezone}" class="form-control timezone-select">
+                                <option th:each="tz : ${timezones}" 
+                                        th:value="${tz.key}" 
+                                        th:text="${tz.value}"
+                                        th:selected="${tz.key == settings.timezone()}">
+                                </option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('newTimezone')}" class="invalid-feedback d-block">
+                                <span th:errors="*{newTimezone}">Timezone error</span>
+                            </div>
+                            <small class="form-text text-muted" th:text="#{therapist.settings.timezone.help}">
+                                Your schedule will be displayed in this timezone.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6 offset-lg-3">
+                            <button type="submit" class="btn btn-primary">
+                                <span th:text="#{form.save}">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Read-only Info Card -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{therapist.settings.info.title}">Account Information</h5>
+                <div class="info-row">
+                    <span class="info-label" th:text="#{therapist.settings.info.email}">Email:</span>
+                    <span class="info-value" th:text="${settings.email()}">email@example.com</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label" th:text="#{therapist.settings.info.scheduleTimeCap}">Minimum booking advance:</span>
+                    <span class="info-value" th:text="${settings.scheduleTimeCap()}">+3 hour</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function copyToken(btn) {
+            const input = btn.parentElement.querySelector('.token-input');
+            input.select();
+            input.setSelectionRange(0, 99999); // For mobile
+            
+            try {
+                navigator.clipboard.writeText(input.value);
+                const originalText = btn.textContent;
+                btn.textContent = /*[[#{therapist.settings.telegram.copied}]]*/ 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+            }
+        }
+        /*]]>*/
+    </script>
+</th:block>
+
+<th:block layout:fragment="styles">
+    <style>
+        .settings-page .settings-container {
+            max-width: 800px;
+        }
+
+        .settings-page .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .settings-page .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .settings-page .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Telegram Setup */
+        .telegram-status.connected {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .telegram-setup-steps p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .setup-steps {
+            padding-left: 1.5rem;
+        }
+
+        .setup-steps li {
+            margin-bottom: 0.75rem;
+            color: #444;
+        }
+
+        .telegram-link {
+            color: #0088cc;
+            text-decoration: none;
+        }
+
+        .telegram-link:hover {
+            text-decoration: underline;
+        }
+
+        .token-input-container {
+            display: flex;
+            gap: 8px;
+            max-width: 400px;
+            margin-top: 0.5rem;
+        }
+
+        .token-input {
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            white-space: nowrap;
+        }
+
+        .copy-btn.copied {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        /* Timezone Select */
+        .timezone-select {
+            max-width: 400px;
+        }
+
+        /* Info Card */
+        .info-row {
+            display: flex;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666;
+            min-width: 200px;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        /* Form */
+        .form-text {
+            font-size: 0.85rem;
+        }
+    </style>
+</th:block>
+</body>
+</html>
+

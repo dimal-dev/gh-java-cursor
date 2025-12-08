@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Fragment for rendering chat messages -->
+<th:block th:fragment="messages(chatMessages, userName, therapistId)">
+    <th:block th:if="${#lists.isEmpty(chatMessages)}">
+        <div class="kt-notes__item empty-chat">
+            <div class="kt-notes__media">
+                <span class="kt-notes__icon">
+                    <i class="fas fa-coffee"></i>
+                </span>
+            </div>
+            <div class="kt-notes__content">
+                <div class="kt-notes__body">
+                    <div th:text="#{therapist.chat.noMessages}">No messages from this user yet</div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block th:each="message : ${chatMessages}">
+        <div th:class="${message.senderType.name() == 'USER'} ? 'kt-notes__item message-user' : 'kt-notes__item message-therapist'">
+            <div class="kt-notes__media">
+                <th:block th:if="${message.senderType.name() == 'USER'}">
+                    <span class="kt-notes__icon kt-font-boldest">
+                        <i class="fas fa-user-alt kt-font-brand"></i>
+                    </span>
+                </th:block>
+                <th:block th:unless="${message.senderType.name() == 'USER'}">
+                    <span class="kt-notes__icon kt-font-boldest">
+                        <i class="fas fa-user-md kt-font-brand"></i>
+                    </span>
+                </th:block>
+            </div>
+            <div class="kt-notes__content">
+                <div class="kt-notes__section">
+                    <div class="kt-notes__info d-flex w-100">
+                        <th:block th:if="${message.senderType.name() == 'USER'}">
+                            <span class="kt-notes__title kt-font-brand" th:utext="${userName}">User</span>
+                            <span th:if="${message.isUnread}" class="kt-badge kt-badge--brand" th:text="#{therapist.chat.new}">New</span>
+                        </th:block>
+                        <th:block th:unless="${message.senderType.name() == 'USER'}">
+                            <span class="kt-notes__title kt-font-brand" th:text="#{therapist.chat.you}">You</span>
+                        </th:block>
+                        <span class="kt-notes__desc ms-auto">
+                            <th:block th:text="${#temporals.format(message.sentAt, 'HH:mm, d MMM')}">12:00, 1 Jan</th:block>
+                        </span>
+                    </div>
+                </div>
+                <div class="kt-notes__body">
+                    <div th:text="${message.body}">Message content</div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+</body>
+</html>
+

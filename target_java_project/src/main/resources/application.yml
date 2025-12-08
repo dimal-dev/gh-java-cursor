@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: goodhelp
+  
+  profiles:
+    active: dev
+  
+  # JPA / Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+  
+  # Thymeleaf
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+  
+  # Messages / i18n
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+  
+  # Session
+  session:
+    store-type: redis
+    timeout: 48h
+    redis:
+      namespace: goodhelp:session
+  
+  # Servlet
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Server configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      cookie:
+        same-site: lax
+        http-only: true
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.goodhelp: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+
+# Custom application properties
+goodhelp:
+  default-locale: en
+  supported-locales: en,uk,ru
+  default-timezone: Europe/Kiev

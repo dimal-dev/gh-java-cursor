@@ -137,12 +137,43 @@ templates/therapist/
 ---
 
 ## Verification
-- [ ] Settings page shows current values
-- [ ] Can change and save timezone
-- [ ] Telegram setup instructions displayed
-- [ ] Payments overview shows earnings
-- [ ] History loads with pagination
-- [ ] Amounts displayed correctly with currency
+- [x] Settings page shows current values
+- [x] Can change and save timezone
+- [x] Telegram setup instructions displayed
+- [x] Payments overview shows earnings
+- [x] History loads with pagination
+- [x] Amounts displayed correctly with currency
+
+## Implementation Summary (Completed 2024-12-08)
+
+### Files Created:
+**DTOs:**
+- `SettingsDto.java` - Settings page data transfer object
+- `PaymentsSummaryDto.java` - Current payout period summary
+- `PaymentHistoryResponse.java` - Paginated history response
+
+**Use Cases:**
+- `GetSettingsUseCase.java` - Retrieve therapist settings
+- `GetPaymentsSummaryUseCase.java` - Get current payout period summary
+- `GetPaymentHistoryUseCase.java` - Get paginated payment history
+
+**Controllers:**
+- `TherapistSettingsController.java` - Settings page endpoints
+- `TherapistPaymentsController.java` - Payments page endpoints
+
+**Forms:**
+- `SettingsForm.java` - Form binding for settings
+
+**Services:**
+- `TimezoneService.java` - Timezone utilities and list
+
+**Templates:**
+- `settings.html` - Settings page
+- `payments/index.html` - Current payout overview
+- `payments/history.html` - Payment history with KTDatatable
+
+**i18n:**
+- Added settings and payments messages in all 3 languages
 
 ---
 

@@ -1,0 +1,526 @@
+.gh-book-consultation {
+  margin-top: 4rem;
+  margin-bottom: 12rem;
+
+  @include media(mobile, tablet-full) {
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+  }
+
+  &__header-block {
+    display: grid;
+    grid-template-columns: 77rem 34rem;
+    column-gap: 5.5rem;
+    align-items: center;
+
+    @include tablet-full {
+      grid-template-columns: 45rem 21rem;
+      column-gap: 3rem;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  &__h1 {
+    font-weight: 500;
+    font-size: 4.5rem;
+    line-height: 1.2;
+    margin: 0;
+
+    @include media(mobile, tablet-full) {
+      font-weight: 500;
+      font-size: 3.5rem;
+      line-height: 1.2;
+    }
+  }
+
+  &__back-btn-container {
+    & .gh-button--outlined {
+      width: 100%;
+
+      @include media(mobile, tablet-full) {
+        width: auto;
+        font-weight: 400;
+        font-size: 1.1rem;
+        line-height: 1.2;
+
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
+
+  &__content-block {
+    margin-top: 4rem;
+
+    display: grid;
+    grid-template-columns: 77rem 34rem;
+    column-gap: 5.5rem;
+    align-items: flex-start;
+
+    @include tablet-full {
+      grid-template-columns: 45rem 21rem;
+      column-gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  &__main {
+
+  }
+
+  &__h2 {
+    position: relative;
+    font-weight: 500;
+    font-size: 3rem;
+    line-height: 1.2;
+    margin: 0;
+
+    @include media(mobile, tablet-full) {
+      font-size: 2.4rem;
+    }
+  }
+
+  &__h3 {
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: $color-grey-4;
+    margin-top: 1rem;
+    margin-bottom: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__choose-type {
+    &-container {
+      margin-top: 3rem;
+      margin-bottom: 4rem;
+      display: flex;
+      gap: 3rem;
+
+      @include media(mobile, tablet-full) {
+        margin-top: 2rem;
+      }
+
+      @include mobile {
+        flex-direction: column;
+        gap: 2rem;
+      }
+    }
+
+    &-specific {
+      max-width: 50%;
+
+      @include media(mobile, tablet-full) {
+        width: auto;
+      }
+
+      flex-grow: 1;
+
+      display: flex;
+      gap: 1.3rem;
+
+      @include mobile {
+        gap: .7rem;
+        max-width: initial;
+      }
+
+      flex-direction: column;
+      align-items: center;
+
+      & > .gh-switch, & > .gh-switch-new {
+        width: 100%;
+      }
+
+      &-info {
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 1.25;
+      }
+    }
+  }
+
+  &__summary {
+    position: sticky;
+    top: 2rem;
+    padding: 3rem;
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: $color-white-1;
+    box-shadow: $box-shadow-1;
+    border-radius: 2rem;
+
+    @include media(mobile, tablet-full) {
+      padding: 3rem 1.5rem 2rem 1.5rem;
+      border-radius: 1rem;
+    }
+
+    &-short {
+      &-info {
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      &-name {
+        font-weight: 700;
+        font-size: 3rem;
+        line-height: 1.2;
+
+        @include media(mobile, tablet-full) {
+          font-size: 2rem;
+        }
+      }
+
+      &-trait {
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 1.2;
+
+        margin-top: 1rem;
+
+        @include media(mobile, tablet-full) {
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    &-session {
+      &-info {
+        width: 100%;
+      }
+
+      &-header {
+        font-weight: 700;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        text-align: center;
+
+        margin-bottom: 2rem;
+
+        @include media(mobile, tablet-full) {
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      &-row {
+        margin-top: 1rem;
+
+        font-size: 1.2rem;
+        line-height: 1.2;
+
+        display: flex;
+        justify-content: space-between;
+
+        &-value {
+          font-weight: 600;
+          text-align: right;
+        }
+      }
+    }
+
+    &-price {
+      &-content {
+        display: flex;
+        justify-content: center;
+        margin-top: .7rem;
+      }
+
+      &-info {
+        text-align: center;
+      }
+
+      &-header {
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 120%;
+        color: $color-primary-carrot-1;
+
+        @include media(mobile, tablet-full) {
+          font-size: 1.2rem;
+        }
+      }
+
+      &-value {
+        font-size: 2.4rem;
+        line-height: .9;
+
+        @include media(mobile, tablet-full) {
+          font-size: 2rem;
+        }
+      }
+
+      &-currency {
+        font-weight: 600;
+        font-size: 1.4rem;
+        line-height: 1.1;
+        align-self: flex-end;
+      }
+    }
+
+    &-old-price {
+      &-content {
+        display: inline-flex;
+        color: $color-grey-4;
+        justify-content: center;
+        //text-decoration: line-through;
+
+        background: linear-gradient(10deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 0) calc(50% - 0.8px),
+                $color-grey-4 50%,
+                rgba(0, 0, 0, 0) calc(50% + 0.8px),
+                rgba(0, 0, 0, 0) 100%);
+      }
+
+      &-content {
+        margin-top: .7rem;
+      }
+
+      &-value {
+        font-size: 1.4rem;
+        line-height: .9;
+      }
+
+      &-currency {
+        font-size: 1.2rem;
+        line-height: 1.1;
+        align-self: flex-end;
+      }
+    }
+
+    &-promo-info {
+      font-size: 1.3rem;
+      line-height: .9;
+
+      margin-top: 1.7rem;
+
+      @include media(mobile, tablet-full) {
+        margin-top: .7rem;
+      }
+    }
+
+    &-book-container {
+      margin-top: 2rem;
+      width: 100%;
+      position: relative;
+
+      @include media(mobile, tablet-full) {
+        margin-top: 1.5rem;
+      }
+
+      & .gh-button {
+        width: 100%;
+
+        @include mobile {
+          padding: 1rem 4rem;
+        }
+      }
+    }
+
+    &-promo {
+      margin-top: 2rem;
+      width: 100%;
+      text-align: center;
+
+      @include mobile {
+        margin-top: 1.5rem;
+      }
+
+      &-show-form {
+        font-weight: 500;
+        font-size: 1.4rem;
+        line-height: 1.2;
+        text-decoration: underline;
+
+        &:hover {
+          cursor: pointer;
+          opacity: .7;
+        }
+      }
+
+      &-form {
+        margin-top: 1.5rem;
+
+        @include media(mobile, tablet-full) {
+          & .gh-input-text {
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            font-size: 1.25rem;
+            line-height: 1.4;
+          }
+        }
+      }
+
+      &-add-btn {
+        position: absolute;
+        right: 0;
+        width: 5.2rem;
+        height: 5.2rem;
+
+        @include media(mobile, tablet-full) {
+          width: 3.9rem;
+          height: 3.9rem;
+          right: -0.6rem;
+        }
+
+        @include mobile {
+          right: 0;
+        }
+
+        background-color: $color-primary-olive-2;
+
+        border-radius: 50%;
+
+        border: none;
+        transition: all .2s;
+
+        &:active, &:hover {
+          background-color: $color-primary-olive-5;
+          cursor: pointer;
+        }
+
+        &:active {
+          transform: scaleX(.98) scaleY(.98);
+        }
+      }
+    }
+  }
+
+  &__schedule {
+    &-container {
+      margin-top: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    &-day {
+      margin-top: 3rem;
+
+      @include mobile {
+        margin-top: 2rem;
+      }
+
+      &-title {
+        font-weight: 500;
+        font-size: 1.8rem;
+        line-height: 1.2;
+      }
+
+      &-time-list {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        @include mobile {
+          margin-top: 1.5rem;
+        }
+
+        & > .gh-switch-new {
+          min-width: 8.5rem;
+        }
+      }
+    }
+
+    &-no-time-available {
+      margin-top: 2.5rem;
+      background-color: $color-primary-olive-3;
+      border-radius: 2rem;
+      padding: 3rem;
+
+      display: flex;
+      gap: 2rem;
+
+      @include media(mobile, tablet-full) {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem;
+        border-radius: 1rem;
+        margin-top: 0;
+      }
+
+      &-label {
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 1.2;
+
+        @include media(mobile, tablet-full) {
+          font-size: 1.6rem;
+        }
+      }
+
+      & .gh-button {
+        flex-shrink: 0;
+
+        @include media(mobile, tablet-full) {
+          font-size: 1.6rem;
+
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        }
+      }
+    }
+  }
+
+  &__auth {
+    margin-top: 4rem;
+
+
+    &-type-select {
+      display: flex;
+      gap: 1rem;
+
+      margin-top: 2.5rem;
+
+      @include media(mobile, tablet-full) {
+        margin-top: 1.8rem;
+        flex-direction: column;
+      }
+    }
+
+    &-form {
+      margin-top: 2.5rem;
+      background-color: $color-primary-olive-3;
+      border-radius: 2rem;
+
+      padding: 3rem;
+
+      @include media(mobile, tablet-full) {
+        margin-top: 2rem;
+        padding: 2rem;
+        border-radius: 1rem;
+
+      }
+
+      &-title {
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 1.4;
+      }
+
+      &-fields {
+        margin-top: 2rem;
+
+        display: flex;
+        gap: 2rem;
+
+        @include media(mobile, tablet-full) {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+      }
+    }
+  }
+}

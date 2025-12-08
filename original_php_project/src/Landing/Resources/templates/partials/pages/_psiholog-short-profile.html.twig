@@ -1,0 +1,83 @@
+{% set linkToProfile =
+    path(
+        constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_PROFILE'),
+        {'id': psiholog.id}
+    ) %}
+<div class="gh-psiholog-list__item">
+    <div class=" gh-position-relative">
+        <div class="gh-psiholog-list__item-avatar-container">
+            <div class="gh-avatar">
+                <img class="gh-img" src="{{ psiholog.profileUrl }}" alt="">
+            </div>
+        </div>
+
+        <div class="gh-psiholog-list__item-info">
+            <div class="gh-psiholog-list__item-name">
+                {{ psiholog.fullName|trans }}
+            </div>
+            <div class="gh-psiholog-list__item-trait">
+                {{ psiholog.singlePhrase|trans|raw }}
+            </div>
+        </div>
+
+        <div class="gh-horizontal-divider"></div>
+
+        <div class="gh-psiholog-list__item-specifics">
+            <div class="gh-psiholog-list__item-experience">
+                <div class="gh-psiholog-list__item-experience-label">
+                    {{ 'Experience'|trans }}
+                </div>
+                <div class="gh-psiholog-list__item-experience-value">
+                    <span class="gh-psiholog-list__item-experience-value-number">{{ psiholog.experience_years }}</span>
+                    <span class="gh-psiholog-list__item-experience-years">{{pluralize(psiholog.experience_years, 'one_year'|trans, 'few_years'|trans, 'many_years'|trans)}}</span>
+                </div>
+            </div>
+            <div class="gh-vertical-divider"></div>
+            <div class="gh-psiholog-list__item-price">
+                <div class="gh-psiholog-list__item-price-label">
+                    {{ 'Price'|trans }}
+                </div>
+                <div class="gh-psiholog-list__item-price-value">
+{#                    {% if psiholog.price_from %}#}
+{#                        <span class="gh-psiholog-list__item-price-from">{{ 'from'|trans }}</span>#}
+{#                    {% endif %}#}
+                    <span class="gh-psiholog-list__item-price-value-number">{{ psiholog.price }}</span>
+                    <span class="gh-psiholog-list__item-price-currency">₴</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gh-horizontal-divider"></div>
+
+        <div class="gh-psiholog-list__specializations">
+            <div class="gh-psiholog-list__specializations-header">
+                {{ 'psiholog_specialty'|trans }}
+            </div>
+            <div class="gh-psiholog-list__specializations-list">
+                {% for index, speciality in psiholog.specialties %}
+                    <div class="gh-psiholog-list__specializations-list-item
+                {% if isBool(speciality) and speciality %}
+                    gh-psiholog-list__specializations-list-item--carrot
+                {% endif %}
+                ">
+
+                        {% if isBool(speciality) and speciality %}
+                            {{ index|trans }}
+                        {% else %}
+                            {{ speciality|trans }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a href="{{ linkToProfile }}" class="gh-stretched-link">
+        </a>
+
+    </div>
+
+    <div class="gh-psiholog-list__view-psiholog-button-wrapper">
+        <a href="{{ linkToProfile }}" class="gh-button gh-button--small-mobile gh-button--small-tablet">
+            {{ 'Look_closely'|trans }}
+        </a>
+    </div>
+</div>

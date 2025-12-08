@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <title>
+        {% block page_title %}
+            {{ 'Вход в личный кабинет'|trans }}. GoodHelp
+        {% endblock %}
+    </title>
+    <meta name="description" content="User login example">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link href="{{ asset('pages/login/login-v2.css', 'user') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header class="gh-login__header-with-shadow">
+    <a href="https://goodhelp.com.ua/" class="gh-login__logo">
+        <img class="gh-img" src="/assets/landing/img/logo/logo-olive.svg?v=j056h45b5" alt="">
+    </a>
+</header>
+<div class="gh-login__soft-light-container">
+    <div class="gh-login__soft-light"></div>
+</div>
+<div class="gh-login__container">
+    <div class="flex-1">
+        <div class="gh-login__wrapper">
+            {% if emailHasBeenSent %}
+                <div class="alert alert-brand">
+                    <div>
+                        <div>
+                            {{ 'Мы отправили письмо со ссылкой для входа на вашу почту'|trans }}.
+                        </div>
+                        <div>
+                            {{ 'Вы сможете отправить письмо еще раз через 60 секунд'|trans }}.
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 60 * 1000);
+                </script>
+            {% else %}
+                <div class="gh-login__title">
+                    <h3>
+                        {{ 'Вход в кабинет'|trans }}
+                    </h3>
+                </div>
+
+                <form class="kt-login-v2__form kt-form" method="post"
+                      action="{{ path(constant('\\App\\User\\Service\\RouteNames::LOGIN')) }}"
+                      autocomplete="off" id="kt_login_form">
+                    {% if error is defined and error %}
+                        {% if error == constant('\\App\\User\\Controller\\LoginController::ERROR_EMAIL_DOES_NOT_EXIST') %}
+                            <div class="alert alert-danger">
+                                {{ 'С таким email у нас нет пользователя'|trans }}
+                            </div>
+                        {% elseif error == constant('\\App\\User\\Controller\\LoginController::ERROR_INVALID_EMAIL') %}
+                            <div class="alert alert-danger">
+                                {{ 'Введите пожалуйста корректный email'|trans }}
+                            </div>
+                        {% elseif error == constant('\\App\\User\\Controller\\LoginController::ERROR_FAILED_TO_SEND_EMAIL') %}
+                            <div class="alert alert-danger">
+                                {{ 'Произошла ошибка при отправке email, попробуйте, пожалуйста, еще'|trans }}.
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="form-group mb-3">
+                        <input class="gh-login__email" type="email" placeholder="Пошта" name="email"
+                               required
+                               autocomplete="off">
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::REQUEST_PSIHOLOG')) }}"
+                           class="gh-login__first">
+                            {{ 'Я первый раз на вашем сервисе'|trans }}
+                        </a>
+                    </div>
+
+                    <div class="gh-login__actions">
+                        <button type="submit" class="btn" id="gh_login_submit">
+                            {{ 'Отправить ссылку для входа на почту'|trans }}
+                        </button>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token(csrf_token_intention) }}"/>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <div class="flex-1">
+        <div class="gh-login__img">
+            <img class="gh-login__security" src="{{ asset('media/login_img.png', 'user') }}" alt="">
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('style.bundle.js', 'user') }}"></script>
+<script src="{{ asset('pages/login/login-v2.css', 'user') }}"></script>
+</body>
+</html>

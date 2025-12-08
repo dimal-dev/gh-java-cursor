@@ -1,0 +1,5 @@
+user_routes:
+  resource: ../../src/Psiholog/Controller
+  type: 'annotation'
+  name_prefix: 'psiholog_'
+  prefix: psiholog

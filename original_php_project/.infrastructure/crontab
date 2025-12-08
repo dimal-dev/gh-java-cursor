@@ -1,0 +1,1 @@
+0 0 * * * docker exec -t goodhelp-php-fpm bash -c 'bin/console landing:sitemap:generate -vv'

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="../../">
+    <meta charset="utf-8"/>
+    <title>{% block page_title %}goodhelp. Войти в кабинет{% endblock %}</title>
+    <meta name="description" content="User login example">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+    <link href="{{ asset('style.bundle.css', 'psiholog') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('pages/login/login-v2.css', 'psiholog') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body class="kt-demo-panel--right kt-header-mobile--fixed kt-page-content-white kt-subheader--enabled kt-aside--secondary-enabled kt-offcanvas-panel--left kt-aside--left kt-page--loading">
+<div class="kt-grid kt-grid--ver kt-grid--root">
+    <div class="kt-grid__item   kt-grid__item--fluid kt-grid  kt-grid kt-grid--hor kt-login-v2" id="kt_login_v2">
+        <div class="kt-login-v2__head">
+            <div class="kt-login-v2__logo">
+                <h1>
+                    <a href="/" class="kt-font-brand">
+                        GoodHelp
+                    </a>
+                </h1>
+            </div>
+        </div>
+
+        <div class="kt-grid__item  kt-grid  kt-grid--ver  kt-grid__item--fluid">
+
+            <div class="kt-login-v2__body">
+
+                <div class="kt-login-v2__wrapper">
+                    <div class="kt-login-v2__container">
+                        <div class="kt-login-v2__title">
+                            <h3>Войти в кабинет</h3>
+                        </div>
+
+                        <form class="kt-login-v2__form kt-form" method="post"
+                              action=""
+                              autocomplete="off" id="kt_login_form">
+                            {% if error %}
+                                <div class="alert alert-danger">
+                                    {% if error.messageKey == 'Invalid credentials.' %}
+                                        Шойта ты не то вводишь, Друже ;(
+                                        Правильные креды давай
+                                    {% else %}
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if autologinLink %}
+                                <div class="alert alert-success">
+                                    <a href="{{ autologinLink }}">Ссылка для входа</a>
+                                </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <input class="form-control p-3" type="text" placeholder="Почта" name="email"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="kt-login-v2__actions">
+                                <button type="submit" class="btn btn-brand btn-elevate btn-pill" id="kt_login_submit">
+                                    Отправить ссылку для входа
+                                </button>
+                            </div>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token(csrf_token_intention) }}"/>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="kt-login-v2__image">
+                    <img src="{{ asset('media/bg_icon.svg', 'psiholog') }}" alt="">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="{{ asset('style.bundle.js', 'psiholog') }}"></script>
+<script src="{{ asset('pages/login/login-v2.css', 'psiholog') }}"></script>
+</body>
+</html>

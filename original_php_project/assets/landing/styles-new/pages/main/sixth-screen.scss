@@ -1,0 +1,179 @@
+.ghl-sixth-screen {
+  margin-top: 12rem;
+  overflow: hidden;
+  padding-bottom: 12rem;
+
+  @include mobile {
+    margin-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @include tablet-full {
+    margin-top: 4rem;
+    padding-bottom: 6rem;
+  }
+
+  &__arrow-down {
+    display: inline-block;
+    position: relative;
+
+    @include mobile {
+      display: none;
+    }
+
+    & > svg {
+      position: absolute;
+
+      top: -2.4rem;
+      left: 0.7rem;
+    }
+  }
+}
+
+.ghl-frequent-questions {
+  margin-top: 4rem;
+  display: flex;
+  gap: 2rem;
+  position: relative;
+
+  @include mobile {
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  @include tablet-full {
+    margin-top: 3rem;
+  }
+
+  &__question {
+    &-head {
+      padding: 2rem 3rem;
+      box-shadow: 0 0.676px 1.6rem rgba($color-black-1, 0.03);
+      border-radius: 1.5rem;
+      background: $color-white-1;
+
+      display: flex;
+      transition: all .3s;
+
+      @include mobile {
+        padding: 1.5rem 2rem;
+        box-shadow: 0 1.5rem 5rem rgba($color-black-1, 0.05), 0 .3rem 1rem rgba($color-black-1, 0.025);
+      }
+
+      @include tablet-full {
+        padding: 1.5rem 2rem;
+        box-shadow: 0 1.5rem 5rem rgba($color-black-1, 0.05), 0 .3rem 1rem rgba($color-black-1, 0.025);
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        transform: scaleX(1.02) scaleY(1.02);
+      }
+    }
+
+    &-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.4;
+
+      @include mobile {
+        font-size: 1.6rem;
+        font-weight: 500;
+      }
+
+      @include tablet-full {
+        font-size: 1.6rem;
+        font-weight: 500;
+      }
+    }
+
+    &-icon {
+      margin-left: auto;
+      transition-property: all;
+      transition-duration: .5s;
+      align-self: center;
+    }
+
+    &-icon path {
+      transition-property: fill;
+      transition-duration: .5s;
+    }
+
+    &-icon path {
+      fill: $color-primary-olive-1;
+    }
+
+    &-body {
+      overflow: hidden;
+      max-height: 0;
+      padding: 0 3rem;
+      font-size: 1.4rem;
+      line-height: 1.4;
+
+      //transform: scaleY(0);
+      transition: all .5s;
+      transform-origin: top;
+      opacity: 0;
+
+      @include mobile {
+        padding: 0 2rem;
+      }
+
+      @include tablet-full {
+        padding: 0 2rem;
+      }
+    }
+
+    &--opened &-body {
+      margin-top: 2rem;
+      max-height: 1000rem;
+      //transform: scaleY(1);
+      opacity: 1;
+
+      @include mobile {
+        margin-top: 1.5rem;
+      }
+
+      @include tablet-full {
+        margin-top: 1.5rem;
+      }
+    }
+
+    &--opened &-icon {
+      transform: rotateZ(135deg);
+    }
+
+    &--opened &-icon path {
+      fill: $color-primary-carrot-1;
+    }
+
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 50%;
+
+    @include mobile {
+      width: auto;
+      gap: 2rem;
+    }
+
+    @include tablet-full {
+      gap: 2rem;
+    }
+  }
+
+  &__soft-light {
+    position: absolute;
+    width: 133rem;
+    height: 100rem;
+    left: 109.5rem;
+    top: -13rem;
+    z-index: -1;
+
+    background: $soft-light-gradient;
+  }
+}

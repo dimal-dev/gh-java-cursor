@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $wayForPayMerchantSecretKey: '%env(WAY_FOR_PAY_MERCHANT_SECRET_KEY)%'
+
+
+  App\Billing\:
+    resource: '%kernel.project_dir%/src/Billing/*'
+    exclude: '%kernel.project_dir%/src/Billing/{DependencyInjection,Entity,Migrations,Tests}'
+

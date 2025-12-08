@@ -1,0 +1,850 @@
+{% extends '@landing/layout/main.html.twig' %}
+
+
+{% block hrefLang %}
+{% endblock %}
+
+{% block content %}
+    <section class="gh-book-consultation gh-main-block">
+        <div class="gh-book-consultation__header-block">
+            <h1 class="gh-book-consultation__h1">
+                {{ 'Book_consultation'|trans }}
+            </h1>
+            <div class="gh-book-consultation__back-btn-container">
+                <a href="{{ path(
+                    constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_PROFILE'),
+                    {'id': psiholog.id}
+                ) }}" class="gh-button gh-button--outlined">
+                    <svg width="31" height="9" viewBox="0 0 31 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M29.75 5C30.0261 5 30.25 4.77614 30.25 4.5C30.25 4.22386 30.0261 4 29.75 4V5ZM0.896447 4.14645C0.701184 4.34171 0.701184 4.65829 0.896447 4.85355L4.07843 8.03553C4.27369 8.2308 4.59027 8.2308 4.78553 8.03553C4.9808 7.84027 4.9808 7.52369 4.78553 7.32843L1.95711 4.5L4.78553 1.67157C4.9808 1.47631 4.9808 1.15973 4.78553 0.964466C4.59027 0.769204 4.27369 0.769204 4.07843 0.964466L0.896447 4.14645ZM29.75 4H1.25V5H29.75V4Z"
+                              fill="black"/>
+                    </svg>
+                    {{ 'To_psiholog_profile'|trans }}
+                </a>
+            </div>
+        </div>
+        <form class="gh-book-consultation__content-block gh-book-consultation__book-form" novalidate action=""
+              method="post">
+            <div class="gh-book-consultation__main">
+                <div class="gh-book-consultation__main-block">
+                    {% if hasSchedule %}
+                        <div class="gh-book-consultation__choose-type">
+                            <h2 class="gh-book-consultation__h2">
+                                {{ 'Consultation_type'|trans }}
+                            </h2>
+                            <h3 class="gh-book-consultation__h3">
+                                {{ 'Choose_consultation_type'|trans }}
+                            </h3>
+                            <div class="gh-book-consultation__choose-type-container">
+                                {% for priceConfig in pricesPlain %}
+                                    <div class="gh-book-consultation__choose-type-specific">
+                                        <div class="gh-switch-new">
+                                            <input type="radio"
+                                                   class="gh-switch-new__input gh-book-consultation__choose-type-switch"
+                                                   id="gh-book-consultation__type-{{ priceConfig.price.type }}"
+                                                   name="price"
+                                                   value="{{ priceConfig.price.id }}"
+                                                   data-label="{{ priceConfig.price.typeLabel|trans }}"
+                                                   data-duration-label="{{ priceConfig.price.typeDuration }} {{ 'minutes'|trans }}"
+                                                   data-price-value="{{ priceConfig.price.price }}"
+                                                   data-price-currency="₴"
+                                                   data-target-selector=".gh-book-consultation__schedule-time-list--{{ priceConfig.price.type }}"
+                                            ><label for="gh-book-consultation__type-{{ priceConfig.price.type }}"
+                                                    class="gh-switch-new__label">
+                                                {{ priceConfig.price.typeLabel|trans }}
+                                            </label>
+                                        </div>
+                                        <div class="gh-book-consultation__choose-type-specific-info">
+                                            {{ priceConfig.price.typeDuration }} {{ 'minutes'|trans }},
+                                            <span class="gh-text-bold">
+                                    {{ priceConfig.price.price }} ₴
+                                </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="gh-horizontal-divider gh-horizontal-divider--schedule gh-d-none"></div>
+
+                        <div class="gh-book-consultation__schedule-container gh-d-none">
+                            <h2 class="gh-book-consultation__h2">
+                                <div class="gh-error gh-d-none">
+                                    {{ 'Select_session_date_and_time'|trans }}
+                                </div>
+                                {{ 'Select_session_date_and_time'|trans }}
+                            </h2>
+
+                            <h3 class="gh-book-consultation__h3">
+                                {{ 'Timezone'|trans }}: {{ userTimezone }}
+                                {#                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" #}
+                                {#                                 xmlns="http://www.w3.org/2000/svg"> #}
+                                {#                                <g clip-path="url(#clip0_145_2078)"> #}
+                                {#                                    <path d="M7.5 0C3.35476 0 0 3.35438 0 7.5C0 11.6452 3.35438 15 7.5 15C11.6452 15 15 11.6456 15 7.5C15 3.35476 11.6456 0 7.5 0ZM7.27808 11.0103C6.85356 11.0103 6.52778 10.6549 6.52778 10.2501C6.52778 9.83549 6.86344 9.48999 7.27808 9.48999C7.69274 9.48999 8.03821 9.83552 8.03821 10.2502C8.03821 10.6549 7.70256 11.0103 7.27808 11.0103ZM8.40349 7.17C7.86053 7.59451 7.85062 7.89067 7.85062 8.40401C7.85062 8.59163 7.75189 8.80881 7.26817 8.80881C6.86338 8.80881 6.72521 8.66071 6.72521 8.14737C6.72521 7.29835 7.10036 6.89358 7.38665 6.64679C7.71243 6.37034 8.26529 6.06434 8.26529 5.53125C8.26529 5.07709 7.8704 4.85991 7.37678 4.85991C6.36981 4.85991 6.58702 5.62011 6.05388 5.62011C5.78733 5.62011 5.46155 5.44236 5.46155 5.05737C5.46155 4.52429 6.07362 3.73447 7.4064 3.73447C8.67003 3.73447 9.50918 4.43543 9.50918 5.36341C9.50918 6.29139 8.67003 6.9627 8.40349 7.17Z" #}
+                                {#                                          fill="#C0C0C0"/> #}
+                                {#                                </g> #}
+                                {#                                <defs> #}
+                                {#                                    <clipPath id="clip0_145_2078"> #}
+                                {#                                        <rect width="15" height="15" fill="white"/> #}
+                                {#                                    </clipPath> #}
+                                {#                                </defs> #}
+                                {#                            </svg> #}
+                            </h3>
+
+                            {% for priceConfig in pricesPlain %}
+                                {% if priceConfig.schedule|length > 0 %}
+                                    <div class="gh-book-consultation__schedule-time-list gh-book-consultation__schedule-time-list--{{ priceConfig.price.type }}">
+                                        {% for day in priceConfig.schedule %}
+                                            <div class="gh-book-consultation__schedule-day">
+                                                <div class="gh-book-consultation__schedule-day-title">
+                                                    {{ day.dayOfMonth }} {{ day.month }}, {{ day.dayFull }}
+                                                </div>
+
+                                                <div class="gh-book-consultation__schedule-day-time-list">
+                                                    {% set dayLabelPrefix = day.dayOfMonth ~ ' ' ~ day.month ~ ', ' ~ day.dayFull ~ ' ' ~ 'at'|trans %}
+                                                    {% for time in day.timeList %}
+                                                        <div class="gh-switch-new">
+                                                            <input type="radio"
+                                                                   class="gh-switch-new__input gh-book-consultation__schedule-day-time-switch"
+                                                                   id="gh-book-consultation__schedule-day-time-switch--{{ priceConfig.price.type }}-{{ time.scheduleId }}"
+                                                                   name="time"
+                                                                   data-summary-label="{{ dayLabelPrefix }} {{ time.time }}"
+                                                                   value="{{ time.scheduleId }}"
+                                                            ><label for="gh-book-consultation__schedule-day-time-switch--{{ priceConfig.price.type }}-{{ time.scheduleId }}"
+                                                                    class="gh-switch-new__label">
+                                                                {{ time.time }}
+                                                            </label>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="gh-book-consultation__schedule-time-list gh-book-consultation__schedule-time-list--{{ priceConfig.price.type }}">
+                                        <div class="gh-book-consultation__schedule-no-time-available">
+                                        <span class="gh-book-consultation__schedule-no-time-available-label">
+                                            {{ 'To_book_consultation_fill_questionnaire'|trans|raw }}
+                                        </span>
+                                            <a href="{{ requestConsultationLink }}"
+                                               class="gh-button">
+                                                {{ 'Fill_questionnaire'|trans }}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="gh-horizontal-divider"></div>
+
+                        <div class="gh-book-consultation__auth">
+                            <h2 class="gh-book-consultation__h2">
+                                {{ 'Authorization'|trans }}
+                            </h2>
+                            <h3 class="gh-book-consultation__h3">
+                                {{ 'Choose_authorization_type'|trans }}
+                            </h3>
+
+                            <div class="gh-book-consultation__auth-type-select">
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-book-consultation__choose-auth-type-switch"
+                                           id="gh-book-consultation__auth-new"
+                                           name="auth-type"
+                                           value="new"
+                                           checked="checked"
+                                           data-target-selector=".gh-book-consultation__auth-form--new"
+                                    ><label for="gh-book-consultation__auth-new"
+                                            class="gh-switch-new__label">
+                                        {{ 'I_book_first_time'|trans }}
+                                    </label>
+                                </div>
+                                <div class="gh-switch-new">
+                                    <input type="radio"
+                                           class="gh-switch-new__input gh-book-consultation__choose-auth-type-switch"
+                                           id="gh-book-consultation__auth-existing"
+                                           name="auth-type"
+                                           value="existing"
+                                           data-target-selector=".gh-book-consultation__auth-form--existing"
+                                    ><label for="gh-book-consultation__auth-existing"
+                                            class="gh-switch-new__label">
+                                        {{ 'I_already_booked_before'|trans }}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="gh-book-consultation__auth-form gh-book-consultation__auth-form--new">
+                                <div class="gh-book-consultation__auth-form-title">
+                                <span class="gh-text-bold">
+                                    {{ 'Enter_your_data'|trans }}
+                                </span>
+                                    {{ 'to_receive_email_after_purchase'|trans }}
+                                </div>
+
+                                <div class="gh-book-consultation__auth-form-fields">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none">
+                                            {{ 'Put_your_name'|trans }}
+                                        </div>
+                                        <input type="text" class="gh-input-text"
+                                               name="new--name"
+                                               id="auth-new--name"
+                                               placeholder="{{ 'Your_name'|trans }}">
+                                    </div>
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none">
+                                            {{ 'Put_your_phone_number'|trans }}
+                                        </div>
+                                        <input type="text" class="gh-input-text"
+                                               id="auth-new--phone"
+                                               name="new--phone"
+                                               placeholder="{{ 'Phone'|trans }}">
+                                    </div>
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none">
+                                            {{ 'Put_your_email'|trans }}
+                                        </div>
+                                        <input type="text" class="gh-input-text"
+                                               id="auth-new--email"
+                                               name="new--email"
+                                               placeholder="{{ 'Email'|trans }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gh-book-consultation__auth-form gh-book-consultation__auth-form--existing  gh-d-none">
+                                <div class="gh-book-consultation__auth-form-title">
+                                <span class="gh-text-bold">
+                                    {{ 'Enter_your_data'|trans }}
+                                </span>
+                                    {{ 'to_receive_email_after_purchase'|trans }}
+                                </div>
+
+                                <div class="gh-book-consultation__auth-form-fields">
+                                    <div class="gh-input">
+                                        <div class="gh-error gh-d-none">
+                                            {{ 'Put_your_email'|trans }}
+                                        </div>
+                                        <input type="email" class="gh-input-text"
+                                               id="auth-existing--email"
+                                               name="existing--email"
+                                               placeholder="{{ 'Email'|trans }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="gh-book-consultation__schedule-no-time-available">
+                            <span class="gh-book-consultation__schedule-no-time-available-label">
+                                {{ 'To_book_consultation_fill_questionnaire'|trans|raw }}
+                            </span>
+                            <a href="{{ requestConsultationLink }}"
+                               class="gh-button">
+                                {{ 'Fill_questionnaire'|trans }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="gh-book-consultation__summary">
+                <div class="gh-avatar gh-avatar--profile">
+                    <img class="gh-img"
+                         src="{{ asset('img/select-psiholog/' ~ psihologProfile.profileTemplate ~ '.jpg', 'landing') }}"
+                         alt="">
+                </div>
+
+                <div class="gh-book-consultation__summary-short-info">
+                    <div class="gh-book-consultation__summary-short-name">
+                        {{ psihologProfile.fullName|trans }}
+                    </div>
+                    <div class="gh-book-consultation__summary-short-trait">
+                        {{ psihologProfileInfo.singlePhrase|trans|raw }}
+                    </div>
+                </div>
+                {% if hasSchedule %}
+                    <div class="gh-horizontal-divider"></div>
+
+                    <div class="gh-book-consultation__summary-session-info">
+                        <div class="gh-book-consultation__summary-session-header">
+                            {{ 'Session_info'|trans }}
+                        </div>
+                        <div class="gh-book-consultation__summary-session-row">
+                            <div class="gh-book-consultation__summary-session-row-label">
+                                {{ 'Session_type'|trans|raw }}:
+                            </div>
+                            <div class="gh-book-consultation__summary-session-row-value"
+                                 id="gh-book-consultation__summary-session-type">
+                                {{ 'Needs_to_be_chosen'|trans }}
+                            </div>
+                        </div>
+                        <div class="gh-book-consultation__summary-session-row">
+                            <div class="gh-book-consultation__summary-session-row-label">
+                                {{ 'Time'|trans }}:
+                            </div>
+                            <div class="gh-book-consultation__summary-session-row-value"
+                                 id="gh-book-consultation__summary-session-time">
+                                {{ 'Needs_to_be_chosen'|trans }}
+                            </div>
+                        </div>
+                        <div class="gh-book-consultation__summary-session-row">
+                            <div class="gh-book-consultation__summary-session-row-label">
+                                {{ 'Session_duration'|trans }}:
+                            </div>
+                            <div class="gh-book-consultation__summary-session-row-value"
+                                 id="gh-book-consultation__summary-session-duration">
+                                {#                                60 {{ 'minutes'|trans }} #}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gh-horizontal-divider"></div>
+                    <div class="gh-book-consultation__summary-price-info gh-d-none">
+                        <div class="gh-book-consultation__summary-price-header">
+                            {{ 'Consultation_price'|trans }}
+                        </div>
+                        <div class="gh-book-consultation__summary-old-price-content gh-d-none">
+                            <div class="gh-book-consultation__summary-old-price-value">
+                                2000
+                            </div>
+                            <div class="gh-book-consultation__summary-old-price-currency">
+                                ₴
+                            </div>
+                        </div>
+                        <div class="gh-book-consultation__summary-price-content">
+                            <div class="gh-book-consultation__summary-price-value">
+                                2000
+                            </div>
+                            <div class="gh-book-consultation__summary-price-currency">
+                                ₴
+                            </div>
+                        </div>
+                        <div class="gh-book-consultation__summary-promo-info gh-d-none">
+                            {{ 'Promocode_applied'|trans }} Promo15
+                        </div>
+                    </div>
+                    <div class="gh-book-consultation__summary-book-container">
+                        <div class="gh-error gh-error--carrot gh-book-consultation__summary-book-error-container gh-d-none">
+                            <div class="gh-text-color-black-2">
+                                {{ 'To_book_you_have_to'|trans }}
+                            </div>
+                            <ol>
+                                <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--consultation-type">
+                                    {{ 'Have_to_select_session_type'|trans }}
+                                </li>
+                                <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--date-and-time">
+                                    {{ 'Have_to_select_session_date_and_time'|trans }}
+                                </li>
+                                <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--name">
+                                    {{ 'Have_to_enter_name'|trans }}
+                                </li>
+                                <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--phone">
+                                    {{ 'Have_to_enter_phone'|trans }}
+                                </li>
+                                <li class="gh-book-consultation__summary-book-error gh-book-consultation__summary-book-error--email">
+                                    {{ 'Have_to_enter_email'|trans }}
+                                </li>
+                            </ol>
+                            <div class="gh-text-color-black-2">
+                                {{ 'You_can_do_that_on_this_page_higher'|trans }}
+                            </div>
+                        </div>
+                        <button class="gh-button" disabled="disabled" id="book-button">
+                            {{ 'Book'|trans }}
+                        </button>
+                    </div>
+
+                    <div class="gh-book-consultation__summary-promo">
+                        <div class="gh-book-consultation__summary-promo-show-form">
+                            {{ 'I_have_promocode'|trans }}
+                        </div>
+                        <div class="gh-book-consultation__summary-promo-form gh-d-none">
+                            <div class="gh-input">
+                                <div class="gh-error gh-error--olive gh-d-none" id="promocode-applied-message">
+                                    {{ 'Horrey_promocode_is_successfully_applied'|trans }}
+                                </div>
+                                <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-doesnt-exist">
+                                    {{ 'Promocode_doesnt_exist'|trans }}
+                                </div>
+                                <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-email-dosnt-exist">
+                                    {{ 'User_with_such_email_doesnt_exist'|trans }}
+                                </div>
+                                <div class="gh-error gh-d-none gh-promocode-error" id="error-cannot-use-this-promocode">
+                                    {{ 'You_have_already_applied_this_promo'|trans }}
+                                </div>
+                                <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-empty-email">
+                                    {{ 'Please_enter_email_in_authentication_first'|trans|raw }}
+                                </div>
+                                <div class="gh-error gh-d-none gh-promocode-error" id="error-promocode-empty">
+                                    {{ 'Please_enter_promocode'|trans }}
+                                </div>
+                                <input type="text" class="gh-input-text" id="promocode-name" placeholder="{{ 'Enter_promocode'|trans }}">
+                                <input type="hidden" value="" id="applied-promocode" name="applied-promocode">
+                                <button class="gh-book-consultation__summary-promo-add-btn" type="button">
+                                    <svg class="promo-loading-animation gh-d-none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%;margin: auto;/* background: rgba(255, 255, 255, 0); */display: block;height: 100%;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                        <circle cx="50" cy="50" r="0" fill="none" stroke="#ef9665" stroke-width="6">
+                                            <animate attributeName="r" repeatCount="indefinite" dur="2.127659574468085s" values="0;45" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="0s"></animate>
+                                            <animate attributeName="opacity" repeatCount="indefinite" dur="2.127659574468085s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="0s"></animate>
+                                        </circle><circle cx="50" cy="50" r="0" fill="none" stroke="#ffffff" stroke-width="6">
+                                            <animate attributeName="r" repeatCount="indefinite" dur="2.127659574468085s" values="0;45" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-1.0638297872340425s"></animate>
+                                            <animate attributeName="opacity" repeatCount="indefinite" dur="2.127659574468085s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-1.0638297872340425s"></animate>
+                                        </circle>
+                                    </svg>
+                                    <svg class="promo-submit-icon" width="26" height="18" viewBox="0 0 26 18" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M25.0898 0.572266C25.6953 1.17773 25.6953 2.17383 25.0898 2.7793L10.4414 17.4277C10.1387 17.7305 9.73828 17.8867 9.33789 17.8867C8.9375 17.8867 8.53711 17.7305 8.23438 17.4277L0.910156 10.1035C0.304688 9.49805 0.304688 8.50195 0.910156 7.89648C1.51562 7.29102 2.51172 7.29102 3.11719 7.89648L9.33789 14.1172L22.8828 0.572266C23.4883 -0.0429688 24.4844 -0.0429688 25.0898 0.572266Z"
+                                              fill="#202020"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // const chooseTypeBtnList = document.querySelectorAll('.gh-book-consultation__choose-type-specific .gh-switch');
+            // const scheduleTimeBtnList = document.querySelectorAll('.gh-book-consultation__schedule-day-time-list .gh-switch');
+            //
+            // chooseTypeBtnList.forEach(btn => {
+            //     btn.addEventListener('click', (e) => {
+            //         chooseTypeBtnList.forEach(typeBtn => {
+            //             typeBtn.classList.remove('gh-switch--active');
+            //         });
+            //
+            //         btn.classList.add('gh-switch--active');
+            //     });
+            // });
+            //
+            // scheduleTimeBtnList.forEach(btn => {
+            //     btn.addEventListener('click', (e) => {
+            //         scheduleTimeBtnList.forEach(typeBtn => {
+            //             typeBtn.classList.remove('gh-switch--active');
+            //         });
+            //
+            //         btn.classList.add('gh-switch--active');
+            //     });
+            // });
+
+            const showSummaryPriceInfo = () => {
+                document.querySelector('.gh-book-consultation__summary-price-info').classList.remove('gh-d-none');
+            };
+
+            const setSummarySessionType = (typeLabel) => {
+                document.querySelector('#gh-book-consultation__summary-session-type').innerHTML = typeLabel;
+            };
+
+            const setSummarySessionDuration = (durationLabel) => {
+                document.querySelector('#gh-book-consultation__summary-session-duration').innerHTML = durationLabel;
+            };
+
+            const setSummarySessionTime = (timeLabel) => {
+                document.querySelector('#gh-book-consultation__summary-session-time').innerHTML = timeLabel;
+            };
+
+            let summaryPriceValue = 0;
+            let summaryPriceCurrency = '';
+            const setSummaryPrice = (price, currency) => {
+                document.querySelector('.gh-book-consultation__summary-old-price-value').innerHTML = price;
+                document.querySelector('.gh-book-consultation__summary-old-price-currency').innerHTML = currency;
+                document.querySelector('.gh-book-consultation__summary-price-value').innerHTML = price;
+                document.querySelector('.gh-book-consultation__summary-price-currency').innerHTML = currency;
+                summaryPriceValue = price;
+                summaryPriceCurrency = currency;
+
+                renderPromocodePrice();
+            };
+
+            document.querySelectorAll('.gh-book-consultation__choose-type-switch').forEach(switchInput => {
+                switchInput.addEventListener('change', () => {
+                    document.querySelector('.gh-book-consultation__schedule-container').classList.remove('gh-d-none');
+                    document.querySelector('.gh-horizontal-divider--schedule').classList.remove('gh-d-none');
+
+                    const dataTargetSelector = switchInput.getAttribute('data-target-selector');
+
+                    document.querySelectorAll('.gh-book-consultation__schedule-time-list').forEach(container => {
+                        container.classList.add('gh-d-none');
+                    });
+                    document.querySelector(dataTargetSelector).classList.remove('gh-d-none');
+
+                    const typeLabel = switchInput.getAttribute('data-label');
+                    const durationLabel = switchInput.getAttribute('data-duration-label');
+                    const priceValue = switchInput.getAttribute('data-price-value');
+                    const priceCurrency = switchInput.getAttribute('data-price-currency');
+
+                    setSummarySessionType(typeLabel);
+                    setSummarySessionDuration(durationLabel);
+
+                    showSummaryPriceInfo();
+                    setSummaryPrice(priceValue, priceCurrency);
+                    setSummarySessionTime('{{ 'Needs_to_be_chosen'|trans }}');
+
+
+                    // const setSummarySessionType = (typeLabel) => {
+                    //     document.querySelector('#gh-book-consultation__summary-session-type').innerHTML = typeLabel;
+                    // };
+                    //
+                    // const setSummarySessionDuration
+
+                    document.querySelectorAll('.gh-book-consultation__schedule-day-time-switch').forEach(timeSwitch => {
+                        timeSwitch.checked = false;
+                    });
+
+                    hideSummaryConsultationTypeRequirement();
+                    showSummaryDateAndTimeRequirement();
+                });
+            });
+
+            document.querySelectorAll('.gh-book-consultation__schedule-day-time-switch').forEach(switchInput => {
+                switchInput.addEventListener('change', () => {
+                    const timeLabel = switchInput.getAttribute('data-summary-label');
+                    setSummarySessionTime(timeLabel);
+                    hideSummaryDateAndTimeRequirement();
+                });
+            });
+
+            const makeAuthInputErrorCheck = () => {
+                document.querySelectorAll('.gh-book-consultation__choose-auth-type-switch').forEach(switchInput => {
+                    if (!switchInput.checked) {
+                        return;
+                    }
+
+                    if (switchInput.value === 'existing') {
+                        const emailInput = document.querySelector('#auth-existing--email');
+                        const email = emailInput.value.trim();
+                        if (email.length < 1) {
+                            showSummaryEmailRequirement();
+                        }
+
+                        hideSummaryNameRequirement();
+                        hideSummaryPhoneRequirement();
+                    } else {
+                        const emailInput = document.querySelector('#auth-new--email');
+                        const email = emailInput.value.trim();
+                        if (email.length < 1) {
+                            showSummaryEmailRequirement();
+                        }
+
+                        const nameInput = document.querySelector('#auth-new--name');
+                        const name = nameInput.value.trim();
+                        if (name.length < 1) {
+                            showSummaryNameRequirement();
+                        }
+
+                        const phoneInput = document.querySelector('#auth-new--phone');
+                        const phone = phoneInput.value.trim();
+                        if (phone.length < 1) {
+                            showSummaryPhoneRequirement();
+                        }
+                    }
+                });
+            };
+
+            document.querySelectorAll('.gh-book-consultation__choose-auth-type-switch').forEach(switchInput => {
+                switchInput.addEventListener('change', () => {
+                    const dataTargetSelector = switchInput.getAttribute('data-target-selector');
+
+                    document.querySelectorAll('.gh-book-consultation__auth-form').forEach(container => {
+                        container.classList.add('gh-d-none');
+                    });
+                    document.querySelector(dataTargetSelector).classList.remove('gh-d-none');
+
+                    makeAuthInputErrorCheck();
+                });
+            });
+
+            document.querySelector('.gh-book-consultation__summary-promo-show-form').addEventListener('click', () => {
+                const promoForm = document.querySelector('.gh-book-consultation__summary-promo-form');
+                if (promoForm.classList.contains('gh-d-none')) {
+                    promoForm.classList.remove('gh-d-none');
+                } else {
+                    promoForm.classList.add('gh-d-none');
+                }
+            });
+
+            document.querySelector('#auth-existing--email').addEventListener('input', (e) => {
+                const field = e.target.value.trim();
+                if (field.length > 0) {
+                    hideSummaryEmailRequirement();
+                    if (promoErrorEnterEmailShowing) {
+                        hideAllPromocodeErrors();
+                        promoErrorEnterEmailShowing = false;
+                    }
+                } else {
+                    showSummaryEmailRequirement();
+                }
+            });
+
+            document.querySelector('#auth-new--email').addEventListener('input', (e) => {
+                const field = e.target.value.trim();
+                if (field.length > 0) {
+                    hideSummaryEmailRequirement();
+                    if (promoErrorEnterEmailShowing) {
+                        hideAllPromocodeErrors();
+                        promoErrorEnterEmailShowing = false;
+                    }
+                } else {
+                    showSummaryEmailRequirement();
+                }
+            });
+
+            document.querySelector('#auth-new--name').addEventListener('input', (e) => {
+                const field = e.target.value.trim();
+                if (field.length > 0) {
+                    hideSummaryNameRequirement();
+                } else {
+                    showSummaryNameRequirement();
+                }
+            });
+
+            document.querySelector('#auth-new--phone').addEventListener('input', (e) => {
+                const field = e.target.value.trim();
+                if (field.length > 0) {
+                    hideSummaryPhoneRequirement();
+                } else {
+                    showSummaryPhoneRequirement();
+                }
+            });
+
+            const checkAndHideSummaryValidationBlock = () => {
+                let errorsCount = 0;
+                document.querySelectorAll('.gh-book-consultation__summary-book-error').forEach(errorElement => {
+                    if (!errorElement.classList.contains('gh-d-none')) {
+                        errorsCount++;
+                    }
+                });
+
+                if (errorsCount === 0) {
+                    document.querySelector('.gh-book-consultation__summary-book-error-container').classList.add('gh-d-none');
+                    EnableBookButton();
+                }
+            };
+
+            const checkAndShowSummaryValidationBlock = () => {
+                let errorsCount = 0;
+                document.querySelectorAll('.gh-book-consultation__summary-book-error').forEach(errorElement => {
+                    if (!errorElement.classList.contains('gh-d-none')) {
+                        errorsCount++;
+                    }
+                });
+
+                if (errorsCount > 0) {
+                    document.querySelector('.gh-book-consultation__summary-book-error-container').classList.remove('gh-d-none');
+                    DisableBookButton();
+                }
+            };
+
+            const hideSummaryConsultationTypeRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--consultation-type';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.add('gh-d-none');
+                checkAndHideSummaryValidationBlock();
+            };
+
+            const hideSummaryDateAndTimeRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--date-and-time';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.add('gh-d-none');
+                checkAndHideSummaryValidationBlock();
+            };
+
+            const hideSummaryNameRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--name';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.add('gh-d-none');
+                checkAndHideSummaryValidationBlock();
+            };
+
+            const hideSummaryPhoneRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--phone';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.add('gh-d-none');
+                checkAndHideSummaryValidationBlock();
+            };
+
+            const hideSummaryEmailRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--email';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.add('gh-d-none');
+                checkAndHideSummaryValidationBlock();
+            };
+
+            const showSummaryDateAndTimeRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--date-and-time';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.remove('gh-d-none');
+                checkAndShowSummaryValidationBlock();
+            };
+
+            const showSummaryNameRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--name';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.remove('gh-d-none');
+                checkAndShowSummaryValidationBlock();
+            };
+
+            const showSummaryEmailRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--email';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.remove('gh-d-none');
+                checkAndShowSummaryValidationBlock();
+            };
+
+            const showSummaryPhoneRequirement = () => {
+                const selector = '.gh-book-consultation__summary-book-error--phone';
+                const errorElement = document.querySelector(selector);
+                errorElement.classList.remove('gh-d-none');
+                checkAndShowSummaryValidationBlock();
+            };
+
+            function EnableBookButton() {
+                document.querySelector('#book-button').removeAttribute('disabled');
+            }
+
+            function DisableBookButton() {
+                document.querySelector('#book-button').setAttribute('disabled', 'disabled');
+            }
+
+            makeAuthInputErrorCheck();
+
+            document.querySelector('.gh-book-consultation__book-form').addEventListener('submit', (e) => {
+                DisableBookButton();
+            });
+
+            let currentPromoDiscount = 0;
+            let currentPromoName = '';
+            function setPromoDiscount(percent)
+            {
+                currentPromoDiscount = percent;
+                renderPromocodePrice();
+            }
+
+            let promoSubmitting = false;
+            let promoErrorEnterEmailShowing = false;
+            let promoErrorEnterPromoShowing = false;
+            document.querySelector('.gh-book-consultation__summary-promo-add-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (promoSubmitting) return;
+
+
+                let authType = '';
+                document.querySelectorAll('.gh-book-consultation__choose-auth-type-switch').forEach(authTypeInput => {
+                    if (authTypeInput.checked) {
+                        authType = authTypeInput.value;
+                    }
+                });
+
+                const emailSelector = authType === 'new' ? '#auth-new--email' : '#auth-existing--email';
+                const email = document.querySelector(emailSelector).value.trim();
+
+                if (email.length < 1) {
+                    promoErrorEnterEmailShowing = true;
+                    showPromocodeError('#error-promocode-empty-email');
+                    return;
+                }
+
+                const promocodeNameInput = document.querySelector('#promocode-name');
+                const promocodeName = promocodeNameInput.value.trim();
+
+                if (promocodeName.length < 1) {
+                    promoErrorEnterPromoShowing = true;
+                    showPromocodeError('#error-promocode-empty');
+                    return;
+                }
+
+                promoSubmitting = true;
+                const promoLoadingAnimationElement = document.querySelector('.promo-loading-animation');
+                const promoSubmitIconElement = document.querySelector('.promo-submit-icon');
+
+                promocodeNameInput.setAttribute('disabled', 'disabled');
+                promoLoadingAnimationElement.classList.remove('gh-d-none');
+                promoSubmitIconElement.classList.add('gh-d-none');
+
+                const data = {
+                    promocode: promocodeName,
+                    email: email
+                };
+
+                hideAllPromocodeErrors();
+                fetch('{{ url(constant('\\App\\Landing\\Service\\RouteNames::BOOK_CONSULTATION_APPLY_PROMOCODE')) }}', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}, // this line is important, if this content-type is not set it wont work
+                    body: new URLSearchParams(data).toString()
+                }).then(res => res.json()).then(res => {
+                    promoSubmitting = false;
+                    promoLoadingAnimationElement.classList.add('gh-d-none');
+                    promoSubmitIconElement.classList.remove('gh-d-none');
+                    promocodeNameInput.removeAttribute('disabled');
+
+                    if (typeof res.fs !== 'undefined') {
+                        document.querySelector('#promocode-applied-message').classList.remove('gh-d-none');
+                        currentPromoName = promocodeName;
+                        setPromoDiscount(res.discountPercent);
+                        document.querySelector('#applied-promocode').value = res.fs;
+
+                        return;
+                    }
+
+                    if (res.error == '{{ constant('\\App\\Landing\\Controller\\BookConsultationApplyPromocodeController::ERROR_PROMOCODE_NOT_EXIST') }}') {
+                        showPromocodeError('#error-promocode-doesnt-exist');
+                        return;
+                    }
+
+                    if (res.error == '{{ constant('\\App\\Landing\\Controller\\BookConsultationApplyPromocodeController::ERROR_EXCEEDS_NUMBER_OF_USES') }}') {
+                        showPromocodeError('#error-cannot-use-this-promocode');
+                        return;
+                    }
+                }).catch(res => {
+                    promoSubmitting = false;
+                    promoLoadingAnimationElement.classList.add('gh-d-none');
+                    promoSubmitIconElement.classList.remove('gh-d-none');
+                    promocodeNameInput.removeAttribute('disabled');
+                });
+            });
+
+            document.querySelector('#promocode-name').addEventListener('input', (e) => {
+                const field = e.target.value.trim();
+                if (field.length > 0) {
+                    hideAllPromocodeErrors();
+                    if (promoErrorEnterPromoShowing) {
+                        promoErrorEnterPromoShowing = false;
+                    }
+                }
+            });
+
+            let promocodeErrorsShown = false;
+            function showPromocodeError(selector) {
+                const promocodeErrorElement = document.querySelector(selector);
+                hideAllPromocodeErrors();
+
+                promocodeErrorElement.classList.remove('gh-d-none');
+                promocodeErrorsShown = true;
+            }
+
+            function hideAllPromocodeErrors() {
+                document.querySelector('#promocode-applied-message').classList.add('gh-d-none');
+                if (!promocodeErrorsShown) return;
+
+                promocodeErrorsShown = false;
+                document.querySelectorAll('.gh-promocode-error').forEach(errorElement => {
+                    errorElement.classList.add('gh-d-none');
+                });
+            }
+
+            function renderPromocodePrice() {
+                if (currentPromoDiscount > 0 && summaryPriceValue > 0) {
+                    const promoInfoElement = document.querySelector('.gh-book-consultation__summary-promo-info');
+                    promoInfoElement.innerHTML = `{{ 'Promocode_applied'|trans }} ${currentPromoName}`;
+                    promoInfoElement.classList.remove('gh-d-none');
+
+                    document.querySelector('.gh-book-consultation__summary-old-price-content').classList.remove('gh-d-none');
+                    document.querySelector('.gh-book-consultation__summary-price-value').innerHTML = Math.floor((summaryPriceValue * (100 - currentPromoDiscount)) / 100);
+                }
+            }
+        });
+    </script>
+{% endblock %}

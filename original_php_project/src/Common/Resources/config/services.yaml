@@ -1,0 +1,23 @@
+parameters:
+  maxMindDBPath: '%kernel.project_dir%/resources/maxmind/GeoIP2-City.mmdb'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $gaMeasurementId: '%env(GA_MEASUREMENT_ID)%'
+      $gaApiSecret: '%env(GA_API_SECRET)%'
+
+  GeoIp2\Database\Reader:
+    class: GeoIp2\Database\Reader
+    arguments:
+      - '%maxMindDBPath%'
+
+  Hashids\Hashids:
+    - 'Once I was afraid, 2I was petrified, but 7 5 4 39 0 by my side1'
+
+  App\Common\:
+    resource: '%kernel.project_dir%/src/Common/*'
+    exclude: '%kernel.project_dir%/src/Common/{DependencyInjection,Entity,Migrations,Tests}'
+

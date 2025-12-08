@@ -1,0 +1,231 @@
+<div id="zeroWeek">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr class="text-center kt-font-bold">
+                {% for day in dayList %}
+                    {% set dateConfig = p_timestampToDayMonthAndYear(day) %}
+                    <th>
+                        <div>{{ dateConfig.dateLabel }}</div>
+                        <div>{{ dateConfig.dayLabel }}</div>
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody class="user-select-none">
+            {% for timeRowTimeList in timeList %}
+                <tr class="text-center kt-shape-bg-color-brand">
+                    {% for timeConfig in timeRowTimeList %}
+                        <td
+                            data-available-at="{{ timeConfig.datetime }}"
+                            data-disabled="0"
+                                {% if timeConfig.state == constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_BOOKED') %}
+                                    data-available-at-ts-utc="{{ timeConfig.available_at_timestamp_utc }}"
+                                {% endif %}
+                            data-state="{{ timeConfig.state }}"
+                            class="time-cell
+{% if timeConfig.state == constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_AVAILABLE') %}
+                kt-bg-brand
+                kt-font-light
+                kt-font-bold
+                border-success
+                time-selected
+{% elseif timeConfig.state == constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_BOOKED') %}
+                kt-bg-primary
+                kt-font-light
+                kt-font-bold
+                border-success
+                time-selected
+{% elseif timeConfig.state == constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_DONE') %}
+                kt-bg-warning
+                kt-font-light
+                kt-font-bold
+                border-success
+                time-selected
+{% elseif timeConfig.state == constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_PASSED') %}
+                kt-bg-metal
+                kt-font-light
+                kt-font-bold
+                border-success
+                time-selected
+{% endif %}
+">
+
+                            {{ timeConfig.time }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<style>
+    .time-cell {
+        position: relative;
+    }
+
+    .time-cell-loader {
+        background-color: rgba(110, 110, 110, .5);
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        justify-content: center;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<script>
+    "use strict";
+    // window.addEventListener('DOMContentLoaded', (event) => {
+    (() => {
+        function isTouchDevice() {
+            return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+        }
+
+        const handleAction = (element) => {
+            const $this = $(element);
+            // console.log('handleAction', $this.html());
+            // return;
+            const disabled = $this.attr('data-disabled');
+            const time = $this.attr('data-available-at');
+            const state = $this.attr('data-state');
+            const mainClass = 'time-selected';
+
+            if (disabled == 1) {
+                seriesStarted = false;
+                return;
+            }
+
+            if (state == '{{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_PASSED') }}') {
+                seriesStarted = false;
+                return;
+            }
+
+            if (state == '{{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_DONE') }}') {
+                seriesStarted = false;
+                return;
+            }
+
+            if (state == '{{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_BOOKED') }}') {
+                seriesStarted = false;
+                alert('Здесь теперь нельзя отменять консультации. Перейдите в раздел Консультации и там отмените');
+                return;
+            }
+
+            const classesToRemove = [
+                'kt-bg-brand',
+                'kt-bg-primary',
+                'kt-bg-warning',
+                'kt-font-light',
+                'kt-font-bold',
+                'border-success',
+                mainClass,
+            ];
+            const classesToAdd = [
+                'kt-bg-brand',
+                'kt-font-light',
+                'kt-font-bold',
+                'border-success',
+                mainClass,
+            ];
+
+            let classes, methodName;
+            if ($this.hasClass(mainClass)) {
+                methodName = 'removeClass';
+                classes = classesToRemove;
+            } else {
+                methodName = 'addClass';
+                classes = classesToAdd;
+            }
+
+            const showLoader = () => {
+                $this.append(`
+<div class="time-cell-loader">
+<div>
+    <div class="spinner-border text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+</div>
+                `);
+                $this.attr('data-disabled', 1);
+            };
+            const hideLoader = () => {
+                $this.find('.time-cell-loader').remove();
+                $this.attr('data-disabled', 0);
+            };
+
+            showLoader();
+
+            const sendToBackend = (action) => {
+                const url = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::SCHEDULE_SETTINGS_BOOK_TIME_AJAX')) }}';
+                const callback = (json) => {
+                    hideLoader();
+                    if (!json.success) {
+                        alert('Что-то пошло не так, попробуйте снова');
+                        seriesStarted = false;
+                    } else {
+                        if (action == {{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsBookTimeAjaxController::ACTION_REMOVE') }}) {
+                            console.log('available');
+                            $this.attr('data-state', {{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_UNUSED') }});
+                        }
+                        if (action == {{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsBookTimeAjaxController::ACTION_ADD') }}) {
+                            console.log('booked');
+                            $this.attr('data-state', {{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsWeekController::STATE_AVAILABLE') }});
+                        }
+
+                        for (const className of classes) {
+                            $this[methodName](className);
+                        }
+                    }
+                };
+
+                const data = {
+                    time,
+                    action
+                };
+
+                $.post(url, data, callback, 'json');
+            }
+
+            if ($this.hasClass(mainClass)) {
+                sendToBackend('{{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsBookTimeAjaxController::ACTION_REMOVE') }}');
+            } else {
+                sendToBackend('{{ constant('\\App\\Psiholog\\Controller\\ScheduleSettingsBookTimeAjaxController::ACTION_ADD') }}');
+            }
+
+        };
+
+        let seriesStarted = false;
+
+        if (isTouchDevice()) {
+            $('.time-cell').on('click', function (e) {
+                handleAction(this);
+            });
+        } else {
+            $('.time-cell').mouseenter(function (e) {
+                if (seriesStarted) {
+                    handleAction(this);
+                }
+            });
+            $('.time-cell').mousedown(function (e) {
+                seriesStarted = true;
+                handleAction(this);
+            });
+            $('body').mouseup(function (e) {
+                seriesStarted = false;
+            });
+        }
+    })();
+    // });
+</script>

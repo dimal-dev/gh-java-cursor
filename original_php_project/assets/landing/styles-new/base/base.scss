@@ -1,0 +1,24 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: $color-background-semi-white-1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gh-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}

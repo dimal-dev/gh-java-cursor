@@ -1,0 +1,14 @@
+{% include '@landing/partials/psiholog-profile/_photo-carousel.html.twig' with {
+    photos: [
+        {
+            webp: asset('img/profile/0002-inna-karashchuk/001-inna-karashchuk.webp', 'landing'),
+            fallback:  asset('img/profile/0002-inna-karashchuk/001-inna-karashchuk.jpg', 'landing'),
+        },        {
+            webp: asset('img/profile/0002-inna-karashchuk/002-inna-karashchuk.webp', 'landing'),
+            fallback:  asset('img/profile/0002-inna-karashchuk/002-inna-karashchuk.jpg', 'landing'),
+        },        {
+            webp: asset('img/profile/0002-inna-karashchuk/003-inna-karashchuk.webp', 'landing'),
+            fallback:  asset('img/profile/0002-inna-karashchuk/003-inna-karashchuk.jpg', 'landing'),
+        },
+    ]
+} %}

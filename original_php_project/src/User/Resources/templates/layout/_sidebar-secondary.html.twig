@@ -1,0 +1,113 @@
+<div class="kt-aside__secondary">
+    <div class="kt-aside__secondary-top">
+        <h3 class="kt-aside__secondary-title kt-font-brand kt-font-bold">
+            <a href="{{ url(constant('\App\\User\\Service\\RouteNames::DASHBOARD')) }}" class="kt-font-brand">
+                GoodHelp
+            </a>
+        </h3>
+    </div>
+{#    <div class="kt-aside__secondary-bottom">#}
+
+{#        <div id="kt_aside_menu" class="kt-aside-menu" data-ktmenu-vertical="1"#}
+{#             data-ktmenu-scroll="1">#}
+{#            <ul class="kt-menu__nav secondary-sidebar-nav">#}
+{#                {% for route, config in userGetSidebarMenuItems() %}#}
+{#                    <li class="kt-menu__item  kt-menu__item{{ app.request.attributes.get('_route') == route ? '--active' : '' }} secondary-sidebar-nav--item"#}
+{#                        aria-haspopup="true"#}
+{#                        id="{{ config.id ?? '' }}"#}
+{#                    >#}
+{#                        <a href="{{ url(route) }}" class="kt-menu__link ">#}
+{#                            <span class="kt-menu__link-text">#}
+{#                                {{ config.label|raw }}#}
+{#                            </span>#}
+{#                        </a>#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="kt-aside__secondary-bottom">
+
+        <div id="kt_aside_menu" class="kt-aside-menu" data-ktmenu-vertical="1"
+             data-ktmenu-scroll="1"
+             style="background: #f4fdee;"
+        >
+            <ul class="kt-menu__nav secondary-sidebar-nav" id="left-menu">
+                {% for route, config in userGetSidebarMenuItems() %}
+                    <li class="kt-menu__item  kt-menu__item{{ app.request.attributes.get('_route') == route ? '--active' : '' }} secondary-sidebar-nav--item"
+                        aria-haspopup="true"
+                        id="{{ config.id ?? '' }}"
+                    >
+                        <a href="{{ url(route) }}" class="kt-menu__link ">
+                            <span class="kt-menu__link-text">
+                                <i class="{{ config.icon }}"></i>
+                                &nbsp;
+                                {{ config.label|raw }}
+                            </span>
+                        </a>
+                    </li>
+                {% endfor %}
+                <li class="kt-menu__item  kt-menu__itemsecondary-sidebar-nav--item"
+                    aria-haspopup="true"
+                >
+                    <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::LOGOUT')) }}" class="kt-menu__link ">
+                            <span class="kt-menu__link-text">
+                        <i class="flaticon-logout"></i> &nbsp;
+                                Выйти
+                            </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    #left-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+        margin-top: 0;
+    }
+
+    #left-menu > li:last-child {
+        margin-top: auto;
+    }
+
+    .kt-aside-menu .kt-menu__nav .kt-menu__item {
+        flex-grow: 0;
+    }
+
+    .kt-menu__nav.secondary-sidebar-nav {
+        margin-top: 25px;
+    }
+
+    .kt-menu__nav.secondary-sidebar-nav .secondary-sidebar-nav--item {
+        margin-top: 6px;
+    }
+
+    .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__heading .kt-menu__link-text, .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__link .kt-menu__link-text {
+        font-size: 1.1rem;
+    }
+</style>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const chatContainer = document.querySelector('#sidebar-menu-item-chat');
+        const span = chatContainer.querySelector('.kt-menu__link-text');
+        const initialHtml = span.innerHTML;
+
+        const fetchAndRenderMessages = () => {
+            const url = '{{ url(constant('\\App\\User\\Service\\RouteNames::CHAT_GET_UNREAD_MESSAGES_AMOUNT_AJAX')) }}';
+            const callback = (json) => {
+                span.innerHTML = `${initialHtml} (<span class="kt-font-danger">${json.amount}</span>)`;
+            };
+
+            $.get(url, {}, callback, 'json');
+        };
+
+        fetchAndRenderMessages();
+        setInterval(fetchAndRenderMessages, 10 * 1000);
+    });
+</script>

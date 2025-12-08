@@ -1,0 +1,150 @@
+{% extends '@psiholog/layout/main.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="kt_datatable" id="new-messages1"></div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Class definition
+            var datatable;
+
+            var KTUsersListDatatable = function() {
+                var init = function() {
+
+                    datatable = $('.kt_datatable').KTDatatable({
+                        data: {
+                            type: 'remote',
+                            source: {
+                                read: {
+                                    url: '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::NEW_MESSAGES_LIST_AJAX')) }}',
+                                    method: 'GET',
+                                    timeout: 30000
+                                },
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                        },
+                        layout: {
+                            scroll: false,
+                            footer: false,
+                            spinner: {
+                                message: '{{ 'Please wait'|trans({}, 'userspace') }}',
+                            }
+                        },
+                        translate: {
+                            records: {
+                                noRecords: 'Новых сообщений нет',
+                            },
+                            toolbar: {
+                                pagination: {
+                                    items: {
+                                        info: '{{ "Displaying {{start}} - {{end}} of {{total}} records"|trans({}, 'userspace') }}',
+                                        default: {
+                                            first: '{{ 'First'|trans({}, 'userspace') }}',
+                                            prev: '{{ 'Previous'|trans({}, 'userspace') }}',
+                                            next: '{{ 'Next'|trans({}, 'userspace') }}',
+                                            last: '{{ 'Last'|trans({}, 'userspace') }}',
+                                            more: '{{ 'More pages'|trans({}, 'userspace') }}',
+                                            input: '{{ 'Page number'|trans({}, 'userspace') }}',
+                                            select: '{{ 'Select page size'|trans({}, 'userspace') }}'
+                                        },
+                                    }
+                                }
+                            }
+                        },
+                        sortable: false,
+                        pagination: true,
+                        columns: [
+                            {
+                                field: 'name',
+                                title: 'Имя',
+                                template: (row) => {
+                                    const urlPart = '{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::CHAT')) }}';
+                                    let name = row.full_name;
+                                    let html = `
+
+                                        <a href="${urlPart}?userId=${row.user_id}" class="kt-link kt-link--brand" target="_blank">
+                                             Открыть чат (<span class="kt-font-danger">${row.unread_messages_amount}</span>)
+                                        </a>
+                                    `;
+
+                                    if (row.psiholog_user_notes_name.length > 0) {
+                                        name += ' / ' + row.psiholog_user_notes_name;
+                                    }
+
+                                    if (name.length < 1) {
+                                        const url = `{{ url(constant('\\App\\Psiholog\\Service\\RouteNames::USER_NOTES')) }}?userId=${row.user_id}`;
+                                        html = `<a class="btn btn-brand btn-sm" href="${url}">Назвать клиента</a>&nbsp;&nbsp;` + html;
+                                    } else {
+                                        if (row.is_full_name_set_by_user != 1 && row.full_name && row.full_name.length > 0) {
+                                            name = `Возможное имя пользователя (мы определили, а не он сам поставил): <br> ${name}`;
+                                        } else {
+                                            name = `<b>${name}</b>`;
+                                        }
+
+                                        html = name + html;
+                                    }
+
+                                    return html;
+                                },
+                            },
+                            {
+                                field: 'preview',
+                                title: 'Сообщение',
+                                // width: '400',
+                                template: (row) => {
+                                    return `<div>${row.body}</div>`;
+                                },
+                            },
+                            {
+                                field: 'sent_at',
+                                title: 'Отправлено',
+                            },
+                            {
+                                field: 'id',
+                                title: 'ID',
+                            },
+                        ],
+
+                    });
+                };
+
+                return {
+                    // public functions
+                    init: function() {
+                        init();
+                    },
+                };
+            }();
+
+            jQuery(document).ready(function() {
+                KTUsersListDatatable.init();
+            });
+        });
+    </script>
+
+    <style>
+        .kt-datatable.kt-datatable--default > .kt-datatable__table {
+            overflow: auto;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__head, .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__foot {
+            overflow: initial;
+        }
+        .kt-datatable.kt-datatable--default.kt-datatable--scroll > .kt-datatable__table > .kt-datatable__body {
+            overflow: initial;
+        }
+
+        .next_session_at {
+            white-space: nowrap;
+        }
+    </style>
+
+{% endblock %}

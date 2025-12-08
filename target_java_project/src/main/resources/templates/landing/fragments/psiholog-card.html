@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--
+  Therapist card fragment for the listing page.
+  Usage: th:replace="~{landing/fragments/psiholog-card :: psihologCard(psiholog=${therapist})}"
+-->
+<div th:fragment="psihologCard(psiholog)" class="gh-psiholog-list__item">
+    <div class="gh-position-relative">
+        <!-- Avatar -->
+        <div class="gh-psiholog-list__item-avatar-container">
+            <div class="gh-avatar">
+                <img class="gh-img" th:src="${psiholog.photoUrl()}" th:alt="${psiholog.fullName()}" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Name and single phrase -->
+        <div class="gh-psiholog-list__item-info">
+            <div class="gh-psiholog-list__item-name" th:text="${psiholog.fullName()}">Therapist Name</div>
+            <div class="gh-psiholog-list__item-trait" th:text="#{${psiholog.singlePhrase()}}">Specialty phrase</div>
+        </div>
+
+        <div class="gh-horizontal-divider"></div>
+
+        <!-- Experience and Price -->
+        <div class="gh-psiholog-list__item-specifics">
+            <div class="gh-psiholog-list__item-experience">
+                <div class="gh-psiholog-list__item-experience-label" th:text="#{Experience}">Experience</div>
+                <div class="gh-psiholog-list__item-experience-value">
+                    <span class="gh-psiholog-list__item-experience-value-number" th:text="${psiholog.experienceYears() != null ? psiholog.experienceYears() : '5'}">5</span>
+                    <span class="gh-psiholog-list__item-experience-years" th:text="#{years}">years</span>
+                </div>
+            </div>
+            <div class="gh-vertical-divider"></div>
+            <div class="gh-psiholog-list__item-price">
+                <div class="gh-psiholog-list__item-price-label" th:text="#{Price}">Price</div>
+                <div class="gh-psiholog-list__item-price-value">
+                    <span th:if="${psiholog.priceFrom()}" class="gh-psiholog-list__item-price-from" th:text="#{from}">from</span>
+                    <span class="gh-psiholog-list__item-price-value-number" th:text="${psiholog.price() != null ? psiholog.price() : '500'}">500</span>
+                    <span class="gh-psiholog-list__item-price-currency" th:text="${psiholog.currency()}">₴</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gh-horizontal-divider"></div>
+
+        <!-- Specializations -->
+        <div class="gh-psiholog-list__specializations">
+            <div class="gh-psiholog-list__specializations-header" th:text="#{psiholog_specialty}">Specialization</div>
+            <div class="gh-psiholog-list__specializations-list">
+                <div th:each="specialty : ${psiholog.specialties()}" 
+                     class="gh-psiholog-list__specializations-list-item"
+                     th:text="#{${specialty}}">Specialty</div>
+            </div>
+        </div>
+
+        <!-- Stretched link to profile -->
+        <a th:href="@{/{lang}/psiholog/{id}(lang=${lang != 'uk' ? lang : ''}, id=${psiholog.id()})}" 
+           class="gh-stretched-link"></a>
+    </div>
+
+    <!-- View profile button -->
+    <div class="gh-psiholog-list__view-psiholog-button-wrapper">
+        <a th:href="@{/{lang}/psiholog/{id}(lang=${lang != 'uk' ? lang : ''}, id=${psiholog.id()})}" 
+           class="gh-button gh-button--small-mobile gh-button--small-tablet view-specific-psiholog-btn"
+           th:text="#{Look_closely}">View Profile</a>
+    </div>
+</div>
+</body>
+</html>
+

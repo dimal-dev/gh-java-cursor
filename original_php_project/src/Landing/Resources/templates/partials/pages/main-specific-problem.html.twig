@@ -1,0 +1,20 @@
+<div class="problem-category-list__item">
+    <div class="problem-category-list__item-icon">
+        {% block itemIcon %}
+        {% endblock %}
+    </div>
+    <div class="problem-category-list__item-header">
+        {{ title }}
+    </div>
+    <div class="problem-category-list__specific-problem-list">
+        {% for problem in problemList %}
+            <div class="problem-category-list__specific-problem">
+                <img class="problem-category-list__double-quotes-icon"
+                     src="{{ asset('img/icons/double-quotes.svg', 'landing') }}" alt="">
+                <span class="problem-category-list__specific-problem-label">
+                    {{ problem }}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+</div>

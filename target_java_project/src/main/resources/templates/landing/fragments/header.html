@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<!-- Header Fragment - for pages that need custom header handling -->
+<header th:fragment="header" class="gh-header" th:classappend="${headerWithoutShadow} ? '' : 'gh-header--with-shadow'">
+    <a th:href="@{/}" class="gh-header__logo">
+        <img class="gh-img" th:src="@{/img/logo/logo-olive.svg}" alt="GoodHelp">
+    </a>
+    
+    <nav class="gh-header__nav">
+        <ul class="gh-header__nav-menu">
+            <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/therapist-list')} ? 'active' : ''">
+                <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                   th:text="#{our_specialists}">Our Specialists</a>
+            </li>
+            <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/blog')} ? 'active' : ''">
+                <a th:href="@{/{lang}/blog(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                   th:text="#{Blog}">Blog</a>
+            </li>
+            <li>
+                <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
+                   th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/user/dashboard}" th:text="#{landing.header.user_dashboard}">My Cabinet</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/user/login}" th:text="#{landing.header.user_login}">Login</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="gh-header__lang-and-select-block-container">
+        <div class="gh-header__lang-picker" th:replace="~{landing/fragments/language-switcher :: switcher}"></div>
+        <div class="gh-header__select-psiholog-btn-container">
+            <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="select-psiholog-btn select-psiholog-btn--no-shadow select-psiholog-btn--header gh-button"
+               th:text="#{landing.request_psiholog}">
+                Find a Psychologist
+            </a>
+        </div>
+    </div>
+    
+    <div class="gh-header__burger-icon-mobile" id="mobile-menu-toggle">
+        <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.481934" width="20" height="2" rx="1" fill="#202020"/>
+            <rect x="0.481934" y="8" width="20" height="2" rx="0.999999" fill="#202020"/>
+            <rect x="5.48193" y="16" width="15" height="2" rx="1" fill="#202020"/>
+        </svg>
+    </div>
+</header>
+</body>
+</html>
+

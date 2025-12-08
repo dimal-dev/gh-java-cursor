@@ -1,0 +1,32 @@
+imports:
+  - { resource: ../src/Common/Resources/config/services.yaml }
+  - { resource: ../src/Landing/Resources/config/services.yaml }
+  - { resource: ../src/User/Resources/config/services.yaml }
+  - { resource: ../src/Psiholog/Resources/config/services.yaml }
+  - { resource: ../src/Staff/Resources/config/services.yaml }
+  - { resource: ../src/Billing/Resources/config/services.yaml }
+  - { resource: ../src/Notification/Resources/config/services.yaml }
+parameters:
+  jivochat_disabled: '%env(JIVOCHAT_DISABLED)%'
+  admin_telegram_notifications_enabled: '%env(ADMIN_TELEGRAM_NOTIFICATIONS_ENABLED)%'
+
+services:
+    redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                - '%env(REDIS_HOST)%'
+                - '%env(REDIS_PORT)%'
+            - method: auth
+              arguments:
+                - '%env(REDIS_PASSWORD)%'
+    Redis: '@redis'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@redis'
+            - prefix: session_
+              ttl: 172800
+
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'

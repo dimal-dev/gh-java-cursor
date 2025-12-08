@@ -1,0 +1,71 @@
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet-full {
+  @media (min-width: 768px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin tablet-small {
+  @media (min-width: 768px) and (max-width: 990px) {
+    @content;
+  }
+}
+
+@mixin tablet-big {
+  @media (min-width: 991px) and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin max-990 {
+  @media (max-width: 990px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin desktop-small {
+  @media (min-width: 1200px) and (max-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin media($keys...) {
+  @each $key in $keys {
+    @if ($key == mobile) {
+      @include mobile {
+        @content
+      }
+    } @else if ($key == tablet-full) {
+      @include tablet-full {
+        @content
+      }
+    } @else if ($key == tablet-small) {
+      @include tablet-small {
+        @content
+      }
+    } @else if ($key == tablet-big) {
+      @include tablet-big {
+        @content
+      }
+    } @else if ($key == desktop) {
+      @include desktop {
+        @content
+      }
+    } @else if ($key == desktop-small) {
+      @include desktop-small {
+        @content
+      }
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{% extends '@user/layout/main.html.twig' %}
+
+{% block content %}
+    {% set classPart = 'xl' %}
+    {% set classPart2 = 'md' %}
+    {% if showSuccessfullyBookedConsultationMessage %}
+        <div class="alert alert-outline-brand fade show mt-3" role="alert">
+            <div class="alert-icon">
+                <i class="flaticon2-checkmark"></i>
+            </div>
+            <div class="alert-text" style="font-weight: bold">
+                Вы успешно записались на консультацию
+            </div>
+            <div class="alert-close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                        onclick="this.parentNode.parentNode.remove()"
+
+                >
+                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Что делать дальше</h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="kt-list">
+                        {% if not isFullNameSetByUser %}
+                            <div class="kt-list__item">
+                                <div class="kt-list__icon">
+                                    <span class="kt-media kt-media--sm kt-media--light">
+                                        <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                    </span>
+                                </div>
+
+                                <form action="{{ url(constant('\\App\\User\\Service\\RouteNames::SETTINGS')) }}" method="post">
+                                    <div class="form-group row" style="margin: 0">
+                                        <label class="col-form-label">Напишите как вас зовут</label>
+                                        <div class="ml-3">
+                                            <input class="form-control" type="text" value="" name="newFullName">
+                                        </div>
+                                        <button class="btn btn-brand ml-sm-3">Сохранить</button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                        {% if not rulesWereRead %}
+                        <div class="kt-list__item">
+                            <span class="kt-list__icon">
+                                <span class="kt-media kt-media--sm kt-media--light">
+                                    <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                </span>
+                            </span>
+                            <span class="kt-list__text">
+                                <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::RULES')) }}"
+                                   class="kt-link">
+                                    Почитайте условия консультаций
+                                </a>
+                            </span>
+                        </div>
+                        {% endif %}
+                        {% if closestConsultation is defined %}
+                            <div class="kt-list__item">
+                            <span class="kt-list__icon">
+                                <span class="kt-media kt-media--sm kt-media--light">
+                                    <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                </span>
+                            </span>
+                                <span class="kt-list__text">
+                                    Психолог напишет вам инструкции по консультации в чате
+                                </span>
+                            </div>
+                            {% include '@user/partials/_dashboard-consultation.html.twig' with {
+                                consultation: closestConsultation,
+                                consultationAdditionalText: "- ближайшая консультация"
+                            } %}
+                        {% elseif latestPsiholog is defined and latestPsiholog %}
+                            <div class="kt-list__item">
+                                <span class="kt-list__icon">
+                                    <span class="kt-media kt-media--sm kt-media--light">
+                                        <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                    </span>
+                                </span>
+                                <span class="kt-list__text">
+                                    <span>
+                                        {% if latestPsiholog.profile_template is defined %}
+                                            <img class="psiholog-profile-img"
+                                                 src="{{ asset('media/psiholog-profile/' ~ latestPsiholog.profile_template ~ '.jpg', 'user') }} "
+                                                 alt="">
+                                        {% endif %}
+
+                                        {{ latestPsiholog.first_name }} {{ latestPsiholog.last_name }}
+                                        &nbsp;&nbsp;
+                                        <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_PROFILE'), {id: latestPsiholog.psiholog_id}) }}#{{ constant('\\App\\Landing\\Controller\\PsihologProfileController::BOOK_CONSULTATION_HTML_ID') }}"
+                                           target="_blank" class="btn btn-brand my-3">Запишитесь на консультацию</a>
+                                    </span>
+                                </span>
+                            </div>
+                        {% else %}
+                            <div class="kt-list__item">
+                                <span class="kt-list__icon">
+                                    <span class="kt-media kt-media--sm kt-media--light">
+                                        <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                    </span>
+                                </span>
+                                <span class="kt-list__text">
+                                    <span>
+                                        Запишитесь на консультацию. Для этого
+                                        <a target="_blank"
+                                           href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::REQUEST_PSIHOLOG')) }}"
+                                           class="btn btn-brand">Выберите психолога</a>
+                                    </span>
+                                </span>
+                            </div>
+
+                        {% endif %}
+                        <div class="kt-list__item">
+                            <span class="kt-list__icon">
+                                <span class="kt-media kt-media--sm kt-media--light">
+                                    <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                </span>
+                            </span>
+                            <span class="kt-list__text">
+                                <span>
+                                    <div>
+                                        <span class="text-danger">
+                                            Важно!
+                                        </span>
+                                        <span>
+                                            Проверьте такое ли у вас время: <span id="timezone-time-value"></span>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        Если нет, поменяйте, пожалуйста, ваш часовой пояс
+                                        <a href="{{ url(constant('\\App\\User\\Service\\RouteNames::SETTINGS')) }}"
+                                           class="kt-link">в настройках</a>, иначе время консультаций будет отображаться неверно.
+                                    </div>
+                                    <div>
+                                         Мы определили ваш часовой пояс как {{ timezoneLabel }}.
+                                    </div>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <div class="kt-list">
+                        <div class="kt-list__item">
+                            <span class="kt-list__icon">
+                                <span class="kt-media kt-media--sm kt-media--light">
+                                    <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                </span>
+                            </span>
+                            <span class="kt-list__text">
+                                У вас на счету сейчас {{ userWallet.balance / 100 }} грн
+                            </span>
+                        </div>
+
+                        {% for consultation in upcomingConsultations %}
+                            {% include '@user/partials/_dashboard-consultation.html.twig' with {consultation: consultation} %}
+                        {% endfor %}
+                        {% if closestConsultation is defined %}
+                            {% if latestPsiholog is defined and latestPsiholog %}
+                                <div class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand"></i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <span>
+                                            {% if latestPsiholog.profile_template is defined %}
+                                                <img class="psiholog-profile-img"
+                                                     src="{{ asset('media/psiholog-profile/' ~ latestPsiholog.profile_template ~ '.jpg', 'user') }} "
+                                                     alt="">
+                                            {% endif %}
+
+                                            {{ latestPsiholog.first_name }} {{ latestPsiholog.last_name }}
+                                            &nbsp;&nbsp;
+                                            <a href="{{ url(constant('\\App\\Landing\\Service\\RouteNames::PSIHOLOG_PROFILE'), {id: latestPsiholog.psiholog_id}) }}#{{ constant('\\App\\Landing\\Controller\\PsihologProfileController::BOOK_CONSULTATION_HTML_ID') }}"
+                                               target="_blank" class="btn btn-brand">Записаться на консультацию</a>
+                                        </span>
+                                    </span>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .kt-list__text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .psiholog-profile-img {
+            border-radius: 50%;
+            width: 3rem;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const timezoneTimeValueEl = document.querySelector('#timezone-time-value');
+
+            const withLeadingZero = (number) => {
+                return number < 10 ? '0' + number : number;
+            };
+
+            const timestampToDateTime = (timestamp) => {
+                const userTime = new Date(timestamp);
+                const dateLabel = `${userTime.getFullYear()}-${withLeadingZero(userTime.getMonth())}-${userTime.getDate()}`;
+                const timeLabel = `${withLeadingZero(userTime.getHours())}:${withLeadingZero(userTime.getMinutes())}:${withLeadingZero(userTime.getSeconds())}`;
+
+                return `${dateLabel} ${timeLabel}`;
+            };
+
+            const updateTime = () => {
+                const d = new Date;
+                const timestamp = ((d.getTime() + d.getTimezoneOffset() * 60 * 1000) / 1000 + {{ timezoneOffset }}) * 1000;
+
+                timezoneTimeValueEl.innerHTML = timestampToDateTime(timestamp);
+            };
+            setInterval(updateTime, 1000);
+            updateTime();
+
+
+            document.querySelectorAll('.cancel-consultation-btn').forEach((cancelBtn) => {
+                cancelBtn.addEventListener('click', (e) => {
+                    const currentTs = Math.floor(((new Date).getTime() + (new Date()).getTimezoneOffset()) / 1000)
+                    const consultationTs = parseInt(cancelBtn.getAttribute('data-consultation-ts'));
+                    const delta = (consultationTs - currentTs);
+                    const minimumDelta = {{ constant('\\App\\Common\\Service\\ConsultationAllowedCancelTimeChecker::MINIMUM_DELTA') }};
+                    const willCharge = delta < minimumDelta;
+
+                    if (willCharge) {
+                        if (!confirm("Осталось меньше чем 24 часа до консультации. В этом случае при отмене по условиям деньги уже не вернуться вам на счет. Вы все равно хотите отменить?")) {
+                            e.preventDefault();
+                        }
+                        cancelBtn.classList.add('disabled', 'disabled');
+                        return;
+                    }
+
+                    if (!confirm("Вы уверены что хотите отменить консультацию?")) {
+                        e.preventDefault();
+                    }
+                    cancelBtn.classList.add('disabled', 'disabled');
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

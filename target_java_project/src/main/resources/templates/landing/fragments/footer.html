@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="gh-footer">
+    <div class="gh-main-block gh-footer__main-block">
+        <!-- Logo Section -->
+        <div class="gh-footer__logo-container">
+            <div class="gh-footer__logo">
+                <a th:href="@{/}">
+                    <img th:src="@{/img/logo/logo-carrot.svg}" alt="GoodHelp" style="height: 50px;">
+                </a>
+            </div>
+            <div class="gh-footer__logo-description" th:utext="#{Help_with_worries}">
+                Help with worries
+            </div>
+        </div>
+        
+        <!-- Pages Section -->
+        <div class="gh-footer__block gh-footer__pages">
+            <div class="gh-footer__block-header" th:text="#{Pages}">Pages</div>
+            <div class="gh-footer__block-section">
+                <div class="gh-footer__block-section-list">
+                    <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{our_specialists}">Our Specialists</a>
+                    <a th:href="@{/{lang}/consultation-conditions(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{Consultation_conditions}">Consultation Conditions</a>
+                    <a th:href="@{/user/login}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{landing.header.user_login}">Login</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Other Section -->
+        <div class="gh-footer__block gh-footer__other">
+            <div class="gh-footer__block-header" th:text="#{Other}">Other</div>
+            <div class="gh-footer__block-section">
+                <div class="gh-footer__block-section-list">
+                    <a th:href="@{/{lang}/terms-of-use(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{Terms}">Terms of Use</a>
+                    <a th:href="@{/{lang}/privacy(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{Privacy_policy}">Privacy Policy</a>
+                    <a th:href="@{/{lang}/refund-policy(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{Refund}">Refund Policy</a>
+                    <a th:href="@{/{lang}/family-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{family_psiholog}">Family Therapist</a>
+                    <a th:href="@{/{lang}/teenage-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
+                       class="gh-footer__block-section-list-item"
+                       th:text="#{teenage_psiholog}">Teenage Therapist</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contacts Section -->
+        <div class="gh-footer__block gh-footer__contacts">
+            <div class="gh-footer__block-header" th:text="#{Contacts}">Contacts</div>
+            
+            <!-- Email -->
+            <div class="gh-footer__block-section">
+                <div class="gh-footer__block-section-subheader">
+                    <span th:text="#{Write_us}">Write to us</span>:
+                </div>
+                <div class="gh-footer__social-icons-row">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_footer_email)">
+                            <path d="M19.8238 3.97339L13.7582 9.99991L19.8238 16.0264C19.9335 15.7973 20 15.5439 20 15.2733V4.72647C20 4.45589 19.9335 4.20257 19.8238 3.97339Z" fill="#EF9665"/>
+                            <path d="M18.2422 2.96875H1.75779C1.4872 2.96875 1.23388 3.03527 1.0047 3.14492L8.75716 10.8583C9.44263 11.5438 10.5573 11.5438 11.2428 10.8583L18.9952 3.14492C18.7661 3.03527 18.5127 2.96875 18.2422 2.96875Z" fill="#EF9665"/>
+                            <path d="M0.176172 3.97339C0.0665234 4.20257 0 4.45589 0 4.72647V15.2733C0 15.5439 0.0665234 15.7973 0.176172 16.0264L6.24176 9.99991L0.176172 3.97339Z" fill="#EF9665"/>
+                            <path d="M12.9297 10.8286L12.0713 11.6869C10.9292 12.8291 9.07072 12.8291 7.92857 11.6869L7.07029 10.8286L1.0047 16.8551C1.23388 16.9648 1.4872 17.0313 1.75779 17.0313H18.2422C18.5127 17.0313 18.7661 16.9648 18.9952 16.8551L12.9297 10.8286Z" fill="#EF9665"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_footer_email">
+                                <rect width="20" height="20" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                    <span>goodhelpua@gmail.com</span>
+                </div>
+            </div>
+            
+            <!-- Messengers -->
+            <div class="gh-footer__block-section">
+                <div class="gh-footer__block-section-subheader">
+                    <span th:text="#{Messengers}">Messengers</span>
+                </div>
+                <div class="gh-footer__social-icons-row">
+                    <a href="https://t.me/GoodHelpUA" target="_blank" title="Telegram">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#47B0D3"/>
+                            <path d="M14.854 4.25981C14.7569 4.19379 14.6323 4.18379 14.5259 4.23328L3.78036 9.23555C3.59157 9.32348 3.47228 9.51571 3.477 9.72387C3.48157 9.92801 3.60513 10.1114 3.79204 10.1932L13.6988 14.5079C14.0296 14.6583 14.4191 14.4216 14.4403 14.0606L14.9995 4.55504C15.0063 4.43793 14.9511 4.32574 14.854 4.25981Z" fill="#E5E5E5"/>
+                            <path d="M6.70438 11.4617L7.37395 15.9375L14.8113 4.2356L6.70438 11.4617Z" fill="#CCCCCC"/>
+                            <path d="M14.526 4.23338L3.78037 9.23564C3.59534 9.32177 3.47467 9.5138 3.4769 9.71787C3.47916 9.92228 3.60487 10.1114 3.79201 10.1933L6.7044 11.4617L14.8113 4.2356C14.722 4.19256 14.6173 4.19088 14.526 4.23338Z" fill="white"/>
+                            <path d="M8.25851 12.1386L7.3739 15.9375L14.8112 4.2356L8.25851 12.1386Z" fill="#E5E5E5"/>
+                            <path d="M14.8541 4.25989C14.8403 4.25056 14.8259 4.24263 14.8113 4.2356L8.25854 12.1386L13.6988 14.508C14.0296 14.6584 14.4191 14.4217 14.4403 14.0606L14.9994 4.55513C15.0063 4.43802 14.9511 4.32583 14.8541 4.25989Z" fill="white"/>
+                        </svg>
+                    </a>
+                    <a href="viber://pa?chatURI=goodhelp" title="Viber">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#6F3FAA"/>
+                            <path d="M15.7761 6.75569V6.74092C15.642 6.19773 15.292 5.63637 14.8329 5.16364C14.2966 4.6091 13.6136 4.17387 12.9614 4.03296H12.9477C11.0025 3.66024 9.00426 3.66024 7.05908 4.03296H7.04544C5.83408 4.29546 4.51931 5.56137 4.22613 6.74092V6.75569C3.86591 8.39101 3.86591 10.0851 4.22613 11.7205V11.7341C4.43522 12.575 5.16249 13.4591 6.00113 13.9932C6.27501 14.1717 6.57313 14.3098 6.88635 14.4034V15.7193C6.88679 15.8245 6.91854 15.9271 6.97754 16.0142C7.03654 16.1012 7.12012 16.1688 7.21764 16.2081C7.31516 16.2475 7.42219 16.257 7.52509 16.2353C7.62799 16.2136 7.72211 16.1617 7.79544 16.0864L9.12953 14.7C9.41817 14.7159 9.70908 14.725 9.99772 14.725C10.9858 14.7247 11.9716 14.6311 12.942 14.4455H12.9557C14.1636 14.1818 15.4795 12.9159 15.7704 11.7364V11.7227C16.1329 10.0871 16.1348 8.39215 15.7761 6.75569Z" fill="white"/>
+                            <path d="M14.7204 11.4773C14.525 12.2466 13.5273 13.2046 12.7329 13.3807C11.7012 13.5783 10.6512 13.664 9.60113 13.6364C9.5909 13.6357 9.58067 13.6375 9.57121 13.6414C9.56176 13.6453 9.55333 13.6514 9.54658 13.6591L8.57272 14.6591L7.53635 15.7216C7.51977 15.7391 7.49832 15.7513 7.47476 15.7565C7.4512 15.7616 7.42663 15.7596 7.40422 15.7507C7.38182 15.7418 7.36261 15.7263 7.34909 15.7063C7.33557 15.6863 7.32836 15.6628 7.3284 15.6386V13.4568C7.32842 13.4393 7.3223 13.4223 7.31109 13.4088C7.29988 13.3953 7.28429 13.3862 7.26703 13.383C7.10136 13.3436 6.94163 13.2825 6.79203 13.2011C6.11703 12.8409 5.43635 12.1023 5.27953 11.4773C4.95472 9.99908 4.95472 8.46798 5.27953 6.98978C5.47385 6.22387 6.47726 5.26819 7.2659 5.09092C9.07187 4.74536 10.927 4.74536 12.7329 5.09092C13.1704 5.18864 13.6704 5.5216 14.0614 5.93069C14.3829 6.26364 14.6295 6.64773 14.7204 6.99319C15.0448 8.47029 15.0448 10.0002 14.7204 11.4773Z" fill="#6F3FAA"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Social Media -->
+            <div class="gh-footer__block-section">
+                <div class="gh-footer__block-section-subheader">
+                    <span th:text="#{We_in_social}">Follow us</span>
+                </div>
+                <div class="gh-footer__social-icons-row">
+                    <a href="https://www.instagram.com/goodhelp.ua/" target="_blank" title="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.4812 0H5.50346C2.44427 0 0 2.44427 0 5.50346V14.4965C0 17.5404 2.44427 20 5.50346 20H14.4965C17.5404 20 20 17.5557 20 14.4965V5.50346C19.9846 2.44427 17.5404 0 14.4812 0ZM18.2321 13.6972C18.2321 16.1875 16.2029 18.2475 13.6818 18.2475H6.30284C3.81245 18.2475 1.7525 16.2183 1.7525 13.6972V6.30284C1.7525 3.81245 3.78171 1.7525 6.30284 1.7525H13.7279C16.2183 1.7525 18.2782 3.78171 18.2782 6.30284V13.6972H18.2321Z" fill="#EF9665"/>
+                            <path d="M13.6343 6.39493L13.5882 6.34881L13.542 6.30269C12.5889 5.34958 11.313 4.8269 9.99093 4.8269C7.16234 4.84228 4.87179 7.16357 4.88716 9.99216C4.88716 11.3603 5.44058 12.667 6.3937 13.6355C7.34681 14.604 8.63812 15.142 9.99093 15.142C12.8349 15.0959 15.1101 12.7131 15.064 9.83843C15.0332 8.56249 14.5413 7.3173 13.6343 6.39493ZM9.99093 13.3895C8.11545 13.4203 6.59354 11.9138 6.5628 10.0383C6.53205 8.1628 8.03858 6.64089 9.91406 6.61015C11.7895 6.5794 13.3115 8.08594 13.3422 9.96142V10.0075C13.3422 11.8369 11.8357 13.3588 9.99093 13.3895Z" fill="#EF9665"/>
+                            <path d="M16.5876 4.59628C16.5876 5.27268 16.065 5.8261 15.3886 5.8261C15.0657 5.8261 14.7583 5.70312 14.5431 5.47253C14.0665 4.99597 14.0665 4.19659 14.5738 3.72003C14.8044 3.48944 15.0965 3.36646 15.4193 3.36646C15.696 3.36646 15.9727 3.47406 16.1879 3.64317L16.2187 3.67391C16.2648 3.70466 16.2956 3.75077 16.3263 3.78152L16.357 3.81227C16.48 4.02748 16.5876 4.3042 16.5876 4.59628Z" fill="#EF9665"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/goodhelpua" target="_blank" title="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.896 2.26231e-08H1.10303C0.493774 0.000366235 -0.000122048 0.494507 2.26231e-08 1.104V18.897C0.000366235 19.5062 0.494507 20.0001 1.104 20H10.6836V12.2656H8.08594V9.23828H10.6836V7.01038C10.6836 4.42676 12.2609 3.02051 14.5656 3.02051C15.6694 3.02051 16.618 3.10278 16.8945 3.13953V5.83984H15.3053C14.0514 5.83984 13.8086 6.43567 13.8086 7.31018V9.23828H16.8066L16.416 12.2656H13.8086V20H18.896C19.5056 20.0001 19.9999 19.5061 20 18.8965C20 18.8964 20 18.8962 20 18.896V1.10303C19.9998 0.493774 19.5055 -0.000122048 18.896 2.26231e-08Z" fill="#EF9665"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/goodhelpua/" target="_blank" title="LinkedIn">
+                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_footer_linkedin)">
+                                <path d="M4.89355 6.25H0.421051V20H4.89355V6.25Z" fill="#EF9665"/>
+                                <path d="M17.0761 6.41125C17.0286 6.39625 16.9836 6.38 16.9336 6.36625C16.8736 6.3525 16.8136 6.34125 16.7523 6.33125C16.5148 6.28375 16.2548 6.25 15.9498 6.25C13.3423 6.25 11.6886 8.14625 11.1436 8.87875V6.25H6.67105V20H11.1436V12.5C11.1436 12.5 14.5236 7.7925 15.9498 11.25C15.9498 14.3363 15.9498 20 15.9498 20H20.4211V10.7212C20.4211 8.64375 18.9973 6.9125 17.0761 6.41125Z" fill="#EF9665"/>
+                                <path d="M2.60855 4.375C3.81667 4.375 4.79605 3.39562 4.79605 2.1875C4.79605 0.979377 3.81667 0 2.60855 0C1.40043 0 0.421051 0.979377 0.421051 2.1875C0.421051 3.39562 1.40043 4.375 2.60855 4.375Z" fill="#EF9665"/>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_footer_linkedin">
+                                    <rect width="20" height="20" fill="white" transform="translate(0.421051)"/>
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="gh-footer__copyright">
+        © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2024</span> GoodHelp
+    </div>
+</footer>
+</body>
+</html>
+

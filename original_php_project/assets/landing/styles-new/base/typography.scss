@@ -1,0 +1,44 @@
+@import "variables";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: $color-black-2;
+}
+
+:link, :visited {
+  color: $color-black-1;
+  text-decoration: none;
+}
+
+.gh-h1 {
+  font-weight: 500;
+  font-size: 4.5rem;
+  line-height: 1.2;
+  margin: 0;
+
+  @include tablet-full {
+    font-size: 3.5rem;
+  }
+
+  @include mobile {
+    font-size: 3.5rem;
+  }
+}
+
+.gh-h2 {
+  font-weight: 500;
+  font-size: 3rem;
+  line-height: 1.2;
+  margin: 0;
+
+  @include tablet-full {
+    font-size: 2rem;
+  }
+
+  @include mobile {
+    font-size: 2rem;
+  }
+}
