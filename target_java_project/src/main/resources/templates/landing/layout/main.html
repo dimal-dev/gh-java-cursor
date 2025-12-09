@@ -162,42 +162,13 @@
     <footer th:replace="~{landing/fragments/footer :: footer}"></footer>
     
     <!-- Scripts -->
-    <script th:src="@{/js/landing/main.js}"></script>
-    <script>
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('mobile-menu-toggle');
-            const menuClose = document.getElementById('mobile-menu-close');
-            const mobileHeader = document.getElementById('mobile-header');
-            
-            if (menuToggle && mobileHeader) {
-                menuToggle.addEventListener('click', function() {
-                    mobileHeader.classList.add('gh-mobile-header--opened');
-                });
-            }
-            
-            if (menuClose && mobileHeader) {
-                menuClose.addEventListener('click', function() {
-                    mobileHeader.classList.remove('gh-mobile-header--opened');
-                });
-            }
-        });
-    </script>
+    <!-- Component scripts (load first) -->
+    <script th:src="@{/js/landing/components/mobile-menu.js}"></script>
+    <script th:src="@{/js/landing/components/faq-accordion.js}"></script>
+    <script th:src="@{/js/landing/timezone.js}"></script>
     
-    <!-- Timezone detection -->
-    <script th:if="${!timezoneDetected}">
-        document.addEventListener('DOMContentLoaded', function() {
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            fetch('/api/save-timezone', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ tz: tz })
-            });
-        });
-    </script>
+    <!-- Main script -->
+    <script th:src="@{/js/landing/main.js}"></script>
     
     <!-- Additional scripts -->
     <th:block layout:fragment="scripts"></th:block>

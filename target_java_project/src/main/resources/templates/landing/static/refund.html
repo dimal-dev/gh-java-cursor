@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.refund.title}">Refund Policy - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 60rem; margin: 2rem auto;">
+            <div class="refund-content" style="line-height: 1.8;">
+                <p style="font-size: 16pt; font-family: Arial; color: rgb(33, 37, 41); margin-bottom: 1rem;"
+                   th:text="#{landing.refund.intro}">
+                    To get a refund for a consultation:
+                </p>
+                <ol style="margin-top: 0px; margin-bottom: 0px; padding-inline-start: 48px;">
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                           th:utext="#{landing.refund.step1}">
+                            Cancel the consultation in your personal cabinet no later than 24 hours before the start...
+                        </p>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                           th:text="#{landing.refund.step2.intro}">
+                            In the email body, specify the following data:
+                        </p>
+                        <ol style="padding-inline-start: 48px;">
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                                   th:text="#{landing.refund.step2.a}">
+                                    Payment amount for the consultation
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                                   th:text="#{landing.refund.step2.b}">
+                                    Card used for payment
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                                   th:text="#{landing.refund.step2.c}">
+                                    Passport series and number
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                                   th:text="#{landing.refund.step2.d}">
+                                    Reason for cancellation
+                                </p>
+                            </li>
+                            <li style="list-style-type: lower-alpha; font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                                <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                                   th:text="#{landing.refund.step2.e}">
+                                    Contact information
+                                </p>
+                            </li>
+                        </ol>
+                    </li>
+                    <li style="font-size: 13pt; font-family: Arial; color: rgb(33, 37, 41);">
+                        <p style="line-height: 1.8; margin-top: 0pt; margin-bottom: 0pt;"
+                           th:text="#{landing.refund.step3}">
+                            Refund is processed within 30 days from the application date.
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

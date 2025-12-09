@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="${metaTitle}">Request Submitted - GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/main.css}">
+    <style>
+        .gh-success-page {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .gh-success-page__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: #D5D55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gh-success-page__icon svg {
+            width: 40px;
+            height: 40px;
+        }
+        .gh-success-page__title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .gh-success-page__message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .gh-success-page__actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .gh-button {
+            background: #EF9665;
+            color: white;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .gh-button:hover {
+            background: #e08550;
+        }
+        .gh-button--outlined {
+            background: transparent;
+            border: 2px solid #EF9665;
+            color: #EF9665;
+        }
+        .gh-button--outlined:hover {
+            background: #EF9665;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="gh-success-page gh-main-block">
+        <div class="gh-success-page__icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="#202020"/>
+            </svg>
+        </div>
+        <h1 class="gh-success-page__title" th:text="#{landing.request.success.title}">
+            Thank You!
+        </h1>
+        <p class="gh-success-page__message" th:text="#{landing.request.success.message}">
+            We've received your request. Our team will contact you soon to help you find the right therapist.
+        </p>
+        <div class="gh-success-page__actions">
+            <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="gh-button" 
+               th:text="#{landing.request.success.view_therapists}">
+                View Therapists
+            </a>
+            <a th:href="@{/{lang}/(lang=${lang != 'uk'} ? ${lang} : '')}" 
+               class="gh-button gh-button--outlined" 
+               th:text="#{landing.request.success.back_home}">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
+

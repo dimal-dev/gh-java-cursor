@@ -1,0 +1,170 @@
+/* Teenage Therapist SEO Landing Page Styles */
+
+.gh-teenage-psiholog {
+    padding-top: 3rem;
+    padding-bottom: 12rem;
+    position: relative;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog {
+        padding-bottom: 6rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+    }
+}
+
+.gh-teenage-psiholog__soft-light {
+    position: absolute;
+    width: 127rem;
+    height: 96rem;
+    left: -185.8rem;
+    top: 25.6rem;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(213, 213, 94, 0.5) 0%, rgba(211, 211, 94, 0.3) 27.6%, rgba(211, 211, 94, 0.24) 57.81%, rgba(212, 212, 94, 0) 100%);
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__soft-light {
+        width: 78.7rem;
+        height: 59.6rem;
+        left: -112rem;
+        top: 2.7rem;
+    }
+}
+
+.gh-teenage-psiholog__soft-light-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+}
+
+.gh-teenage-psiholog__h1 {
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 1.2;
+    margin: 0;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog__h1 {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+}
+
+.gh-teenage-psiholog__h2 {
+    font-weight: 500;
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog__h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+.gh-teenage-psiholog__box {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 3rem;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__box {
+        display: block;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog__box {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+}
+
+.gh-teenage-psiholog__box-info {
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    width: 77rem;
+    margin-top: 1.6rem;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__box-info {
+        font-size: 1.5rem;
+        width: 69.2rem;
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog__box-info {
+        font-size: 1rem;
+        width: 29rem;
+        margin-top: 1rem;
+        text-align: justify;
+    }
+}
+
+.gh-teenage-psiholog__box-frame {
+    border-style: double;
+    border-color: #D5D55E;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__box-frame {
+        width: 33.3rem;
+    }
+}
+
+.gh-teenage-psiholog__box-teenage-photo {
+    width: 37rem;
+    height: max-content;
+    margin: auto;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .gh-teenage-psiholog__box-teenage-photo {
+        width: 33.1rem;
+        float: right;
+        margin-top: 5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .gh-teenage-psiholog__box-teenage-photo {
+        width: 29rem;
+    }
+}
+
+.gh-teenage-psiholog__box li {
+    margin-bottom: 2rem;
+}
+
+.gh-teenage-psiholog__box-result {
+    font-weight: 600;
+}
+

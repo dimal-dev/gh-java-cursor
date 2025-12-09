@@ -1,5 +1,6 @@
 /**
  * GoodHelp Landing - Main JavaScript
+ * Entry point for landing page functionality
  */
 
 (function() {
@@ -9,45 +10,9 @@
      * Initialize on DOM ready
      */
     document.addEventListener('DOMContentLoaded', function() {
-        initMobileMenu();
         initSmoothScroll();
-        initFaqAccordion();
         initHeaderScroll();
     });
-
-    /**
-     * Mobile menu toggle
-     */
-    function initMobileMenu() {
-        const menuToggle = document.getElementById('mobile-menu-toggle');
-        const menuClose = document.getElementById('mobile-menu-close');
-        const mobileHeader = document.getElementById('mobile-header');
-
-        if (menuToggle && mobileHeader) {
-            menuToggle.addEventListener('click', function() {
-                mobileHeader.classList.add('gh-mobile-header--opened');
-                document.body.style.overflow = 'hidden';
-            });
-        }
-
-        if (menuClose && mobileHeader) {
-            menuClose.addEventListener('click', function() {
-                mobileHeader.classList.remove('gh-mobile-header--opened');
-                document.body.style.overflow = '';
-            });
-        }
-
-        // Close menu when clicking a link
-        if (mobileHeader) {
-            const menuLinks = mobileHeader.querySelectorAll('a');
-            menuLinks.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    mobileHeader.classList.remove('gh-mobile-header--opened');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
-    }
 
     /**
      * Smooth scroll for anchor links
@@ -73,31 +38,6 @@
         });
     }
 
-    /**
-     * FAQ Accordion
-     */
-    function initFaqAccordion() {
-        const faqItems = document.querySelectorAll('.gh-faq__item');
-
-        faqItems.forEach(function(item) {
-            const question = item.querySelector('.gh-faq__question');
-            if (question) {
-                question.addEventListener('click', function() {
-                    const isOpen = item.classList.contains('gh-faq__item--open');
-
-                    // Close all items
-                    faqItems.forEach(function(otherItem) {
-                        otherItem.classList.remove('gh-faq__item--open');
-                    });
-
-                    // Toggle clicked item
-                    if (!isOpen) {
-                        item.classList.add('gh-faq__item--open');
-                    }
-                });
-            }
-        });
-    }
 
     /**
      * Header shadow on scroll
@@ -124,29 +64,6 @@
         });
     }
 
-    /**
-     * Timezone detection and saving
-     */
-    function detectAndSaveTimezone() {
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        
-        // Check if timezone is already saved in cookie
-        if (document.cookie.includes('user_timezone')) {
-            return;
-        }
-
-        // Save timezone
-        fetch('/api/save-timezone', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ tz: timezone })
-        }).catch(function(error) {
-            console.error('Failed to save timezone:', error);
-        });
-    }
 
     /**
      * Form validation helper
@@ -191,9 +108,13 @@
     };
 
     /**
-     * Format date/time
+     * Format date/time (delegates to Timezone component if available)
      */
     window.GoodHelp.formatDateTime = function(dateString, locale) {
+        if (window.GoodHelp.Timezone && window.GoodHelp.Timezone.formatDateTime) {
+            return window.GoodHelp.Timezone.formatDateTime(dateString, locale);
+        }
+        // Fallback implementation
         locale = locale || 'uk-UA';
         const date = new Date(dateString);
         return date.toLocaleDateString(locale, {

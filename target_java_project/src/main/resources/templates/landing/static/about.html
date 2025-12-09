@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.about.title}">About GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 60rem; margin: 2rem auto; padding: 2rem;">
+            <h1 th:text="#{landing.about.heading}">About GoodHelp</h1>
+            
+            <div class="static-page-content" style="line-height: 1.86; font-size: 15pt; color: rgb(69, 69, 69);">
+                <p th:utext="#{landing.about.content}">
+                    <!-- Content from messages.properties -->
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

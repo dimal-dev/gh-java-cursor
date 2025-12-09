@@ -33,11 +33,11 @@ This stage implements the public-facing website including the home page, therapi
 | 3.4 | Therapist profile pages | COMPLETED |
 | 3.5 | Book consultation page | COMPLETED |
 | 3.6 | Checkout page | COMPLETED |
-| 3.7 | Thank you page | NOT_STARTED |
-| 3.8 | Static pages | NOT_STARTED |
-| 3.9 | Request therapist form | NOT_STARTED |
-| 3.10 | Landing styles | NOT_STARTED |
-| 3.11 | JavaScript functionality | NOT_STARTED |
+| 3.7 | Thank you page | COMPLETED |
+| 3.8 | Static pages | COMPLETED |
+| 3.9 | Request therapist form | COMPLETED |
+| 3.10 | Landing styles | COMPLETED |
+| 3.11 | JavaScript functionality | COMPLETED |
 
 ---
 

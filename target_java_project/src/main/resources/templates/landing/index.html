@@ -492,96 +492,12 @@
 </main>
 
 <th:block layout:fragment="scripts">
-    <!-- Swiper JS for reviews carousel -->
+    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Swiper for reviews
-            new Swiper('.swiper', {
-                pagination: {
-                    el: ".ghl-reviews__pagination",
-                    clickable: true,
-                },
-                slidesPerView: 1,
-                spaceBetween: 30,
-                breakpoints: {
-                    768: {
-                        slidesPerView: 2,
-                        spaceBetween: 30,
-                    },
-                    1200: {
-                        slidesPerView: 3,
-                        spaceBetween: 40,
-                    },
-                }
-            });
-
-            // FAQ Accordion
-            document.querySelectorAll('.ghl-frequent-questions__question-head').forEach(function(btn) {
-                const containerEl = btn.parentElement;
-                btn.addEventListener('click', function() {
-                    if (containerEl.classList.contains('ghl-frequent-questions__question--opened')) {
-                        containerEl.classList.remove('ghl-frequent-questions__question--opened');
-                    } else {
-                        containerEl.classList.add('ghl-frequent-questions__question--opened');
-                    }
-                });
-            });
-
-            // Problem category drag on mobile
-            let problemDragEnabled = false;
-            let previousPageX = 0;
-            const problemList = document.querySelector('.problem-category-list');
-            
-            if (problemList) {
-                const baseOffset = problemList.offsetLeft;
-                
-                problemList.addEventListener('touchstart', function(e) {
-                    problemDragEnabled = true;
-                    const touch = e.touches[0];
-                    previousPageX = touch.pageX;
-                });
-
-                problemList.addEventListener('touchmove', function(e) {
-                    if (!problemDragEnabled) return;
-                    const touch = e.touches[0];
-                    const currentPageX = touch.pageX;
-                    const delta = previousPageX - currentPageX;
-                    previousPageX = touch.pageX;
-
-                    const resultingOffset = problemList.offsetLeft - delta;
-                    const itemEl = document.querySelector('.problem-category-list__item');
-                    if (!itemEl) return;
-                    
-                    const itemWidth = itemEl.offsetWidth;
-                    const containerWidth = problemList.offsetWidth;
-                    const flexGap = 15;
-                    const maxOffset = containerWidth - itemWidth - flexGap * 2;
-
-                    if ((-resultingOffset) > maxOffset) {
-                        problemList.style.left = (-maxOffset) + 'px';
-                        return;
-                    }
-
-                    if ((resultingOffset > baseOffset)) {
-                        problemList.style.left = (baseOffset) + 'px';
-                        return;
-                    }
-
-                    problemList.style.left = (resultingOffset) + 'px';
-                });
-
-                problemList.addEventListener('touchcancel', function() {
-                    problemDragEnabled = false;
-                });
-
-                problemList.addEventListener('touchend', function() {
-                    problemDragEnabled = false;
-                });
-            }
-        });
-    </script>
+    
+    <!-- Index page specific components -->
+    <script th:src="@{/js/landing/components/swiper.js}"></script>
+    <script th:src="@{/js/landing/components/index-page.js}"></script>
 </th:block>
 
 </body>

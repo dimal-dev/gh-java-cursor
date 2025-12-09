@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.terms.title}">Terms of Use - GoodHelp</title>
+    <style th:utext="#{landing.terms.styles}">
+        /* Styles from messages.properties if needed */
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 60rem; margin: 2rem auto;">
+            <div class="terms-content" th:utext="#{landing.terms.content}">
+                <!-- Long terms of use content from messages.properties -->
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

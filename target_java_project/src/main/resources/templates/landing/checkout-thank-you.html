@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.thankYou.title} + ' | GoodHelp'">Thank you | GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/checkout-thank-you.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="gh-request-psiholog-success__container-outer">
+        <div class="gh-request-psiholog-success__container-inner">
+            <div class="gh-request-psiholog-success__soft-light"></div>
+            
+            <!-- Pending State -->
+            <div class="state-container" id="state-pending" th:if="${order.status == 'pending'}">
+                <div class="spinner"></div>
+                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.processing}">
+                    Payment system is processing
+                </h3>
+                <div class="gh-request-psiholog-success__description" th:text="#{landing.thankYou.pleaseWait}">
+                    Please wait, it takes about a minute
+                </div>
+            </div>
+            
+            <!-- Success State -->
+            <div class="state-container gh-d-none" id="state-approved" th:if="${order.status == 'approved'}">
+                <div class="success-icon">✓</div>
+                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.success}">
+                    Payment has been successful
+                </h3>
+                <div class="gh-request-psiholog-success__description">
+                    <div class="booking-details" th:if="${order.consultationDate != null}">
+                        <p th:if="${order.therapistName != null and !#strings.isEmpty(order.therapistName)}">
+                            <strong th:text="#{landing.thankYou.therapist} + ':'">Therapist:</strong>
+                            <span th:text="${order.therapistName}"></span>
+                        </p>
+                        <p th:if="${order.consultationDate != null}">
+                            <strong th:text="#{landing.thankYou.date} + ':'">Date:</strong>
+                            <span th:text="${order.consultationDate}"></span>
+                        </p>
+                        <p th:if="${order.consultationTime != null}">
+                            <strong th:text="#{landing.thankYou.time} + ':'">Time:</strong>
+                            <span th:text="${order.consultationTime}"></span>
+                        </p>
+                    </div>
+                    <p th:text="#{landing.thankYou.emailSent}">
+                        A confirmation email has been sent
+                    </p>
+                    <a th:href="${order.loginUrl != null ? order.loginUrl : '/user/login'}" 
+                       id="go-to-personal-cabinet-button" 
+                       class="gh-button"
+                       th:text="#{landing.thankYou.goToCabinet}">
+                        Redirecting to personal cabinet
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Failed State -->
+            <div class="state-container gh-d-none" id="state-failed" th:if="${order.status == 'failed'}">
+                <div class="error-icon">✗</div>
+                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.failed}">
+                    Payment has failed
+                </h3>
+                <div class="gh-request-psiholog-success__description" th:text="#{landing.thankYou.failedMessage}">
+                    Please try again
+                </div>
+                <a th:href="@{/{lang}/checkout/{slug}(lang=${lang != 'uk'} ? ${lang} : '', slug=${checkoutSlug})}" 
+                   class="gh-button gh-button--secondary"
+                   th:text="#{landing.thankYou.tryAgain}">
+                    Try Again
+                </a>
+            </div>
+            
+            <div class="gh-request-psiholog-success__photo">
+                <img class="gh-img" th:src="@{/img/checkout-thank-you-dima.jpg}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="checkout-slug" th:value="${checkoutSlug}">
+    <input type="hidden" id="initial-status" th:value="${order.status}">
+    <input type="hidden" id="initial-price" th:value="${order.price}">
+    <input type="hidden" id="initial-therapist-name" th:value="${order.therapistName}">
+
+    <!-- Checkout status polling script -->
+    <script th:src="@{/js/landing/checkout.js}"></script>
+</main>
+</body>
+</html>
+

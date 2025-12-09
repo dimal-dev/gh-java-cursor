@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.privacy.title}">Privacy Policy - GoodHelp</title>
+    <style th:utext="#{landing.privacy.styles}">
+        /* Styles from messages.properties if needed */
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 60rem; margin: 2rem auto;">
+            <div class="privacy-content" th:utext="#{landing.privacy.content}">
+                <!-- Long privacy policy content from messages.properties -->
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

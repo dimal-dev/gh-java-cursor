@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.conditions.title}">Consultation Conditions - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 65rem; padding: 2rem; margin: 0 auto;">
+            <div class="landing-main-psihologi__title-wrapper mt-2">
+                <h1 class="landing-main-psihologi__title" th:text="#{landing.conditions.heading}">
+                    Consultation Conditions
+                </h1>
+            </div>
+            <div style="font-size: 1.4rem; line-height: 1.4;" th:utext="#{landing.conditions.content}">
+                <!-- Content from messages.properties -->
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

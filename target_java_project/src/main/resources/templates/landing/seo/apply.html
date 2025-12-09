@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.apply.title}">Become a Therapist - GoodHelp</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="static-page">
+        <div class="container" style="max-width: 60rem; margin: 2rem auto; padding: 2rem;">
+            <div class="card text-center mt-5">
+                <div class="card-header">
+                    <h2 th:text="#{landing.apply.heading}">Join Our Team</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:text="#{landing.apply.description}">
+                        We are looking for experienced therapists to join our platform.
+                    </p>
+                    <p class="card-text" th:utext="#{landing.apply.content}">
+                        <!-- Detailed content from messages.properties -->
+                    </p>
+                    <a href="mailto:goodhelpua@gmail.com" class="btn btn-success" th:text="#{landing.apply.cta}">
+                        Apply Now
+                    </a>
+                </div>
+                <div class="card-footer text-muted" th:text="#{landing.apply.footer}">
+                    Contact us for more information
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
+

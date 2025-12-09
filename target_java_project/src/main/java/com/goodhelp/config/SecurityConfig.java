@@ -2,6 +2,8 @@ package com.goodhelp.config;
 
 import com.goodhelp.therapist.infrastructure.security.TherapistAutoLoginFilter;
 import com.goodhelp.therapist.infrastructure.security.TherapistUserDetailsService;
+import com.goodhelp.user.infrastructure.security.GoodHelpUserDetailsService;
+import com.goodhelp.user.infrastructure.security.UserAutoLoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +38,8 @@ public class SecurityConfig {
     
     private final TherapistAutoLoginFilter therapistAutoLoginFilter;
     private final TherapistUserDetailsService therapistUserDetailsService;
+    private final UserAutoLoginFilter userAutoLoginFilter;
+    private final GoodHelpUserDetailsService userUserDetailsService;
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -51,6 +55,14 @@ public class SecurityConfig {
     public DaoAuthenticationProvider therapistAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(therapistUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+    
+    @Bean
+    public DaoAuthenticationProvider userAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
@@ -135,6 +147,10 @@ public class SecurityConfig {
     
     /**
      * Security filter chain for user cabinet (/user/**)
+     * 
+     * Supports two authentication methods:
+     * 1. Auto-login via token link (primary method for users)
+     * 2. Form-based login (fallback)
      */
     @Bean
     @Order(3)
@@ -145,10 +161,13 @@ public class SecurityConfig {
                 .requestMatchers("/user/login", "/user/auto-login").permitAll()
                 .anyRequest().hasRole("USER")
             )
+            .authenticationProvider(userAuthenticationProvider())
+            .addFilterBefore(userAutoLoginFilter, UsernamePasswordAuthenticationFilter.class)
             .formLogin(form -> form
                 .loginPage("/user/login")
                 .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/user/", true)
+                .failureUrl("/user/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout

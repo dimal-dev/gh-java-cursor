@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{landing/layout/main}">
+<head>
+    <title th:text="#{landing.family.title}">Family Therapist - GoodHelp</title>
+    <link rel="stylesheet" th:href="@{/css/landing/family-psiholog.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="gh-family-psiholog">
+        <div class="gh-family-psiholog__soft-light-container">
+            <div class="gh-family-psiholog__soft-light"></div>
+        </div>
+        <div class="gh-container">
+            <h1 class="gh-family-psiholog__h1" th:text="#{family_psiholog}">Family Therapist</h1>
+            
+            <div class="gh-family-psiholog__box">
+                <img src="/img/pages/family-photo.png" class="gh-family-psiholog__box-family-photo" alt="Family therapy">
+                <div class="gh-family-psiholog__box-info">
+                    <p th:text="#{family_psiholog.phrase_1}">
+                        Family therapy helps resolve conflicts and improve relationships within the family.
+                    </p>
+
+                    <h3 th:text="#{family_psiholog.misunderstanding_each_other}">Misunderstanding Each Other</h3>
+                    <p th:text="#{family_psiholog.pharse_2}">
+                        When family members struggle to communicate effectively...
+                    </p>
+
+                    <h3 th:text="#{family_psiholog.problems_with_children}">Problems with Children</h3>
+                    <p th:text="#{family_psiholog.pharse_3}">
+                        Family therapy can help address behavioral issues...
+                    </p>
+
+                    <h3 th:text="#{family_psiholog.alarm_states}">Alarm States</h3>
+                    <p th:text="#{family_psiholog.pharse_4}">
+                        During difficult times, family therapy provides support...
+                    </p>
+
+                    <p class="gh-family-psiholog__box-frame" th:text="#{family_psiholog.pharse_5}">
+                        Our experienced family therapists are here to help.
+                    </p>
+                </div>
+            </div>
+            
+            <h2 class="gh-family-psiholog__h2" th:text="#{family_psiholog.our-psychologists}">
+                Our Family Therapists
+            </h2>
+            
+            <div class="gh-psiholog-list__list">
+                <div th:each="psiholog : ${therapists}"
+                     th:replace="~{landing/fragments/psiholog-card :: psihologCard(psiholog=${psiholog})}">
+                </div>
+                
+                <div th:if="${#lists.isEmpty(therapists)}" class="gh-psiholog-list__empty">
+                    <p th:text="#{landing.psiholog_list.empty}">No therapists found.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script th:inline="javascript">
+        window.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.view-specific-psiholog-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'view_specific_psiholog_btn_clicked_on_select_psiholog_page', {
+                            'event_category': 'Conversions'
+                        });
+                    }
+                });
+            });
+
+            var viewItemListData = [];
+            /*[# th:each="psiholog,iterStat : ${therapists}"]*/
+            viewItemListData.push({
+                'id': 'P' + /*[[${psiholog.id()}]]*/ '0',
+                'name': /*[[${psiholog.fullName()}]]*/ 'Therapist',
+                'list_name': 'Select Therapist - Family Therapists',
+                'category': 'Family Therapists',
+                'list_position': /*[[${iterStat.index + 1}]]*/ 1,
+                'quantity': 1,
+                'price': /*[[${psiholog.price()}]]*/ 0
+            });
+            /*[/]*/
+
+            if (typeof gtag !== 'undefined' && viewItemListData.length > 0) {
+                gtag('event', 'view_item_list', {
+                    'items': viewItemListData
+                });
+            }
+        });
+    </script>
+</main>
+</body>
+</html>
+
