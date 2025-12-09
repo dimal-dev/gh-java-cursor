@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
 
+import java.security.SecureRandom;
 import java.util.Objects;
 
 /**
@@ -28,6 +29,10 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // For JPA
 public class UserAutologinToken extends BaseEntity {
+
+    private static final int TOKEN_LENGTH = 32;
+    private static final String TOKEN_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,19 +61,53 @@ public class UserAutologinToken extends BaseEntity {
     }
 
     /**
+     * Create with auto-generated token.
+     */
+    public static UserAutologinToken createWithGeneratedToken(User user) {
+        return new UserAutologinToken(user, generateToken());
+    }
+
+    /**
+     * Generate a cryptographically secure random token.
+     */
+    public static String generateToken() {
+        StringBuilder sb = new StringBuilder(TOKEN_LENGTH);
+        for (int i = 0; i < TOKEN_LENGTH; i++) {
+            sb.append(TOKEN_CHARS.charAt(RANDOM.nextInt(TOKEN_CHARS.length())));
+        }
+        return sb.toString();
+    }
+
+    /**
      * Update the token (e.g., on token rotation).
      */
-    public void updateToken(String newToken) {
+    void updateToken(String newToken) {
         this.token = validateToken(newToken);
+    }
+
+    /**
+     * Regenerate with new random token.
+     */
+    public void regenerate() {
+        this.token = generateToken();
+    }
+
+    /**
+     * Build the auto-login URL path.
+     * 
+     * @return path like "/user/auto-login?t=abc123"
+     */
+    public String buildLoginPath() {
+        return "/user/auto-login?t=" + token;
     }
 
     // ==================== Validation ====================
 
     private String validateToken(String token) {
         Objects.requireNonNull(token, "Token is required");
-        token = token.trim();
-        if (token.length() != 32) {
-            throw new IllegalArgumentException("Token must be exactly 32 characters: " + token.length());
+        token = token.trim().toLowerCase();
+        if (token.length() != TOKEN_LENGTH) {
+            throw new IllegalArgumentException("Token must be exactly " + TOKEN_LENGTH + " characters: " + token.length());
         }
         return token;
     }

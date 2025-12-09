@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title th:text="#{user.login.title}">User Login - GoodHelp</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #5D6B4E;
+            --color-primary-dark: #4A5740;
+            --color-accent: #D4A574;
+            --color-bg: #F8F6F3;
+            --color-surface: #FFFFFF;
+            --color-text: #2D3436;
+            --color-text-muted: #636E72;
+            --color-error: #D63031;
+            --color-success: #00B894;
+            --color-brand: #5D6B4E;
+            --font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg);
+            min-height: 100vh;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        
+        .gh-login__header-with-shadow {
+            padding: 20px;
+            background: var(--color-surface);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .gh-login__logo {
+            display: inline-block;
+        }
+        
+        .gh-login__logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .gh-login__soft-light-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .gh-login__soft-light {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(93, 107, 78, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .gh-login__container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .flex-1 {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .gh-login__wrapper {
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .gh-login__title h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--color-text);
+        }
+        
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+        
+        .alert-brand {
+            background: rgba(93, 107, 78, 0.1);
+            color: var(--color-brand);
+            border: 1px solid rgba(93, 107, 78, 0.2);
+        }
+        
+        .alert-danger {
+            background: rgba(214, 48, 49, 0.1);
+            color: var(--color-error);
+            border: 1px solid rgba(214, 48, 49, 0.2);
+        }
+        
+        .alert-success {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(0, 184, 148, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .gh-login__email {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #E8E6E3;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--color-surface);
+        }
+        
+        .gh-login__email:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px rgba(93, 107, 78, 0.1);
+        }
+        
+        .gh-login__email.error {
+            border-color: var(--color-error);
+        }
+        
+        .form-error {
+            color: var(--color-error);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+        
+        .gh-login__first {
+            display: block;
+            text-align: center;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+        
+        .gh-login__first:hover {
+            text-decoration: underline;
+        }
+        
+        .gh-login__actions {
+            margin-top: 24px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        
+        .btn:hover {
+            background: var(--color-primary-dark);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .gh-login__img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        
+        .gh-login__security {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .gh-login__container {
+                flex-direction: column;
+            }
+            
+            .gh-login__img {
+                display: none;
+            }
+            
+            .gh-login__wrapper {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="gh-login__header-with-shadow">
+        <a th:href="@{/}" class="gh-login__logo">
+            <img th:src="@{/img/logo/logo-olive.svg}" alt="GoodHelp">
+        </a>
+    </header>
+    
+    <div class="gh-login__soft-light-container">
+        <div class="gh-login__soft-light"></div>
+    </div>
+    
+    <div class="gh-login__container">
+        <div class="flex-1">
+            <div class="gh-login__wrapper">
+                <!-- Success Message (Email Sent) -->
+                <div th:if="${successMessage}" class="alert alert-brand">
+                    <div th:text="${successMessage}">We sent you an email with a login link.</div>
+                </div>
+                
+                <!-- Error Message -->
+                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+                    An error occurred.
+                </div>
+                
+                <!-- Login Form -->
+                <div th:unless="${successMessage}">
+                    <div class="gh-login__title">
+                        <h3 th:text="#{user.login.heading}">Sign In to Your Account</h3>
+                    </div>
+                    
+                    <form th:action="@{/user/login}" th:object="${form}" method="post" id="kt_login_form">
+                        <div class="form-group">
+                            <input type="email" 
+                                   th:field="*{email}" 
+                                   class="gh-login__email"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'error'"
+                                   th:placeholder="#{user.login.emailPlaceholder}"
+                                   name="email"
+                                   required
+                                   autocomplete="off">
+                            <p th:if="${#fields.hasErrors('email')}" 
+                               th:errors="*{email}" 
+                               class="form-error">
+                                Invalid email
+                            </p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <a th:href="@{/request-psiholog}" class="gh-login__first" th:text="#{user.login.firstTime}">
+                                I'm new to this service
+                            </a>
+                        </div>
+                        
+                        <div class="gh-login__actions">
+                            <button type="submit" class="btn" id="gh_login_submit" th:text="#{user.login.submit}">
+                                Send Login Link
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex-1">
+            <div class="gh-login__img">
+                <img class="gh-login__security" th:src="@{/img/login_img.png}" alt="Security">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

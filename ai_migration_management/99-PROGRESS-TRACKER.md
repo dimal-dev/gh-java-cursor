@@ -18,8 +18,8 @@ This file tracks the exact progress of the migration. **Update this file after c
 ## Current Status
 
 **Current Stage:** 4 - User Module  
-**Current Sub-Stage:** 4.3 - Security ✅ COMPLETED  
-**Last Completed Sub-Stage:** 4.3 - Security (UserDetails, Auth)  
+**Current Sub-Stage:** 4.5 - Dashboard ✅ COMPLETED  
+**Last Completed Sub-Stage:** 4.5 - Dashboard (Use Case, Controller, Templates, i18n)  
 **Last Update Timestamp:** 2025-12-08
 
 ### Development Approach
@@ -93,15 +93,15 @@ This file tracks the exact progress of the migration. **Update this file after c
 | 4.1 | User entities | COMPLETED | 2025-12-08 |
 | 4.2 | Repositories | COMPLETED | 2025-12-08 |
 | 4.3 | Security (UserDetails, Auth) | COMPLETED | 2025-12-08 |
-| 4.4 | Login/Logout controllers | NOT_STARTED | - |
-| 4.5 | Dashboard controller | NOT_STARTED | - |
+| 4.4 | Login/Logout controllers | COMPLETED | 2025-12-08 |
+| 4.5 | Dashboard controller | COMPLETED | 2025-12-08 |
 | 4.6 | Chat functionality | NOT_STARTED | - |
 | 4.7 | Consultations management | NOT_STARTED | - |
 | 4.8 | Settings controller | NOT_STARTED | - |
 | 4.9 | User templates | NOT_STARTED | - |
 | 4.10 | User styles | NOT_STARTED | - |
 
-**Stage 4 Progress:** 3/10 complete
+**Stage 4 Progress:** 5/10 complete
 
 ---
 
@@ -177,15 +177,15 @@ This file tracks the exact progress of the migration. **Update this file after c
 | 1 | Project Foundation | 100% | COMPLETED |
 | 2 | Therapist Module | 100% | COMPLETED |
 | 3 | Landing Module | 100% | COMPLETED |
-| 4 | User Module | 30% | IN_PROGRESS |
+| 4 | User Module | 40% | IN_PROGRESS |
 | 5 | Staff Module | 0% | NOT_STARTED |
 | 6 | Billing Module | 0% | NOT_STARTED |
 | 7 | Notification Module | 0% | NOT_STARTED |
 | 8 | Integration & Polish | 0% | NOT_STARTED |
 
 **Total Sub-Stages:** 70  
-**Completed Sub-Stages:** 33  
-**Overall Progress:** 47%
+**Completed Sub-Stages:** 35  
+**Overall Progress:** 50%
 
 ---
 
@@ -234,5 +234,7 @@ This file tracks the exact progress of the migration. **Update this file after c
 | 2025-12-08 | Created user domain entities: User (aggregate root with profile management), UserAutologinToken (authentication token), UserConsultation (consultation entity with cancellation logic), UserConsultationScheduleSlot (join table entity), ConsultationState enum (with business methods), ConsultationType enum, and converters. All entities follow DDD principles with rich domain models, factory methods, and business logic in entities. Entities include proper validation, equals/hashCode, and toString methods | 4.1 |
 | 2025-12-08 | Created user repositories: UserRepository, UserConsultationRepository, UserAutologinTokenRepository (domain interfaces), JPA repositories with custom queries for upcoming consultations (using native queries to join with schedule slots), and repository adapters bridging domain and infrastructure layers. All repositories follow DDD patterns with domain interfaces in domain layer and JPA implementations in infrastructure layer | 4.2 |
 | 2025-12-08 | Implemented user security: Created GoodHelpUserDetails (UserDetails implementation), GoodHelpUserDetailsService (UserDetailsService with loadByUsername and loadById methods), UserAutoLoginFilter (token-based auto-login filter), CurrentUser annotation (for controller parameter injection), and updated SecurityConfig with userAuthenticationProvider and userSecurityFilterChain. Security supports token-based auto-login via /user/auto-login?t={token} and form-based login fallback. All components follow Spring Security best practices and match therapist security pattern | 4.3 |
+| 2025-12-08 | Implemented user login/logout: Created RequestLoginCommand, RequestUserLoginLinkUseCase (with email enumeration prevention), UserLoginForm, UserLoginController (with showLogin, processLogin, autoLogin, logoutSuccess handlers), user/login.html Thymeleaf template (with language picker, form validation, error/success messages), and i18n messages for all 3 languages (EN/UK/RU). Added regenerateAutologinToken method to User entity and generateToken/createWithGeneratedToken/matches methods to UserAutologinToken. Login flow supports email-based magic link authentication with proper error handling and security best practices | 4.4 |
+| 2025-12-08 | Implemented user dashboard: Added date formatting methods (getDateTimeGoodLookingLabel, getDateTimeGoodLookingParts) to DateLocalizedHelper. Created UserDashboardDto, ConsultationDto, LatestTherapistDto DTOs. Created GetUserDashboardUseCase to fetch dashboard data including upcoming consultations, wallet balance, timezone info, and latest therapist. Created UserDashboardController with dashboard endpoint handling rules cookie and success message. Created user/dashboard.html Thymeleaf template with consultation list, profile reminders, timezone display, and JavaScript for timezone time and cancellation. Created dashboard-consultation.html fragment. Added i18n messages for dashboard in EN/UK/RU (30+ keys). Dashboard displays consultations with formatted dates, cancellation buttons, wallet balance, and therapist suggestions | 4.5 |
 
 

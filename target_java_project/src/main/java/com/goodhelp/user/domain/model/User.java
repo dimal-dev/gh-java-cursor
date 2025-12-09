@@ -175,6 +175,19 @@ public class User extends BaseEntity {
         this.emailReal = true;
     }
 
+    /**
+     * Generate or regenerate the autologin token.
+     * 
+     * @param tokenValue the new token value
+     */
+    public void regenerateAutologinToken(String tokenValue) {
+        if (this.autologinToken == null) {
+            this.autologinToken = UserAutologinToken.create(this, tokenValue);
+        } else {
+            this.autologinToken.updateToken(tokenValue);
+        }
+    }
+
     // ==================== Validation ====================
 
     private String validateEmail(String email) {

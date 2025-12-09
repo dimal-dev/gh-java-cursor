@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="consultation(consultation, additionalText)" class="kt-list__item">
+        <span class="kt-list__icon">
+            <span class="kt-media kt-media--sm kt-media--light">
+                <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+            </span>
+        </span>
+        <span class="kt-list__text">
+            <span>
+                <img th:if="${consultation.therapistPhotoUrl}" 
+                     th:src="${consultation.therapistPhotoUrl}" 
+                     class="psiholog-profile-img" 
+                     alt="">
+                <span th:text="${consultation.therapistName + ', ' + consultation.scheduledAtFormatted}">Name, Date</span>
+                <span th:text="${additionalText}">Additional text</span>
+                <a th:href="@{/user/consultation/{id}/cancel(id=${consultation.id})}"
+                   th:if="${consultation.canBeCancelled}"
+                   th:attr="data-consultation-ts=${consultation.scheduledAtTimestamp}"
+                   class="btn btn-danger cancel-consultation-btn"
+                   th:text="#{user.dashboard.cancel}">
+                    Отменить
+                </a>
+            </span>
+        </span>
+    </div>
+</body>
+</html>
+

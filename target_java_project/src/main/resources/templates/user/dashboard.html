@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title th:text="#{user.dashboard.title}">Dashboard - GoodHelp</title>
+    <style>
+        .kt-list__text {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .psiholog-profile-img {
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            object-fit: cover;
+        }
+        .kt-list__item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e8e6e3;
+        }
+        .kt-list__icon {
+            margin-right: 1rem;
+            color: #5D6B4E;
+        }
+        .kt-list__text {
+            flex: 1;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .alert-info {
+            background: rgba(93, 107, 78, 0.1);
+            border: 1px solid rgba(93, 107, 78, 0.2);
+            color: #5D6B4E;
+        }
+        .alert-outline-brand {
+            background: rgba(93, 107, 78, 0.1);
+            border: 1px solid rgba(93, 107, 78, 0.3);
+            color: #5D6B4E;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-brand {
+            background: #5D6B4E;
+            color: white;
+        }
+        .btn-brand:hover {
+            background: #4A5740;
+        }
+        .btn-danger {
+            background: #D63031;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #B71C1C;
+        }
+        .btn-danger.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .kt-link {
+            color: #5D6B4E;
+            text-decoration: none;
+        }
+        .kt-link:hover {
+            text-decoration: underline;
+        }
+        .kt-portlet {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .kt-portlet__head-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: #2D3436;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+        }
+        .empty-state p {
+            margin-bottom: 1rem;
+            color: #636E72;
+        }
+    </style>
+</head>
+<body>
+    <main layout:fragment="content">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+            <!-- Success Message -->
+            <div th:if="${dashboard.showSuccessfullyBookedMessage}" class="alert alert-outline-brand">
+                <div style="font-weight: bold" th:text="#{user.dashboard.successfullyBooked}">
+                    Вы успешно записались на консультацию
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title" th:text="#{user.dashboard.whatToDoNext}">
+                                    Что делать дальше
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body">
+                            <div class="kt-list">
+                                <!-- Profile reminder -->
+                                <div th:if="${!dashboard.profileComplete}" class="kt-list__item">
+                                    <div class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </div>
+                                    <div class="kt-list__text">
+                                        <form th:action="@{/user/settings}" method="post" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                            <label th:text="#{user.dashboard.setNameReminder}">Напишите как вас зовут</label>
+                                            <input class="form-control" type="text" name="newFullName" style="flex: 1; min-width: 200px; padding: 0.5rem; border: 1px solid #e8e6e3; border-radius: 4px;">
+                                            <button class="btn btn-brand" type="submit" th:text="#{user.dashboard.save}">Сохранить</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Rules reminder -->
+                                <div th:if="${!dashboard.rulesRead}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <a th:href="@{/user/rules}" class="kt-link" th:text="#{user.dashboard.readRules}">
+                                            Почитайте условия консультаций
+                                        </a>
+                                    </span>
+                                </div>
+
+                                <!-- Next consultation info -->
+                                <div th:if="${dashboard.nextConsultation != null}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text" th:text="#{user.dashboard.therapistWillWriteInstructions}">
+                                        Психолог напишет вам инструкции по консультации в чате
+                                    </span>
+                                </div>
+
+                                <!-- Closest consultation -->
+                                <div th:if="${dashboard.nextConsultation != null}">
+                                    <div th:replace="~{user/fragments/dashboard-consultation :: consultation(${dashboard.nextConsultation}, '- ближайшая консультация')}"></div>
+                                </div>
+
+                                <!-- Latest therapist (if no consultations) -->
+                                <div th:if="${dashboard.nextConsultation == null && dashboard.latestTherapist != null}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <span>
+                                            <img th:if="${dashboard.latestTherapist.photoUrl}" 
+                                                 th:src="${dashboard.latestTherapist.photoUrl}" 
+                                                 class="psiholog-profile-img" 
+                                                 alt="">
+                                            <span th:text="${dashboard.latestTherapist.fullName()}">Name</span>
+                                            &nbsp;&nbsp;
+                                            <a th:href="@{/therapist/{id}(id=${dashboard.latestTherapist.therapistId})}#book-consultation" 
+                                               target="_blank" 
+                                               class="btn btn-brand my-3" 
+                                               th:text="#{user.dashboard.bookConsultation}">
+                                                Запишитесь на консультацию
+                                            </a>
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <!-- No therapist or consultations -->
+                                <div th:if="${dashboard.nextConsultation == null && dashboard.latestTherapist == null}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <span>
+                                            <span th:text="#{user.dashboard.bookConsultationPrompt}">Запишитесь на консультацию. Для этого</span>
+                                            <a target="_blank" 
+                                               th:href="@{/request-psiholog}" 
+                                               class="btn btn-brand" 
+                                               th:text="#{user.dashboard.selectTherapist}">
+                                                Выберите психолога
+                                            </a>
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <!-- Timezone reminder -->
+                                <div class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <div>
+                                            <span class="text-danger" style="color: #D63031; font-weight: 600;" th:text="#{user.dashboard.important}">
+                                                Важно!
+                                            </span>
+                                            <span th:text="#{user.dashboard.checkTimezone}">
+                                                Проверьте такое ли у вас время: <span id="timezone-time-value"></span>
+                                            </span>
+                                        </div>
+                                        <div th:text="#{user.dashboard.changeTimezonePrompt}">
+                                            Если нет, поменяйте, пожалуйста, ваш часовой пояс
+                                            <a th:href="@{/user/settings}" class="kt-link" th:text="#{user.dashboard.inSettings}">в настройках</a>, 
+                                            иначе время консультаций будет отображаться неверно.
+                                        </div>
+                                        <div th:text="#{|Мы определили ваш часовой пояс как ${dashboard.timezoneLabel}.|}">
+                                            Мы определили ваш часовой пояс как ...
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <div class="kt-list">
+                                <!-- Wallet balance -->
+                                <div th:if="${dashboard.walletBalance != null}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text" th:text="#{|У вас на счету сейчас ${dashboard.walletBalance / 100} ${dashboard.walletCurrency}|}">
+                                        У вас на счету сейчас 0 грн
+                                    </span>
+                                </div>
+
+                                <!-- Upcoming consultations -->
+                                <div th:each="consultation : ${dashboard.upcomingConsultations}">
+                                    <div th:replace="~{user/fragments/dashboard-consultation :: consultation(${consultation}, '')}"></div>
+                                </div>
+
+                                <!-- Latest therapist (if closest consultation exists) -->
+                                <div th:if="${dashboard.nextConsultation != null && dashboard.latestTherapist != null}" class="kt-list__item">
+                                    <span class="kt-list__icon">
+                                        <span class="kt-media kt-media--sm kt-media--light">
+                                            <span><i class="fas fa-angle-right kt-font-brand">→</i></span>
+                                        </span>
+                                    </span>
+                                    <span class="kt-list__text">
+                                        <span>
+                                            <img th:if="${dashboard.latestTherapist.photoUrl}" 
+                                                 th:src="${dashboard.latestTherapist.photoUrl}" 
+                                                 class="psiholog-profile-img" 
+                                                 alt="">
+                                            <span th:text="${dashboard.latestTherapist.fullName()}">Name</span>
+                                            &nbsp;&nbsp;
+                                            <a th:href="@{/therapist/{id}(id=${dashboard.latestTherapist.therapistId})}#book-consultation" 
+                                               target="_blank" 
+                                               class="btn btn-brand" 
+                                               th:text="#{user.dashboard.bookConsultation}">
+                                                Записаться на консультацию
+                                            </a>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const timezoneTimeValueEl = document.querySelector('#timezone-time-value');
+                if (!timezoneTimeValueEl) return;
+
+                const withLeadingZero = (number) => {
+                    return number < 10 ? '0' + number : number;
+                };
+
+                const timestampToDateTime = (timestamp) => {
+                    const userTime = new Date(timestamp);
+                    const dateLabel = `${userTime.getFullYear()}-${withLeadingZero(userTime.getMonth() + 1)}-${withLeadingZero(userTime.getDate())}`;
+                    const timeLabel = `${withLeadingZero(userTime.getHours())}:${withLeadingZero(userTime.getMinutes())}:${withLeadingZero(userTime.getSeconds())}`;
+                    return `${dateLabel} ${timeLabel}`;
+                };
+
+                const updateTime = () => {
+                    const d = new Date();
+                    const timestamp = ((d.getTime() + d.getTimezoneOffset() * 60 * 1000) / 1000 + /*[[${dashboard.timezoneOffset}]]*/ 0) * 1000;
+                    timezoneTimeValueEl.innerHTML = timestampToDateTime(timestamp);
+                };
+                setInterval(updateTime, 1000);
+                updateTime();
+
+                // Cancel consultation handlers
+                document.querySelectorAll('.cancel-consultation-btn').forEach((cancelBtn) => {
+                    cancelBtn.addEventListener('click', (e) => {
+                        const currentTs = Math.floor(((new Date).getTime() + (new Date()).getTimezoneOffset() * 60 * 1000) / 1000);
+                        const consultationTs = parseInt(cancelBtn.getAttribute('data-consultation-ts'));
+                        const delta = (consultationTs - currentTs);
+                        const minimumDelta = 24 * 60 * 60; // 24 hours in seconds
+                        const willCharge = delta < minimumDelta;
+
+                        if (willCharge) {
+                            if (!confirm("Осталось меньше чем 24 часа до консультации. В этом случае при отмене по условиям деньги уже не вернуться вам на счет. Вы все равно хотите отменить?")) {
+                                e.preventDefault();
+                                return;
+                            }
+                            cancelBtn.classList.add('disabled', 'disabled');
+                            return;
+                        }
+
+                        if (!confirm("Вы уверены что хотите отменить консультацию?")) {
+                            e.preventDefault();
+                            return;
+                        }
+                        cancelBtn.classList.add('disabled', 'disabled');
+                    });
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>
+

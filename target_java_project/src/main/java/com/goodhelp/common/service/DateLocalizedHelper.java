@@ -3,6 +3,8 @@ package com.goodhelp.common.service;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
@@ -100,6 +102,55 @@ public class DateLocalizedHelper {
         }
         return messageSource.getMessage(MONTH_INCLINED_KEYS[month], null, getLocale(localeCode));
     }
+    
+    /**
+     * Format a datetime in a "good looking" format.
+     * Format: "{Weekday} на {time}, {day} {Month}"
+     * Example: "Понедельник на 14:30, 15 Января" (Monday at 14:30, 15 January)
+     * 
+     * @param dateTime the datetime to format
+     * @param localeCode locale code (ua, ru, en)
+     * @return formatted string
+     */
+    public String getDateTimeGoodLookingLabel(LocalDateTime dateTime, String localeCode) {
+        DateTimeGoodLookingParts parts = getDateTimeGoodLookingParts(dateTime, localeCode);
+        // Format: "{Weekday} на {time}, {day} {Month}"
+        return String.format("%s на %s, %d %s",
+            parts.dayOfWeekFull(),
+            parts.time(),
+            parts.dayOfMonth(),
+            parts.month()
+        );
+    }
+    
+    /**
+     * Get parts of a datetime formatted for display.
+     * 
+     * @param dateTime the datetime to format
+     * @param localeCode locale code (ua, ru, en)
+     * @return parts object with time, dayOfWeekFull, dayOfMonth, month, year
+     */
+    public DateTimeGoodLookingParts getDateTimeGoodLookingParts(LocalDateTime dateTime, String localeCode) {
+        int dayOfWeekNumber = dateTime.getDayOfWeek().getValue(); // 1 = Monday, 7 = Sunday
+        int dayOfMonth = dateTime.getDayOfMonth();
+        String dayOfWeekFull = getWeekDayNameByNumber(dayOfWeekNumber, localeCode);
+        String month = getMonthNameByNumberInclined(dateTime.getMonthValue(), localeCode);
+        String time = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        int year = dateTime.getYear();
+        
+        return new DateTimeGoodLookingParts(time, dayOfWeekFull, dayOfMonth, month, year);
+    }
+    
+    /**
+     * Record for datetime parts.
+     */
+    public record DateTimeGoodLookingParts(
+        String time,
+        String dayOfWeekFull,
+        int dayOfMonth,
+        String month,
+        int year
+    ) {}
     
     private Locale getLocale(String localeCode) {
         if (localeCode == null || localeCode.isEmpty()) {
