@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -39,9 +40,6 @@ public class TherapistLoginController {
     private final RequestLoginLinkUseCase requestLoginLinkUseCase;
     private final MessageSource messageSource;
 
-    /**
-     * Display the login page.
-     */
     @GetMapping("/login")
     public String showLoginPage(
             @RequestParam(value = "error", required = false) String error,
@@ -52,14 +50,18 @@ public class TherapistLoginController {
         model.addAttribute("loginForm", new LoginForm());
         
         if (error != null) {
-            if ("invalid_token".equals(error)) {
-                model.addAttribute("errorMessage", 
-                    messageSource.getMessage("therapist.login.invalidToken", null, locale));
-            } else {
-                model.addAttribute("errorMessage", 
-                    messageSource.getMessage("therapist.login.error", null, locale));
-            }
+            String errorMessageKey = "invalid_token".equals(error) 
+                                    ? "therapist.login.invalidToken" 
+                                    : "therapist.login.error";
+            String errorMessage = messageSource.getMessage(errorMessageKey, null, locale);
+            model.addAttribute("errorMessage", errorMessage);
         }
+
+        var people = new HashMap<String, String>();
+        people.put("Dima", "L");
+        people.put("Super", "Man");
+
+        System.out.println(people);
         
         if (expired != null) {
             model.addAttribute("errorMessage", 
@@ -84,10 +86,9 @@ public class TherapistLoginController {
         }
 
         log.debug("Login link requested for: {}", loginForm.getEmail());
-        
-        var result = requestLoginLinkUseCase.execute(
-            new RequestLoginCommand(loginForm.getEmail())
-        );
+
+        var command = new RequestLoginCommand(loginForm.getEmail());
+        var result = requestLoginLinkUseCase.execute(command);
 
         // Always show success message to prevent email enumeration
         String successMessage;

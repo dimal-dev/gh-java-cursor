@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Link between an order and a booked schedule slot.
  */
 @Entity
-@Table(name = "order_psiholog_schedule")
+@Table(name = "order_therapist_schedule")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderSchedule {
@@ -24,7 +24,7 @@ public class OrderSchedule {
     @Column(name = "order_id", nullable = false)
     private Long orderId;
 
-    @Column(name = "psiholog_schedule_id", nullable = false)
+    @Column(name = "therapist_schedule_id", nullable = false)
     private Long scheduleSlotId;
 
     @Column(name = "created_at", nullable = false)

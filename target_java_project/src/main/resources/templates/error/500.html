@@ -47,7 +47,28 @@
     <h1>500</h1>
     <h2 th:text="#{message.error}">Server Error</h2>
     <p>An unexpected error occurred. Please try again later.</p>
-    <a th:href="@{/}" class="gh-button">Go to Home</a>
+    
+    <!-- Development error details -->
+    <div th:if="${exceptionType}" style="margin-top: 2rem; text-align: left; max-width: 900px; background: #f5f5f5; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #e74c3c;">
+        <h3 style="margin-top: 0; color: #e74c3c;">🔍 Development Error Details</h3>
+        
+        <div style="margin-bottom: 1rem;">
+            <strong>Exception Type:</strong><br>
+            <code th:text="${exceptionType}" style="background: white; padding: 0.25rem 0.5rem; border-radius: 4px; display: inline-block; margin-top: 0.25rem;">Exception</code>
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+            <strong>Error Message:</strong><br>
+            <code th:text="${exceptionMessage}" style="background: white; padding: 0.25rem 0.5rem; border-radius: 4px; display: inline-block; margin-top: 0.25rem;">Message</code>
+        </div>
+        
+        <div th:if="${stackTrace}">
+            <strong>Stack Trace:</strong><br>
+            <pre th:text="${stackTrace}" style="background: white; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.85rem; margin-top: 0.5rem; max-height: 400px; overflow-y: auto;">Stack trace</pre>
+        </div>
+    </div>
+    
+    <a th:href="@{/}" class="gh-button" style="margin-top: 2rem;">Go to Home</a>
 </div>
 </body>
 </html>

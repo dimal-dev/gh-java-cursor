@@ -42,14 +42,26 @@ spring:
   thymeleaf:
     cache: false
 
+# Server error configuration - show detailed errors in dev
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+
 # Logging - more verbose for dev
 logging:
   level:
-    com.goodhelp: DEBUG
-    org.springframework.security: DEBUG
+    com.goodhelp: WARN
+    org.springframework.security: WARN
 
 # Dev-specific settings
 goodhelp:
+  # Error handling - use Spring's default error pages in dev for detailed debugging
+  error-handling:
+    use-custom-pages: false
+  
   # WayForPay test credentials
   wayforpay:
     merchant-login: ${WAYFORPAY_MERCHANT_LOGIN:test_merchant}

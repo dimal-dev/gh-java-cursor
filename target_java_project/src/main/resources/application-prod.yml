@@ -54,6 +54,10 @@ server:
 
 # Production settings
 goodhelp:
+  # Error handling - use custom error pages in production
+  error-handling:
+    use-custom-pages: true
+  
   wayforpay:
     merchant-login: ${WAYFORPAY_MERCHANT_LOGIN}
     merchant-secret-key: ${WAYFORPAY_SECRET_KEY}

@@ -36,7 +36,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_consultation", indexes = {
     @Index(name = "idx_user_consultation_user", columnList = "user_id"),
-    @Index(name = "idx_user_consultation_psiholog", columnList = "psiholog_id")
+    @Index(name = "idx_user_consultation_therapist", columnList = "therapist_id")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // For JPA
@@ -51,11 +51,11 @@ public class UserConsultation extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false)
+    @JoinColumn(name = "therapist_id", nullable = false)
     private Therapist therapist;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_price_id")
+    @JoinColumn(name = "therapist_price_id")
     private TherapistPrice price;
 
     @Column(name = "state", nullable = false)

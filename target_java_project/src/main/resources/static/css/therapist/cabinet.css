@@ -143,6 +143,14 @@ body.therapist-cabinet {
     min-height: 100vh;
 }
 
+.cabinet-content-wrapper {
+    padding-top: 10px;
+    padding-left: 240px;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+}
+
 .cabinet-page {
     max-width: 1200px;
 }

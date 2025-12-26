@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -15,8 +14,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "billing_order", indexes = {
-    @Index(name = "idx_billing_order_checkout_slug", columnList = "checkout_slug"),
-    @Index(name = "idx_billing_order_user", columnList = "user_id")
+        @Index(name = "idx_billing_order_checkout_slug", columnList = "checkout_slug"),
+        @Index(name = "idx_billing_order_user", columnList = "user_id")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -57,7 +56,7 @@ public class Order extends BaseEntity {
     @Column(name = "billing_product_id", nullable = false)
     private Integer billingProductId = 0;
 
-    @Column(name = "psiholog_price_id")
+    @Column(name = "therapist_price_id")
     private Long therapistPriceId;
 
     @Column(name = "phone")
@@ -75,22 +74,19 @@ public class Order extends BaseEntity {
     @Column(name = "client_name")
     private String clientName;
 
-    @Column(name = "date_created", nullable = false)
-    private LocalDateTime dateCreated;
-
     private Order(String checkoutSlug,
-                  Integer price,
-                  String currency,
-                  Long therapistPriceId,
-                  Long checkoutId,
-                  Long userId,
-                  String phone,
-                  String email,
-                  String clientName,
-                  String timezone,
-                  String locale,
-                  String gaClientId,
-                  String requestCookies) {
+            Integer price,
+            String currency,
+            Long therapistPriceId,
+            Long checkoutId,
+            Long userId,
+            String phone,
+            String email,
+            String clientName,
+            String timezone,
+            String locale,
+            String gaClientId,
+            String requestCookies) {
         this.checkoutSlug = Objects.requireNonNull(checkoutSlug, "Order reference is required");
         this.price = Objects.requireNonNull(price, "Price (cents) is required");
         this.currency = Objects.requireNonNull(currency, "Currency is required");
@@ -104,39 +100,36 @@ public class Order extends BaseEntity {
         this.locale = locale;
         this.gaClientId = gaClientId;
         this.requestCookies = requestCookies;
-        this.dateCreated = LocalDateTime.now();
         this.state = OrderState.CREATED;
         this.billingProductId = 0;
     }
 
     public static Order create(String checkoutSlug,
-                               Integer price,
-                               String currency,
-                               Long therapistPriceId,
-                               Long checkoutId,
-                               Long userId,
-                               String phone,
-                               String email,
-                               String clientName,
-                               String timezone,
-                               String locale,
-                               String gaClientId,
-                               String requestCookies) {
+            Integer price,
+            String currency,
+            Long therapistPriceId,
+            Long checkoutId,
+            Long userId,
+            String phone,
+            String email,
+            String clientName,
+            String timezone,
+            String locale,
+            String gaClientId,
+            String requestCookies) {
         return new Order(
-            checkoutSlug,
-            price,
-            currency,
-            therapistPriceId,
-            checkoutId,
-            userId,
-            phone,
-            email,
-            clientName,
-            timezone,
-            locale,
-            gaClientId,
-            requestCookies
-        );
+                checkoutSlug,
+                price,
+                currency,
+                therapistPriceId,
+                checkoutId,
+                userId,
+                phone,
+                email,
+                clientName,
+                timezone,
+                locale,
+                gaClientId,
+                requestCookies);
     }
 }
-

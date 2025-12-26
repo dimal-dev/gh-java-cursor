@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:lang="${#locale.language}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <!-- CSRF Token for AJAX requests (provided by Spring Security) -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title layout:title-pattern="$CONTENT_TITLE - GoodHelp Cabinet">GoodHelp Cabinet</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Cabinet Styles -->
     <link rel="stylesheet" th:href="@{/css/therapist/cabinet.css}" />
-    
+
     <!-- Additional head content -->
     <th:block layout:fragment="head"></th:block>
 </head>
+
 <body class="therapist-cabinet">
     <!-- Sidebar Navigation -->
     <aside class="cabinet-sidebar" sec:authorize="isAuthenticated()">
@@ -28,47 +32,47 @@
                 <img th:src="@{/img/logo/logo-white.svg}" alt="GoodHelp">
             </a>
         </div>
-        
+
         <nav class="cabinet-sidebar__nav">
             <ul>
                 <li>
-                    <a th:href="@{/therapist/schedule}" 
-                       th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/schedule')} ? 'active'">
+                    <a th:href="@{/therapist/schedule}"
+                        th:classappend="${#strings.contains(currentUri, '/schedule')} ? 'active'">
                         <span class="icon">📅</span>
                         <span th:text="#{therapist.nav.schedule}">Schedule</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/therapist/clients}" 
-                       th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/clients')} ? 'active'">
+                    <a th:href="@{/therapist/clients}"
+                        th:classappend="${#strings.contains(currentUri, '/clients')} ? 'active'">
                         <span class="icon">👥</span>
                         <span th:text="#{therapist.nav.clients}">Clients</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/therapist/chat}" 
-                       th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/chat')} ? 'active'">
+                    <a th:href="@{/therapist/chat}"
+                        th:classappend="${#strings.contains(currentUri, '/chat')} ? 'active'">
                         <span class="icon">💬</span>
                         <span th:text="#{therapist.nav.chat}">Chat</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/therapist/payments}" 
-                       th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/payments')} ? 'active'">
+                    <a th:href="@{/therapist/payments}"
+                        th:classappend="${#strings.contains(currentUri, '/payments')} ? 'active'">
                         <span class="icon">💰</span>
                         <span th:text="#{therapist.nav.payments}">Payments</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/therapist/settings}" 
-                       th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/settings')} ? 'active'">
+                    <a th:href="@{/therapist/settings}"
+                        th:classappend="${#strings.contains(currentUri, '/settings')} ? 'active'">
                         <span class="icon">⚙️</span>
                         <span th:text="#{therapist.nav.settings}">Settings</span>
                     </a>
                 </li>
             </ul>
         </nav>
-        
+
         <div class="cabinet-sidebar__footer">
             <div class="cabinet-sidebar__user" sec:authentication="principal">
                 <span class="user-name" sec:authentication="principal.fullName">Therapist</span>
@@ -79,15 +83,17 @@
             </form>
         </div>
     </aside>
-    
+
     <!-- Main Content Area -->
-    <main class="cabinet-content" layout:fragment="content">
-        <p>Content goes here</p>
-    </main>
-    
+    <div class="cabinet-content-wrapper">
+        <main class="cabinet-content" layout:fragment="content">
+            <p>Content goes here</p>
+        </main>
+    </div>
+
     <!-- Scripts -->
     <script th:src="@{/js/therapist/cabinet.js}"></script>
     <th:block layout:fragment="scripts"></th:block>
 </body>
-</html>
 
+</html>

@@ -25,9 +25,9 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "chat_message", indexes = {
-    @Index(name = "idx_chat_user_psiholog", columnList = "user_id, psiholog_id"),
-    @Index(name = "idx_chat_psiholog_user", columnList = "psiholog_id, user_id"),
-    @Index(name = "idx_chat_created", columnList = "date_created")
+    @Index(name = "idx_chat_user_therapist", columnList = "user_id, therapist_id"),
+    @Index(name = "idx_chat_therapist_user", columnList = "therapist_id, user_id"),
+    @Index(name = "idx_chat_created", columnList = "sent_at")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // For JPA
@@ -40,7 +40,7 @@ public class ChatMessage extends BaseEntity {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "psiholog_id", nullable = false)
+    @Column(name = "therapist_id", nullable = false)
     private Long therapistId;
 
     @Column(name = "type", nullable = false)

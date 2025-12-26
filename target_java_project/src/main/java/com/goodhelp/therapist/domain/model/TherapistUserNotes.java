@@ -19,8 +19,8 @@ import java.util.Objects;
  * </ul>
  */
 @Entity
-@Table(name = "psiholog_user_notes", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"psiholog_id", "user_id"})
+@Table(name = "therapist_user_notes", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"therapist_id", "user_id"})
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,7 +31,7 @@ public class TherapistUserNotes extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false)
+    @JoinColumn(name = "therapist_id", nullable = false)
     private Therapist therapist;
 
     @Column(name = "user_id", nullable = false)

@@ -36,10 +36,10 @@ public class PreparePaymentUseCase {
     private final MessageSource messageSource;
 
     public PreparePaymentUseCase(GoodHelpProperties properties,
-                                 WayForPaySignatureService signatureService,
-                                 OrderRepository orderRepository,
-                                 OrderScheduleRepository orderScheduleRepository,
-                                 MessageSource messageSource) {
+            WayForPaySignatureService signatureService,
+            OrderRepository orderRepository,
+            OrderScheduleRepository orderScheduleRepository,
+            MessageSource messageSource) {
         this.properties = properties;
         this.signatureService = signatureService;
         this.orderRepository = orderRepository;
@@ -53,20 +53,19 @@ public class PreparePaymentUseCase {
 
         int priceInCents = checkout.price().finalPrice() * 100;
         Order order = Order.create(
-            orderSlug,
-            priceInCents,
-            checkout.price().currency(),
-            checkout.therapistPriceId(),
-            checkout.checkoutId(),
-            null,
-            checkout.client().phone(),
-            checkout.client().email(),
-            checkout.client().name(),
-            checkout.session().timezoneId(),
-            locale.getLanguage(),
-            checkout.gaClientId(),
-            context.requestCookies()
-        );
+                orderSlug,
+                priceInCents,
+                checkout.price().currency(),
+                checkout.therapistPriceId(),
+                checkout.checkoutId(),
+                null,
+                checkout.client().phone(),
+                checkout.client().email(),
+                checkout.client().name(),
+                checkout.session().timezoneId(),
+                locale.getLanguage(),
+                checkout.gaClientId(),
+                context.requestCookies());
 
         Order savedOrder = orderRepository.save(order);
         if (checkout.scheduleSlotId() != null) {
@@ -80,36 +79,34 @@ public class PreparePaymentUseCase {
         String returnUrl = buildUrl(context.baseUrl(), context.returnPath());
         String serviceUrl = buildUrl(context.baseUrl(), context.servicePath());
 
-        long orderDate = savedOrder.getDateCreated()
-            .atZone(ZoneOffset.UTC)
-            .toEpochSecond();
+        long orderDate = savedOrder.getCreatedAt()
+                .atZone(ZoneOffset.UTC)
+                .toEpochSecond();
 
         String signature = signatureService.sign(List.of(
-            properties.getWayforpay().getMerchantLogin(),
-            properties.getWayforpay().getMerchantDomain(),
-            savedOrder.getCheckoutSlug(),
-            String.valueOf(orderDate),
-            amountStr,
-            savedOrder.getCurrency(),
-            productName,
-            "1",
-            amountStr
-        ));
+                properties.getWayforpay().getMerchantLogin(),
+                properties.getWayforpay().getMerchantDomain(),
+                savedOrder.getCheckoutSlug(),
+                String.valueOf(orderDate),
+                amountStr,
+                savedOrder.getCurrency(),
+                productName,
+                "1",
+                amountStr));
 
         return new PaymentFormDataDto(
-            WAYFORPAY_ACTION_URL,
-            properties.getWayforpay().getMerchantLogin(),
-            properties.getWayforpay().getMerchantDomain(),
-            savedOrder.getCheckoutSlug(),
-            orderDate,
-            amountStr,
-            savedOrder.getCurrency(),
-            productName,
-            amountStr,
-            returnUrl,
-            serviceUrl,
-            signature
-        );
+                WAYFORPAY_ACTION_URL,
+                properties.getWayforpay().getMerchantLogin(),
+                properties.getWayforpay().getMerchantDomain(),
+                savedOrder.getCheckoutSlug(),
+                orderDate,
+                amountStr,
+                savedOrder.getCurrency(),
+                productName,
+                amountStr,
+                returnUrl,
+                serviceUrl,
+                signature);
     }
 
     private String buildProductName(CheckoutSummaryDto checkout, Locale locale) {
@@ -129,4 +126,3 @@ public class PreparePaymentUseCase {
         return safeBase + safePath;
     }
 }
-

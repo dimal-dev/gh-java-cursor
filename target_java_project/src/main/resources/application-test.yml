@@ -37,6 +37,10 @@ logging:
 
 # Test settings
 goodhelp:
+  # Error handling - use Spring's default error pages in tests
+  error-handling:
+    use-custom-pages: false
+  
   wayforpay:
     merchant-login: test_merchant
     merchant-secret-key: test_secret

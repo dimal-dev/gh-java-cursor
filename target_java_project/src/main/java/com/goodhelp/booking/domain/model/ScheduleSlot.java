@@ -32,8 +32,8 @@ import java.util.Objects;
  * </ul>
  */
 @Entity
-@Table(name = "psiholog_schedule", indexes = {
-    @Index(name = "idx_schedule_therapist_time", columnList = "psiholog_id, available_at"),
+@Table(name = "therapist_schedule", indexes = {
+    @Index(name = "idx_schedule_therapist_time", columnList = "therapist_id, available_at"),
     @Index(name = "idx_schedule_state", columnList = "state")
 })
 @Getter
@@ -45,7 +45,7 @@ public class ScheduleSlot extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false)
+    @JoinColumn(name = "therapist_id", nullable = false)
     private Therapist therapist;
 
     @Column(name = "available_at", nullable = false)

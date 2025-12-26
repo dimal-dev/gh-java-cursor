@@ -21,8 +21,8 @@ import java.util.Objects;
  * </ol>
  */
 @Entity
-@Table(name = "psiholog_autologin_token", indexes = {
-    @Index(name = "idx_psiholog_autologin_token", columnList = "token", unique = true)
+@Table(name = "therapist_autologin_token", indexes = {
+    @Index(name = "idx_therapist_autologin_token", columnList = "token", unique = true)
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,7 +40,7 @@ public class TherapistAutologinToken extends BaseEntity {
     private String token;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false, unique = true)
+    @JoinColumn(name = "therapist_id", nullable = false, unique = true)
     private Therapist therapist;
 
     /**

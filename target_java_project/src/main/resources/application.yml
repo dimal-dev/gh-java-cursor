@@ -1,6 +1,9 @@
 spring:
   application:
     name: goodhelp
+
+  main:
+    banner-mode: "off"
   
   profiles:
     active: dev
@@ -57,11 +60,11 @@ server:
 # Logging
 logging:
   level:
-    root: INFO
-    com.goodhelp: DEBUG
-    org.springframework.web: INFO
+    root: WARN
+    com.goodhelp: WARN
+    org.springframework.web: WARN
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql: TRACE
+    org.hibernate.type.descriptor.sql: WARN
 
 # Custom application properties
 goodhelp:

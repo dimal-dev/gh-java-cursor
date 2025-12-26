@@ -12,10 +12,10 @@ import java.util.Objects;
  * Entity representing a therapist's pricing option.
  * Each therapist can have multiple prices (individual, couple, etc.).
  */
-@Entity
-@Table(name = "psiholog_price", indexes = {
-    @Index(name = "idx_psiholog_price_psiholog", columnList = "psiholog_id"),
-    @Index(name = "idx_psiholog_price_slug", columnList = "slug")
+@Entity(name = "TherapistPriceView")
+@Table(name = "therapist_price", indexes = {
+        @Index(name = "idx_therapist_price_therapist", columnList = "therapist_id"),
+        @Index(name = "idx_therapist_price_slug", columnList = "slug")
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,7 +25,7 @@ public class TherapistPrice extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "psiholog_id", nullable = false)
+    @Column(name = "therapist_id", nullable = false)
     private Long therapistId;
 
     @Column(name = "price", nullable = false)
@@ -90,8 +90,10 @@ public class TherapistPrice extends BaseEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         TherapistPrice that = (TherapistPrice) o;
         return id != null && id.equals(that.id);
     }
@@ -104,7 +106,6 @@ public class TherapistPrice extends BaseEntity {
     @Override
     public String toString() {
         return String.format("TherapistPrice[id=%d, therapistId=%d, price=%d %s, type=%s]",
-            id, therapistId, price, currency, type);
+                id, therapistId, price, currency, type);
     }
 }
-

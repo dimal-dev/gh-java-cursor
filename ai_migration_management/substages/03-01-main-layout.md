@@ -110,16 +110,16 @@ templates/landing/
 ## URL Locale Pattern
 
 Routes follow pattern:
-- Ukrainian (default): `/page-name`
+- Ukrainian: `/ua/page-name`
 - Russian: `/ru/page-name`  
-- English: `/en/page-name`
+- English (default): `/page-name`
 
 Controller base class provides URL generation for all languages:
 ```java
 protected void addLanguageUrls(Model model, String pagePath) {
-    model.addAttribute("ukUrl", "/" + pagePath);
+    model.addAttribute("ukUrl", "/ua/" + pagePath);
     model.addAttribute("ruUrl", "/ru/" + pagePath);
-    model.addAttribute("enUrl", "/en/" + pagePath);
+    model.addAttribute("enUrl", "/" + pagePath);
 }
 ```
 

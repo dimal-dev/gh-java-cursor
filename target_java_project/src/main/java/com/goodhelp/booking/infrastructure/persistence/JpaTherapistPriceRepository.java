@@ -15,7 +15,7 @@ import java.util.Optional;
  * Spring Data JPA repository for TherapistPrice entity.
  * Manages pricing options for therapist consultations.
  */
-@Repository
+@Repository("booking_jpaTherapistPriceRepository")
 public interface JpaTherapistPriceRepository extends JpaRepository<TherapistPrice, Long> {
 
     /**

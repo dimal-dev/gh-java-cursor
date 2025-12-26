@@ -633,9 +633,9 @@ public ResponseEntity<ScheduleResponse> getSchedule() {
 - `messages_ru.properties` - Russian
 
 ### URL-Based Locale
-- Ukrainian: `/page-name` (default)
+- Ukrainian: `/ua/page-name` 
 - Russian: `/ru/page-name`
-- English: `/en/page-name`
+- English: `/page-name`(default)
 
 ### Thymeleaf Usage
 ```html

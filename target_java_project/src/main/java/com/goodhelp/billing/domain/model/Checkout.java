@@ -27,10 +27,10 @@ public class Checkout extends BaseEntity {
     @Column(name = "slug", nullable = false, unique = true, length = 32)
     private String slug;
 
-    @Column(name = "psiholog_price_id", nullable = false)
+    @Column(name = "therapist_price_id", nullable = false)
     private Long therapistPriceId;
 
-    @Column(name = "psiholog_schedule_id", nullable = false)
+    @Column(name = "therapist_schedule_id", nullable = false)
     private Long scheduleSlotId;
 
     @Column(name = "user_promocode_id")

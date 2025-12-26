@@ -137,6 +137,8 @@ public class TherapistScheduleController {
             @RequestBody ToggleSlotRequest request,
             @AuthenticationPrincipal TherapistUserDetails user) {
 
+        System.out.println("📇 Entering a great thing!");
+
         LocalDateTime time = LocalDateTime.parse(request.time(), DATE_FORMATTER);
         
         var command = new ToggleSlotByTimeUseCase.Command(

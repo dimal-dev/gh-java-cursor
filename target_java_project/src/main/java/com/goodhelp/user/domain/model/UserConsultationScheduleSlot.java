@@ -17,7 +17,7 @@ import java.util.Objects;
  * but the schema allows multiple slots per consultation.</p>
  */
 @Entity
-@Table(name = "user_consultation_psiholog_schedule")
+@Table(name = "user_consultation_therapist_schedule")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // For JPA
 public class UserConsultationScheduleSlot extends BaseEntity {
@@ -31,7 +31,7 @@ public class UserConsultationScheduleSlot extends BaseEntity {
     private UserConsultation consultation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_schedule_id", nullable = false)
+    @JoinColumn(name = "therapist_schedule_id", nullable = false)
     private ScheduleSlot scheduleSlot;
 
     /**

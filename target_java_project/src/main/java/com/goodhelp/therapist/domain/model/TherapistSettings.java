@@ -22,7 +22,7 @@ import java.util.Objects;
  * </ul>
  */
 @Entity
-@Table(name = "psiholog_settings")
+@Table(name = "therapist_settings")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TherapistSettings extends BaseEntity {
@@ -45,7 +45,7 @@ public class TherapistSettings extends BaseEntity {
 
     @Setter(AccessLevel.PACKAGE)
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false)
+    @JoinColumn(name = "therapist_id", nullable = false)
     private Therapist therapist;
 
     /**

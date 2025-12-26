@@ -15,7 +15,7 @@ import java.util.Optional;
  * Adapter implementing the domain TherapistPriceRepository interface
  * using Spring Data JPA.
  */
-@Repository
+@Repository("booking_therapistPriceRepositoryAdapter")
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TherapistPriceRepositoryAdapter implements TherapistPriceRepository {

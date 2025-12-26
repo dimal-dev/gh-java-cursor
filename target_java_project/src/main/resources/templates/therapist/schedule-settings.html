@@ -85,8 +85,195 @@
             let loadingWeek = false;
 
             const messages = {
-                weekUrl: /*[[@{/therapist/schedule/settings/week}]]*/ '/therapist/schedule/settings/week'
+                weekUrl: /*[[@{/therapist/schedule/settings/week}]]*/ '/therapist/schedule/settings/week',
+                toggleUrl: /*[[@{/therapist/schedule/book}]]*/ '/therapist/schedule/book'
             };
+
+            // Get CSRF token from meta tag (set by Thymeleaf layout)
+            function getCsrfToken() {
+                const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+                const headerName = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content') || 'X-CSRF-TOKEN';
+                return { token, headerName };
+            }
+
+            // Constants for slot states and actions
+            const ACTION_ADD = 1;
+            const ACTION_REMOVE = 2;
+            const STATE_UNUSED = 1;
+            const STATE_AVAILABLE = 2;
+            const STATE_BOOKED = 3;
+            const STATE_DONE = 4;
+            const STATE_PASSED = 15;
+
+            // Track drag state for mouse interactions
+            let seriesStarted = false;
+
+            /**
+             * Initialize the week grid after it's loaded via AJAX.
+             * Sets up event handlers for time slot cells to toggle availability.
+             */
+            function initWeekGrid() {
+                const weekGrid = document.getElementById('week-grid');
+                
+                if (!weekGrid) {
+                    console.warn('Week grid container not found');
+                    return;
+                }
+
+                const cells = weekGrid.querySelectorAll('.time-cell');
+                
+                // Remove old listeners by cloning nodes (clean slate approach)
+                cells.forEach(cell => {
+                    const newCell = cell.cloneNode(true);
+                    cell.parentNode.replaceChild(newCell, cell);
+                });
+
+                // Get fresh references after cloning
+                const freshCells = weekGrid.querySelectorAll('.time-cell');
+
+                if (isTouchDevice()) {
+                    // Touch devices: single tap to toggle
+                    freshCells.forEach(cell => {
+                        cell.addEventListener('click', () => handleAction(cell));
+                    });
+                } else {
+                    // Desktop: mouse drag to toggle multiple slots
+                    freshCells.forEach(cell => {
+                        cell.addEventListener('mouseenter', () => {
+                            if (seriesStarted) {
+                                handleAction(cell);
+                            }
+                        });
+                        cell.addEventListener('mousedown', (e) => {
+                            e.preventDefault();
+                            seriesStarted = true;
+                            handleAction(cell);
+                        });
+                    });
+
+                    // Stop series on mouse up anywhere
+                    document.body.addEventListener('mouseup', () => {
+                        seriesStarted = false;
+                    });
+                }
+            }
+
+            /**
+             * Check if the device supports touch input.
+             */
+            function isTouchDevice() {
+                return ('ontouchstart' in window) ||
+                    (navigator.maxTouchPoints > 0) ||
+                    (navigator.msMaxTouchPoints > 0);
+            }
+
+            /**
+             * Handle user action on a time slot cell.
+             * Validates the slot state and toggles availability if allowed.
+             */
+            function handleAction(cell) {
+                const disabled = cell.getAttribute('data-disabled');
+                const time = cell.getAttribute('data-available-at');
+                const state = parseInt(cell.getAttribute('data-state'));
+
+                if (disabled === '1') {
+                    seriesStarted = false;
+                    return;
+                }
+
+                if (state === STATE_PASSED || state === STATE_DONE) {
+                    seriesStarted = false;
+                    return;
+                }
+
+                if (state === STATE_BOOKED) {
+                    seriesStarted = false;
+                    alert('Cannot toggle booked slots. Go to the Schedule page to cancel consultations.');
+                    return;
+                }
+
+                const isCurrentlyAvailable = state === STATE_AVAILABLE;
+                const action = isCurrentlyAvailable ? ACTION_REMOVE : ACTION_ADD;
+
+                showLoader(cell);
+
+                sendToBackend(cell, time, action)
+                    .then(success => {
+                        hideLoader(cell);
+                        if (success) {
+                            updateCellState(cell, action);
+                        } else {
+                            alert('Something went wrong. Please try again.');
+                            seriesStarted = false;
+                        }
+                    })
+                    .catch(error => {
+                        hideLoader(cell);
+                        console.error('Error toggling slot:', error);
+                        alert('Something went wrong. Please try again.');
+                        seriesStarted = false;
+                    });
+            }
+
+            /**
+             * Show loading indicator on a cell.
+             */
+            function showLoader(cell) {
+                cell.setAttribute('data-disabled', '1');
+                const loader = cell.querySelector('.time-cell__loader');
+                if (loader) loader.style.display = 'flex';
+            }
+
+            /**
+             * Hide loading indicator on a cell.
+             */
+            function hideLoader(cell) {
+                cell.setAttribute('data-disabled', '0');
+                const loader = cell.querySelector('.time-cell__loader');
+                if (loader) loader.style.display = 'none';
+            }
+
+            /**
+             * Send toggle request to backend.
+             * Includes CSRF token for Spring Security.
+             */
+            async function sendToBackend(cell, time, action) {
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                
+                const csrf = getCsrfToken();
+                headers[csrf.headerName] = csrf.token;
+
+                const response = await fetch(messages.toggleUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ time, action })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.success;
+            }
+
+            /**
+             * Update cell visual state after successful toggle.
+             */
+            function updateCellState(cell, action) {
+                // Remove all state classes
+                cell.classList.remove('slot-available', 'slot-booked', 'slot-done', 'slot-passed', 'slot-unused');
+
+                if (action === ACTION_REMOVE) {
+                    cell.setAttribute('data-state', STATE_UNUSED);
+                    cell.classList.add('slot-unused');
+                } else if (action === ACTION_ADD) {
+                    cell.setAttribute('data-state', STATE_AVAILABLE);
+                    cell.classList.add('slot-available');
+                }
+            }
 
             function removeActiveStateFromAllWeekButtons() {
                 document.querySelectorAll('.show-week-button').forEach(el => {
@@ -120,15 +307,33 @@
                 const url = messages.weekUrl + '?weekDayFirst=' + encodeURIComponent(weekDayFirst);
 
                 fetch(url)
-                    .then(response => response.text())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
                     .then(html => {
                         weekButton.disabled = false;
                         loadingWeek = false;
 
                         addActiveStateToWeekButton(weekButton);
-                        displayingWeekContentEl.innerHTML = html;
+                        
+                        // Extract just the content from the HTML response
+                        // The response may contain HTML/body tags, so we parse and extract the #week-grid
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const weekGridContent = doc.getElementById('week-grid');
+                        
+                        if (weekGridContent) {
+                            // Insert just the grid content
+                            displayingWeekContentEl.innerHTML = weekGridContent.outerHTML;
+                        } else {
+                            // Fallback: insert the full HTML if parsing fails
+                            displayingWeekContentEl.innerHTML = html;
+                        }
 
-                        // Initialize the week grid interactions
+                        // Initialize the week grid interactions after HTML is inserted
                         initWeekGrid();
                     })
                     .catch(error => {

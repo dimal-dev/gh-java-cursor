@@ -20,10 +20,8 @@ public interface JpaTherapistPriceRepository extends JpaRepository<TherapistPric
 
     List<TherapistPrice> findByTherapistIdInAndState(List<Long> therapistIds, PriceState state);
 
-    @Query("SELECT MIN(p.price) FROM TherapistPrice p WHERE p.therapistId = :therapistId AND p.state = :state")
+    @Query("SELECT MIN(p.price) FROM TherapistPriceView p WHERE p.therapistId = :therapistId AND p.state = :state")
     Optional<Integer> findMinPriceByTherapistIdAndState(
-        @Param("therapistId") Long therapistId, 
-        @Param("state") PriceState state
-    );
+            @Param("therapistId") Long therapistId,
+            @Param("state") PriceState state);
 }
-

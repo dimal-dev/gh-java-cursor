@@ -28,8 +28,8 @@ import java.util.Optional;
  * </ul>
  */
 @Entity
-@Table(name = "psiholog", indexes = {
-    @Index(name = "idx_psiholog_email", columnList = "email", unique = true)
+@Table(name = "therapist", indexes = {
+    @Index(name = "idx_therapist_email", columnList = "email", unique = true)
 })
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // For JPA

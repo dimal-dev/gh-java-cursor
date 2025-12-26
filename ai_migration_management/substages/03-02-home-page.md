@@ -6,9 +6,9 @@ Implement the landing page home with all sections.
 ---
 
 ## Route
-- `GET /` (Ukrainian default)
+- `GET /ua/` (Ukrainian)
 - `GET /ru/` (Russian)
-- `GET /en/` (English)
+- `GET /` (English default)
 
 ---
 

@@ -12,7 +12,7 @@ import lombok.Setter;
  * Stores form submission data from the "Help me find a therapist" form.
  */
 @Entity
-@Table(name = "user_request_psiholog")
+@Table(name = "user_request_therapist")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,7 +31,7 @@ public class UserRequestTherapist extends BaseEntity {
     @Column(name = "phone", length = 100)
     private String phone;
 
-    @Column(name = "psiholog_id")
+    @Column(name = "therapist_id")
     private Long therapistId;
 
     @Column(name = "is_processed", nullable = false)

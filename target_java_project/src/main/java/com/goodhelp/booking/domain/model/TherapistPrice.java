@@ -24,8 +24,8 @@ import java.util.Objects;
  * goes to the therapist (the rest is platform fee).</p>
  */
 @Entity
-@Table(name = "psiholog_price", indexes = {
-    @Index(name = "idx_price_therapist", columnList = "psiholog_id"),
+@Table(name = "therapist_price", indexes = {
+    @Index(name = "idx_price_therapist", columnList = "therapist_id"),
     @Index(name = "idx_price_slug", columnList = "slug")
 })
 @Getter
@@ -37,7 +37,7 @@ public class TherapistPrice extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "psiholog_id", nullable = false)
+    @JoinColumn(name = "therapist_id", nullable = false)
     private Therapist therapist;
 
     /**
