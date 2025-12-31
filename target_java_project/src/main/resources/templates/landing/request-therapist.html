@@ -6,34 +6,34 @@
     <title th:text="${metaTitle}">Help Me Find a Therapist - GoodHelp</title>
     <link rel="stylesheet" th:href="@{/css/landing/main.css}">
     <style>
-        .gh-request-psiholog {
+        .gh-request-therapist {
             padding: 60px 0;
         }
-        .gh-request-psiholog__h1 {
+        .gh-request-therapist__h1 {
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 40px;
             text-align: center;
         }
-        .gh-request-psiholog-container {
+        .gh-request-therapist-container {
             max-width: 800px;
             margin: 0 auto;
         }
-        .gh-request-psiholog__form {
+        .gh-request-therapist__form {
             background: #fff;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .gh-request-psiholog__section {
+        .gh-request-therapist__section {
             margin-bottom: 30px;
         }
-        .gh-request-psiholog__section-header {
+        .gh-request-therapist__section-header {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 12px;
         }
-        .gh-request-psiholog__section-sub-header {
+        .gh-request-therapist__section-sub-header {
             font-size: 14px;
             color: #666;
             margin-bottom: 8px;
@@ -111,20 +111,20 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="gh-request-psiholog gh-main-block">
-        <h1 class="gh-request-psiholog__h1" th:text="#{landing.request.title}">
+    <div class="gh-request-therapist gh-main-block">
+        <h1 class="gh-request-therapist__h1" th:text="#{landing.request.title}">
             Help Me Find a Therapist
         </h1>
 
-        <div class="gh-request-psiholog-container">
-            <form class="gh-request-psiholog__form" 
+        <div class="gh-request-therapist-container">
+            <form class="gh-request-therapist__form"
                   th:action="@{/request-therapist}" 
                   th:object="${form}" 
                   method="post">
                 
                 <!-- Name -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.name}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.name}">
                         Your Name
                     </div>
                     <div class="gh-input">
@@ -139,11 +139,11 @@
                 </div>
 
                 <!-- Sex Preference (only if no specific therapist) -->
-                <div class="gh-request-psiholog__section" th:if="${therapistId == null}">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.sex_preference}">
+                <div class="gh-request-therapist__section" th:if="${therapistId == null}">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.sex_preference}">
                         Which therapist gender do you prefer?
                     </div>
-                    <div class="gh-request-psiholog__section-content">
+                    <div class="gh-request-therapist__section-content">
                         <div class="gh-switch-new">
                             <input type="radio" 
                                    th:field="*{sex}" 
@@ -175,12 +175,12 @@
                 </div>
 
                 <!-- Topics -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.topics}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.topics}">
                         What would you like to work on?
                     </div>
-                    <div th:each="group : ${topicsGrouped}" class="gh-request-psiholog__section-content">
-                        <div class="gh-request-psiholog__section-sub-header" th:text="${group.key}">
+                    <div th:each="group : ${topicsGrouped}" class="gh-request-therapist__section-content">
+                        <div class="gh-request-therapist__section-sub-header" th:text="${group.key}">
                             Category
                         </div>
                         <div class="topics-grid">
@@ -203,11 +203,11 @@
                 </div>
 
                 <!-- LGBTQ Preference (only if no specific therapist) -->
-                <div class="gh-request-psiholog__section" th:if="${therapistId == null}">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.lgbtq}">
+                <div class="gh-request-therapist__section" th:if="${therapistId == null}">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.lgbtq}">
                         Is LGBTQ+ experience important?
                     </div>
-                    <div class="gh-request-psiholog__section-content">
+                    <div class="gh-request-therapist__section-content">
                         <div class="gh-switch-new">
                             <input type="radio" 
                                    th:field="*{lgbtq}" 
@@ -231,8 +231,8 @@
                 </div>
 
                 <!-- Email -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.email}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.email}">
                         Email
                     </div>
                     <div class="gh-input">
@@ -247,8 +247,8 @@
                 </div>
 
                 <!-- Phone -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.phone}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.phone}">
                         Phone (optional)
                     </div>
                     <div class="gh-input">
@@ -260,11 +260,11 @@
                 </div>
 
                 <!-- Channel -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.channel}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.channel}">
                         How should we reach you?
                     </div>
-                    <div class="gh-request-psiholog__section-content">
+                    <div class="gh-request-therapist__section-content">
                         <div class="gh-switch-new">
                             <input type="radio" 
                                    th:field="*{channel}" 
@@ -299,11 +299,11 @@
                 </div>
 
                 <!-- Consultation Type -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.consultation_type}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.consultation_type}">
                         This consultation is for
                     </div>
-                    <div class="gh-request-psiholog__section-content">
+                    <div class="gh-request-therapist__section-content">
                         <div class="gh-switch-new">
                             <input type="radio" 
                                    th:field="*{type}" 
@@ -338,8 +338,8 @@
                 </div>
 
                 <!-- Price -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.price}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.price}">
                         Select price
                     </div>
                     <div class="gh-input">
@@ -354,8 +354,8 @@
                 </div>
 
                 <!-- Promocode -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.promocode}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.promocode}">
                         Promocode (optional)
                     </div>
                     <div class="gh-input">
@@ -367,8 +367,8 @@
                 </div>
 
                 <!-- Message -->
-                <div class="gh-request-psiholog__section">
-                    <div class="gh-request-psiholog__section-header" th:text="#{landing.request.message}">
+                <div class="gh-request-therapist__section">
+                    <div class="gh-request-therapist__section-header" th:text="#{landing.request.message}">
                         Tell us more (optional)
                     </div>
                     <div class="gh-input">
@@ -379,7 +379,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="gh-request-psiholog__section">
+                <div class="gh-request-therapist__section">
                     <button type="submit" class="gh-button" th:text="#{landing.request.submit}">
                         Send Request
                     </button>

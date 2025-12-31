@@ -43,9 +43,6 @@ public class TherapistSettingsController {
         this.timezoneService = timezoneService;
     }
 
-    /**
-     * Display settings page.
-     */
     @GetMapping
     public String showSettings(
             Model model,

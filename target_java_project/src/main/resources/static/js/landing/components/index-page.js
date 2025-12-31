@@ -75,10 +75,10 @@
      */
     function initAnalyticsEvents() {
         // Track select therapist button clicks
-        document.querySelectorAll('.select-psiholog-btn').forEach(function(btn) {
+        document.querySelectorAll('.select-therapist-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'select_psiholog_btn_clicked_from_main', {
+                    gtag('event', 'select_therapist_btn_clicked_from_main', {
                         event_category: 'Conversions'
                     });
                 }
@@ -86,10 +86,10 @@
         });
 
         // Track view specific therapist button clicks
-        document.querySelectorAll('.view-specific-psiholog-btn').forEach(function(btn) {
+        document.querySelectorAll('.view-specific-therapist-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'view_specific_psiholog_btn_clicked_on_main', {
+                    gtag('event', 'view_specific_therapist_btn_clicked_on_main', {
                         event_category: 'Conversions'
                     });
                 }

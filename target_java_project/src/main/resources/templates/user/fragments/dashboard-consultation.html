@@ -11,7 +11,7 @@
             <span>
                 <img th:if="${consultation.therapistPhotoUrl}" 
                      th:src="${consultation.therapistPhotoUrl}" 
-                     class="psiholog-profile-img" 
+                     class="therapist-profile-img"
                      alt="">
                 <span th:text="${consultation.therapistName + ', ' + consultation.scheduledAtFormatted}">Name, Date</span>
                 <span th:text="${additionalText}">Additional text</span>

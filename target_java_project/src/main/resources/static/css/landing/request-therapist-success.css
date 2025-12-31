@@ -1,13 +1,13 @@
 /* Request Therapist Success Page Styles */
 
-.gh-request-psiholog-success__container-outer {
+.gh-request-therapist-success__container-outer {
     overflow: hidden;
     display: flex;
     align-items: center;
     flex-grow: 1;
 }
 
-.gh-request-psiholog-success__container-inner {
+.gh-request-therapist-success__container-inner {
     background: #fff;
     border-radius: 2rem;
     display: flex;
@@ -21,7 +21,7 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog-success__container-inner {
+    .gh-request-therapist-success__container-inner {
         margin-top: 3rem;
         margin-bottom: 3rem;
         width: 29rem;
@@ -30,7 +30,7 @@
     }
 }
 
-.gh-request-psiholog-success__soft-light {
+.gh-request-therapist-success__soft-light {
     z-index: -1;
     position: absolute;
     left: -98rem;
@@ -40,15 +40,15 @@
     background: radial-gradient(50% 50% at 50% 50%, rgba(213, 213, 94, 0.5) 0%, rgba(211, 211, 94, 0.3) 27.6%, rgba(211, 211, 94, 0.24) 57.81%, rgba(212, 212, 94, 0) 100%);
 }
 
-.gh-request-psiholog-success__header {
+.gh-request-therapist-success__header {
     font-size: 1.6rem;
 }
 
-.gh-request-psiholog-success__description {
+.gh-request-therapist-success__description {
     font-size: 1.4rem;
 }
 
-.gh-request-psiholog-success__photo {
+.gh-request-therapist-success__photo {
     border-radius: 50%;
     overflow: hidden;
     width: 15rem;
@@ -59,7 +59,7 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog-success__photo {
+    .gh-request-therapist-success__photo {
         margin-right: auto;
         margin-top: 1rem;
     }

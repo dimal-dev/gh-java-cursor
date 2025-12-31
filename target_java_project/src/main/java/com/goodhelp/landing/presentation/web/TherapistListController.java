@@ -3,6 +3,7 @@ package com.goodhelp.landing.presentation.web;
 import com.goodhelp.landing.application.dto.TherapistListItemDto;
 import com.goodhelp.landing.application.usecase.GetTherapistCatalogUseCase;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class TherapistListController extends BaseLandingController {
     /**
      * Therapist list for Ukrainian (default) language.
      */
-    @GetMapping("/psiholog-list")
+    @GetMapping("/therapist-list")
     public String listUk(
             @RequestParam(required = false) String topic,
             Model model,
@@ -37,7 +38,7 @@ public class TherapistListController extends BaseLandingController {
     /**
      * Therapist list for Russian language.
      */
-    @GetMapping("/ru/psiholog-list")
+    @GetMapping("/ru/therapist-list")
     public String listRu(
             @RequestParam(required = false) String topic,
             Model model,
@@ -48,7 +49,7 @@ public class TherapistListController extends BaseLandingController {
     /**
      * Therapist list for English language.
      */
-    @GetMapping("/en/psiholog-list")
+    @GetMapping("/en/therapist-list")
     public String listEn(
             @RequestParam(required = false) String topic,
             Model model,
@@ -57,7 +58,7 @@ public class TherapistListController extends BaseLandingController {
     }
 
     private String renderList(Model model, HttpServletRequest request, String topic) {
-        addCommonAttributes(model, request, "psiholog-list");
+        addCommonAttributes(model, request, "therapist-list");
         
         // Fetch therapists
         List<TherapistListItemDto> therapists;
@@ -68,9 +69,34 @@ public class TherapistListController extends BaseLandingController {
             therapists = catalogUseCase.execute();
         }
         
-        model.addAttribute("psihologList", therapists);
-        
-        return "landing/psiholog-list";
+        model.addAttribute("therapistList", therapists);
+
+        return "landing/therapist-list";
+    }
+
+    @GetMapping("/json/therapist-list")
+    public ResponseEntity<List<TherapistListItemDto>> listJson(
+            @RequestParam(required = false) String topic,
+            Model model,
+            HttpServletRequest request) {
+        return ResponseEntity.ok(_renderList(model, request, topic));
+    }
+
+    private List<TherapistListItemDto> _renderList(Model model, HttpServletRequest request, String topic) {
+        addCommonAttributes(model, request, "therapist-list");
+
+        // Fetch therapists
+        List<TherapistListItemDto> therapists;
+        if (topic != null && !topic.isBlank()) {
+            therapists = catalogUseCase.execute(topic);
+            model.addAttribute("selectedTopic", topic);
+        } else {
+            therapists = catalogUseCase.execute();
+        }
+
+        model.addAttribute("therapistList", therapists);
+
+        return therapists;
     }
 }
 

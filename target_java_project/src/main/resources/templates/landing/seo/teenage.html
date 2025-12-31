@@ -1,104 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{landing/layout/main}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{landing/layout/main}">
+
 <head>
     <title th:text="#{landing.teenage.title}">Teenage Therapist - GoodHelp</title>
-    <link rel="stylesheet" th:href="@{/css/landing/teenage-psiholog.css}">
+    <link rel="stylesheet" th:href="@{/css/landing/teenage-therapist.css}">
 </head>
+
 <body>
-<main layout:fragment="content">
-    <section class="gh-teenage-psiholog">
-        <div class="gh-teenage-psiholog__soft-light-container">
-            <div class="gh-teenage-psiholog__soft-light"></div>
-        </div>
-        <div class="gh-container">
-            <h1 class="gh-teenage-psiholog__h1" th:text="#{teenage_psiholog}">Teenage Therapist</h1>
-            
-            <div class="gh-teenage-psiholog__box">
-                <img src="/img/pages/teenage-photo.png" class="gh-teenage-psiholog__box-teenage-photo" alt="Teenage therapy">
-                <div class="gh-teenage-psiholog__box-info">
-                    <h3 th:text="#{teenage_psiholog.why}">Why Teenage Therapy?</h3>
-                    <p th:text="#{teenage_psiholog.pharse_1}">
-                        Adolescence is a challenging time that requires special support...
-                    </p>
+    <main layout:fragment="content">
+        <section class="gh-teenage-therapist">
+            <div class="gh-teenage-therapist__soft-light-container">
+                <div class="gh-teenage-therapist__soft-light"></div>
+            </div>
+            <div class="gh-container">
+                <h1 class="gh-teenage-therapist__h1" th:text="#{teenage_therapist}">Teenage Therapist</h1>
 
-                    <p class="gh-teenage-psiholog__box-frame" th:text="#{teenage_psiholog.pharse_2}">
-                        Our therapists understand the unique challenges teenagers face.
-                    </p>
+                <div class="gh-teenage-therapist__box">
+                    <img src="/img/pages/teenage-photo.png" class="gh-teenage-therapist__box-teenage-photo"
+                        alt="Teenage therapy">
+                    <div class="gh-teenage-therapist__box-info">
+                        <h3 th:text="#{teenage_therapist.why}">Why Teenage Therapy?</h3>
+                        <p th:text="#{teenage_therapist.pharse_1}">
+                            Adolescence is a challenging time that requires special support...
+                        </p>
 
-                    <p th:text="#{teenage_psiholog.pharse_3}">
-                        We provide a safe and confidential space for teenagers to express themselves.
-                    </p>
+                        <p class="gh-teenage-therapist__box-frame" th:text="#{teenage_therapist.pharse_2}">
+                            Our therapists understand the unique challenges teenagers face.
+                        </p>
 
-                    <h3 th:text="#{teenage_psiholog.right_now}">Right Now</h3>
-                    <ul>
-                        <li th:text="#{teenage_psiholog.reasons_1}">Academic stress and pressure</li>
-                        <li th:text="#{teenage_psiholog.reasons_2}">Social relationships and peer pressure</li>
-                        <li th:text="#{teenage_psiholog.reasons_3}">Family conflicts</li>
-                        <li th:text="#{teenage_psiholog.reasons_4}">Identity and self-esteem issues</li>
-                        <li th:text="#{teenage_psiholog.reasons_5}">Anxiety and depression</li>
-                    </ul>
+                        <p th:text="#{teenage_therapist.pharse_3}">
+                            We provide a safe and confidential space for teenagers to express themselves.
+                        </p>
 
-                    <p class="gh-teenage-psiholog__box-frame" th:text="#{teenage_psiholog.pharse_4}">
-                        Early intervention can make a significant difference.
-                    </p>
+                        <h3 th:text="#{teenage_therapist.right_now}">Right Now</h3>
+                        <ul>
+                            <li th:text="#{teenage_therapist.reasons_1}">Academic stress and pressure</li>
+                            <li th:text="#{teenage_therapist.reasons_2}">Social relationships and peer pressure</li>
+                            <li th:text="#{teenage_therapist.reasons_3}">Family conflicts</li>
+                            <li th:text="#{teenage_therapist.reasons_4}">Identity and self-esteem issues</li>
+                            <li th:text="#{teenage_therapist.reasons_5}">Anxiety and depression</li>
+                        </ul>
 
-                    <p class="gh-teenage-psiholog__box-result" th:text="#{teenage_psiholog.pharse_5}">
-                        Our teenage therapists are experienced in working with adolescents.
-                    </p>
+                        <p class="gh-teenage-therapist__box-frame" th:text="#{teenage_therapist.pharse_4}">
+                            Early intervention can make a significant difference.
+                        </p>
+
+                        <p class="gh-teenage-therapist__box-result" th:text="#{teenage_therapist.pharse_5}">
+                            Our teenage therapists are experienced in working with adolescents.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="gh-teenage-therapist__h2" th:text="#{teenage_therapist.our-psychologists}">
+                    Our Teenage Therapists
+                </h2>
+
+                <div class="gh-therapist-list__list">
+                    <th:block th:each="t : ${therapists}">
+                        <div th:replace="~{landing/fragments/therapist-card :: therapistCard(therapist=${t})}"></div>
+                    </th:block>
+
+                    <div th:if="${#lists.isEmpty(therapists)}" class="gh-therapist-list__empty">
+                        <p th:text="#{landing.therapist_list.empty}">No therapists found.</p>
+                    </div>
                 </div>
             </div>
-            
-            <h2 class="gh-teenage-psiholog__h2" th:text="#{teenage_psiholog.our-psychologists}">
-                Our Teenage Therapists
-            </h2>
-            
-            <div class="gh-psiholog-list__list">
-                <div th:each="psiholog : ${therapists}"
-                     th:replace="~{landing/fragments/psiholog-card :: psihologCard(psiholog=${psiholog})}">
-                </div>
-                
-                <div th:if="${#lists.isEmpty(therapists)}" class="gh-psiholog-list__empty">
-                    <p th:text="#{landing.psiholog_list.empty}">No therapists found.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <script th:inline="javascript">
-        window.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.view-specific-psiholog-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'view_specific_psiholog_btn_clicked_on_select_psiholog_page', {
-                            'event_category': 'Conversions'
-                        });
-                    }
+        <script th:inline="javascript">
+            window.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.view-specific-therapist-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'view_specific_therapist_btn_clicked_on_select_therapist_page', {
+                                'event_category': 'Conversions'
+                            });
+                        }
+                    });
                 });
-            });
 
-            var viewItemListData = [];
-            /*[# th:each="psiholog,iterStat : ${therapists}"]*/
-            viewItemListData.push({
-                'id': 'P' + /*[[${psiholog.id()}]]*/ '0',
-                'name': /*[[${psiholog.fullName()}]]*/ 'Therapist',
-                'list_name': 'Select Therapist - Teenage Therapists',
-                'category': 'Teenage Therapists',
-                'list_position': /*[[${iterStat.index + 1}]]*/ 1,
-                'quantity': 1,
-                'price': /*[[${psiholog.price()}]]*/ 0
-            });
-            /*[/]*/
-
-            if (typeof gtag !== 'undefined' && viewItemListData.length > 0) {
-                gtag('event', 'view_item_list', {
-                    'items': viewItemListData
+                var viewItemListData = [];
+                /*[# th:each="therapist,iterStat : ${therapists}"]*/
+                viewItemListData.push({
+                    'id': 'P' + /*[[${therapist.id()}]]*/ '0',
+                    'name': /*[[${therapist.fullName()}]]*/ 'Therapist',
+                    'list_name': 'Select Therapist - Teenage Therapists',
+                    'category': 'Teenage Therapists',
+                    'list_position': /*[[${iterStat.index + 1}]]*/ 1,
+                    'quantity': 1,
+                    'price': /*[[${therapist.price()}]]*/ 0
                 });
-            }
-        });
-    </script>
-</main>
+                /*[/]*/
+
+                if (typeof gtag !== 'undefined' && viewItemListData.length > 0) {
+                    gtag('event', 'view_item_list', {
+                        'items': viewItemListData
+                    });
+                }
+            });
+        </script>
+    </main>
 </body>
-</html>
 
+</html>

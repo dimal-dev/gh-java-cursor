@@ -24,7 +24,7 @@ CREATE TABLE image (
 -- PSIHOLOG MODULE TABLES
 -- ============================================
 
-CREATE TABLE psiholog (
+CREATE TABLE therapist (
     id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     role INTEGER NOT NULL DEFAULT 1,
@@ -33,9 +33,9 @@ CREATE TABLE psiholog (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE psiholog_profile (
+CREATE TABLE therapist_profile (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL UNIQUE REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL UNIQUE REFERENCES therapist(id),
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     birth_date DATE,
@@ -46,21 +46,21 @@ CREATE TABLE psiholog_profile (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE psiholog_schedule (
+CREATE TABLE therapist_schedule (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     available_at TIMESTAMP NOT NULL,
     state INTEGER NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_psiholog_schedule_psiholog_state ON psiholog_schedule(psiholog_id, state);
-CREATE INDEX idx_psiholog_schedule_available_at ON psiholog_schedule(available_at);
+CREATE INDEX idx_therapist_schedule_therapist_state ON therapist_schedule(therapist_id, state);
+CREATE INDEX idx_therapist_schedule_available_at ON therapist_schedule(available_at);
 
-CREATE TABLE psiholog_price (
+CREATE TABLE therapist_price (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     price INTEGER NOT NULL,
     slug VARCHAR(100),
     currency VARCHAR(10) NOT NULL DEFAULT 'UAH',
@@ -71,12 +71,12 @@ CREATE TABLE psiholog_price (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_psiholog_price_psiholog ON psiholog_price(psiholog_id);
-CREATE INDEX idx_psiholog_price_slug ON psiholog_price(slug);
+CREATE INDEX idx_therapist_price_therapist ON therapist_price(therapist_id);
+CREATE INDEX idx_therapist_price_slug ON therapist_price(slug);
 
-CREATE TABLE psiholog_settings (
+CREATE TABLE therapist_settings (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL UNIQUE REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL UNIQUE REFERENCES therapist(id),
     timezone VARCHAR(100) NOT NULL DEFAULT 'Europe/Kiev',
     telegram_chat_id VARCHAR(100),
     schedule_time_cap VARCHAR(50) NOT NULL DEFAULT '+3 hour',
@@ -84,15 +84,15 @@ CREATE TABLE psiholog_settings (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE psiholog_autologin_token (
+CREATE TABLE therapist_autologin_token (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL UNIQUE REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL UNIQUE REFERENCES therapist(id),
     token VARCHAR(32) NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_psiholog_autologin_token ON psiholog_autologin_token(token);
+CREATE INDEX idx_therapist_autologin_token ON therapist_autologin_token(token);
 
 -- ============================================
 -- USER MODULE TABLES
@@ -125,8 +125,8 @@ CREATE INDEX idx_user_autologin_token ON user_autologin_token(token);
 CREATE TABLE user_consultation (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES "user"(id),
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
-    psiholog_price_id BIGINT REFERENCES psiholog_price(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
+    therapist_price_id BIGINT REFERENCES therapist_price(id),
     state INTEGER NOT NULL DEFAULT 1,
     type INTEGER NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -134,19 +134,19 @@ CREATE TABLE user_consultation (
 );
 
 CREATE INDEX idx_user_consultation_user ON user_consultation(user_id);
-CREATE INDEX idx_user_consultation_psiholog ON user_consultation(psiholog_id);
+CREATE INDEX idx_user_consultation_therapist ON user_consultation(therapist_id);
 
-CREATE TABLE user_consultation_psiholog_schedule (
+CREATE TABLE user_consultation_therapist_schedule (
     id BIGSERIAL PRIMARY KEY,
     user_consultation_id BIGINT NOT NULL REFERENCES user_consultation(id),
-    psiholog_schedule_id BIGINT NOT NULL REFERENCES psiholog_schedule(id),
+    therapist_schedule_id BIGINT NOT NULL REFERENCES therapist_schedule(id),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE chat_message (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES "user"(id),
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     type INTEGER NOT NULL,
     state INTEGER NOT NULL DEFAULT 1,
     body TEXT NOT NULL,
@@ -155,15 +155,15 @@ CREATE TABLE chat_message (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_chat_message_user_psiholog ON chat_message(user_id, psiholog_id);
+CREATE INDEX idx_chat_message_user_therapist ON chat_message(user_id, therapist_id);
 CREATE INDEX idx_chat_message_sent_at ON chat_message(sent_at);
 
-CREATE TABLE user_psiholog (
+CREATE TABLE user_therapist (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES "user"(id),
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(user_id, psiholog_id)
+    UNIQUE(user_id, therapist_id)
 );
 
 CREATE TABLE promocode (
@@ -189,23 +189,23 @@ CREATE TABLE user_promocode (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_request_psiholog (
+CREATE TABLE user_request_therapist (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(500),
     email VARCHAR(500),
     phone VARCHAR(100),
-    psiholog_id BIGINT REFERENCES psiholog(id),
+    therapist_id BIGINT REFERENCES therapist(id),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE psiholog_user_notes (
+CREATE TABLE therapist_user_notes (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     user_id BIGINT NOT NULL REFERENCES "user"(id),
     notes TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(psiholog_id, user_id)
+    UNIQUE(therapist_id, user_id)
 );
 
 -- ============================================
@@ -235,8 +235,8 @@ CREATE TABLE staff_user_autologin_token (
 
 CREATE TABLE billing_checkout (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_price_id BIGINT NOT NULL,
-    psiholog_schedule_id BIGINT NOT NULL,
+    therapist_price_id BIGINT NOT NULL,
+    therapist_schedule_id BIGINT NOT NULL,
     user_promocode_id BIGINT REFERENCES user_promocode(id),
     slug VARCHAR(32) NOT NULL UNIQUE,
     user_id BIGINT,
@@ -263,7 +263,7 @@ CREATE TABLE billing_order (
     price INTEGER NOT NULL,
     currency VARCHAR(10) NOT NULL,
     billing_product_id INTEGER DEFAULT 0,
-    psiholog_price_id BIGINT,
+    therapist_price_id BIGINT,
     issuer_bank_country VARCHAR(100),
     issuer_bank_name VARCHAR(255),
     payment_system VARCHAR(100),
@@ -295,10 +295,10 @@ CREATE TABLE order_log (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE order_psiholog_schedule (
+CREATE TABLE order_therapist_schedule (
     id BIGSERIAL PRIMARY KEY,
     order_id BIGINT NOT NULL REFERENCES billing_order(id),
-    psiholog_schedule_id BIGINT NOT NULL REFERENCES psiholog_schedule(id),
+    therapist_schedule_id BIGINT NOT NULL REFERENCES therapist_schedule(id),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -328,7 +328,7 @@ CREATE TABLE user_wallet_operation (
 
 CREATE TABLE blog_post (
     id BIGSERIAL PRIMARY KEY,
-    psiholog_id BIGINT NOT NULL REFERENCES psiholog(id),
+    therapist_id BIGINT NOT NULL REFERENCES therapist(id),
     header VARCHAR(1000) NOT NULL,
     preview TEXT,
     body TEXT,
@@ -348,11 +348,11 @@ CREATE INDEX idx_blog_post_slug ON blog_post(slug);
 -- COMMENTS
 -- ============================================
 
-COMMENT ON TABLE psiholog IS 'Psychologist accounts';
-COMMENT ON TABLE psiholog_profile IS 'Psychologist profile information';
-COMMENT ON TABLE psiholog_schedule IS 'Available time slots for psychologists';
-COMMENT ON TABLE psiholog_price IS 'Pricing information for psychologists';
-COMMENT ON TABLE psiholog_settings IS 'Psychologist account settings';
+COMMENT ON TABLE therapist IS 'Psychologist accounts';
+COMMENT ON TABLE therapist_profile IS 'Psychologist profile information';
+COMMENT ON TABLE therapist_schedule IS 'Available time slots for psychologists';
+COMMENT ON TABLE therapist_price IS 'Pricing information for psychologists';
+COMMENT ON TABLE therapist_settings IS 'Psychologist account settings';
 COMMENT ON TABLE "user" IS 'Client/user accounts';
 COMMENT ON TABLE user_consultation IS 'Booked consultations between users and psychologists';
 COMMENT ON TABLE chat_message IS 'Chat messages between users and psychologists';

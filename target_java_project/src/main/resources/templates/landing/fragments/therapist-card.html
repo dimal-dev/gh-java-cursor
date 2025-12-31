@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <!--
+  Therapist card fragment for the listing page.
+  Usage: th:replace="~{landing/fragments/therapist-card :: therapistCard(therapist=${therapist})}"
+-->
+    <div th:fragment="therapistCard(therapist)" class="gh-therapist-list__item">
+        <div class="gh-position-relative">
+            <!-- Avatar -->
+            <div class="gh-therapist-list__item-avatar-container">
+                <div class="gh-avatar">
+                    <img class="gh-img" th:src="${therapist.photoUrl()}" th:alt="${therapist.fullName()}"
+                        loading="lazy">
+                </div>
+            </div>
+
+            <!-- Name and single phrase -->
+            <div class="gh-therapist-list__item-info">
+                <div class="gh-therapist-list__item-name" th:text="${therapist.fullName()}">Therapist Name</div>
+                <div class="gh-therapist-list__item-trait" th:text="#{${therapist.singlePhrase()}}">Specialty phrase
+                </div>
+            </div>
+
+            <div class="gh-horizontal-divider"></div>
+
+            <!-- Experience and Price -->
+            <div class="gh-therapist-list__item-specifics">
+                <div class="gh-therapist-list__item-experience">
+                    <div class="gh-therapist-list__item-experience-label" th:text="#{Experience}">Experience</div>
+                    <div class="gh-therapist-list__item-experience-value">
+                        <span class="gh-therapist-list__item-experience-value-number"
+                            th:text="${therapist.experienceYears() != null ? therapist.experienceYears() : '5'}">5</span>
+                        <span class="gh-therapist-list__item-experience-years" th:text="#{years}">years</span>
+                    </div>
+                </div>
+                <div class="gh-vertical-divider"></div>
+                <div class="gh-therapist-list__item-price">
+                    <div class="gh-therapist-list__item-price-label" th:text="#{Price}">Price</div>
+                    <div class="gh-therapist-list__item-price-value">
+                        <span th:if="${therapist.priceFrom()}" class="gh-therapist-list__item-price-from"
+                            th:text="#{from}">from</span>
+                        <span class="gh-therapist-list__item-price-value-number"
+                            th:text="${therapist.price() != null ? therapist.price() : '500'}">500</span>
+                        <span class="gh-therapist-list__item-price-currency" th:text="${therapist.currency()}">₴</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gh-horizontal-divider"></div>
+
+            <!-- Specializations -->
+            <div class="gh-therapist-list__specializations">
+                <div class="gh-therapist-list__specializations-header" th:text="#{therapist_specialty}">Specialization
+                </div>
+                <div class="gh-therapist-list__specializations-list">
+                    <div th:each="specialty : ${therapist.specialties()}"
+                        class="gh-therapist-list__specializations-list-item" th:text="#{${specialty}}">Specialty
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stretched link to profile -->
+            <a th:href="@{/{lang}/therapist/{id}(lang=${lang != 'uk' ? lang : ''}, id=${therapist.id()})}"
+                class="gh-stretched-link"></a>
+        </div>
+
+        <!-- View profile button -->
+        <div class="gh-therapist-list__view-therapist-button-wrapper">
+            <a th:href="@{/{lang}/therapist/{id}(lang=${lang != 'uk' ? lang : ''}, id=${therapist.id()})}"
+                class="gh-button gh-button--small-mobile gh-button--small-tablet view-specific-therapist-btn"
+                th:text="#{Look_closely}">View Profile</a>
+        </div>
+    </div>
+</body>
+
+</html>

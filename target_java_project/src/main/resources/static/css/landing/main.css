@@ -320,13 +320,13 @@ button {
 }
 
 .gh-button--primary,
-.select-psiholog-btn {
+.select-therapist-btn {
     background: var(--color-primary-carrot-1);
     color: var(--color-white-1);
 }
 
 .gh-button--primary:hover,
-.select-psiholog-btn:hover {
+.select-therapist-btn:hover {
     background: #e8854f;
     transform: translateY(-1px);
 }
@@ -351,11 +351,11 @@ button {
     background: #4a5740;
 }
 
-.select-psiholog-btn--no-shadow {
+.select-therapist-btn--no-shadow {
     box-shadow: none;
 }
 
-.select-psiholog-btn--header {
+.select-therapist-btn--header {
     padding: 12px 20px;
     font-size: 0.9rem;
 }
@@ -811,7 +811,7 @@ p {
 }
 
 /* Select Therapist Button */
-.select-psiholog-btn {
+.select-therapist-btn {
     font-size: 1.63rem;
     color: var(--color-white-1);
     display: inline-block;
@@ -823,26 +823,26 @@ p {
 }
 
 @media (max-width: 767px) {
-    .select-psiholog-btn {
+    .select-therapist-btn {
         width: 100%;
         text-align: center;
     }
 }
 
-.select-psiholog-btn--main {
+.select-therapist-btn--main {
     font-size: 1.8rem;
     padding: 2rem 4rem;
 }
 
 @media (max-width: 767px) {
-    .select-psiholog-btn--main {
+    .select-therapist-btn--main {
         font-size: 1.6rem;
         padding: 1rem 2.9rem;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .select-psiholog-btn--main {
+    .select-therapist-btn--main {
         font-size: 1.6rem;
         padding: 1rem 2.9rem;
     }

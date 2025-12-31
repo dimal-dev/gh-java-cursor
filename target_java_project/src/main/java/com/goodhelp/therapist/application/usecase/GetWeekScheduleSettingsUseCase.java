@@ -54,7 +54,6 @@ public class GetWeekScheduleSettingsUseCase {
 
         String therapistTimezone = therapist.getTimezone();
         ZoneId therapistZone = ZoneId.of(therapistTimezone);
-
         LocalDateTime mondayStart = query.mondayDate().atStartOfDay();
         LocalDateTime sundayEnd = query.mondayDate().plusDays(7).atStartOfDay();
 

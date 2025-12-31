@@ -8,15 +8,15 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <section class="gh-psiholog-profile-container">
-        <div class="gh-container gh-psiholog-profile">
+    <section class="gh-therapist-profile-container">
+        <div class="gh-container gh-therapist-profile">
             <!-- Soft light decorative background -->
-            <div class="gh-psiholog-profile__soft-light-container">
-                <div class="gh-psiholog-profile__soft-light"></div>
+            <div class="gh-therapist-profile__soft-light-container">
+                <div class="gh-therapist-profile__soft-light"></div>
             </div>
 
             <!-- Short info section (sidebar on desktop) -->
-            <div class="gh-psiholog-profile__short">
+            <div class="gh-therapist-profile__short">
                 <!-- Avatar -->
                 <div class="gh-avatar gh-avatar--profile">
                     <img class="gh-img"
@@ -25,22 +25,22 @@
                 </div>
 
                 <!-- Name and tagline -->
-                <h1 class="gh-psiholog-profile__short-info">
-                    <span class="gh-psiholog-profile__short-name" th:text="${therapist.fullName()}">Therapist Name</span>
-                    <span class="gh-psiholog-profile__short-trait" th:text="#{${therapist.singlePhrase()}}">Gestalt therapist</span>
+                <h1 class="gh-therapist-profile__short-info">
+                    <span class="gh-therapist-profile__short-name" th:text="${therapist.fullName()}">Therapist Name</span>
+                    <span class="gh-therapist-profile__short-trait" th:text="#{${therapist.singlePhrase()}}">Gestalt therapist</span>
                 </h1>
 
                 <!-- Price section -->
-                <div class="gh-psiholog-profile__short-price-container">
-                    <div class="gh-psiholog-profile__short-price-title" th:text="#{Consultation_price}">Consultation price</div>
-                    <div class="gh-psiholog-profile__short-price">
-                        <span class="gh-psiholog-profile__short-price-value" th:text="${price}">800</span>
-                        <span class="gh-psiholog-profile__short-price-currency">₴</span>
+                <div class="gh-therapist-profile__short-price-container">
+                    <div class="gh-therapist-profile__short-price-title" th:text="#{Consultation_price}">Consultation price</div>
+                    <div class="gh-therapist-profile__short-price">
+                        <span class="gh-therapist-profile__short-price-value" th:text="${price}">800</span>
+                        <span class="gh-therapist-profile__short-price-currency">₴</span>
                     </div>
                 </div>
 
                 <!-- Book button -->
-                <div class="gh-psiholog-profile__short-book-container">
+                <div class="gh-therapist-profile__short-book-container">
                     <a th:href="${bookConsultationLink}" class="gh-button">
                         <span th:text="#{Book}">Book</span>
                     </a>
@@ -48,7 +48,7 @@
             </div>
 
             <!-- Full info section (main content area) -->
-            <div class="gh-psiholog-profile__full">
+            <div class="gh-therapist-profile__full">
                 <!-- Experience stats -->
                 <div class="gist">
                     <!-- Years of experience -->
@@ -92,20 +92,20 @@
                 </div>
 
                 <!-- Mobile header (shown on mobile only) -->
-                <div class="gh-psiholog-profile__mobile-header">
-                    <div class="gh-psiholog-profile__mobile-header-avatar">
+                <div class="gh-therapist-profile__mobile-header">
+                    <div class="gh-therapist-profile__mobile-header-avatar">
                         <img class="gh-img"
                              th:src="${therapist.photoUrl()}"
                              th:alt="${therapist.fullName()}">
                     </div>
-                    <div class="gh-psiholog-profile__mobile-header-info">
-                        <div class="gh-psiholog-profile__mobile-header-info-name" th:text="${therapist.fullName()}">Name</div>
+                    <div class="gh-therapist-profile__mobile-header-info">
+                        <div class="gh-therapist-profile__mobile-header-info-name" th:text="${therapist.fullName()}">Name</div>
                         <div>
-                            <span class="gh-psiholog-profile__mobile-header-price-value" th:text="${price}">800</span>
-                            <span class="gh-psiholog-profile__mobile-header-price-currency">₴</span>
+                            <span class="gh-therapist-profile__mobile-header-price-value" th:text="${price}">800</span>
+                            <span class="gh-therapist-profile__mobile-header-price-currency">₴</span>
                         </div>
                     </div>
-                    <div class="gh-psiholog-profile__mobile-header-book">
+                    <div class="gh-therapist-profile__mobile-header-book">
                         <a th:href="${bookConsultationLink}" class="gh-button" th:text="#{Book}">Book</a>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                 <!-- About section -->
                 <div class="about" th:if="${therapist.about() != null and !therapist.about().isEmpty()}">
                     <div class="about__head">
-                        <span th:if="${therapist.isNotTherapist()}" th:text="#{About_psiholog}">About the psychologist</span>
+                        <span th:if="${therapist.isNotTherapist()}" th:text="#{About_therapist}">About the psychologist</span>
                         <span th:unless="${therapist.isNotTherapist()}" th:text="#{About_therapist}">About the therapist</span>
                     </div>
                     <div class="about__body">

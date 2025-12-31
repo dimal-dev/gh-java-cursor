@@ -11,7 +11,7 @@ spring:
   
   # JPA
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
   
@@ -72,3 +72,4 @@ goodhelp:
   telegram:
     bot-token: ${TELEGRAM_BOT_TOKEN:}
     enabled: false
+    setup-prefix: "z5k_ps_2_p_1_7yofmlwrgbdu53_:"

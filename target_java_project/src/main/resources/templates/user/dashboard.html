@@ -9,7 +9,7 @@
             font-size: 1.2rem;
             font-weight: 500;
         }
-        .psiholog-profile-img {
+        .therapist-profile-img {
             border-radius: 50%;
             width: 3rem;
             height: 3rem;
@@ -182,7 +182,7 @@
                                         <span>
                                             <img th:if="${dashboard.latestTherapist.photoUrl}" 
                                                  th:src="${dashboard.latestTherapist.photoUrl}" 
-                                                 class="psiholog-profile-img" 
+                                                 class="therapist-profile-img"
                                                  alt="">
                                             <span th:text="${dashboard.latestTherapist.fullName()}">Name</span>
                                             &nbsp;&nbsp;
@@ -207,7 +207,7 @@
                                         <span>
                                             <span th:text="#{user.dashboard.bookConsultationPrompt}">Запишитесь на консультацию. Для этого</span>
                                             <a target="_blank" 
-                                               th:href="@{/request-psiholog}" 
+                                               th:href="@{/request-therapist}"
                                                class="btn btn-brand" 
                                                th:text="#{user.dashboard.selectTherapist}">
                                                 Выберите психолога
@@ -279,7 +279,7 @@
                                         <span>
                                             <img th:if="${dashboard.latestTherapist.photoUrl}" 
                                                  th:src="${dashboard.latestTherapist.photoUrl}" 
-                                                 class="psiholog-profile-img" 
+                                                 class="therapist-profile-img"
                                                  alt="">
                                             <span th:text="${dashboard.latestTherapist.fullName()}">Name</span>
                                             &nbsp;&nbsp;

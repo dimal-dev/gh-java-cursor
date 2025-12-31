@@ -218,6 +218,7 @@ public class SecurityConfig {
                                 "/ru/**",
                                 "/uk/**",
                                 "/therapist-list",
+                                "/json/therapist-list",
                                 "/psiholog/**",
                                 "/book-consultation/**",
                                 "/api/book-consultation/**",

@@ -43,17 +43,17 @@
         
         <nav class="gh-header__nav">
             <ul class="gh-header__nav-menu">
-                <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/therapist-list')} ? 'active' : ''">
+                <li th:classappend="${#strings.contains(currentUri, '/therapist-list')} ? 'active' : ''">
                     <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}" 
                        th:text="#{our_specialists}">Our Specialists</a>
                 </li>
-                <li th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/blog')} ? 'active' : ''">
+                <li th:classappend="${#strings.contains(currentUri, '/blog')} ? 'active' : ''">
                     <a th:href="@{/{lang}/blog(lang=${lang != 'uk'} ? ${lang} : '')}" 
                        th:text="#{Blog}">Blog</a>
                 </li>
                 <li>
                     <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
-                       th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+                       th:text="#{landing.header.for_therapist}">For Psychologists</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/user/dashboard}" th:text="#{landing.header.user_dashboard}">My Cabinet</a>
@@ -69,10 +69,10 @@
             <div class="gh-header__lang-picker" th:replace="~{landing/fragments/language-switcher :: switcher}"></div>
             
             <!-- CTA Button -->
-            <div class="gh-header__select-psiholog-btn-container">
+            <div class="gh-header__select-therapist-btn-container">
                 <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
-                   class="select-psiholog-btn select-psiholog-btn--no-shadow select-psiholog-btn--header gh-button"
-                   th:text="#{landing.request_psiholog}">
+                   class="select-therapist-btn select-therapist-btn--no-shadow select-therapist-btn--header gh-button"
+                   th:text="#{landing.request_therapist}">
                     Find a Psychologist
                 </a>
             </div>
@@ -106,7 +106,7 @@
                th:text="#{Blog}">Blog</a>
             <a href="https://forms.gle/kVM9qC4Q2tMaD9Xe7" target="_blank" 
                class="gh-mobile-header__menu-item"
-               th:text="#{landing.header.for_psiholog}">For Psychologists</a>
+               th:text="#{landing.header.for_therapist}">For Psychologists</a>
             <a sec:authorize="isAuthenticated()" 
                th:href="@{/user/dashboard}" 
                class="gh-mobile-header__menu-item"
@@ -119,8 +119,8 @@
         
         <div>
             <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}" 
-               class="select-psiholog-btn gh-button"
-               th:text="#{landing.request_psiholog}">
+               class="select-therapist-btn gh-button"
+               th:text="#{landing.request_therapist}">
                 Find a Psychologist
             </a>
         </div>

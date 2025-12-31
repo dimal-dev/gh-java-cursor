@@ -1,25 +1,25 @@
 /* Teenage Therapist SEO Landing Page Styles */
 
-.gh-teenage-psiholog {
+.gh-teenage-therapist {
     padding-top: 3rem;
     padding-bottom: 12rem;
     position: relative;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog {
+    .gh-teenage-therapist {
         padding-bottom: 6rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog {
+    .gh-teenage-therapist {
         padding-top: 2rem;
         padding-bottom: 5rem;
     }
 }
 
-.gh-teenage-psiholog__soft-light {
+.gh-teenage-therapist__soft-light {
     position: absolute;
     width: 127rem;
     height: 96rem;
@@ -29,7 +29,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__soft-light {
+    .gh-teenage-therapist__soft-light {
         width: 78.7rem;
         height: 59.6rem;
         left: -112rem;
@@ -37,14 +37,14 @@
     }
 }
 
-.gh-teenage-psiholog__soft-light-container {
+.gh-teenage-therapist__soft-light-container {
     position: absolute;
     top: 0;
     left: 50%;
     z-index: -1;
 }
 
-.gh-teenage-psiholog__h1 {
+.gh-teenage-therapist__h1 {
     font-weight: 500;
     font-size: 4rem;
     line-height: 1.2;
@@ -52,57 +52,57 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__h1 {
+    .gh-teenage-therapist__h1 {
         font-size: 3.5rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog__h1 {
+    .gh-teenage-therapist__h1 {
         font-size: 2.5rem;
         text-align: center;
     }
 }
 
-.gh-teenage-psiholog__h2 {
+.gh-teenage-therapist__h2 {
     font-weight: 500;
     font-size: 2.5rem;
     line-height: 1.2;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__h2 {
+    .gh-teenage-therapist__h2 {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog__h2 {
+    .gh-teenage-therapist__h2 {
         font-size: 1.5rem;
         text-align: center;
     }
 }
 
-.gh-teenage-psiholog__box {
+.gh-teenage-therapist__box {
     display: flex;
     flex-direction: row-reverse;
     gap: 3rem;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__box {
+    .gh-teenage-therapist__box {
         display: block;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog__box {
+    .gh-teenage-therapist__box {
         flex-direction: column-reverse;
         gap: 2rem;
     }
 }
 
-.gh-teenage-psiholog__box-info {
+.gh-teenage-therapist__box-info {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 1.4;
@@ -111,7 +111,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__box-info {
+    .gh-teenage-therapist__box-info {
         font-size: 1.5rem;
         width: 69.2rem;
         margin-top: 1.5rem;
@@ -119,7 +119,7 @@
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog__box-info {
+    .gh-teenage-therapist__box-info {
         font-size: 1rem;
         width: 29rem;
         margin-top: 1rem;
@@ -127,7 +127,7 @@
     }
 }
 
-.gh-teenage-psiholog__box-frame {
+.gh-teenage-therapist__box-frame {
     border-style: double;
     border-color: #D5D55E;
     text-align: center;
@@ -135,19 +135,19 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__box-frame {
+    .gh-teenage-therapist__box-frame {
         width: 33.3rem;
     }
 }
 
-.gh-teenage-psiholog__box-teenage-photo {
+.gh-teenage-therapist__box-teenage-photo {
     width: 37rem;
     height: max-content;
     margin: auto;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-teenage-psiholog__box-teenage-photo {
+    .gh-teenage-therapist__box-teenage-photo {
         width: 33.1rem;
         float: right;
         margin-top: 5rem;
@@ -155,16 +155,16 @@
 }
 
 @media (max-width: 767px) {
-    .gh-teenage-psiholog__box-teenage-photo {
+    .gh-teenage-therapist__box-teenage-photo {
         width: 29rem;
     }
 }
 
-.gh-teenage-psiholog__box li {
+.gh-teenage-therapist__box li {
     margin-bottom: 2rem;
 }
 
-.gh-teenage-psiholog__box-result {
+.gh-teenage-therapist__box-result {
     font-weight: 600;
 }
 

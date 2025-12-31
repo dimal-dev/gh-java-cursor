@@ -15,27 +15,27 @@
 }
 
 /* Main Container */
-.gh-psiholog-list {
+.gh-therapist-list {
     padding-top: 3rem;
     padding-bottom: 12rem;
     position: relative;
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list {
+    .gh-therapist-list {
         padding-bottom: 6rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list {
+    .gh-therapist-list {
         padding-top: 2rem;
         padding-bottom: 5rem;
     }
 }
 
 /* Soft Light Background Effect */
-.gh-psiholog-list__soft-light {
+.gh-therapist-list__soft-light {
     position: absolute;
     width: 127rem;
     height: 96rem;
@@ -45,7 +45,7 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__soft-light {
+    .gh-therapist-list__soft-light {
         width: 78.7rem;
         height: 59.6rem;
         left: -112rem;
@@ -53,7 +53,7 @@
     }
 }
 
-.gh-psiholog-list__soft-light-container {
+.gh-therapist-list__soft-light-container {
     position: absolute;
     top: 0;
     left: 50%;
@@ -61,7 +61,7 @@
 }
 
 /* Page Title */
-.gh-psiholog-list__h1 {
+.gh-therapist-list__h1 {
     font-weight: 500;
     font-size: 4rem;
     line-height: 1.2;
@@ -70,20 +70,20 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__h1 {
+    .gh-therapist-list__h1 {
         font-size: 3.5rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__h1 {
+    .gh-therapist-list__h1 {
         font-size: 3rem;
         text-align: center;
     }
 }
 
 /* Therapist Cards Grid */
-.gh-psiholog-list__list {
+.gh-therapist-list__list {
     display: grid;
     grid-template-columns: repeat(3, 37rem);
     gap: 3rem;
@@ -92,20 +92,20 @@
 }
 
 @media (max-width: 1200px) {
-    .gh-psiholog-list__list {
+    .gh-therapist-list__list {
         grid-template-columns: repeat(2, 33.1rem);
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__list {
+    .gh-therapist-list__list {
         grid-template-columns: repeat(1, 29rem);
         margin-top: 3rem;
     }
 }
 
 /* Individual Therapist Card */
-.gh-psiholog-list__item {
+.gh-therapist-list__item {
     display: flex;
     flex-direction: column;
     padding: 4rem 3rem 3rem 3rem;
@@ -117,38 +117,38 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.gh-psiholog-list__item:hover {
+.gh-therapist-list__item:hover {
     transform: translateY(-4px);
     box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item {
+    .gh-therapist-list__item {
         padding: 3rem 1.5rem 1.5rem 2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item {
+    .gh-therapist-list__item {
         padding: 3rem 1.5rem 1.5rem 2rem;
     }
 }
 
 /* Avatar Section */
-.gh-psiholog-list__item-avatar-container {
+.gh-therapist-list__item-avatar-container {
     display: flex;
     justify-content: center;
 }
 
 /* Info Section (Name & Trait) */
-.gh-psiholog-list__item-info {
+.gh-therapist-list__item-info {
     margin-top: 2rem;
     margin-bottom: 1rem;
     text-align: center;
     min-height: 5.5rem;
 }
 
-.gh-psiholog-list__item-name {
+.gh-therapist-list__item-name {
     font-weight: 700;
     font-size: 2.4rem;
     line-height: 1.2;
@@ -156,18 +156,18 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-name {
+    .gh-therapist-list__item-name {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-name {
+    .gh-therapist-list__item-name {
         font-size: 2rem;
     }
 }
 
-.gh-psiholog-list__item-trait {
+.gh-therapist-list__item-trait {
     font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.2;
@@ -176,26 +176,26 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-trait {
+    .gh-therapist-list__item-trait {
         font-size: 1.3rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-trait {
+    .gh-therapist-list__item-trait {
         font-size: 1.3rem;
     }
 }
 
 /* Specifics Section (Experience & Price) */
-.gh-psiholog-list__item-specifics {
+.gh-therapist-list__item-specifics {
     display: flex;
     justify-content: space-between;
     text-align: center;
 }
 
 /* Experience */
-.gh-psiholog-list__item-experience {
+.gh-therapist-list__item-experience {
     width: 13rem;
     display: flex;
     align-items: center;
@@ -203,7 +203,7 @@
     gap: 0.7rem;
 }
 
-.gh-psiholog-list__item-experience-label {
+.gh-therapist-list__item-experience-label {
     color: var(--color-primary-carrot-1);
     font-weight: 700;
     font-size: 1.4rem;
@@ -211,24 +211,24 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-experience-label {
+    .gh-therapist-list__item-experience-label {
         font-size: 1.2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-experience-label {
+    .gh-therapist-list__item-experience-label {
         font-size: 1.2rem;
     }
 }
 
-.gh-psiholog-list__item-experience-value {
+.gh-therapist-list__item-experience-value {
     display: flex;
     align-items: baseline;
     gap: 0.3rem;
 }
 
-.gh-psiholog-list__item-experience-value-number {
+.gh-therapist-list__item-experience-value-number {
     font-size: 2.4rem;
     line-height: 0.9;
     font-weight: 400;
@@ -236,39 +236,39 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-experience-value-number {
+    .gh-therapist-list__item-experience-value-number {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-experience-value-number {
+    .gh-therapist-list__item-experience-value-number {
         font-size: 2rem;
     }
 }
 
-.gh-psiholog-list__item-experience-years {
+.gh-therapist-list__item-experience-years {
     font-size: 1.4rem;
     line-height: 1.1;
     font-weight: 600;
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-experience-years {
+    .gh-therapist-list__item-experience-years {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-experience-years {
+    .gh-therapist-list__item-experience-years {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
 /* Price */
-.gh-psiholog-list__item-price {
+.gh-therapist-list__item-price {
     width: 13rem;
     display: flex;
     align-items: center;
@@ -276,7 +276,7 @@
     gap: 0.7rem;
 }
 
-.gh-psiholog-list__item-price-label {
+.gh-therapist-list__item-price-label {
     color: var(--color-primary-carrot-1);
     font-weight: 700;
     font-size: 1.4rem;
@@ -284,24 +284,24 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-price-label {
+    .gh-therapist-list__item-price-label {
         font-size: 1.2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-price-label {
+    .gh-therapist-list__item-price-label {
         font-size: 1.2rem;
     }
 }
 
-.gh-psiholog-list__item-price-value {
+.gh-therapist-list__item-price-value {
     display: flex;
     gap: 0.4rem;
     align-items: flex-end;
 }
 
-.gh-psiholog-list__item-price-from {
+.gh-therapist-list__item-price-from {
     font-size: 1.4rem;
     line-height: 1.1;
     font-weight: 600;
@@ -309,20 +309,20 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-price-from {
+    .gh-therapist-list__item-price-from {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-price-from {
+    .gh-therapist-list__item-price-from {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
-.gh-psiholog-list__item-price-value-number {
+.gh-therapist-list__item-price-value-number {
     font-size: 2.4rem;
     line-height: 0.9;
     font-weight: 400;
@@ -330,57 +330,57 @@
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-price-value-number {
+    .gh-therapist-list__item-price-value-number {
         font-size: 2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-price-value-number {
+    .gh-therapist-list__item-price-value-number {
         font-size: 2rem;
     }
 }
 
-.gh-psiholog-list__item-price-currency {
+.gh-therapist-list__item-price-currency {
     font-size: 1.4rem;
     line-height: 1.1;
     font-weight: 600;
 }
 
 @media (max-width: 1024px) {
-    .gh-psiholog-list__item-price-currency {
+    .gh-therapist-list__item-price-currency {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
 @media (max-width: 768px) {
-    .gh-psiholog-list__item-price-currency {
+    .gh-therapist-list__item-price-currency {
         font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
 /* Specializations Section */
-.gh-psiholog-list__specializations {
+.gh-therapist-list__specializations {
     flex-grow: 1;
 }
 
-.gh-psiholog-list__specializations-header {
+.gh-therapist-list__specializations-header {
     font-weight: 700;
     font-size: 1.4rem;
     line-height: 1.2;
     color: var(--color-black-2);
 }
 
-.gh-psiholog-list__specializations-list {
+.gh-therapist-list__specializations-list {
     display: flex;
     gap: 0.7rem;
     flex-wrap: wrap;
     margin-top: 1rem;
 }
 
-.gh-psiholog-list__specializations-list-item {
+.gh-therapist-list__specializations-list-item {
     padding: 0.5rem 1.2rem;
     line-height: 1.25;
     font-size: 1.2rem;
@@ -390,16 +390,16 @@
     color: var(--color-black-2);
 }
 
-.gh-psiholog-list__specializations-list-item--carrot {
+.gh-therapist-list__specializations-list-item--carrot {
     background-color: var(--color-primary-carrot-4);
 }
 
 /* View Profile Button */
-.gh-psiholog-list__view-psiholog-button-wrapper {
+.gh-therapist-list__view-therapist-button-wrapper {
     margin-top: 3rem;
 }
 
-.gh-psiholog-list__view-psiholog-button-wrapper > .gh-button {
+.gh-therapist-list__view-therapist-button-wrapper > .gh-button {
     width: 100%;
 }
 
@@ -455,7 +455,7 @@
 }
 
 /* Empty State */
-.gh-psiholog-list__empty {
+.gh-therapist-list__empty {
     grid-column: 1 / -1;
     text-align: center;
     padding: 4rem 2rem;
@@ -463,7 +463,7 @@
     border-radius: 2rem;
 }
 
-.gh-psiholog-list__empty p {
+.gh-therapist-list__empty p {
     font-size: 1.6rem;
     color: #666;
     margin: 0;

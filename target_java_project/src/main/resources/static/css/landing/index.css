@@ -127,7 +127,7 @@
     flex-shrink: 0;
 }
 
-.ghl-first-screen__middle-select-psiholog-zero-wrapper {
+.ghl-first-screen__middle-select-therapist-zero-wrapper {
     margin-bottom: 40px;
 }
 
@@ -709,7 +709,7 @@
 }
 
 /* Select Psychologist Button */
-.select-psiholog-btn {
+.select-therapist-btn {
     display: inline-block;
     background-color: var(--color-primary-carrot);
     color: var(--color-white);
@@ -722,13 +722,13 @@
     box-shadow: 0 4px 15px rgba(239, 150, 101, 0.3);
 }
 
-.select-psiholog-btn:hover {
+.select-therapist-btn:hover {
     background-color: #e08550;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(239, 150, 101, 0.4);
 }
 
-.select-psiholog-btn--main {
+.select-therapist-btn--main {
     font-size: 18px;
     padding: 18px 40px;
 }

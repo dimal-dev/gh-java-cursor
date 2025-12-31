@@ -2,7 +2,6 @@ package com.goodhelp.therapist.application.usecase;
 
 import com.goodhelp.booking.domain.model.ScheduleSlot;
 import com.goodhelp.booking.domain.repository.ScheduleSlotRepository;
-import com.goodhelp.common.exception.BusinessException;
 import com.goodhelp.common.exception.ResourceNotFoundException;
 import com.goodhelp.therapist.domain.model.Therapist;
 import com.goodhelp.therapist.domain.repository.TherapistRepository;
@@ -43,18 +42,12 @@ public class ToggleSlotByTimeUseCase {
         this.slotRepository = slotRepository;
     }
 
-    /**
-     * Command to toggle a slot.
-     */
     public record Command(
         Long therapistId,
         LocalDateTime timeInTherapistTz,
         int action
     ) {}
 
-    /**
-     * Result of the toggle operation.
-     */
     public record Result(boolean succeeded, String message) {
         public static Result ok() {
             return new Result(true, null);
@@ -65,9 +58,6 @@ public class ToggleSlotByTimeUseCase {
         }
     }
 
-    /**
-     * Execute the slot toggle operation.
-     */
     public Result execute(Command command) {
         Therapist therapist = therapistRepository.findById(command.therapistId())
             .orElseThrow(() -> new ResourceNotFoundException("Therapist", command.therapistId()));
@@ -77,7 +67,6 @@ public class ToggleSlotByTimeUseCase {
             .atZone(ZoneId.of(therapist.getTimezone()));
         LocalDateTime utcTime = localZoned.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
 
-        // Find existing slot
         Optional<ScheduleSlot> existingSlot = slotRepository.findByTherapistIdAndAvailableAt(
             command.therapistId(),
             utcTime
@@ -96,14 +85,13 @@ public class ToggleSlotByTimeUseCase {
         if (existingSlot.isPresent()) {
             ScheduleSlot slot = existingSlot.get();
             if (slot.isUnavailable()) {
-                // Reactivate unavailable slot
                 slot.markAvailable();
-                slotRepository.save(slot);
+                //might not be needed, check this!
+//                slotRepository.save(slot);
                 log.info("Reactivated slot {} for therapist {}", slot.getId(), therapist.getId());
             }
             // If already available or booked, do nothing
         } else {
-            // Create new available slot
             ScheduleSlot newSlot = ScheduleSlot.createAvailable(therapist, utcTime);
             slotRepository.save(newSlot);
             log.info("Created new available slot at {} for therapist {}", utcTime, therapist.getId());
@@ -126,7 +114,7 @@ public class ToggleSlotByTimeUseCase {
 
         // Mark as unavailable
         slot.markUnavailable();
-        slotRepository.save(slot);
+//        slotRepository.save(slot);
         log.info("Marked slot {} as unavailable", slot.getId());
         
         return Result.ok();

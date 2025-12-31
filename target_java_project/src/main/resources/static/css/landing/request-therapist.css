@@ -1,45 +1,45 @@
 /* Request Therapist Page Styles */
 
-.gh-request-psiholog {
+.gh-request-therapist {
     margin-top: 4rem;
     margin-bottom: 12.5rem;
 }
 
 @media (max-width: 1199px) {
-    .gh-request-psiholog {
+    .gh-request-therapist {
         margin-top: 2rem;
         margin-bottom: 7rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog {
+    .gh-request-therapist {
         margin-top: 2rem;
         margin-bottom: 7rem;
     }
 }
 
-.gh-request-psiholog__psiholog {
+.gh-request-therapist__therapist {
     display: none;
     margin-left: auto;
     margin-right: auto;
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__psiholog {
+    .gh-request-therapist__therapist {
         width: 28.9rem;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__psiholog {
+    .gh-request-therapist__therapist {
         width: 69.1rem;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__psiholog {
+    .gh-request-therapist__therapist {
         display: flex;
         align-items: center;
         position: sticky;
@@ -51,7 +51,7 @@
     }
 }
 
-.gh-request-psiholog__psiholog-avatar {
+.gh-request-therapist__therapist-avatar {
     border-radius: 50%;
     width: 4.5rem;
     height: 4.5rem;
@@ -60,47 +60,47 @@
     margin-right: 1rem;
 }
 
-.gh-request-psiholog__psiholog-info {
+.gh-request-therapist__therapist-info {
     display: flex;
     flex-grow: 1;
 }
 
-.gh-request-psiholog__psiholog-name-and-single-phrase {
+.gh-request-therapist__therapist-name-and-single-phrase {
     gap: 0.5rem;
     display: flex;
     flex-direction: column;
 }
 
-.gh-request-psiholog__psiholog-name {
+.gh-request-therapist__therapist-name {
     font-weight: 700;
     font-size: 1.2rem;
     line-height: 1.2;
 }
 
-.gh-request-psiholog__psiholog-price {
+.gh-request-therapist__therapist-price {
     margin-top: 0.1rem;
     margin-left: auto;
 }
 
-.gh-request-psiholog__psiholog-price-from {
+.gh-request-therapist__therapist-price-from {
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.1;
 }
 
-.gh-request-psiholog__psiholog-price-value {
+.gh-request-therapist__therapist-price-value {
     font-weight: 400;
     font-size: 1.4rem;
     line-height: 0.9;
 }
 
-.gh-request-psiholog__psiholog-price-currency {
+.gh-request-therapist__therapist-price-currency {
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.1;
 }
 
-.gh-request-psiholog__h1 {
+.gh-request-therapist__h1 {
     margin: 0;
     font-weight: 500;
     font-size: 4.5rem;
@@ -108,19 +108,19 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__h1 {
+    .gh-request-therapist__h1 {
         font-size: 3.5rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__h1 {
+    .gh-request-therapist__h1 {
         font-size: 3.1rem;
         text-align: center;
     }
 }
 
-.gh-request-psiholog-container {
+.gh-request-therapist-container {
     display: flex;
     gap: 6rem;
     margin-top: 5rem;
@@ -128,19 +128,19 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog-container {
+    .gh-request-therapist-container {
         gap: 2rem;
         margin-top: 3rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog-container {
+    .gh-request-therapist-container {
         flex-direction: column;
     }
 }
 
-.gh-request-psiholog__step {
+.gh-request-therapist__step {
     padding: 2rem 3rem;
     border-radius: 2rem;
     box-shadow: 0 5.4rem 11.6rem rgba(0, 0, 0, 0.05), 0 0.676164rem 1.56937rem rgba(0, 0, 0, 0.025);
@@ -150,47 +150,47 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__step {
+    .gh-request-therapist__step {
         padding: 1.5rem;
         border-radius: 1rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__step {
+    .gh-request-therapist__step {
         display: none;
     }
 }
 
-.gh-request-psiholog__step--active {
+.gh-request-therapist__step--active {
     opacity: 1;
     background-color: #D4D45E;
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__step--active {
+    .gh-request-therapist__step--active {
         display: block;
     }
 }
 
-.gh-request-psiholog__step:hover {
+.gh-request-therapist__step:hover {
     cursor: pointer;
     border: 0.1rem solid #D4D45E;
     margin: -0.1rem;
 }
 
-.gh-request-psiholog__step-list {
+.gh-request-therapist__step-list {
     display: flex;
     gap: 3rem;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__step-list {
+    .gh-request-therapist__step-list {
         gap: 2.1rem;
     }
 }
 
-.gh-request-psiholog__step-number-label {
+.gh-request-therapist__step-number-label {
     font-weight: 500;
     font-size: 1.6rem;
     line-height: 1.2;
@@ -199,12 +199,12 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__step-number-label {
+    .gh-request-therapist__step-number-label {
         font-size: 1.2rem;
     }
 }
 
-.gh-request-psiholog__step-name {
+.gh-request-therapist__step-name {
     font-weight: 700;
     font-size: 2.4rem;
     line-height: 1.2;
@@ -212,36 +212,36 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__step-name {
+    .gh-request-therapist__step-name {
         font-size: 1.8rem;
     }
 }
 
-.gh-request-psiholog__step-content {
+.gh-request-therapist__step-content {
     display: none;
 }
 
-.gh-request-psiholog__step-content--active {
+.gh-request-therapist__step-content--active {
     display: initial;
 }
 
-.gh-request-psiholog__section {
+.gh-request-therapist__section {
     margin-top: 5rem;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section {
+    .gh-request-therapist__section {
         margin-top: 4rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section {
+    .gh-request-therapist__section {
         margin-top: 3rem;
     }
 }
 
-.gh-request-psiholog__section-header {
+.gh-request-therapist__section-header {
     font-weight: 500;
     font-size: 3rem;
     line-height: 1.2;
@@ -250,20 +250,20 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-header {
+    .gh-request-therapist__section-header {
         font-size: 2.4rem;
         margin-bottom: 2rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-header {
+    .gh-request-therapist__section-header {
         font-size: 2rem;
         margin-bottom: 1.5rem;
     }
 }
 
-.gh-request-psiholog__section-sub-header {
+.gh-request-therapist__section-sub-header {
     font-weight: 500;
     font-size: 1.8rem;
     line-height: 1.2;
@@ -273,7 +273,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-sub-header {
+    .gh-request-therapist__section-sub-header {
         margin-top: 2rem;
         margin-bottom: 2rem;
         font-size: 1.6rem;
@@ -281,30 +281,30 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-sub-header {
+    .gh-request-therapist__section-sub-header {
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
         font-size: 1.5rem;
     }
 }
 
-.gh-request-psiholog__section-content--sex {
+.gh-request-therapist__section-content--sex {
     display: flex;
     gap: 1rem;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--sex > * {
+    .gh-request-therapist__section-content--sex > * {
         flex: 1 1 0px;
     }
     
-    .gh-request-psiholog__section-content--sex .gh-switch {
+    .gh-request-therapist__section-content--sex .gh-switch {
         font-weight: 400;
         font-size: 1.8rem;
         line-height: 2.2rem;
     }
     
-    .gh-request-psiholog__section-content--sex .gh-switch-new > label {
+    .gh-request-therapist__section-content--sex .gh-switch-new > label {
         font-weight: 400;
         font-size: 1.8rem;
         line-height: 2.2rem;
@@ -312,32 +312,32 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--sex {
+    .gh-request-therapist__section-content--sex {
         flex-direction: column;
     }
 }
 
-.gh-request-psiholog__section-content--problem {
+.gh-request-therapist__section-content--problem {
     display: flex;
     gap: 2rem 3rem;
     flex-wrap: wrap;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--problem {
+    .gh-request-therapist__section-content--problem {
         padding-left: 2rem;
         padding-right: 2rem;
         gap: 1.5rem;
         display: none;
     }
     
-    .gh-request-psiholog__section-content--problem--active {
+    .gh-request-therapist__section-content--problem--active {
         display: flex;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--problem {
+    .gh-request-therapist__section-content--problem {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
         gap: 1.5rem;
@@ -345,16 +345,16 @@
         align-items: stretch;
     }
     
-    .gh-request-psiholog__section-content--problem--active {
+    .gh-request-therapist__section-content--problem--active {
         display: flex;
     }
     
-    .gh-request-psiholog__section-content--problem--active:not(:last-child) {
+    .gh-request-therapist__section-content--problem--active:not(:last-child) {
         margin-bottom: 2rem;
     }
 }
 
-.gh-request-psiholog__section-content--problem > .gh-switch {
+.gh-request-therapist__section-content--problem > .gh-switch {
     width: 23.5rem;
     display: flex;
     align-items: center;
@@ -366,28 +366,28 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--problem > .gh-switch {
+    .gh-request-therapist__section-content--problem > .gh-switch {
         flex-grow: 1;
     }
     
-    .gh-request-psiholog__section-content--problem > .gh-switch > svg {
+    .gh-request-therapist__section-content--problem > .gh-switch > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--problem > .gh-switch {
+    .gh-request-therapist__section-content--problem > .gh-switch {
         width: 20.7rem;
     }
     
-    .gh-request-psiholog__section-content--problem > .gh-switch > svg {
+    .gh-request-therapist__section-content--problem > .gh-switch > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
-.gh-request-psiholog__section-content--problem > .gh-switch-new > label {
+.gh-request-therapist__section-content--problem > .gh-switch-new > label {
     width: 23.5rem;
     display: flex;
     align-items: center;
@@ -400,59 +400,59 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--problem > .gh-switch-new > label {
+    .gh-request-therapist__section-content--problem > .gh-switch-new > label {
         flex-grow: 1;
     }
     
-    .gh-request-psiholog__section-content--problem > .gh-switch-new > label > svg {
+    .gh-request-therapist__section-content--problem > .gh-switch-new > label > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--problem > .gh-switch-new > label {
+    .gh-request-therapist__section-content--problem > .gh-switch-new > label {
         width: 20.7rem;
     }
     
-    .gh-request-psiholog__section-content--problem > .gh-switch-new > label > svg {
+    .gh-request-therapist__section-content--problem > .gh-switch-new > label > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
-.gh-request-psiholog__section-content--lgbtq {
+.gh-request-therapist__section-content--lgbtq {
     display: flex;
     gap: 1rem;
 }
 
-.gh-request-psiholog__section-content--lgbtq > .gh-switch {
+.gh-request-therapist__section-content--lgbtq > .gh-switch {
     min-width: 9rem;
 }
 
-.gh-request-psiholog__section-content--lgbtq > .gh-switch-new {
+.gh-request-therapist__section-content--lgbtq > .gh-switch-new {
     min-width: 9rem;
 }
 
-.gh-request-psiholog__section-content--channel {
+.gh-request-therapist__section-content--channel {
     display: flex;
     gap: 2rem 3rem;
     flex-wrap: wrap;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--channel {
+    .gh-request-therapist__section-content--channel {
         gap: 1rem 2rem;
     }
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--channel {
+    .gh-request-therapist__section-content--channel {
         gap: 1rem;
     }
 }
 
-.gh-request-psiholog__section-content--channel > .gh-switch {
+.gh-request-therapist__section-content--channel > .gh-switch {
     width: 23rem;
     display: flex;
     align-items: center;
@@ -463,13 +463,13 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--channel > .gh-switch {
+    .gh-request-therapist__section-content--channel > .gh-switch {
         width: 33.5rem;
         padding: 1rem 2rem;
         justify-content: center;
     }
     
-    .gh-request-psiholog__section-content--channel > .gh-switch > svg {
+    .gh-request-therapist__section-content--channel > .gh-switch > svg {
         flex-shrink: 0;
         width: 2rem;
         height: 2rem;
@@ -477,20 +477,20 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--channel > .gh-switch {
+    .gh-request-therapist__section-content--channel > .gh-switch {
         font-size: 1.4rem;
         width: 13.8rem;
         padding: 1rem 1.5rem;
         justify-content: center;
     }
     
-    .gh-request-psiholog__section-content--channel > .gh-switch > svg {
+    .gh-request-therapist__section-content--channel > .gh-switch > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
-.gh-request-psiholog__section-content--channel > .gh-switch-new > label {
+.gh-request-therapist__section-content--channel > .gh-switch-new > label {
     width: 23rem;
     display: flex;
     align-items: center;
@@ -502,13 +502,13 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-    .gh-request-psiholog__section-content--channel > .gh-switch-new > label {
+    .gh-request-therapist__section-content--channel > .gh-switch-new > label {
         width: 33.5rem;
         padding: 1rem 2rem;
         justify-content: center;
     }
     
-    .gh-request-psiholog__section-content--channel > .gh-switch-new > label > svg {
+    .gh-request-therapist__section-content--channel > .gh-switch-new > label > svg {
         flex-shrink: 0;
         width: 2rem;
         height: 2rem;
@@ -516,20 +516,20 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__section-content--channel > .gh-switch-new > label {
+    .gh-request-therapist__section-content--channel > .gh-switch-new > label {
         font-size: 1.4rem;
         width: 13.8rem;
         padding: 1rem 1.5rem;
         justify-content: center;
     }
     
-    .gh-request-psiholog__section-content--channel > .gh-switch-new > label > svg {
+    .gh-request-therapist__section-content--channel > .gh-switch-new > label > svg {
         width: 2rem;
         height: 2rem;
     }
 }
 
-.gh-request-psiholog__next {
+.gh-request-therapist__next {
     margin-top: 3rem;
     display: flex;
     gap: 2.7rem;
@@ -537,7 +537,7 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__next {
+    .gh-request-therapist__next {
         margin-top: 3rem;
         gap: 4rem;
         flex-direction: column;
@@ -545,16 +545,16 @@
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__next {
+    .gh-request-therapist__next {
         margin-top: 7rem;
     }
     
-    .gh-request-psiholog__next .gh-button {
+    .gh-request-therapist__next .gh-button {
         flex-grow: 1;
     }
 }
 
-.gh-request-psiholog__benefits {
+.gh-request-therapist__benefits {
     display: flex;
     gap: 3rem;
     flex-direction: column;
@@ -565,12 +565,12 @@
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__benefits {
+    .gh-request-therapist__benefits {
         display: none;
     }
 }
 
-.gh-request-psiholog__benefit {
+.gh-request-therapist__benefit {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -581,44 +581,44 @@
     box-shadow: 0 5.4rem 11.6rem rgba(0, 0, 0, 0.05), 0 0.676164rem 1.56937rem rgba(0, 0, 0, 0.025);
 }
 
-.gh-request-psiholog__benefit-title {
+.gh-request-therapist__benefit-title {
     font-weight: 700;
     font-size: 2rem;
     line-height: 1.2;
 }
 
-.gh-request-psiholog__benefit-description {
+.gh-request-therapist__benefit-description {
     font-weight: 500;
     font-size: 1.4rem;
     line-height: 1.4;
 }
 
-.gh-request-psiholog__contacts {
+.gh-request-therapist__contacts {
     display: flex;
     gap: 3rem;
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__contacts {
+    .gh-request-therapist__contacts {
         flex-direction: column;
     }
 }
 
-.gh-request-psiholog__contact {
+.gh-request-therapist__contact {
     flex-grow: 1;
 }
 
-.gh-request-psiholog__contact .gh-request-psiholog__section-sub-header {
+.gh-request-therapist__contact .gh-request-therapist__section-sub-header {
     margin-top: 0;
 }
 
-.gh-request-psiholog__collapsable {
+.gh-request-therapist__collapsable {
     display: none;
 }
 
 @media (min-width: 768px) and (max-width: 1199px),
        (max-width: 767px) {
-    .gh-request-psiholog__collapsable {
+    .gh-request-therapist__collapsable {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -634,41 +634,41 @@
         transition: 0.3s transform;
     }
     
-    .gh-request-psiholog__collapsable:active {
+    .gh-request-therapist__collapsable:active {
         cursor: pointer;
         transform: scaleX(0.99) scaleY(0.99);
     }
     
-    .gh-request-psiholog__collapsable-icon,
-    .gh-request-psiholog__collapsable path {
+    .gh-request-therapist__collapsable-icon,
+    .gh-request-therapist__collapsable path {
         transition: 0.3s transform;
     }
     
-    .gh-request-psiholog__collapsable--active > .gh-request-psiholog__collapsable-icon {
+    .gh-request-therapist__collapsable--active > .gh-request-therapist__collapsable-icon {
         transform: rotateZ(135deg);
     }
     
-    .gh-request-psiholog__collapsable--active path {
+    .gh-request-therapist__collapsable--active path {
         fill: #EF9665;
     }
 }
 
-.gh-request-psiholog__form {
+.gh-request-therapist__form {
     width: 100%;
 }
 
 @media (min-width: 1200px) {
-    .gh-request-psiholog__form {
+    .gh-request-therapist__form {
         width: auto;
     }
 }
 
-.gh-request-psiholog__back-btn--top {
+.gh-request-therapist__back-btn--top {
     display: none;
 }
 
 @media (max-width: 767px) {
-    .gh-request-psiholog__back-btn--top {
+    .gh-request-therapist__back-btn--top {
         display: inline-flex;
         font-size: 1.4rem;
         padding-top: 1rem;
@@ -676,7 +676,7 @@
     }
 }
 
-.gh-request-psiholog__i-have-promo {
+.gh-request-therapist__i-have-promo {
     margin-left: 1rem;
     margin-top: 2.5rem;
     font-size: 1.8rem;
@@ -685,12 +685,12 @@
     text-decoration: underline;
 }
 
-.gh-request-psiholog__i-have-promo:hover {
+.gh-request-therapist__i-have-promo:hover {
     cursor: pointer;
     opacity: 0.7;
 }
 
-.gh-request-psiholog__i-have-promo-content {
+.gh-request-therapist__i-have-promo-content {
     margin-top: 1.5rem;
 }
 

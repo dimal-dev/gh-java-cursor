@@ -93,7 +93,6 @@ public class TherapistScheduleController {
     public String scheduleSettings(
             Model model,
             @AuthenticationPrincipal TherapistUserDetails user) {
-        
         LocalDate today = LocalDate.now();
         
         model.addAttribute("zeroWeek", WeekInfoDto.forWeekOffset(0, today));
@@ -136,8 +135,6 @@ public class TherapistScheduleController {
     public ResponseEntity<Map<String, Object>> toggleSlot(
             @RequestBody ToggleSlotRequest request,
             @AuthenticationPrincipal TherapistUserDetails user) {
-
-        System.out.println("📇 Entering a great thing!");
 
         LocalDateTime time = LocalDateTime.parse(request.time(), DATE_FORMATTER);
         

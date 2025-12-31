@@ -1,5 +1,5 @@
--- Add missing columns to user_request_psiholog table
-ALTER TABLE user_request_psiholog
+-- Add missing columns to user_request_therapist table
+ALTER TABLE user_request_therapist
     ADD COLUMN IF NOT EXISTS is_processed INTEGER NOT NULL DEFAULT 0,
     ADD COLUMN IF NOT EXISTS lgbtq INTEGER DEFAULT 0,
     ADD COLUMN IF NOT EXISTS channel VARCHAR(500),
@@ -11,7 +11,7 @@ ALTER TABLE user_request_psiholog
     ADD COLUMN IF NOT EXISTS additional_data JSONB DEFAULT '{}'::jsonb;
 
 -- Update existing records to have default values
-UPDATE user_request_psiholog
+UPDATE user_request_therapist
 SET is_processed = 0,
     lgbtq = 0,
     sex = 'both',

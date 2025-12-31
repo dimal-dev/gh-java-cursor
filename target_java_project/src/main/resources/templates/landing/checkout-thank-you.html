@@ -8,17 +8,17 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="gh-request-psiholog-success__container-outer">
-        <div class="gh-request-psiholog-success__container-inner">
-            <div class="gh-request-psiholog-success__soft-light"></div>
+    <div class="gh-request-therapist-success__container-outer">
+        <div class="gh-request-therapist-success__container-inner">
+            <div class="gh-request-therapist-success__soft-light"></div>
             
             <!-- Pending State -->
             <div class="state-container" id="state-pending" th:if="${order.status == 'pending'}">
                 <div class="spinner"></div>
-                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.processing}">
+                <h3 class="gh-request-therapist-success__header" th:text="#{landing.thankYou.processing}">
                     Payment system is processing
                 </h3>
-                <div class="gh-request-psiholog-success__description" th:text="#{landing.thankYou.pleaseWait}">
+                <div class="gh-request-therapist-success__description" th:text="#{landing.thankYou.pleaseWait}">
                     Please wait, it takes about a minute
                 </div>
             </div>
@@ -26,10 +26,10 @@
             <!-- Success State -->
             <div class="state-container gh-d-none" id="state-approved" th:if="${order.status == 'approved'}">
                 <div class="success-icon">✓</div>
-                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.success}">
+                <h3 class="gh-request-therapist-success__header" th:text="#{landing.thankYou.success}">
                     Payment has been successful
                 </h3>
-                <div class="gh-request-psiholog-success__description">
+                <div class="gh-request-therapist-success__description">
                     <div class="booking-details" th:if="${order.consultationDate != null}">
                         <p th:if="${order.therapistName != null and !#strings.isEmpty(order.therapistName)}">
                             <strong th:text="#{landing.thankYou.therapist} + ':'">Therapist:</strong>
@@ -59,10 +59,10 @@
             <!-- Failed State -->
             <div class="state-container gh-d-none" id="state-failed" th:if="${order.status == 'failed'}">
                 <div class="error-icon">✗</div>
-                <h3 class="gh-request-psiholog-success__header" th:text="#{landing.thankYou.failed}">
+                <h3 class="gh-request-therapist-success__header" th:text="#{landing.thankYou.failed}">
                     Payment has failed
                 </h3>
-                <div class="gh-request-psiholog-success__description" th:text="#{landing.thankYou.failedMessage}">
+                <div class="gh-request-therapist-success__description" th:text="#{landing.thankYou.failedMessage}">
                     Please try again
                 </div>
                 <a th:href="@{/{lang}/checkout/{slug}(lang=${lang != 'uk'} ? ${lang} : '', slug=${checkoutSlug})}" 
@@ -72,7 +72,7 @@
                 </a>
             </div>
             
-            <div class="gh-request-psiholog-success__photo">
+            <div class="gh-request-therapist-success__photo">
                 <img class="gh-img" th:src="@{/img/checkout-thank-you-dima.jpg}" alt="">
             </div>
         </div>

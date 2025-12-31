@@ -63,7 +63,7 @@ logging:
     root: WARN
     com.goodhelp: WARN
     org.springframework.web: WARN
-    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL: WARN #DEBUG
     org.hibernate.type.descriptor.sql: WARN
 
 # Custom application properties
@@ -71,3 +71,5 @@ goodhelp:
   default-locale: en
   supported-locales: en,uk,ru
   default-timezone: Europe/Kiev
+  telegram:
+    setup-prefix: "dummy:"

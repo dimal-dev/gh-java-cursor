@@ -44,7 +44,7 @@
             <h1 class="ghl-first-screen__middle-main-phrase">
                 <span th:text="#{Consultation}">Consultation</span>
                 <br class="gh-ld-display gh-ds-display"/>
-                <span th:text="#{psihologa}">psychologist</span>
+                <span th:text="#{therapista}">psychologist</span>
                 <span class="gh-text-color-carrot-1" th:text="#{online}">online</span>
             </h1>
             <div class="ghl-first-screen__middle-description-wrapper">
@@ -57,12 +57,12 @@
                     </svg>
                 </div>
             </div>
-            <div class="ghl-first-screen__middle-select-psiholog-zero-wrapper">
-                <div class="ghl-first-screen__middle-select-psiholog-first-wrapper">
-                    <div class="ghl-first-screen__middle-select-psiholog-second-wrapper">
+            <div class="ghl-first-screen__middle-select-therapist-zero-wrapper">
+                <div class="ghl-first-screen__middle-select-therapist-first-wrapper">
+                    <div class="ghl-first-screen__middle-select-therapist-second-wrapper">
                         <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}"
-                           class="select-psiholog-btn select-psiholog-btn--main gh-button"
-                           th:text="#{landing.request_psiholog}">Find a Psychologist</a>
+                           class="select-therapist-btn select-therapist-btn--main gh-button"
+                           th:text="#{landing.request_therapist}">Find a Psychologist</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 0C4.70859 0 0 4.70859 0 10.5C0 16.2914 4.70859 21 10.5 21C16.2914 21 21 16.2914 21 10.5C21 4.70859 16.2914 0 10.5 0Z" fill="#D4D45E"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5778 6.9604C15.8321 7.2147 15.8321 7.63306 15.5778 7.88735L9.42542 14.0397C9.29827 14.1668 9.1301 14.2325 8.96194 14.2325C8.79377 14.2325 8.62561 14.1668 8.49846 14.0397L5.42229 10.9635C5.16799 10.7092 5.16799 10.2909 5.42229 10.0366C5.67659 9.78228 6.09495 9.78228 6.34924 10.0366L8.96194 12.6493L14.6508 6.9604C14.9051 6.702 15.3235 6.702 15.5778 6.9604Z" fill="#202020"/>
                         </svg>
-                        <span th:text="#{landing.index.psiholog_amount_working_with_us}">10+ specialists work with us</span>
+                        <span th:text="#{landing.index.therapist_amount_working_with_us}">10+ specialists work with us</span>
                     </div>
                 </div>
                 <div class="ghl-first-screen__middle-advantage-group gh-order-md-1">
@@ -218,7 +218,7 @@
     <section class="ghl-third-screen">
         <div class="gh-main-block ghl-third-screen__main-block">
             <h2 class="ghl__main-h2 ghl-third-screen__h2">
-                <span th:text="#{landing.index.our_psihologi}">Our psychologists</span>
+                <span th:text="#{landing.index.our_therapisti}">Our psychologists</span>
                 <span class="gh-text-color-carrot-1" th:text="#{landing.index.can}">can</span>
                 <br class="gh-ld-d-none"/>
                 <span th:text="#{landing.index.help_you}">help you</span>
@@ -227,8 +227,8 @@
             
             <div class="ghl-third-screen__cta-wrapper">
                 <a th:href="@{/{lang}/therapist-list(lang=${lang != 'uk'} ? ${lang} : '')}"
-                   class="select-psiholog-btn select-psiholog-btn--main gh-button"
-                   th:text="#{landing.request_psiholog}">Find a Psychologist</a>
+                   class="select-therapist-btn select-therapist-btn--main gh-button"
+                   th:text="#{landing.request_therapist}">Find a Psychologist</a>
             </div>
         </div>
     </section>
@@ -465,8 +465,8 @@
                 <h3 th:text="#{landing.index.safe_place_for_you_and_emotions}">Safe place for you and your emotions</h3>
                 <div>
                     <a th:href="@{/{lang}/request-therapist(lang=${lang != 'uk'} ? ${lang} : '')}"
-                       class="select-psiholog-btn select-psiholog-btn--main gh-button"
-                       th:text="#{landing.request_psiholog}">Find a Psychologist</a>
+                       class="select-therapist-btn select-therapist-btn--main gh-button"
+                       th:text="#{landing.request_therapist}">Find a Psychologist</a>
                 </div>
             </div>
             <div class="ghl-seventh-screen__column-two">
