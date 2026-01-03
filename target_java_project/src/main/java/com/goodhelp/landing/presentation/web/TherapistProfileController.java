@@ -26,7 +26,7 @@ public class TherapistProfileController extends BaseLandingController {
     /**
      * Profile page for Ukrainian (default) language.
      */
-    @GetMapping("/profile/{id}")
+    @GetMapping("/uk/profile/{id}")
     public String profileUk(
             @PathVariable Long id,
             @RequestParam(name = "tft", required = false) String priceSlug,
@@ -50,7 +50,7 @@ public class TherapistProfileController extends BaseLandingController {
     /**
      * Profile page for English language.
      */
-    @GetMapping("/en/profile/{id}")
+    @GetMapping("/profile/{id}")
     public String profileEn(
             @PathVariable Long id,
             @RequestParam(name = "tft", required = false) String priceSlug,

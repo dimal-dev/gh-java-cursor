@@ -62,13 +62,13 @@
             </div>
 
             <!-- Stretched link to profile -->
-            <a th:href="@{/{lang}/therapist/{id}(lang=${lang != 'uk' ? lang : ''}, id=${therapist.id()})}"
+            <a th:href="@{/{lang}/profile/{id}(lang=${lang != 'en' ? lang : ''}, id=${therapist.id()})}"
                 class="gh-stretched-link"></a>
         </div>
 
         <!-- View profile button -->
         <div class="gh-therapist-list__view-therapist-button-wrapper">
-            <a th:href="@{/{lang}/therapist/{id}(lang=${lang != 'uk' ? lang : ''}, id=${therapist.id()})}"
+            <a th:href="@{/{lang}/profile/{id}(lang=${lang != 'en' ? lang : ''}, id=${therapist.id()})}"
                 class="gh-button gh-button--small-mobile gh-button--small-tablet view-specific-therapist-btn"
                 th:text="#{Look_closely}">View Profile</a>
         </div>

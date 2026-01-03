@@ -219,7 +219,7 @@ public class SecurityConfig {
                                 "/uk/**",
                                 "/therapist-list",
                                 "/json/therapist-list",
-                                "/psiholog/**",
+                                "/profile/**",
                                 "/book-consultation/**",
                                 "/api/book-consultation/**",
                                 "/api/save-timezone",
@@ -239,6 +239,7 @@ public class SecurityConfig {
                                 "/static/**",
                                 "/css/**",
                                 "/js/**",
+                                "/assets/**",
                                 "/img/**",
                                 "/favicon.ico",
                                 "/error")

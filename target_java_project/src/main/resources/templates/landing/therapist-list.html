@@ -21,7 +21,6 @@
 
                 <!-- Therapist cards grid -->
                 <div class="gh-therapist-list__list">
-                    <div th:text="${therapistList.size()}"></div>
                     <th:block th:each="t : ${therapistList}">
                         <div th:replace="~{landing/fragments/therapist-card :: therapistCard(therapist=${t})}"></div>
                     </th:block>

@@ -27,7 +27,7 @@ public class TherapistListController extends BaseLandingController {
     /**
      * Therapist list for Ukrainian (default) language.
      */
-    @GetMapping("/therapist-list")
+    @GetMapping("/uk/therapist-list")
     public String listUk(
             @RequestParam(required = false) String topic,
             Model model,
@@ -49,7 +49,7 @@ public class TherapistListController extends BaseLandingController {
     /**
      * Therapist list for English language.
      */
-    @GetMapping("/en/therapist-list")
+    @GetMapping("/therapist-list")
     public String listEn(
             @RequestParam(required = false) String topic,
             Model model,
